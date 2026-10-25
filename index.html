@@ -1,1 +1,151 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextGen | Smart Automation</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#eef3ff;font-family:Arial,sans-serif}
+header{padding:22px;background:#141e32;border-bottom:1px solid #293752}
+h1{margin:0;color:#91aaff;font-size:30px}
+header p{margin:6px 0;color:#c1cbe0}
+.credit{font-size:11px;color:#a5b3cc;text-align:right}
+.layout{display:flex;min-height:85vh}
+nav{width:190px;padding:15px;background:#10182a}
+nav button{display:block;width:100%;margin:5px 0;padding:12px;text-align:left;background:#1a2740;color:white;border:0;border-radius:8px}
+main{padding:22px;flex:1;min-width:0}
+.card{background:#141e32;border:1px solid #293752;border-radius:13px;padding:18px;margin-bottom:16px}
+h2,h3{margin-top:0}
+.stats,.channels,.drafts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.channels{grid-template-columns:repeat(2,minmax(0,1fr))}
+.stat strong{font-size:27px;display:block;margin-top:8px}
+.muted{color:#a5b3cc;font-size:13px}
+button{cursor:pointer}
+.action{padding:10px 13px;border-radius:8px;border:1px solid #53688d;background:#233654;color:white;margin:4px 4px 4px 0}
+.active{background:#91aaff;color:#0b1020;font-weight:bold}
+.warning{background:#302818;border:1px solid #806633;color:#ffe1a6;padding:12px;border-radius:9px;font-size:13px}
+.draft{background:#1a2740;padding:13px;border-radius:10px}
+.status{color:#ffd27d;font-size:12px}
+.page{display:none}
+.page.show{display:block}
+footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
+@media(max-width:650px){
+.layout{display:block}
+nav{width:100%;display:flex;overflow-x:auto;gap:5px}
+nav button{min-width:max-content;width:auto}
+main{padding:12px}
+.stats,.drafts{grid-template-columns:1fr}
+.channels{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header>
+<div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+<div>
+<h1>NextGen</h1>
+<p>Smart Automation. Smarter Growth.</p>
+</div>
+<div class="credit">Powered by<br><b>ABDUS SATTAR</b></div>
+</div>
+</header>
+<div class="layout">
+<nav>
+<button onclick="showPage('dashboard')">Dashboard</button>
+<button onclick="showPage('channels')">Channels</button>
+<button onclick="showPage('content')">Content Queue</button>
+<button onclick="showPage('approvals')">Approvals</button>
+<button onclick="showPage('schedule')">Schedule</button>
+<button onclick="showPage('settings')">Settings</button>
+</nav>
+<main>
+<section id="dashboard" class="page show">
+<h2>Dashboard</h2>
+<p class="muted">Welcome to your NextGen creator workspace.</p>
+<div class="stats">
+<div class="card stat"><span class="muted">Target Channels</span><strong>4</strong></div>
+<div class="card stat"><span class="muted">Draft Ideas</span><strong>3</strong></div>
+<div class="card stat"><span class="muted">Published by App</span><strong>0</strong></div>
+</div>
+<div class="card">
+<h3>Publishing Approval Control</h3>
+<p id="mode">Manual Approval Mode — ON</p>
+<button class="action active" onclick="setMode(false)">Manual Approval</button>
+<button class="action" onclick="setMode(true)">Auto Approval</button>
+<p id="modeText" class="muted">Content requires your approval before publishing.</p>
+<div class="warning">Auto Approval is OFF by default. This prototype does not publish or schedule posts.</div>
+</div>
+<div class="card">
+<h3>Channel Overview</h3>
+<div class="channels">
+<div class="draft"><b>YouTube</b><p class="muted">@RoyalFurnitureHouse</p></div>
+<div class="draft"><b>Facebook</b><p class="muted">@RoyalFurnitureZone</p></div>
+<div class="draft"><b>Instagram</b><p class="muted">@royalfurniturezone</p></div>
+<div class="draft"><b>Threads</b><p class="muted">@royalfurniturezone</p></div>
+</div>
+</div>
+<div class="card">
+<h3>Daily Content Preparation Plan</h3>
+<div class="channels">
+<div class="draft"><b>8:00 AM</b><p class="muted">Prepare content ideas</p></div>
+<div class="draft"><b>2:00 PM</b><p class="muted">Prepare content ideas</p></div>
+<div class="draft"><b>6:00 PM</b><p class="muted">Prepare content ideas</p></div>
+</div>
+<p class="muted">Planned times only. Background automation is not active.</p>
+</div>
+</section>
+<section id="channels" class="page">
+<h2>Channels</h2>
+<div class="card"><h3>YouTube</h3><p>@RoyalFurnitureHouse</p><p class="muted">Real connection status needs verification.</p></div>
+<div class="card"><h3>Facebook Page</h3><p>@RoyalFurnitureZone</p><p class="muted">Real connection status needs verification.</p></div>
+<div class="card"><h3>Instagram</h3><p>@royalfurniturezone</p><p class="muted">Real connection status needs verification.</p></div>
+<div class="card"><h3>Threads</h3><p>@royalfurniturezone</p><p class="muted">Real connection status needs verification.</p></div>
+</section>
+<section id="content" class="page">
+<h2>Content Queue</h2>
+<div class="card"><h3>Luxury Wooden Bed Reel</h3><p class="muted">Cinematic furniture product showcase.</p><span class="status">Pending approval</span></div>
+<div class="card"><h3>Royal Sofa Set Short</h3><p class="muted">Highlight comfort and premium design.</p><span class="status">Pending approval</span></div>
+<div class="card"><h3>Carved Centre Table Reel</h3><p class="muted">Showcase wood finish and craftsmanship.</p><span class="status">Pending approval</span></div>
+</section>
+<section id="approvals" class="page">
+<h2>Approvals</h2>
+<div class="card"><h3>Review Checklist</h3>
+<label><input type="checkbox"> Spelling checked</label><br><br>
+<label><input type="checkbox"> Facts checked</label><br><br>
+<label><input type="checkbox"> Copyright checked</label><br><br>
+<label><input type="checkbox"> Duplicate content checked</label><br><br>
+<label><input type="checkbox"> Platform policy and brand safety checked</label>
+<div class="warning" style="margin-top:15px">Checklist demonstration only. No content is published by this prototype.</div>
+</div>
+</section>
+<section id="schedule" class="page">
+<h2>Schedule</h2>
+<div class="card"><h3>8:00 AM</h3><p>Content preparation plan</p></div>
+<div class="card"><h3>2:00 PM</h3><p>Content preparation plan</p></div>
+<div class="card"><h3>6:00 PM</h3><p>Content preparation plan</p></div>
+<div class="warning">These are planned times, not active background jobs.</div>
+</section>
+<section id="settings" class="page">
+<h2>Settings</h2>
+<div class="card"><h3>Brand</h3><p>NextGen</p><p>Smart Automation. Smarter Growth.</p><p>Powered by ABDUS SATTAR</p></div>
+<div class="card"><h3>Safety Defaults</h3><p>Manual Approval: ON</p><p>Auto Approval: OFF by default</p><p class="muted">Login, database, platform APIs, 24/7 worker and recovery are not implemented yet.</p></div>
+</section>
+</main>
+</div>
+<footer>NextGen Prototype • Dashboard preview • Real publishing is not connected</footer>
+<script>
+function showPage(id){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));
+document.getElementById(id).classList.add('show');
+}
+function setMode(auto){
+document.getElementById('mode').textContent=auto?'Auto Approval Mode — DEMO ON':'Manual Approval Mode — ON';
+document.getElementById('modeText').textContent=auto?'Demo toggle only. Real safety checks and automatic publishing are not connected.':'Content requires your approval before publishing.';
+document.querySelectorAll('.action').forEach(b=>b.classList.remove('active'));
+document.querySelectorAll('.action')[auto?1:0].classList.add('active');
+}
+</script>
+</body>
+</html>
