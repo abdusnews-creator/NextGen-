@@ -140,6 +140,16 @@ function showPage(id){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));
 document.getElementById(id).classList.add('show');
 }
+  function approveDraft(id){
+  const checks = document.querySelectorAll('.review-check');
+  if (!Array.from(checks).every(c => c.checked)) {
+    showPage('approvals');
+    alert('Please complete all five review checklist items first.');
+    return;
+  }
+  document.getElementById(id).textContent = 'Approved (demo only)';
+  alert('Demo only. Nothing was published.');
+  }
 function setMode(auto){
 document.getElementById('mode').textContent=auto?'Auto Approval Mode — DEMO ON':'Manual Approval Mode — ON';
 document.getElementById('modeText').textContent=auto?'Demo toggle only. Real safety checks and automatic publishing are not connected.':'Content requires your approval before publishing.';
