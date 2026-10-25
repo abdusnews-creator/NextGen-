@@ -1,1 +1,109 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NextGen — Channels</title>
+<style>
+:root{--bg:#0b1020;--card:#151d31;--text:#f5f7ff;--muted:#a8b3ca;--accent:#70e1b5;--line:#29344c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;padding:20px}
+main{max-width:1000px;margin:auto}
+header,.top,.actions{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+h1{font-size:30px;margin:0}
+.tag{color:var(--accent);margin:8px 0 20px}
+a{color:var(--accent);text-decoration:none}
+.back,button{padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:#202b42;color:var(--text);cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.platform{font-size:25px}
+.handle{color:var(--muted);overflow-wrap:anywhere}
+.status{margin:16px 0;color:#ffd28b;font-size:14px}
+.actions{justify-content:flex-start}
+.primary{background:var(--accent);color:#07150f;font-weight:bold}
+.note{color:var(--muted);font-size:14px;line-height:1.6}
+footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:12px;text-align:right}
+@media(max-width:600px){body{padding:14px}.grid{grid-template-columns:1fr}h1{font-size:25px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div>
+<h1>NextGen</h1>
+<p class="tag">Smart Automation. Smarter Growth.</p>
+</div>
+<a class="back" href="index.html">← Dashboard</a>
+</header>
+
+<h2>Channels</h2>
+<p class="note">Manage your social channels, review status, and pause or resume channel activity.</p>
+
+<div class="grid">
+<section class="card">
+<div class="platform">▶️ YouTube</div>
+<h3>Royal Furniture House</h3>
+<p class="handle">@RoyalFurnitureHouse</p>
+<p class="status">● App connection: Not verified</p>
+<div class="actions">
+<button onclick="toggle(this)">Pause channel</button>
+<button class="primary" onclick="review('YouTube')">Review</button>
+</div>
+</section>
+
+<section class="card">
+<div class="platform">📘 Facebook</div>
+<h3>Royal Furniture Zone</h3>
+<p class="handle">@RoyalFurnitureZone</p>
+<p class="status">● App connection: Not verified</p>
+<div class="actions">
+<button onclick="toggle(this)">Pause channel</button>
+<button class="primary" onclick="review('Facebook')">Review</button>
+</div>
+</section>
+
+<section class="card">
+<div class="platform">📸 Instagram</div>
+<h3>Royal Furniture Zone</h3>
+<p class="handle">@royalfurniturezone</p>
+<p class="status">● App connection: Not verified</p>
+<div class="actions">
+<button onclick="toggle(this)">Pause channel</button>
+<button class="primary" onclick="review('Instagram')">Review</button>
+</div>
+</section>
+
+<section class="card">
+<div class="platform">🧵 Threads</div>
+<h3>Royal Furniture Zone</h3>
+<p class="handle">@royalfurniturezone</p>
+<p class="status">● App connection: Not verified</p>
+<div class="actions">
+<button onclick="toggle(this)">Pause channel</button>
+<button class="primary" onclick="review('Threads')">Review</button>
+</div>
+</section>
+</div>
+
+<section class="card" style="margin-top:20px">
+<h3>Approval Safety</h3>
+<p>Manual Approval Mode: <strong>ON by default</strong></p>
+<p>Auto Approval Mode: <strong>OFF by default</strong></p>
+<p class="note">This prototype does not publish or schedule posts. Real account connections, secure login, database, approval checks, scheduling, and background monitoring are not implemented yet.</p>
+</section>
+
+<footer>Powered by ABDUS SATTAR</footer>
+</main>
+<script>
+function toggle(button){
+ const paused=button.textContent==="Resume channel";
+ button.textContent=paused?"Pause channel":"Resume channel";
+ alert(paused?"Demo: channel resumed.":"Demo: channel paused.");
+}
+function review(platform){
+ alert(platform+" review: Manual approval is required. Real account verification is not connected yet.");
+}
+</script>
+</body>
+</html>
