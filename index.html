@@ -146,6 +146,16 @@ document.getElementById('modeText').textContent=auto?'Demo toggle only. Real saf
 document.querySelectorAll('.action').forEach(b=>b.classList.remove('active'));
 document.querySelectorAll('.action')[auto?1:0].classList.add('active');
 }
+  function approveDraft(id){
+  const checks = document.querySelectorAll('.review-check');
+  if (!Array.from(checks).every(c => c.checked)) {
+    showPage('approvals');
+    alert('Please complete all five review checklist items first.');
+    return;
+  }
+  document.getElementById(id).textContent = 'Approved (demo only)';
+  alert('Demo only. Nothing was published.');
+}
 </script>
 </body>
 </html>
