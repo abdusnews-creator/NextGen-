@@ -1,60 +1,51 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Trigger GitHub Pages redeploy after adding Settings page -->
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0b1020">
-<title>NextGen — Duplicate Dashboard · Channel Data</title>
+<title>NextGen | Dashboard Copy</title>
+
 <style>
-:root{--bg:#0b1020;--card:#151d31;--text:#f5f7ff;--muted:#a8b3ca;--accent:#91aaff;--line:#29344c;--good:#8fe0b8;--warn:#ffd28b}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;padding:0}
-main{max-width:1050px;margin:0 auto;padding:0 18px}
-header,.top,.actions{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-h1{font-size:30px;margin:0}
-h2{margin-bottom:8px}
-.tag{color:var(--accent);margin:8px 0 20px}
-a{color:var(--accent);text-decoration:none}
-.back,button{padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:#202b42;color:var(--text);cursor:pointer;font:inherit}
-button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}
-.platform{font-size:23px}
-.handle{color:var(--muted);overflow-wrap:anywhere}
-.status{margin:16px 0;font-size:14px;line-height:1.5}
-.status .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warn);margin-right:7px}
-.status.paused .dot{background:#ff9c9c}
-.actions{justify-content:flex-start}
-/* Channel-level controls are managed only from Settings → Privacy Settings. */
-#channelGrid .pause-button,#channelGrid .enable-button{display:none!important}
-.primary{background:var(--accent);color:#07101f;font-weight:bold}
-.muted,.note{color:var(--muted);font-size:14px;line-height:1.6}
-.notice{background:#302818;border:1px solid #806633;color:#ffe1a6;padding:13px;border-radius:10px;line-height:1.5;font-size:13px}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-input[type=search]{flex:1;min-width:180px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit}
-.counter{color:var(--muted);font-size:13px;margin-top:12px}
-footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:12px;text-align:right}
-@media(max-width:600px){body{padding:12px}.grid{grid-template-columns:1fr}h1{font-size:25px}.card{padding:16px}}
-.main-nav{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:8px 0 20px;padding:8px;background:#10182a;border:1px solid var(--line);border-radius:12px}.main-nav a{display:block;padding:10px 13px;border-radius:8px;color:var(--muted);white-space:nowrap}.main-nav a:hover{background:#202b42;color:var(--text)}.main-nav a.active{background:#263452;color:#fff;font-weight:700}.main-nav a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}@media(max-width:600px){.main-nav{flex-wrap:nowrap;overflow-x:auto;margin:6px 0 16px;padding:6px;scrollbar-width:thin}.main-nav a{padding:10px 12px;font-size:14px}}
-
-/* NextGen shared responsive header and footer polish */
-header{background:linear-gradient(110deg,#111b30 0%,#101827 70%,#102746 100%);box-shadow:0 5px 22px #0003}
-.brand,header h1,header strong{letter-spacing:-.35px}
-.tag{font-weight:500;letter-spacing:.1px}
-button,a,input{transition:background-color .18s ease,border-color .18s ease,color .18s ease}
-.ng-bottom-nav{backdrop-filter:blur(14px);background:rgba(12,20,34,.96)!important;border-top:1px solid #2b4262!important;box-shadow:0 -8px 28px #0005!important}
-.ng-bottom-nav a{min-height:52px}
-.ng-bottom-nav a.active{color:#63b3ff!important;background:linear-gradient(180deg,#193453,#14263b)!important;box-shadow:inset 0 2px 0 #2696ff}
-@media(max-width:600px){header{padding-left:16px!important;padding-right:16px!important}.tag{font-size:12px}.ng-bottom-nav{min-height:72px}}
-
-/* Shared NextGen dark-blue header and footer */
-header{background:linear-gradient(110deg,#06182d 0%,#092747 62%,#10416c 100%)!important;color:#f4f8ff!important;border-bottom:1px solid #1689d4!important;box-shadow:0 5px 22px #0004!important}
-header .brand,header h1,header strong{color:#f4f8ff!important;letter-spacing:-.35px}
-header .tag{color:#b8d7f5!important}
-.ng-bottom-nav{backdrop-filter:blur(14px);background:rgba(5,20,37,.98)!important;border-top:1px solid #1689d4!important;box-shadow:0 -8px 28px #0005!important}
-.ng-bottom-nav a{min-height:54px}
-.ng-bottom-nav a.active,.ng-bottom-nav a[aria-current="page"]{color:#45baff!important;background:linear-gradient(180deg,#193453,#14263b)!important;box-shadow:inset 0 2px 0 #2696ff}
-@media(max-width:600px){header{padding-left:16px!important;padding-right:16px!important}.ng-bottom-nav a{font-size:11px}}
+body{margin:0;background:#0b1020;color:#eef3ff;font-family:Arial,sans-serif}
+header{padding:22px;background:#141e32;border-bottom:1px solid #293752}
+h1{margin:0;color:#91aaff;font-size:30px}
+header p{margin:6px 0;color:#c1cbe0}
+.credit{font-size:11px;color:#a5b3cc;text-align:right}
+.layout{display:flex;min-height:85vh}
+nav{width:190px;flex-shrink:0;padding:15px;background:#10182a}
+nav button{display:block;width:100%;margin:5px 0;padding:12px;text-align:left;background:#1a2740;color:white;border:0;border-radius:8px}
+main{padding:22px;flex:1;min-width:0}
+.card{background:#141e32;border:1px solid #293752;border-radius:13px;padding:18px;margin-bottom:16px}
+h2,h3{margin-top:0}
+.stats,.channels,.drafts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.channels{grid-template-columns:repeat(2,minmax(0,1fr))}
+.stat strong{font-size:27px;display:block;margin-top:8px}
+.muted{color:#a5b3cc;font-size:13px}
+button{cursor:pointer}
+.action{padding:10px 13px;border-radius:8px;border:1px solid #53688d;background:#233654;color:white;margin:4px 4px 4px 0}
+.action.active{background:#91aaff;color:#0b1020;font-weight:bold}
+.warning{background:#302818;border:1px solid #806633;color:#ffe1a6;padding:12px;border-radius:9px;font-size:13px}
+.draft{background:#1a2740;padding:13px;border-radius:10px}
+.status{color:#ffd27d;font-size:12px}
+.page{display:none}
+.page.show{display:block}
+footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
+.check-row{display:block;margin:15px 0;line-height:1.5}
+.check-row input{margin-right:8px}
+@media(max-width:650px){
+ .layout{display:block}
+ nav{width:100%;display:flex;overflow-x:auto;gap:5px}
+ nav button{min-width:max-content;width:auto}
+ main{padding:12px}
+ .stats,.drafts,.channels{grid-template-columns:1fr}
+}
+.studio-top-right button[aria-label="Notifications"]{font-size:0!important;position:relative!important;display:grid;place-items:center}
+.studio-top-right button[aria-label="Notifications"] .notification-bell{width:23px;height:23px;fill:none;stroke:#f4f8ff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}
+.studio-top-right button[aria-label="Notifications"]::after{content:"";position:absolute;top:5px;right:6px;width:8px;height:8px;border-radius:50%;background:#ff304f;border:2px solid #0b2442;box-sizing:content-box}
 
 /* NextGen shared brand system: consistent dark-blue header/footer on every page */
 :root{--ng-bg:#0b1020;--ng-panel:#141e32;--ng-line:#293752;--ng-text:#eef3ff;--ng-muted:#a5b3cc;--ng-accent:#91aaff}
@@ -69,8 +60,7 @@ body>footer,footer.ng-shared-footer{
  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
  padding:14px 18px calc(14px + env(safe-area-inset-bottom));margin-top:24px;
  color:#c5d9ff;background:linear-gradient(110deg,#10213f,#173b70 58%,#102544);
- border-top:1px solid #35547e;font-size:12px
-}
+ border-top:1px solid #35547e;font-size:15px;font-weight:800;}
 body>footer .credit,footer .credit{color:#d4e2ff;text-align:right}
 .ng-bottom-nav{
  position:fixed;z-index:1000;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
@@ -86,139 +76,165 @@ body:has(.ng-bottom-nav){padding-bottom:76px!important}
 @media(max-width:480px){body>footer{padding-left:14px;padding-right:14px}.ng-bottom-nav a small{font-size:9px}}
 
 
-/* Match the Dashboard's top header on Channels */
-.channel-studio-header{min-height:72px;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;background:linear-gradient(110deg,#07182c 0%,#0b2442 65%,#103b65 100%)!important;border-bottom:1px solid #1675bd!important;box-shadow:0 5px 22px #0004!important;border-radius:0 0 14px 14px}
-.channel-brand{display:flex;align-items:center;gap:11px;min-width:220px}
-.channel-brand-mark{width:38px;height:38px;border-radius:10px;background:#1689d4;display:grid;place-items:center;color:#fff;font-size:22px;font-weight:800}
-.channel-studio-header .brand,.channel-studio-header h1{margin:0;color:#f8fafc!important;font-size:22px;line-height:1.2}
-.channel-studio-header .tag{margin:4px 0 0;color:#b8d7f5!important;font-size:12px}
-.channel-header-tools{display:flex;align-items:center;gap:12px;margin-left:auto}
-.channel-header-search{width:min(34vw,320px);min-width:120px;background:#202a36;border:1px solid #34475e;color:#eef2f7;padding:11px 16px;border-radius:24px;font:inherit}
-.channel-header-add,.channel-header-bell{width:40px;height:40px;padding:7px;display:grid;place-items:center;border-radius:50%;background:#172d47;border:1px solid #345779;color:#f4f8ff;font-size:24px}
-.channel-header-bell{position:relative}
-.channel-header-bell svg{width:22px;height:22px;fill:none;stroke:#f4f8ff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.channel-header-bell span{position:absolute;right:5px;top:4px;width:8px;height:8px;border-radius:50%;background:#ff304f;border:1px solid #0b2442}
-.channel-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#2563eb;color:white;font-weight:700}
-@media(max-width:600px){.channel-studio-header{padding:12px;gap:12px}.channel-brand{min-width:0}.channel-header-tools{width:100%;gap:8px}.channel-header-search{flex:1;width:auto;min-width:0}.channel-studio-header h1{font-size:20px}}
-
-
-/* Final override: Channels header must win over legacy shared header rules */
-body>main>header.channel-studio-header{
- display:flex!important;align-items:center!important;justify-content:space-between!important;gap:18px!important;flex-wrap:wrap!important;
- min-height:72px!important;padding:12px 24px!important;margin:-18px -18px 22px!important;
- background:linear-gradient(110deg,#07182c 0%,#0b2442 65%,#103b65 100%)!important;
- color:#f8fafc!important;border-bottom:1px solid #1675bd!important;border-radius:0 0 14px 14px!important;
- box-shadow:0 5px 22px #0004!important;
-}
-body>main>header.channel-studio-header h1{color:#f8fafc!important;font-size:22px!important;margin:0!important}
-body>main>header.channel-studio-header p.tag{color:#b8d7f5!important;margin:4px 0 0!important;font-size:12px!important}
-@media(max-width:600px){body>main>header.channel-studio-header{margin:-12px -12px 18px!important;padding:12px!important}}
+/* Slightly larger, bold footer/corner text */
+body>footer, footer.ng-shared-footer, body>footer .credit, footer .credit { font-size: 15px !important; font-weight: 800 !important; }
+</style>
+<style>
+/* NextGen Studio-inspired dashboard */
+:root{color-scheme:dark}
+body{background:#0f141b;color:#f1f5f9;font-family:Arial,Helvetica,sans-serif}
+.studio-top{height:72px;padding:0 26px;background:linear-gradient(110deg,#07182c 0%,#0b2442 65%,#103b65 100%);border-bottom:1px solid #1675bd;display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:20;box-shadow:0 5px 22px #0004}
+.studio-menu{font-size:25px;color:#cbd5e1;background:transparent;border:0;padding:6px}
+.studio-brand{display:flex;align-items:center;gap:10px;min-width:230px;font-size:22px;font-weight:700;color:#f8fafc}
+.studio-mark{width:38px;height:27px;background:#ff0033;border-radius:8px;display:grid;place-items:center;color:white;font-size:16px}
+.studio-search{height:42px;max-width:720px;flex:1;border-radius:28px;background:#202a36;border:1px solid #2d3948;color:#eef2f7;padding:0 18px;font-size:15px;outline:none}
+.studio-search:focus{border-color:#6686b8}
+.studio-top-right{display:flex;align-items:center;gap:20px;margin-left:auto;color:#bdc8d6}
+.studio-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#2563eb;color:#fff;font-weight:700}
+.studio-shell{display:flex;min-height:calc(100vh - 72px)}
+.studio-nav{width:248px;flex-shrink:0;padding:16px 12px;background:#0e151d;border-right:1px solid #202b36}
+.studio-channel{display:flex;gap:12px;align-items:center;padding:8px 10px 22px;margin-bottom:14px;border-bottom:1px solid #25303c}
+.studio-channel-logo{width:54px;height:54px;border-radius:50%;background:#e7dfcb;color:#6e4b19;display:grid;place-items:center;font-size:23px;flex-shrink:0}
+.studio-channel strong{display:block;font-size:13px;line-height:1.4}
+.studio-channel small{display:block;color:#92a1b4;margin-top:4px;font-size:12px}
+.studio-nav .studio-navbtn{display:flex;align-items:center;gap:14px;width:100%;min-width:0;padding:12px 14px;margin:3px 0;border:0;border-radius:9px;background:transparent;color:#c4cfdd;text-align:left;font-size:14px}
+.studio-nav .studio-navbtn:hover{background:#1c2733}
+.studio-nav .studio-navbtn.active{background:#382027;color:#fff;font-weight:700;box-shadow:inset 4px 0 #ff0033}
+.studio-nav-icon{width:22px;text-align:center;font-size:18px}
+.studio-main{padding:28px 26px 44px;flex:1;min-width:0;max-width:1700px;margin:0 auto}
+.studio-pagehead{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:24px}
+.studio-pagehead h2{font-size:28px;margin:0 0 7px;color:#f8fafc}
+.studio-subtitle{margin:0;color:#9aaabd;font-size:14px}
+.studio-period{background:#18222d;border:1px solid #293745;color:#e4ebf4;padding:12px 15px;border-radius:12px}
+.studio-note{color:#e9c875;background:#29251b;border:1px solid #61512b;border-radius:10px;padding:11px 14px;font-size:12px;margin-bottom:18px}
+.studio-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:22px}
+.studio-metric{background:#141d27;border:1px solid #25313e;border-radius:14px;padding:18px;min-width:0}
+.studio-metric-label{display:flex;align-items:center;gap:10px;color:#c0cddd;font-size:14px}
+.studio-metric-icon{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;font-size:20px;color:#fff}
+.studio-metric-value{font-size:28px;font-weight:700;margin:14px 0 7px}
+.studio-metric-foot{font-size:12px;color:#8fa1b6}
+.studio-content-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,1fr);gap:22px;align-items:start}
+.studio-panel{background:#141d27;border:1px solid #25313e;border-radius:14px;padding:20px;margin-bottom:20px;min-width:0}
+.studio-panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
+.studio-panel h3{font-size:19px;margin:0;color:#f3f6fb}
+.studio-link{color:#6ba3ff;background:none;border:0;padding:4px;font-weight:600}
+.studio-video{display:grid;grid-template-columns:144px minmax(0,1fr) 20px;gap:16px;padding:12px 0;border-bottom:1px solid #26323e;align-items:center}
+.studio-video:last-child{border-bottom:0;padding-bottom:0}
+.studio-thumb{height:86px;border-radius:8px;background:linear-gradient(135deg,#745331,#d6b77b 48%,#3b2b1d);display:grid;place-items:center;color:#fff;font-size:32px;position:relative;overflow:hidden}
+.studio-thumb.bed{background:linear-gradient(135deg,#b7a48c,#45362b 50%,#e1d3bc)}
+.studio-thumb.sofa{background:linear-gradient(135deg,#bcb8b1,#6c6258 55%,#e8dfd2)}
+.studio-thumb.dining{background:linear-gradient(135deg,#bda26d,#59432c 55%,#dfd1b1)}
+.studio-thumb span{position:absolute;right:6px;bottom:6px;background:#090d12dd;padding:3px 5px;border-radius:4px;font-size:11px}
+.studio-video-title{font-size:14px;line-height:1.4;margin-bottom:7px;color:#e8eef6}
+.studio-video-meta{font-size:12px;color:#8295aa;margin-bottom:10px}
+.studio-video-stats{display:flex;gap:18px;flex-wrap:wrap;color:#b1c0d1;font-size:12px}
+.studio-more{color:#9aabbe;background:none;border:0;font-size:18px}
+.studio-big-number{font-size:30px;font-weight:700;margin:6px 0}
+.studio-positive{font-size:12px;color:#35d477}
+.studio-divider{height:1px;background:#283441;margin:18px 0}
+.studio-topcontent{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:13px}
+.studio-mini-thumb{width:54px;height:36px;border-radius:5px;background:linear-gradient(135deg,#bca06d,#57402b);display:grid;place-items:center}
+.studio-topcontent .studio-number{margin-left:auto;color:#dce5ef}
+.studio-comment{display:grid;grid-template-columns:34px minmax(0,1fr) 50px;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid #283441}
+.studio-comment:last-child{border-bottom:0}
+.studio-comment-avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#6752cc;color:#fff;font-weight:bold}
+.studio-comment p{font-size:12px;line-height:1.5;margin:4px 0;color:#e2e8f0}
+.studio-comment small{font-size:11px;color:#91a2b6}
+.studio-news{display:flex;gap:12px;align-items:center;color:#c4d0de;font-size:13px;padding:15px 0 2px}
+.studio-news-icon{background:#ff0033;color:#fff;border-radius:6px;padding:5px 7px}
+.studio-approval{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.studio-main .action{background:#222f3d;border-color:#40536a}
+.studio-main .action.active{background:#dce8ff;color:#142031}
+.studio-main .warning{margin-top:12px}
+.studio-main .page h2{color:#f8fafc}
+.studio-main input,.studio-main select{color:#eef3ff}
+@media(max-width:1050px){.studio-nav{width:215px}.studio-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-content-grid{grid-template-columns:1fr}.studio-brand{min-width:170px}}
+@media(max-width:680px){.studio-top{height:62px;padding:0 12px;gap:9px}.studio-brand{min-width:0;font-size:18px}.studio-brand .studio-mark{width:32px;height:24px}.studio-search{display:none}.studio-top-right{gap:10px}.studio-shell{display:block}.studio-nav{width:100%;display:flex;overflow-x:auto;gap:4px;padding:8px;border-right:0;border-bottom:1px solid #25313e}.studio-channel{display:none}.studio-nav .studio-navbtn{width:auto;min-width:max-content;margin:0;padding:10px 12px}.studio-nav-icon{width:auto}.studio-main{padding:18px 12px 32px}.studio-pagehead{align-items:flex-start;flex-direction:column}.studio-pagehead h2{font-size:24px}.studio-period{padding:9px 12px}.studio-metrics{gap:10px}.studio-metric{padding:14px}.studio-metric-value{font-size:24px}.studio-metric-label{font-size:12px}.studio-metric-icon{width:32px;height:32px}.studio-panel{padding:15px}.studio-video{grid-template-columns:100px minmax(0,1fr) 14px;gap:10px}.studio-thumb{height:70px;font-size:25px}.studio-video-title{font-size:12px}.studio-video-stats{gap:10px}.studio-content-grid{display:block}}
 
 </style>
 <style>
-
-/* Exact shared Dashboard header styles, reused on Channels */
-.studio-top{height:72px;padding:0 26px!important;margin:0!important;background:linear-gradient(110deg,#07182c 0%,#0b2442 65%,#103b65 100%)!important;border-bottom:1px solid #1675bd!important;display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:120;box-shadow:0 5px 22px #0004;border-radius:0!important;flex-wrap:nowrap!important}
-.studio-menu{font-size:25px;color:#cbd5e1;background:transparent;border:0;padding:6px;cursor:pointer;position:relative;z-index:120;min-width:38px;min-height:38px;display:grid;place-items:center;border-radius:8px}.studio-menu:hover{background:#263442}
-.studio-brand{display:flex;align-items:center;gap:10px;min-width:150px;font-size:22px;font-weight:700;color:#f8fafc!important;white-space:nowrap}
-.studio-search{height:42px;max-width:720px;flex:1;border-radius:28px;background:#202a36;border:1px solid #2d3948;color:#eef2f7;padding:0 18px;font-size:15px;outline:none;min-width:0}
-.studio-search:focus{border-color:#6686b8}
-.studio-top-right{display:flex;align-items:center;gap:16px;margin-left:auto;color:#bdc8d6}
-.top-icon-btn{width:40px;height:40px;border:0;border-radius:50%;display:grid;place-items:center;background:transparent;color:#dbe6f5;font-size:23px;position:relative;padding:0}
+.studio-mark{display:none!important}
+.studio-brand{min-width:150px!important}
+.studio-brand:after{content:"";display:none}
+.studio-top-right{gap:16px}
+.top-icon-btn{width:40px;height:40px;border:0;border-radius:50%;display:grid;place-items:center;background:transparent;color:#dbe6f5;font-size:23px;position:relative}
 .top-icon-btn:hover{background:#253446}
 .top-add-btn{background:#172b43;border:1px solid #2e4968;color:#e8f2ff;font-size:25px}
 .top-profile-btn{width:34px;height:34px;font-size:15px;background:#2449bc;color:white}
-.studio-top-right button[aria-label="Notifications"]{font-size:0!important;position:relative!important;display:grid;place-items:center}
-.studio-top-right button[aria-label="Notifications"] .notification-bell{width:23px;height:23px;fill:none;stroke:#f4f8ff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}
-.studio-top-right button[aria-label="Notifications"]::after{content:"";position:absolute;top:5px;right:6px;width:8px;height:8px;border-radius:50%;background:#ff304f;border:2px solid #0b2442;box-sizing:content-box}
-.top-popover{position:absolute;top:62px;right:72px;width:270px;max-width:calc(100vw - 24px);background:#111d2a;border:1px solid #2c3b4c;border-radius:15px;box-shadow:0 14px 40px #0008;padding:10px;z-index:130}
+.studio-top{position:sticky}
+.top-popover{position:absolute;top:62px;right:72px;width:270px;max-width:calc(100vw - 24px);background:#111d2a;border:1px solid #2c3b4c;border-radius:15px;box-shadow:0 14px 40px #0008;padding:10px;z-index:100}
 .top-popover[hidden]{display:none}
 .top-popover-head{padding:12px;border-bottom:1px solid #2a3948;margin-bottom:6px;color:#edf4ff}
 .top-popover-head small{display:block;color:#93a7bd;margin-top:4px}
 .top-popover button,.top-popover a{display:flex;align-items:center;gap:12px;width:100%;padding:11px 12px;border:0;border-radius:8px;background:transparent;color:#e0eaf6;text-decoration:none;text-align:left;font-size:14px}
 .top-popover button:hover,.top-popover a:hover{background:#223144}
 .top-popover .pop-divider{height:1px;background:#293847;margin:6px 2px}
-@media(max-width:680px){.studio-top{height:62px;padding:0 12px!important;gap:9px}.studio-brand{min-width:0;font-size:18px}.studio-search{display:none}.studio-top-right{gap:5px}.top-icon-btn{width:34px;height:36px}.top-popover{top:56px;right:8px}}
+@media(max-width:680px){.studio-brand{font-size:18px!important}.studio-top-right{gap:5px}.top-icon-btn{width:34px;height:36px}.top-popover{top:56px;right:8px}}
+</style>
+<style>
+/* Mobile Studio bottom navigation and reliable hamburger drawer */
+.studio-menu{cursor:pointer;position:relative;z-index:120;min-width:38px;min-height:38px;display:grid;place-items:center;border-radius:8px}
+.studio-menu:hover{background:#263442}
+@media(min-width:681px){
+ .studio-nav.nav-expanded{width:248px}
+}
+@media(max-width:680px){
+ body{padding-bottom:72px}
+ .studio-shell{display:block;min-height:auto}
+ .studio-nav{position:fixed;z-index:110;top:62px;bottom:0;left:0;width:min(290px,84vw);height:auto;display:flex;flex-direction:column;align-items:stretch;overflow-y:auto;overflow-x:hidden;gap:4px;padding:14px 10px 24px;background:#0e151d;border-right:1px solid #2b3948;box-shadow:12px 0 32px #0008;transform:translateX(-110%);visibility:hidden;transition:transform .2s ease,visibility .2s ease}
+ .studio-nav.nav-expanded{transform:translateX(0);visibility:visible}
+ .studio-nav .studio-channel{display:flex}
+ .studio-nav .studio-navbtn{width:100%;min-width:0;flex-shrink:0}
+ .studio-main{padding:16px 12px 26px}
+
+}
 
 </style>
 <style>
-/* Layout fix: Dashboard header spans the full viewport, page content stays centered */
-body>header.studio-top{width:100%;margin:0!important;border-radius:0!important}
-body>main{max-width:1050px;margin:0 auto;padding:0 18px}
-@media(max-width:680px){body>main{padding:0 12px}}
+/* NextGen duplicate dashboard polish: accessible, responsive, approval-first */
+:root{--ng-blue:#168bff;--ng-cyan:#12d7f4;--ng-green:#00d99a;--ng-purple:#a855f7;--ng-amber:#ffb020}
+body{background:radial-gradient(ellipse at 55% -12%,#123a67 0%,#07172c 42%,#050d1b 100%)!important;color:#edf5ff}
+.studio-top{background:rgba(4,18,37,.96)!important;border-bottom-color:#164a79!important;backdrop-filter:blur(14px)}
+.studio-brand{color:#f5f9ff!important;letter-spacing:.1px}
+.studio-brand:before{content:none;display:none}
+.studio-nav{background:rgba(3,16,32,.88)!important;border-right-color:#123657!important}
+.studio-nav .studio-navbtn{transition:background .18s ease,color .18s ease}
+.studio-nav .studio-navbtn.active,.studio-nav .studio-navbtn[aria-current=page]{background:linear-gradient(100deg,#0755a7,#0b3970)!important;color:#fff!important;box-shadow:inset 3px 0 #18caff}
+.studio-main{background:transparent}
+.studio-panel,.studio-metric,.studio-note,.studio-video,.studio-top-right .top-popover{border-color:#17436c!important;box-shadow:0 10px 30px #0002}
+.studio-panel{background:linear-gradient(145deg,#081f3a,#06172c)!important;border-radius:15px}
+.studio-metric{background:linear-gradient(145deg,#0c2440,#08162a)!important;border-radius:14px;transition:transform .18s ease,border-color .18s ease}
+.studio-metric:hover{transform:translateY(-2px);border-color:#2588d5!important}
+.studio-metric-value{letter-spacing:-.5px}
+.studio-main .action{border-color:#28547c;background:#102b48;color:#f2f8ff}
+.studio-main .action.active{background:linear-gradient(110deg,#0d9eff,#1764f5);color:white;border-color:#279fff}
+.studio-main input:focus,.studio-main select:focus,.studio-search:focus{outline:2px solid #13b9f4;outline-offset:2px}
+.studio-main .warning{background:#302516;border-color:#8d6927;color:#ffe2a6}
+.ng-bottom-nav{background:rgba(3,14,29,.97)!important;border-top-color:#1a4d76!important}
+.ng-bottom-nav a.active{background:#0c4e87!important;color:#fff!important}
+body>footer{background:#071b32!important;border-top-color:#17436c!important}
+@media(max-width:680px){.studio-top{gap:8px}.studio-brand{font-size:17px!important}.studio-brand:before{display:none}.studio-top-right{gap:5px}.studio-avatar{width:32px;height:32px}.studio-main{padding-top:13px}.studio-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-panel{border-radius:12px}.ng-bottom-nav{padding-bottom:calc(8px + env(safe-area-inset-bottom))}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 </style>
-<style>
-
-/* Dashboard header copied exactly for visual consistency on Channels */
-body>header.studio-top{height:72px!important;min-height:72px!important;width:100%!important;padding:0 26px!important;margin:0!important;background:linear-gradient(110deg,#07182c 0%,#0b2442 65%,#103b65 100%)!important;border-bottom:1px solid #1675bd!important;border-radius:0!important;display:flex!important;align-items:center!important;gap:18px!important;position:sticky!important;top:0!important;z-index:120!important;box-shadow:0 5px 22px #0004!important;flex-wrap:nowrap!important}
-body>header.studio-top .studio-menu{font-size:25px!important;color:#cbd5e1!important;background:transparent!important;border:0!important;padding:6px!important;cursor:pointer!important;position:relative!important;z-index:120!important;min-width:38px!important;min-height:38px!important;display:grid!important;place-items:center!important;border-radius:8px!important}
-body>header.studio-top .studio-brand{display:flex!important;align-items:center!important;gap:10px!important;min-width:150px!important;font-size:22px!important;font-weight:700!important;color:#f8fafc!important;white-space:nowrap!important}
-body>header.studio-top .studio-search{height:42px!important;max-width:720px!important;flex:1!important;border-radius:28px!important;background:#202a36!important;border:1px solid #2d3948!important;color:#eef2f7!important;padding:0 18px!important;font-size:15px!important;outline:none!important;min-width:0!important;display:block!important}
-body>header.studio-top .studio-top-right{display:flex!important;align-items:center!important;gap:16px!important;margin-left:auto!important;color:#bdc8d6!important}
-body>header.studio-top .top-icon-btn{width:40px!important;height:40px!important;border:0!important;border-radius:50%!important;display:grid!important;place-items:center!important;background:transparent!important;color:#dbe6f5!important;font-size:23px!important;position:relative!important;padding:0!important}
-body>header.studio-top .top-add-btn{background:#172b43!important;border:1px solid #2e4968!important;color:#e8f2ff!important;font-size:25px!important}
-body>header.studio-top .top-profile-btn{width:34px!important;height:34px!important;font-size:15px!important;background:#2449bc!important;color:white!important}
-body>header.studio-top .studio-top-right button[aria-label="Notifications"]{font-size:0!important;position:relative!important;display:grid!important;place-items:center!important}
-body>header.studio-top .notification-bell{width:23px!important;height:23px!important;fill:none!important;stroke:#f4f8ff!important;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important;display:block!important}
-body>header.studio-top .top-popover{position:absolute!important;top:62px!important;right:72px!important;width:270px!important;max-width:calc(100vw - 24px)!important;background:#111d2a!important;border:1px solid #2c3b4c!important;border-radius:15px!important;box-shadow:0 14px 40px #0008!important;padding:10px!important;z-index:130!important}
-body>header.studio-top .top-popover[hidden]{display:none!important}
-@media(max-width:680px){body>header.studio-top{height:62px!important;min-height:62px!important;padding:0 12px!important;gap:9px!important}body>header.studio-top .studio-brand{min-width:0!important;font-size:18px!important}body>header.studio-top .studio-search{display:none!important}body>header.studio-top .studio-top-right{gap:5px!important}body>header.studio-top .top-icon-btn{width:34px!important;height:36px!important}body>header.studio-top .top-popover{top:56px!important;right:8px!important}body>main{padding:0 12px!important}}
-
-</style>
-
-<style>
-/* Final alignment: use the Dashboard header dimensions and appearance exactly */
-body>header.studio-top{height:72px!important;min-height:72px!important;width:100%!important;padding:0 26px!important;margin:0!important;background:linear-gradient(110deg,#07182c 0%,#0b2442 65%,#103b65 100%)!important;border-bottom:1px solid #1675bd!important;border-radius:0!important;display:flex!important;align-items:center!important;gap:18px!important;position:sticky!important;top:0!important;z-index:120!important;box-shadow:0 5px 22px #0004!important;flex-wrap:nowrap!important}
-body>header.studio-top .studio-menu{font-size:25px!important;color:#cbd5e1!important;background:transparent!important;border:0!important;padding:6px!important;cursor:pointer!important;position:relative!important;z-index:120!important;min-width:38px!important;min-height:38px!important;display:grid!important;place-items:center!important;border-radius:8px!important}
-body>header.studio-top .studio-brand{display:flex!important;align-items:center!important;gap:10px!important;min-width:150px!important;font-size:22px!important;font-weight:700!important;color:#f8fafc!important;white-space:nowrap!important}
-body>header.studio-top .studio-search{height:42px!important;max-width:720px!important;flex:1!important;border-radius:28px!important;background:#202a36!important;border:1px solid #2d3948!important;color:#eef2f7!important;padding:0 18px!important;font-size:15px!important;outline:none!important;min-width:0!important;display:block!important}
-body>header.studio-top .studio-top-right{display:flex!important;align-items:center!important;gap:20px!important;margin-left:auto!important;color:#bdc8d6!important}
-body>header.studio-top .top-icon-btn{width:40px!important;height:40px!important;border:0!important;border-radius:50%!important;display:grid!important;place-items:center!important;background:transparent!important;color:#dbe6f5!important;font-size:23px!important;position:relative!important;padding:0!important}
-body>header.studio-top .top-add-btn{background:#172b43!important;border:1px solid #2e4968!important;color:#e8f2ff!important;font-size:25px!important}
-body>header.studio-top .top-profile-btn{width:34px!important;height:34px!important;font-size:15px!important;background:#2449bc!important;color:white!important}
-body>header.studio-top .studio-top-right button[aria-label="Notifications"]{font-size:0!important;position:relative!important;display:grid!important;place-items:center!important}
-body>header.studio-top .notification-bell{width:23px!important;height:23px!important;fill:none!important;stroke:#f4f8ff!important;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important;display:block!important}
-body>header.studio-top .top-popover{position:absolute!important;top:62px!important;right:72px!important;width:270px!important;max-width:calc(100vw - 24px)!important;background:#111d2a!important;border:1px solid #2c3b4c!important;border-radius:15px!important;box-shadow:0 14px 40px #0008!important;padding:10px!important;z-index:130!important}
-body>header.studio-top .top-popover[hidden]{display:none!important}
-@media(max-width:680px){body>header.studio-top{height:62px!important;min-height:62px!important;padding:0 12px!important;gap:9px!important}body>header.studio-top .studio-brand{min-width:0!important;font-size:18px!important}body>header.studio-top .studio-search{display:none!important}body>header.studio-top .studio-top-right{gap:5px!important}body>header.studio-top .top-icon-btn{width:34px!important;height:36px!important}body>header.studio-top .top-popover{top:56px!important;right:8px!important}}
-</style>
-
-
-<style id="dashboard-header-exact-override">
-/* Match Dashboard header sizing exactly; only preserve Channels-specific button actions. */
-body>header.studio-top{height:72px!important;min-height:72px!important;width:100%!important;padding:0 26px!important;margin:0!important;background:linear-gradient(110deg,#07182c 0%,#0b2442 65%,#103b65 100%)!important;border-bottom:1px solid #1675bd!important;border-radius:0!important;display:flex!important;align-items:center!important;gap:18px!important;position:sticky!important;top:0!important;z-index:120!important;box-shadow:0 5px 22px #0004!important;flex-wrap:nowrap!important}
-body>header.studio-top .studio-menu{font-size:25px!important;color:#cbd5e1!important;background:transparent!important;border:0!important;padding:6px!important;cursor:pointer!important;position:relative!important;z-index:120!important;min-width:38px!important;min-height:38px!important;display:block!important;place-items:initial!important;border-radius:8px!important}
-body>header.studio-top .studio-brand{display:flex!important;align-items:center!important;gap:10px!important;min-width:230px!important;font-size:22px!important;font-weight:700!important;color:#f8fafc!important;white-space:nowrap!important}
-body>header.studio-top .studio-search{height:42px!important;max-width:720px!important;flex:1!important;border-radius:28px!important;background:#202a36!important;border:1px solid #2d3948!important;color:#eef2f7!important;padding:0 18px!important;font-size:15px!important;outline:none!important;min-width:0!important;display:block!important}
-body>header.studio-top .studio-top-right{display:flex!important;align-items:center!important;gap:20px!important;margin-left:auto!important;color:#bdc8d6!important}
-body>header.studio-top .top-icon-btn{width:40px!important;height:40px!important;border:0!important;border-radius:50%!important;display:grid!important;place-items:center!important;background:transparent!important;color:#dbe6f5!important;font-size:23px!important;position:relative!important;padding:0!important}
-body>header.studio-top .top-add-btn{background:#172b43!important;border:1px solid #2e4968!important;color:#e8f2ff!important;font-size:25px!important}
-body>header.studio-top .top-profile-btn{width:34px!important;height:34px!important;font-size:15px!important;background:#2449bc!important;color:white!important}
-body>header.studio-top .studio-top-right button[aria-label="Notifications"]{font-size:0!important;position:relative!important;display:grid!important;place-items:center!important}
-body>header.studio-top .notification-bell{width:23px!important;height:23px!important;fill:none!important;stroke:#f4f8ff!important;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important;display:block!important}
-body>header.studio-top .top-popover{position:absolute!important;top:62px!important;right:72px!important;width:270px!important;max-width:calc(100vw - 24px)!important;background:#111d2a!important;border:1px solid #2c3b4c!important;border-radius:15px!important;box-shadow:0 14px 40px #0008!important;padding:10px!important;z-index:130!important}
-body>header.studio-top .top-popover[hidden]{display:none!important}
-@media(max-width:680px){body>header.studio-top{height:62px!important;min-height:62px!important;padding:0 12px!important;gap:9px!important}body>header.studio-top .studio-brand{min-width:0!important;font-size:18px!important}body>header.studio-top .studio-search{display:none!important}body>header.studio-top .studio-top-right{gap:5px!important}body>header.studio-top .top-icon-btn{width:34px!important;height:36px!important}body>header.studio-top .top-popover{top:56px!important;right:8px!important}}
-</style>
-
 </head>
+
 <body>
 <header class="studio-top">
-  <button class="studio-menu" type="button" aria-label="Menu" onclick="document.querySelector('.channel-drawer')?.classList.toggle('nav-expanded')">☰</button>
-  <div class="studio-brand">NextGen</div>
-  <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" onkeydown="if(event.key==='Enter'){document.getElementById('channelSearch').value=this.value;document.getElementById('channelSearch').dispatchEvent(new Event('input'))}">
+  <button class="studio-menu" type="button" aria-label="Menu" onclick="document.querySelector('.studio-nav').classList.toggle('nav-expanded')">☰</button>
+  <div class="studio-brand" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;line-height:1"><span class="studio-brand-name" style="font-size:20px;font-weight:800;letter-spacing:.2px;line-height:1.05">NextGen</span><span class="studio-tagline" style="display:block;font-size:6px;font-weight:700;letter-spacing:.1px;color:#aabbd0;white-space:nowrap;line-height:1.05">Smart Automation. Smarter Growth.</span></div>
+  <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" onkeydown="if(event.key==='Enter'){showPage('content');document.getElementById('queueSearch').value=this.value;filterQueue()}">
   <div class="studio-top-right">
-    <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="document.getElementById('addChannelButton').click()">+</button>
-    <button class="top-icon-btn" type="button" aria-label="Notifications" title="Notifications" onclick="document.getElementById('notificationMenu').hidden=!document.getElementById('notificationMenu').hidden"><svg class="notification-bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></button>
-    <button class="top-icon-btn top-profile-btn" type="button" aria-label="Profile menu" onclick="document.getElementById('profileMenu').hidden=!document.getElementById('profileMenu').hidden">A</button>
+    <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="toggleTopMenu('addMenu')">+</button>
+    <button class="top-icon-btn" type="button" aria-label="Notifications" title="Notifications" onclick="toggleTopMenu('notificationMenu')"><svg class="notification-bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></button>
+    <button class="top-icon-btn top-profile-btn" type="button" aria-label="Profile menu" onclick="toggleTopMenu('profileMenu')">A</button>
   </div>
   <div id="addMenu" class="top-popover" hidden>
     <button type="button" onclick="window.location.href='channels.html'"><span>＋</span> Add channel</button>
-    <button type="button" onclick="window.location.href='index.html#content'"><span>▣</span> Add content</button>
+    <button type="button" onclick="studioNavTo('content')"><span>▣</span> Add content</button>
   </div>
   <div id="notificationMenu" class="top-popover" hidden style="right:42px">
     <div class="top-popover-head"><b>Notifications</b><small>No new notifications</small></div>
-    <button type="button" onclick="document.getElementById('notificationMenu').hidden=true">Close</button>
+    <button type="button" onclick="toggleTopMenu('notificationMenu')">Close</button>
   </div>
   <div id="profileMenu" class="top-popover" hidden>
     <div class="top-popover-head"><b>NextGen account</b><small>Manage your account and preferences</small></div>
@@ -236,635 +252,707 @@ body>header.studio-top .top-popover[hidden]{display:none!important}
     <button type="button" onclick="window.location.href='privacy-settings.html'"><span>▤</span> Terms of Service</button>
   </div>
 </header>
-<main>
-<div class="top">
-  <div>
-    <h2>Channel Management</h2>
-    <p class="note" id="cloudStatus">DEMO CONTROLS — browser-only test settings, not connected to real social accounts.</p>
-  </div>
-</div>
-<div class="notice" style="margin-top:14px">
-  <strong>Demo controls are below.</strong> Each platform card has Pause/Resume and Enable/Disable buttons. These buttons only save demo state in this browser; they do not pause or publish on YouTube, Facebook, Instagram, or Threads.
-</div>
 
-<div class="toolbar">
-  <input id="channelSearch" type="search" placeholder="Search channels…" aria-label="Search channels">
-  <button type="button" id="showAll">Show all</button>
-  <button type="button" class="primary" id="addChannelButton">＋ Add Channel</button>
-<a class="button" href="dashboard-copy.html" style="display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:#202b42;color:var(--text);text-decoration:none;font:inherit">▣ Duplicate Dashboard</a>
-</div>
-<section class="card" id="addChannelPanel" hidden style="margin-top:14px">
-  <h3>Add a channel (demo)</h3>
-  <p class="muted">Add another platform profile to this browser preview. This does not connect a real social account.</p>
-  <form id="addChannelForm">
-    <div class="toolbar">
-      <input id="newPlatform" type="hidden" value="youtube">
-      <input id="newChannelUrl" type="url" placeholder="Paste full profile URL (e.g. https://instagram.com/username)" aria-label="Profile URL" required style="flex:1;min-width:220px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
-      <input id="newChannelName" type="text" placeholder="Channel Name / Profile Name (auto-filled)" aria-label="Detected channel name" readonly maxlength="80" style="flex:1;min-width:180px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
-      <input id="newChannelHandle" type="text" placeholder="Handle (auto-filled)" aria-label="Detected handle" readonly maxlength="100" style="flex:1;min-width:160px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
-      <input id="platformDisplay" type="text" placeholder="Platform (auto-detected)" aria-label="Detected platform" readonly style="flex:1;min-width:160px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
-      <button type="submit" class="primary">Add to list</button>
-      <button type="button" id="cancelAddChannel">Cancel</button>
+<div class="studio-shell">
+<nav class="studio-nav" aria-label="Main navigation">
+  <div class="studio-channel"><div class="studio-channel-logo">♛</div><div><strong>Royal Furniture House</strong><small>@RoyalFurnitureHouse</small><small>YouTube channel</small></div></div>
+  <button class="studio-navbtn active" type="button" onclick="showPage('dashboard');window.scrollTo(0,0)"><span class="studio-nav-icon">▦</span>Dashboard</button>
+  <button class="studio-navbtn" type="button" onclick="studioNavTo('content')"><span class="studio-nav-icon">▶</span>Content</button>
+  <button class="studio-navbtn" type="button" onclick="studioScroll('channelAnalytics')"><span class="studio-nav-icon">▥</span>Analytics</button>
+  <button class="studio-navbtn" type="button" onclick="studioScroll('latestComments')"><span class="studio-nav-icon">▤</span>Comments</button>
+  <button class="studio-navbtn" type="button" onclick="studioNavTo('content')"><span class="studio-nav-icon">▣</span>Subtitles</button>
+  <button class="studio-navbtn" type="button" onclick="studioNavTo('settings')"><span class="studio-nav-icon">$</span>Monetization</button>
+  <button class="studio-navbtn" type="button" onclick="studioNavTo('settings')"><span class="studio-nav-icon">✧</span>Customization</button>
+  <button class="studio-navbtn" type="button" onclick="studioNavTo('settings')"><span class="studio-nav-icon">⚙</span>Settings</button>
+  <button class="studio-navbtn" type="button" onclick="alert('Thanks for helping improve NextGen Studio.')"><span class="studio-nav-icon">▰</span>Send feedback</button>
+  <button class="studio-navbtn" type="button" onclick="window.location.href='channels.html'"><span class="studio-nav-icon">◎</span>Manage channels</button>
+  <button class="studio-navbtn" type="button" onclick="window.location.href='login.html'"><span class="studio-nav-icon">⇥</span>Sign in</button>
+  <button id="signOutButton" class="studio-navbtn" type="button" style="display:none" onclick="nextgenSignOut()"><span class="studio-nav-icon">↪</span>Sign out</button>
+</nav>
+<main class="studio-main">
+<section id="dashboard" class="page show">
+  <div class="studio-pagehead"><div><h2>Channel Analytics</h2><p class="studio-subtitle">Welcome back! Your creator workspace is ready.</p></div><button type="button" class="studio-period" onclick="alert('Live analytics will appear after platform analytics are connected.')">▣ &nbsp; Last 28 days &nbsp;⌄</button></div>
+  <div class="studio-note">Preview dashboard — live views, subscribers, watch time and revenue are not connected yet. No analytics figures below are being claimed as real.</div>
+  <div class="studio-metrics">
+    <div class="studio-metric"><div class="studio-metric-label"><span class="studio-metric-icon" style="background:#ef3038">▶</span>Views</div><div class="studio-metric-value">—</div><div class="studio-metric-foot">Connect YouTube to view data</div></div>
+    <div class="studio-metric"><div class="studio-metric-label"><span class="studio-metric-icon" style="background:#6550c8">◉</span>Watch time (hours)</div><div class="studio-metric-value">—</div><div class="studio-metric-foot">Analytics not connected</div></div>
+    <div class="studio-metric"><div class="studio-metric-label"><span class="studio-metric-icon" style="background:#168c55">♟</span>Subscribers</div><div class="studio-metric-value">—</div><div class="studio-metric-foot">Channel data unavailable</div></div>
+    <div class="studio-metric"><div class="studio-metric-label"><span class="studio-metric-icon" style="background:#d99a16">$</span>Estimated revenue</div><div class="studio-metric-value">—</div><div class="studio-metric-foot">Monetization data unavailable</div></div>
+  </div>
+  <div class="studio-content-grid">
+    <div>
+      <div class="studio-panel">
+        <div class="studio-panel-head"><h3>Recent content</h3><button class="studio-link" type="button" onclick="studioNavTo('content')">View all</button></div>
+        <div class="studio-video"><div class="studio-thumb">♛<span>0:10</span></div><div><div class="studio-video-title">Luxury Wooden Table | Royal Furniture House</div><div class="studio-video-meta">Demo content idea · Not published by NextGen</div><div class="studio-video-stats"><span>◉ Views —</span><span>▤ Comments —</span><span>♡ Likes —</span></div></div><button class="studio-more" type="button" onclick="studioNavTo('content')" aria-label="Review table content">⋮</button></div>
+        <div class="studio-video"><div class="studio-thumb bed">♜<span>0:12</span></div><div><div class="studio-video-title">Premium Bed Design | Royal Furniture House</div><div class="studio-video-meta">Demo content idea · Pending review</div><div class="studio-video-stats"><span>◉ Views —</span><span>▤ Comments —</span><span>♡ Likes —</span></div></div><button class="studio-more" type="button" onclick="studioNavTo('content')" aria-label="Review bed content">⋮</button></div>
+        <div class="studio-video"><div class="studio-thumb sofa">▰<span>0:11</span></div><div><div class="studio-video-title">Modern Sofa Set | Royal Furniture House</div><div class="studio-video-meta">Demo content idea · Pending review</div><div class="studio-video-stats"><span>◉ Views —</span><span>▤ Comments —</span><span>♡ Likes —</span></div></div><button class="studio-more" type="button" onclick="studioNavTo('content')" aria-label="Review sofa content">⋮</button></div>
+        <div class="studio-video"><div class="studio-thumb dining">♧<span>0:13</span></div><div><div class="studio-video-title">Dining Table Collection | Royal Furniture House</div><div class="studio-video-meta">Demo content idea · Not published by NextGen</div><div class="studio-video-stats"><span>◉ Views —</span><span>▤ Comments —</span><span>♡ Likes —</span></div></div><button class="studio-more" type="button" onclick="studioNavTo('content')" aria-label="Review dining content">⋮</button></div>
+      </div>
+      <div class="studio-panel"><div class="studio-panel-head"><h3>Publishing approval control</h3><button class="studio-link" type="button" onclick="studioNavTo('settings')">Settings</button></div><div class="studio-approval"><p id="mode" aria-live="polite" style="margin:0 12px 0 0">Manual Approval Mode — ON</p><button id="manualButton" type="button" class="action active" aria-pressed="true" onclick="setMode(false)">Manual Approval</button><button id="autoButton" type="button" class="action" aria-pressed="false" onclick="setMode(true)">Auto Approval</button></div><p id="modeText" class="muted">Content requires your approval before publishing.</p><div class="warning">Auto Approval is OFF by default. This prototype does not publish or schedule posts.</div></div>
+      <div class="studio-panel"><div class="studio-panel-head"><h3>What's new in NextGen</h3><span class="studio-news-icon">▶</span></div><div class="studio-news"><span>↗</span> Dashboard design updated to a Studio-style layout <span>›</span></div><div class="studio-news"><span>✓</span> Manual approval remains the safe default <span>›</span></div></div>
     </div>
-    <p id="addChannelStatus" class="muted" aria-live="polite"></p>
-  </form>
-</section>
-<p class="counter" id="channelCount" aria-live="polite">Showing 4 channels</p>
-
-<div class="grid" id="channelGrid">
-<section class="card" data-platform="youtube" data-name="Royal Furniture House" data-handle="@RoyalFurnitureHouse">
-  <div class="platform">▶️ YouTube</div>
-  <h3>Royal Furniture House</h3>
-  <p class="handle">@RoyalFurnitureHouse</p>
-  <p class="status"><span class="dot"></span><span class="connection">App connection: Not verified</span></p>
-  <div class="actions">
-    <button type="button" class="pause-button">Pause channel</button>
-    <button type="button" class="enable-button" aria-pressed="true">Disable channel</button>
-    <button type="button" class="primary review-button">Review</button>
-
+    <div>
+      <div class="studio-panel" id="channelAnalytics"><div class="studio-panel-head"><h3>Channel analytics</h3><span class="studio-subtitle">Last 28 days</span></div><div class="studio-subtitle">Current subscribers</div><div class="studio-big-number">—</div><div class="studio-metric-foot">Connect YouTube to see subscriber totals</div><div class="studio-divider"></div><strong style="font-size:14px">Top content</strong><div class="studio-topcontent"><div class="studio-mini-thumb">♛</div><span>Luxury Wooden Table</span><span class="studio-number">—</span></div><div class="studio-topcontent"><div class="studio-mini-thumb">♜</div><span>Premium Bed Design</span><span class="studio-number">—</span></div><div class="studio-topcontent"><div class="studio-mini-thumb">▰</div><span>Modern Sofa Set</span><span class="studio-number">—</span></div><button class="studio-link" type="button" onclick="alert('Connect YouTube analytics to view detailed reports.')">View analytics →</button></div>
+      <div class="studio-panel" id="latestComments"><div class="studio-panel-head"><h3>Latest comments</h3><button class="studio-link" type="button" onclick="studioNavTo('content')">View all</button></div><div class="studio-subtitle">Comment management is not connected yet.</div><div class="studio-comment"><div class="studio-comment-avatar">R</div><div><small>Example comment · demo</small><p>“Beautiful furniture design!”</p></div><div class="studio-mini-thumb">♛</div></div><div class="studio-comment"><div class="studio-comment-avatar" style="background:#32804a">S</div><div><small>Example comment · demo</small><p>“How can I get more details?”</p></div><div class="studio-mini-thumb">♜</div></div><p class="studio-metric-foot">These are examples, not live viewer comments.</p></div>
+      <div class="studio-panel"><div class="studio-panel-head"><h3>Channel overview</h3><button class="studio-link" type="button" onclick="window.location.href='channels.html'">Manage</button></div><div class="studio-topcontent"><span>▶</span><span>YouTube</span><span class="studio-number">Planned</span></div><div class="studio-topcontent"><span>f</span><span>Facebook</span><span class="studio-number">Planned</span></div><div class="studio-topcontent"><span>◎</span><span>Instagram</span><span class="studio-number">Planned</span></div><div class="studio-topcontent"><span>◉</span><span>Threads</span><span class="studio-number">Planned</span></div><div class="studio-divider"></div><p class="studio-metric-foot">Platform connections and background publishing are not yet verified.</p></div>
+    </div>
   </div>
 </section>
 
-<section class="card" data-platform="facebook" data-name="Royal Furniture Zone" data-handle="@RoyalFurnitureZone">
-  <div class="platform">📘 Facebook</div>
-  <h3>Royal Furniture Zone</h3>
-  <p class="handle">@RoyalFurnitureZone</p>
-  <p class="status"><span class="dot"></span><span class="connection">App connection: Not verified</span></p>
-  <div class="actions">
-    <button type="button" class="pause-button">Pause channel</button>
-    <button type="button" class="enable-button" aria-pressed="true">Disable channel</button>
-    <button type="button" class="primary review-button">Review</button>
+<section id="content" class="page">
+  <h2>Content Queue</h2>
+  <p><a href="review.html?refresh=20261026c" style="color:#b8c9ff">Open Full Content Review: Content, Caption &amp; Hashtags →</a></p>
+  <div class="stats" style="margin-bottom:16px">
+    <div class="card stat"><span class="muted">Pending review</span><strong id="pendingDraftCount">3</strong></div>
+    <div class="card stat"><span class="muted">Approved (demo)</span><strong id="approvedDraftCount">0</strong></div>
+    <div class="card stat"><span class="muted">Needs revision</span><strong id="revisionDraftCount">0</strong></div>
+  </div>
+  <p class="muted">These are local demo drafts. Approval records your review decision only; it never publishes or schedules a post.</p>
+  <div class="card">
+    <h3>Find Content</h3>
+    <label class="muted" for="queueSearch">Search drafts</label>
+    <input id="queueSearch" type="search" placeholder="Search bed, sofa, table..." oninput="filterQueue()" style="display:block;width:100%;padding:11px;margin:6px 0 12px;border-radius:8px;border:1px solid #53688d;background:#0b1020;color:#eef3ff">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px">
+      <label style="display:block;color:#eef3ff;font-size:14px;font-weight:bold">CHANNEL FILTER
+        <select id="queueChannel" onchange="filterQueue()" style="display:block;width:100%;padding:12px;margin-top:7px;background:#0b1020;color:#eef3ff;border:2px solid #53688d;border-radius:8px;font-size:15px">
+          <option value="all">All channels</option><option>YouTube</option><option>Facebook</option><option>Instagram</option><option>Threads</option>
+        </select>
+      </label>
+      <label style="display:block;color:#eef3ff;font-size:14px;font-weight:bold">STATUS FILTER
+        <select id="queueStatus" onchange="filterQueue()" style="display:block;width:100%;padding:12px;margin-top:7px;background:#0b1020;color:#eef3ff;border:2px solid #91aaff;border-radius:8px;font-size:15px">
+          <option value="all">All statuses</option><option value="Pending approval">Pending approval</option><option value="Approved">Approved</option><option value="Rejected">Rejected</option><option value="Revised">Revised</option>
+        </select>
+      </label>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <p id="queueCount" class="muted" aria-live="polite">Showing 3 drafts</p>
+      <button type="button" class="action" onclick="clearQueueFilters()">Clear filters</button>
+    </div>
+  </div>
 
+  <div class="card queue-item" data-draft-title="Luxury Wooden Bed Reel" data-status-id="bedStatus">
+    <h3>Luxury Wooden Bed Reel</h3>
+    <p class="muted">Cinematic furniture product showcase.</p>
+    <label class="muted">Target channel
+      <select class="draft-channel" data-status-id="bedStatus" aria-label="Target channel for Luxury Wooden Bed Reel">
+        <option>YouTube</option><option>Facebook</option><option>Instagram</option><option>Threads</option>
+      </select>
+    </label>
+    <span id="bedStatus" class="status">Pending approval</span>
+    <p>
+      <button type="button" class="action" onclick="reviewDraft('bedStatus')">Review</button>
+      <button type="button" class="action" onclick="approveDraft('bedStatus')">Approve</button>
+      <button type="button" class="action" onclick="rejectDraft('bedStatus')">Reject</button>
+      <button type="button" class="action" onclick="reviseDraft('bedStatus')">Mark Revised</button>
+    </p>
+  </div>
+
+  <div class="card queue-item" data-draft-title="Royal Sofa Set Short" data-status-id="sofaStatus">
+    <h3>Royal Sofa Set Short</h3>
+    <p class="muted">Highlight comfort and premium design.</p>
+    <label class="muted">Target channel
+      <select class="draft-channel" data-status-id="sofaStatus" aria-label="Target channel for Royal Sofa Set Short">
+        <option>YouTube</option><option>Facebook</option><option>Instagram</option><option>Threads</option>
+      </select>
+    </label>
+    <span id="sofaStatus" class="status">Pending approval</span>
+    <p>
+      <button type="button" class="action" onclick="reviewDraft('sofaStatus')">Review</button>
+      <button type="button" class="action" onclick="approveDraft('sofaStatus')">Approve</button>
+      <button type="button" class="action" onclick="rejectDraft('sofaStatus')">Reject</button>
+      <button type="button" class="action" onclick="reviseDraft('sofaStatus')">Mark Revised</button>
+    </p>
+  </div>
+
+  <div class="card queue-item" data-draft-title="Carved Centre Table Reel" data-status-id="tableStatus">
+    <h3>Carved Centre Table Reel</h3>
+    <p class="muted">Showcase wood finish and craftsmanship.</p>
+    <label class="muted">Target channel
+      <select class="draft-channel" data-status-id="tableStatus" aria-label="Target channel for Carved Centre Table Reel">
+        <option>YouTube</option><option>Facebook</option><option>Instagram</option><option>Threads</option>
+      </select>
+    </label>
+    <span id="tableStatus" class="status">Pending approval</span>
+    <p>
+      <button type="button" class="action" onclick="reviewDraft('tableStatus')">Review</button>
+      <button type="button" class="action" onclick="approveDraft('tableStatus')">Approve</button>
+      <button type="button" class="action" onclick="rejectDraft('tableStatus')">Reject</button>
+      <button type="button" class="action" onclick="reviseDraft('tableStatus')">Mark Revised</button>
+    </p>
   </div>
 </section>
 
-<section class="card" data-platform="instagram" data-name="Royal Furniture Zone" data-handle="@royalfurniturezone">
-  <div class="platform">📸 Instagram</div>
-  <h3>Royal Furniture Zone</h3>
-  <p class="handle">@royalfurniturezone</p>
-  <p class="status"><span class="dot"></span><span class="connection">App connection: Not verified</span></p>
-  <div class="actions">
-    <button type="button" class="pause-button">Pause channel</button>
-    <button type="button" class="enable-button" aria-pressed="true">Disable channel</button>
-    <button type="button" class="primary review-button">Review</button>
+<section id="approvals" class="page">
+  <h2>Approvals</h2>
+  <div class="card">
+    <h3>Channel Approval Status</h3>
+    <p class="muted">Pending drafts are listed here from the Content Queue. These are local demo statuses only; nothing is sent to a platform.</p>
+    <div id="approvalQueueSummary" aria-live="polite"><p class="muted">Loading pending drafts…</p></div>
+  </div>
+  <div class="card">
+    <h3>Review Checklist</h3>
+    <p id="activeReviewTitle" class="muted">Reviewing: Luxury Wooden Bed Reel</p>
+    <div id="reviewContentDetails" class="draft" style="margin:14px 0;padding:16px">
+      <h3>Content Preview</h3>
+      <p><strong>Video idea / content</strong></p><p id="reviewContentText">A cinematic vertical showcase of a luxury carved wooden bed, highlighting the polished wood finish, craftsmanship and elegant bedroom styling.</p>
+      <p><strong>Caption</strong></p><p id="reviewCaptionText">Bring timeless elegance to your bedroom with this beautifully crafted wooden bed. Rich finish, detailed carving and a royal look. ✨</p>
+      <p><strong>Hashtags</strong></p><p id="reviewHashtagsText">#Furniture #WoodenBed #LuxuryFurniture #BedroomDesign #HomeDecor #FurnitureDesign #Reels</p>
+    </div>
+    <p class="muted">Review the content, caption and hashtags below, then complete all five checks.</p>
+
+    <label class="check-row"><input type="checkbox" class="review-check"> Spelling checked</label>
+    <label class="check-row"><input type="checkbox" class="review-check"> Facts checked</label>
+    <label class="check-row"><input type="checkbox" class="review-check"> Copyright checked</label>
+    <label class="check-row"><input type="checkbox" class="review-check"> Duplicate checked</label>
+    <label class="check-row"><input type="checkbox" class="review-check"> Platform policy and brand safety checked</label>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
+      <button type="button" class="action" onclick="resetChecklist()">Reset Checklist</button>
+      <button type="button" class="action active" onclick="approveDraft(activeDraftId)">Approve reviewed draft (demo)</button>
+    </div>
+    <p class="muted">To approve: open a draft with Review, complete all five checks, then choose Approve reviewed draft.</p>
+    <div class="warning" style="margin-top:15px">Checklist demonstration only. This prototype does not publish content.</div>
   </div>
 </section>
 
-<section class="card" data-platform="threads" data-name="Royal Furniture Zone" data-handle="@royalfurniturezone">
-  <div class="platform">🧵 Threads</div>
-  <h3>Royal Furniture Zone</h3>
-  <p class="handle">@royalfurniturezone</p>
-  <p class="status"><span class="dot"></span><span class="connection">App connection: Not verified</span></p>
-  <div class="actions">
-    <button type="button" class="pause-button">Pause channel</button>
-    <button type="button" class="enable-button" aria-pressed="true">Disable channel</button>
-    <button type="button" class="primary review-button">Review</button>
+<section id="schedule" class="page">
+  <h2>Schedule</h2>
+  <p class="muted">Choose the daily content-preparation slots you want to keep in your plan.</p>
+  <div class="card">
+    <h3>Daily Content Preparation</h3>
+    <label class="check-row"><input type="checkbox" class="schedule-slot" value="08:00" checked> <strong>8:00 AM</strong> — prepare 3 new furniture video ideas, captions and hashtags</label>
+    <label class="check-row"><input type="checkbox" class="schedule-slot" value="14:00" checked> <strong>2:00 PM</strong> — prepare 3 new furniture video ideas, captions and hashtags</label>
+    <label class="check-row"><input type="checkbox" class="schedule-slot" value="18:00" checked> <strong>6:00 PM</strong> — prepare 3 new furniture video ideas, captions and hashtags</label>
+    <button type="button" class="action active" onclick="saveSchedulePlan()">Save Schedule Plan</button>
+    <p id="scheduleSaveStatus" class="muted" aria-live="polite">Default plan: all three slots selected.</p>
   </div>
-</section>
-</div>
-
-<section class="card" style="margin-top:20px">
-  <h3>Approval Safety</h3>
-  <p>Publishing mode: <strong id="approvalModeLabel">Manual Approval Mode — ON</strong></p>
-  <p>Auto Approval Mode: <strong id="autoModeLabel">OFF</strong></p>
-  <div class="actions">
-    <button type="button" class="primary" id="manualModeButton">Manual Approval (Recommended)</button>
-    <button type="button" id="autoModeButton">Enable Auto Approval</button>
+  <div class="card">
+    <h3>Draft Post Schedule</h3>
+    <p class="muted">Choose an existing draft and save a planned date/time. It stays a draft and requires your approval; nothing is published.</p>
+    <label class="check-row">Draft Post
+      <select id="scheduledDraftSelect" style="display:block;width:100%;padding:12px;margin-top:7px;background:#0b1020;color:#eef3ff;border:1px solid #53688d;border-radius:8px">
+        <option value="Luxury Wooden Bed Reel">Luxury Wooden Bed Reel</option>
+        <option value="Royal Sofa Set Short">Royal Sofa Set Short</option>
+        <option value="Carved Centre Table Reel">Carved Centre Table Reel</option>
+      </select>
+    </label>
+    <label class="check-row">Planned date
+      <input id="scheduledDraftDate" type="date" style="display:block;width:100%;padding:12px;margin-top:7px;background:#0b1020;color:#eef3ff;border:1px solid #53688d;border-radius:8px">
+    </label>
+    <label class="check-row">Planned time
+      <input id="scheduledDraftTime" type="time" value="08:00" style="display:block;width:100%;padding:12px;margin-top:7px;background:#0b1020;color:#eef3ff;border:1px solid #53688d;border-radius:8px">
+    </label>
+    <button type="button" class="action active" onclick="saveDraftSchedule()">Save as Draft Plan</button>
+    <p id="draftScheduleStatus" class="muted" aria-live="polite">No post will be published by saving a plan.</p>
+    <h3>Saved Draft Plans</h3>
+    <div id="draftScheduleList" class="draft"><p class="muted">No planned draft posts yet.</p></div>
   </div>
-  <p class="muted" id="approvalModeStatus" aria-live="polite">Manual approval is the default. Content must be reviewed before publishing.</p>
-  <div class="notice">Auto mode is a demo toggle only. If later connected to a real backend, it must auto-approve only low-risk, brand-safe content after spelling, factual, copyright, duplicate, and platform-policy checks. Sensitive, uncertain, complaint-related, or failing content must remain pending manual review. No publishing or scheduling is performed by this prototype.</div>
-  <div class="notice" style="margin-top:10px">This is a front-end prototype. Channel pause settings and approval mode are saved only in this browser on this device. Real account connections, secure login, shared database, automated checks, scheduling, and 24/7 background monitoring are not implemented yet.</div>
+  <div class="warning">Plan only: saving these choices stores them in this browser on this device. It does not create alarms, run in the background, generate content automatically, or publish/schedule posts. Manual approval remains required.</div>
 </section>
 
 
 </main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./supabase-config.js"></script>
-<script>
-(function(){
-  let cards = Array.from(document.querySelectorAll('.card[data-platform]'));
-  const search = document.getElementById('channelSearch');
-  const count = document.getElementById('channelCount');
-  const storageKey = 'nextgen-demo-paused-channels-v1';
-  const enabledStorageKey = 'nextgen-demo-enabled-channels-v1';
-  const approvalStorageKey = 'nextgen-demo-approval-mode-v1';
-  const cloudStatus = document.getElementById('cloudStatus');
-  let cloudClient = null, cloudUser = null;
-  try { const cfg=window.NEXTGEN_SUPABASE_CONFIG||{}; if(window.supabase?.createClient && /^https:\/\//.test(cfg.url||'') && cfg.anonKey && !cfg.url.includes('PASTE_') && !cfg.anonKey.includes('PASTE_')) cloudClient=window.supabase.createClient(cfg.url,cfg.anonKey); } catch(e) {}
-  const approvalModeLabel = document.getElementById('approvalModeLabel');
-  const autoModeLabel = document.getElementById('autoModeLabel');
-  const approvalModeStatus = document.getElementById('approvalModeStatus');
-  const manualModeButton = document.getElementById('manualModeButton');
-  const autoModeButton = document.getElementById('autoModeButton');
-  let approvalMode = 'manual';
-  try { approvalMode = localStorage.getItem(approvalStorageKey) === 'auto' ? 'auto' : 'manual'; } catch (error) {}
-  function renderApprovalMode(){
-    const isAuto = approvalMode === 'auto';
-    approvalModeLabel.textContent = isAuto ? 'Auto Approval Mode — DEMO ON' : 'Manual Approval Mode — ON';
-    autoModeLabel.textContent = isAuto ? 'ON (demo only)' : 'OFF';
-    manualModeButton.setAttribute('aria-pressed', String(!isAuto));
-    autoModeButton.setAttribute('aria-pressed', String(isAuto));
-    approvalModeStatus.textContent = isAuto
-      ? 'Auto mode is enabled only for this browser demo. No content is auto-approved or published.'
-      : 'Manual approval is active. Content must be reviewed before publishing.';
-    autoModeButton.textContent = isAuto ? 'Turn Auto Approval OFF' : 'Enable Auto Approval';
-  }
-  manualModeButton.addEventListener('click',function(){
-    approvalMode='manual';
-    try { localStorage.setItem(approvalStorageKey,approvalMode); } catch (error) {}
-    renderApprovalMode();
-  });
-  autoModeButton.addEventListener('click',function(){
-    if(approvalMode==='auto'){
-      approvalMode='manual';
-    }else{
-      if(!window.confirm('Enable Auto Approval in this browser demo? This does not publish content or activate real automation.')) return;
-      approvalMode='auto';
-    }
-    try { localStorage.setItem(approvalStorageKey,approvalMode); } catch (error) {}
-    renderApprovalMode();
-  });
-  renderApprovalMode();
-  let pausedChannels = {};
-  let enabledChannels = {youtube:true,facebook:true,instagram:true,threads:true};
-  try { enabledChannels = Object.assign(enabledChannels, JSON.parse(localStorage.getItem(enabledStorageKey) || '{}') || {}); } catch (error) {}
-  try { pausedChannels = JSON.parse(localStorage.getItem(storageKey) || '{}') || {}; }
-  catch (error) { pausedChannels = {}; }
+</div>
 
-  async function saveState(){
-    try { localStorage.setItem(storageKey, JSON.stringify(pausedChannels)); }
-    catch (error) { /* The UI still works for this page session if storage is unavailable. */ }
-    if(cloudClient && cloudUser){
-      const changed=Object.keys(pausedChannels).filter(k=>pausedChannels[k]);
-      try{
-        const {data:rows,error:readError}=await cloudClient.from('channels').select('id,platform').eq('user_id',cloudUser.id);
-        if(readError) throw readError;
-        for(const card of cards){
-          const platform=card.dataset.platform;
-          const row=(rows||[]).find(x=>x.platform===platform);
-          const values={connection_status:pausedChannels[platform]?'paused':'not_connected',updated_at:new Date().toISOString()};
-          if(row){const {error}=await cloudClient.from('channels').update(values).eq('id',row.id).eq('user_id',cloudUser.id);if(error)throw error;}
-          else {const {error}=await cloudClient.from('channels').insert({user_id:cloudUser.id,platform,display_name:card.dataset.name,handle:card.dataset.handle,...values});if(error)throw error;}
-        }
-        cloudStatus.textContent='Supabase connected: channel pause state saved to your signed-in account. Social platform OAuth is still not connected.';
-      }catch(err){cloudStatus.textContent='Cloud sync failed: '+(err.message||'check Supabase schema and access policies')+'. Browser demo state remains saved locally.';}
-    }
-  }
-  async function connectCloud(){
-    if(!cloudClient){cloudStatus.textContent='Supabase not configured yet — channel controls remain browser-only. Configure supabase-config.js and sign in first.';return;}
-    try{
-      const {data,error}=await cloudClient.auth.getUser();
-      if(error)throw error;
-      cloudUser=data.user;
-      if(!cloudUser){cloudStatus.textContent='Supabase configured, but no signed-in user. Sign in through NextGen Login to enable per-account channel sync.';return;}
-      const {data:rows,error:readError}=await cloudClient.from('channels').select('id,platform,display_name,handle,connection_status').eq('user_id',cloudUser.id);
-      if(readError)throw readError;
-      (rows||[]).forEach(row=>{
-        if(row.connection_status==='paused')pausedChannels[row.platform]=true;
-        const rowHandle=(row.handle||'').trim().toLowerCase();
-        const rowName=(row.display_name||'').trim().toLowerCase();
-        const exists=cards.some(card=>{
-          if(card.dataset.platform!==row.platform)return false;
-          const cardHandle=(card.dataset.handle||'').trim().toLowerCase();
-          const cardName=(card.dataset.name||'').trim().toLowerCase();
-          return rowHandle ? cardHandle===rowHandle : cardName===rowName;
-        });
-        if(!exists && ['youtube','facebook','instagram','threads'].includes(row.platform)){
-          const extra=buildChannelCard(row.platform,row.display_name,row.handle||'',row.url||'');
-          document.getElementById('channelGrid').appendChild(extra);
-          cards.push(extra);
-          if(enabledChannels[row.platform]===undefined)enabledChannels[row.platform]=true;
-          bindCard(extra);
-        }
-      });
-      /* Final deduplication after cloud rows load, using platform + normalized handle. */
-      const finalSeen=new Set();
-      cards=cards.filter(card=>{
-        const handle=(card.dataset.handle||'').trim().toLowerCase();
-        const key=(card.dataset.platform||'').trim().toLowerCase()+'|'+(handle || (card.dataset.name||'').trim().toLowerCase());
-        if(finalSeen.has(key)){card.remove();return false;}
-        finalSeen.add(key);return true;
-      });
-      try{localStorage.setItem(storageKey,JSON.stringify(pausedChannels));}catch(e){}
-      cards.forEach(renderCard);
-      filterCards();
-      cloudStatus.textContent='Signed in: channel list and pause state loaded from Supabase. Social platform OAuth is still not connected.';
-    }catch(err){cloudStatus.textContent='Supabase connection needs setup: '+(err.message||'check project configuration and database schema');}
-  }
 
-  function renderCard(card){
-    const platform = card.dataset.platform;
-    const isPaused = Boolean(pausedChannels[platform]);
-    const isEnabled = enabledChannels[platform] !== false;
-    const enableButton = card.querySelector('.enable-button');
-    enableButton.textContent = isEnabled ? 'Disable channel' : 'Enable channel';
-    enableButton.setAttribute('aria-pressed', String(isEnabled));
-    const button = card.querySelector('.pause-button');
-    const status = card.querySelector('.status');
-    const connection = card.querySelector('.connection');
-    button.textContent = isPaused ? 'Resume channel' : 'Pause channel';
-    button.setAttribute('aria-pressed', String(isPaused));
-    status.classList.toggle('paused', isPaused || !isEnabled);
-    connection.textContent = !isEnabled
-      ? 'Demo status: Disabled in this browser · Real account not connected'
-      : (isPaused
-        ? 'Demo status: Paused in this browser · Real account not connected'
-        : 'Demo enabled · Real account connection not verified');
-  }
-
-  function filterCards(){
-    const query = search.value.trim().toLowerCase();
-    let visible = 0;
-    cards.forEach(function(card){
-      const searchable = [card.dataset.platform,card.dataset.name,card.dataset.handle].join(' ').toLowerCase();
-      const match = searchable.includes(query);
-      card.hidden = !match;
-      if(match) visible++;
-    });
-    count.textContent = 'Showing ' + visible + ' of ' + cards.length + ' channels';
-    renderPrivacyChannelList();
-  }
-
-  function bindCard(card){
-    renderCard(card);
-    card.querySelector('.enable-button').addEventListener('click',function(){
-      const platform = card.dataset.platform;
-      enabledChannels[platform] = enabledChannels[platform] === false;
-      try { localStorage.setItem(enabledStorageKey, JSON.stringify(enabledChannels)); } catch (error) {}
-      renderCard(card);
-    });
-    card.querySelector('.pause-button').addEventListener('click',function(){
-      const platform = card.dataset.platform;
-      pausedChannels[platform] = !pausedChannels[platform];
-      saveState();
-      renderCard(card);
-    });
-    card.querySelector('.review-button').addEventListener('click',function(){
-      alert(card.dataset.platform.charAt(0).toUpperCase()+card.dataset.platform.slice(1) +
-        ' review: Manual approval is required. Real account verification is not connected yet.');
-    });
-  }
-  function renderPrivacyChannelList(){
-    const list=document.getElementById('privacyChannelList');
-    if(!list)return;
-    list.innerHTML='';
-    if(!cards.length){list.textContent='No channels to manage.';return;}
-    cards.forEach(function(card){
-      const row=document.createElement('div');
-      row.style.cssText='display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:#10182a;border:1px solid var(--line);border-radius:10px;padding:12px';
-      const info=document.createElement('div');
-      const name=document.createElement('strong');name.textContent=card.dataset.name||'Unnamed channel';
-      const meta=document.createElement('p');meta.className='muted';meta.style.margin='5px 0 0';
-      const isEnabled=enabledChannels[card.dataset.platform]!==false;
-      meta.textContent=(card.dataset.platform||'').toUpperCase()+' · '+(card.dataset.handle||'')+' · '+(isEnabled?'Enabled':'Disabled');
-      info.append(name,meta);
-      const actions=document.createElement('div');actions.className='actions';
-      const edit=document.createElement('button');edit.type='button';edit.textContent='Edit Channel';
-      edit.addEventListener('click',function(){
-        document.getElementById('newPlatform').value=card.dataset.platform||'youtube';
-        document.getElementById('newChannelName').value=card.dataset.name||'';
-        document.getElementById('newChannelHandle').value=card.dataset.handle||'';
-        document.getElementById('newChannelUrl').value=card.dataset.url||'';
-        document.getElementById('platformDisplay').value=(card.dataset.platform||'').replace(/^./,ch=>ch.toUpperCase());
-        document.getElementById('editingChannelKey').value=card.dataset.customKey||channelIdentity(card);
-        document.getElementById('addChannelForm').querySelector('[type=submit]').textContent='Save changes';
-        document.querySelector('#addChannelPanel h3').textContent='Edit channel details';
-        const panel=document.getElementById('addChannelPanel');panel.hidden=false;panel.scrollIntoView({behavior:'smooth',block:'start'});
-      });
-      const toggle=document.createElement('button');toggle.type='button';toggle.textContent=isEnabled?'Disable Channel':'Enable Channel';
-      toggle.setAttribute('aria-pressed',String(isEnabled));
-      toggle.addEventListener('click',function(){
-        enabledChannels[card.dataset.platform]=enabledChannels[card.dataset.platform]===false;
-        try{localStorage.setItem(enabledStorageKey,JSON.stringify(enabledChannels));}catch(e){}
-        cards.filter(item=>item.dataset.platform===card.dataset.platform).forEach(renderCard);
-        renderPrivacyChannelList();
-      });
-      const remove=document.createElement('button');remove.type='button';remove.textContent='Remove Channel';
-      remove.addEventListener('click',function(){
-        const label=card.dataset.name||'this channel';
-        if(!window.confirm('Remove "'+label+'" from the NextGen channel list on this browser? This will not disconnect or delete the real social account.'))return;
-        const identity=channelIdentity(card);deletedChannels.add(identity);
-        try{localStorage.setItem(deletedChannelsStorageKey,JSON.stringify(Array.from(deletedChannels)));}catch(e){}
-        const items=readCustomChannels().filter(item=>[item.platform,item.name,item.handle||''].join('|').toLowerCase()!==identity);
-        saveCustomChannels(items);
-        card.remove();cards=cards.filter(item=>item!==card);filterCards();renderPrivacyChannelList();
-      });
-      actions.append(edit,toggle,remove);row.append(info,actions);list.appendChild(row);
-    });
-  }
-
-  function buildChannelCard(platform,name,handle,url){
-    const card=document.createElement('section');
-    card.className='card';
-    card.dataset.platform=platform;
-    card.dataset.name=name;
-    card.dataset.handle=handle;
-    card.dataset.url=url||'';
-    const heading=document.createElement('div');
-    heading.className='platform';
-    heading.textContent=({youtube:'▶️ YouTube',facebook:'📘 Facebook',instagram:'📸 Instagram',threads:'🧵 Threads',other:'🌐 Other platform'})[platform]||'🌐 Platform';
-    const title=document.createElement('h3');title.textContent=name;
-    const handleEl=document.createElement('p');handleEl.className='handle';handleEl.textContent=handle||'No handle added';
-    const statusEl=document.createElement('p');statusEl.className='status';
-    const dot=document.createElement('span');dot.className='dot';
-    const connection=document.createElement('span');connection.className='connection';
-    statusEl.append(dot,connection);
-    const actions=document.createElement('div');actions.className='actions';
-    [['pause-button','Pause channel'],['enable-button','Disable channel'],['primary review-button','Review']].forEach(function(item){
-      const b=document.createElement('button');b.type='button';b.className=item[0];b.textContent=item[1];actions.appendChild(b);
-    });
-    if(url){const link=document.createElement('p');link.className='handle';const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Open profile link';link.appendChild(a);card.appendChild(link);}
-    card.append(heading,title,handleEl,statusEl,actions);
-    return card;
-  }
-
-  const customChannelsStorageKey='nextgen-custom-channels-v1';
-  const deletedChannelsStorageKey='nextgen-deleted-channels-v1';
-  function channelIdentity(card){return [card.dataset.platform||'',card.dataset.name||'',card.dataset.handle||''].join('|').toLowerCase();}
-  function readDeletedChannels(){try{const v=JSON.parse(localStorage.getItem(deletedChannelsStorageKey)||'[]');return Array.isArray(v)?v:[];}catch(e){return [];}}
-  const deletedChannels=new Set(readDeletedChannels());
-  /* Restore the required default Threads account if an old browser-only removal hid it. */
-  ['threads|royal furniture zone|@royalfurniturezone','threads|royalfurniturezone|@royalfurniturezone'].forEach(identity=>deletedChannels.delete(identity));
-  try{localStorage.setItem(deletedChannelsStorageKey,JSON.stringify(Array.from(deletedChannels)));}catch(e){}
-  cards=cards.filter(card=>{
-    if(deletedChannels.has(channelIdentity(card))){card.remove();return false;}
-    return true;
-  });
-  const editingChannelKey=document.createElement('input');editingChannelKey.type='hidden';editingChannelKey.id='editingChannelKey';document.getElementById('addChannelForm').appendChild(editingChannelKey);
-  function readCustomChannels(){
-    try{
-      const value=JSON.parse(localStorage.getItem(customChannelsStorageKey)||'[]');
-      if(!Array.isArray(value))return [];
-      const seen=new Set();
-      const unique=value.filter(item=>{
-        if(!item || !item.name || !item.platform)return false;
-        const identity=[item.platform,(item.url||'').toLowerCase(),(item.name||'').trim().toLowerCase(),(item.handle||'').trim().toLowerCase()].join('|');
-        if(seen.has(identity))return false;
-        seen.add(identity);
-        return true;
-      });
-      if(unique.length!==value.length){
-        try{localStorage.setItem(customChannelsStorageKey,JSON.stringify(unique));}catch(e){}
-      }
-      return unique;
-    }catch(e){return [];}
-  }
-  function saveCustomChannels(items){
-    try{localStorage.setItem(customChannelsStorageKey,JSON.stringify(items));return true;}catch(e){return false;}
-  }
-  readCustomChannels().forEach(item=>{
-    if(!item || !item.name || !item.platform) return;
-    const itemIdentity=[item.platform,item.name,item.handle||''].join('|').toLowerCase();
-    if(deletedChannels.has(itemIdentity))return;
-    const itemHandle=(item.handle||'').trim().toLowerCase();
-    const itemName=(item.name||'').trim().toLowerCase();
-    const exists=cards.some(card=>{
-      if(card.dataset.platform!==item.platform)return false;
-      const cardHandle=(card.dataset.handle||'').trim().toLowerCase();
-      const cardName=(card.dataset.name||'').trim().toLowerCase();
-      return itemHandle ? cardHandle===itemHandle : cardName===itemName;
-    });
-    if(!exists){
-      const extra=buildChannelCard(item.platform,item.name,item.handle||'',item.url||'');
-      extra.dataset.customKey=item.key||[item.platform,item.name,item.handle||''].join('|');
-      document.getElementById('channelGrid').appendChild(extra);
-      cards.push(extra);
-    }
-  });
-  /* Remove duplicate channel cards by platform + handle, keeping the first (default) card. */
-  const seenChannelKeys=new Set();
-  cards=cards.filter(card=>{
-    const handle=(card.dataset.handle||'').trim().toLowerCase();
-    const key=(card.dataset.platform||'').trim().toLowerCase()+'|'+(handle || (card.dataset.name||'').trim().toLowerCase());
-    if(seenChannelKeys.has(key)){card.remove();return false;}
-    seenChannelKeys.add(key);return true;
-  });
-  const uniqueCustom=readCustomChannels().filter(item=>{
-    const handle=(item.handle||'').trim().toLowerCase();
-    const name=(item.name||'').trim().toLowerCase();
-    return !cards.some(card=>{
-      if(card.dataset.customKey===item.key || card.dataset.platform!==item.platform)return false;
-      const cardHandle=(card.dataset.handle||'').trim().toLowerCase();
-      const cardName=(card.dataset.name||'').trim().toLowerCase();
-      return handle ? cardHandle===handle : cardName===name;
-    });
-  });
-  saveCustomChannels(uniqueCustom);
-
-  /* The separate Privacy Settings page is the shared browser-demo source of truth. */
-  const settingsManagedChannelsKey='nextgen-settings-managed-channels-v1';
-  try{
-    const managed=JSON.parse(localStorage.getItem(settingsManagedChannelsKey)||'null');
-    if(Array.isArray(managed)){
-      cards.forEach(card=>card.remove());
-      cards=[];
-      const platformMap={youtube:'youtube',facebook:'facebook',instagram:'instagram',threads:'threads',other:'other'};
-      managed.forEach(item=>{
-        if(!item || !item.name || !item.platform)return;
-        const platform=String(item.platform).toLowerCase();
-        if(!platformMap[platform])return;
-        const handle=String(item.handle||'');
-        const card=buildChannelCard(platformMap[platform],String(item.name),handle,String(item.url||''));
-        card.dataset.settingsManagedId=String(item.id||'');
-        card.dataset.customKey=[platformMap[platform],item.name,handle].join('|');
-        document.getElementById('channelGrid').appendChild(card);
-        cards.push(card);
-        enabledChannels[platformMap[platform]]=item.enabled!==false;
-      });
-      try{localStorage.setItem(enabledStorageKey,JSON.stringify(enabledChannels));}catch(e){}
-    }
-  }catch(e){}
-  cards.forEach(bindCard);
-  renderPrivacyChannelList();
-
-  /* Refresh this page if Privacy Settings is edited in another open tab. */
-  window.addEventListener('storage',function(event){
-    if(event.key===settingsManagedChannelsKey)window.location.reload();
-  });
-
-  const addPanel = document.getElementById('addChannelPanel');
-  const addForm = document.getElementById('addChannelForm');
-  document.getElementById('addChannelButton').addEventListener('click',function(){
-    addPanel.hidden = false;
-    addPanel.scrollIntoView({behavior:'smooth',block:'start'});
-    document.getElementById('newChannelUrl').focus();
-  });
-  document.getElementById('cancelAddChannel').addEventListener('click',function(){addPanel.hidden=true;addForm.reset();document.getElementById('editingChannelKey').value='';addForm.querySelector('[type=submit]').textContent='Add to list';document.querySelector('#addChannelPanel h3').textContent='Add a channel (demo)';});
-  function detectPlatformFromUrl(raw){
-    try{
-      const parsed=new URL(raw);
-      if(!['http:','https:'].includes(parsed.protocol))return null;
-      const host=parsed.hostname.toLowerCase().replace(/^www\./,'');
-      if(host==='youtube.com'||host.endsWith('.youtube.com')||host==='youtu.be')return 'youtube';
-      if(host==='facebook.com'||host.endsWith('.facebook.com')||host==='fb.watch')return 'facebook';
-      if(host==='instagram.com'||host.endsWith('.instagram.com'))return 'instagram';
-      if(host==='threads.net'||host.endsWith('.threads.net')||host==='threads.com'||host.endsWith('.threads.com'))return 'threads';
-    }catch(e){}
-    return null;
-  }
-  function detectChannelFromUrl(raw){
-    try{
-      const parsed=new URL(raw);
-      const platform=detectPlatformFromUrl(raw);
-      if(!platform)return null;
-      const parts=parsed.pathname.split('/').filter(Boolean);
-      const firstPart=(parts[0]||'').toLowerCase();
-      if(['share','sharer','sharing','posts','reel','reels','stories'].includes(firstPart) || parsed.pathname.toLowerCase().includes('/share/')){
-        return {platform,name:'',handle:'',shareLink:true};
-      }
-      let handle='';
-      if(platform==='youtube'){
-        handle=parts.find(x=>x.startsWith('@')) || (parts[0]==='channel'||parts[0]==='c'||parts[0]==='user' ? (parts[1]||'') : (parts[0]||''));
-      }else if(platform==='facebook'){
-        handle=parts[0]==='profile.php' ? (parsed.searchParams.get('id')||'') : (parts[0]||'');
-      }else{
-        handle=parts[0]||'';
-      }
-      if(!handle)return {platform,name:'',handle:''};
-      try{handle=decodeURIComponent(handle);}catch(e){}
-      const display=handle.startsWith('@')?handle.slice(1):handle;
-      const compact=display.toLowerCase().replace(/[._-]+/g,'').replace(/\s+/g,''); const known={royalfurniturezone:'Royal Furniture Zone',royalfurniturehouse:'Royal Furniture House'}; const name=known[compact]||display.replace(/[._-]+/g,' ').replace(/\s+/g,' ').trim().replace(/\b\w/g,ch=>ch.toUpperCase());
-      return {platform,name:name.slice(0,80),handle:handle.startsWith('@')?handle:'@'+handle};
-    }catch(e){return null;}
-  }
-  document.getElementById('newChannelUrl').addEventListener('input',function(){
-    const raw=this.value.trim();
-    const nameInput=document.getElementById('newChannelName');
-    const handleInput=document.getElementById('newChannelHandle');
-    if(!raw){nameInput.value='';handleInput.value='';document.getElementById('platformDisplay').value='';return;}
-    const detected=detectChannelFromUrl(raw);
-    if(detected && detected.shareLink){
-      nameInput.value='';handleInput.value='';
-      document.getElementById('newPlatform').value=detected.platform;
-      document.getElementById('platformDisplay').value=detected.platform.charAt(0).toUpperCase()+detected.platform.slice(1);
-      document.getElementById('addChannelStatus').textContent='This is a Share/Post link, not a profile link. Open the actual page/channel profile and copy its profile URL.';
-    }else if(detected){
-      document.getElementById('newPlatform').value=detected.platform;
-      nameInput.value=detected.name;
-      handleInput.value=detected.handle;
-      document.getElementById('platformDisplay').value=detected.platform.charAt(0).toUpperCase()+detected.platform.slice(1);
-      document.getElementById('addChannelStatus').textContent='Platform detected. Name is estimated from the profile URL, not verified against the real account.';
-    }else{
-      nameInput.value='';handleInput.value='';document.getElementById('platformDisplay').value='';
-      document.getElementById('addChannelStatus').textContent='Paste the full profile URL including https://. A plain @username is not enough to identify its platform.';
-    }
-  });
-  addForm.addEventListener('submit',async function(event){
-    event.preventDefault();
-    let platform=document.getElementById('newPlatform').value;
-    const name=document.getElementById('newChannelName').value.trim();
-    let handle=document.getElementById('newChannelHandle').value.trim();
-    let url=document.getElementById('newChannelUrl').value.trim();
-    const editingKey=document.getElementById('editingChannelKey').value;
-    const status=document.getElementById('addChannelStatus');
-    if(url){try{const parsed=new URL(url);if(!['http:','https:'].includes(parsed.protocol))throw new Error();url=parsed.href;}catch(e){status.textContent='Please enter a valid Facebook / YouTube / social profile link.';return;}
-      const detected=detectChannelFromUrl(url);
-      if(!detected || !detected.platform){status.textContent='Platform not detected. Paste the FULL profile URL including https:// — not just @username or a post/share link. Supported: youtube.com, facebook.com, instagram.com, threads.net.';return;}
-      if(detected.shareLink){status.textContent='This is a Share/Post link, not a profile link. Please paste the actual page/channel profile URL. Nothing was added.';return;}
-      platform=detected.platform;
-      document.getElementById('newPlatform').value=platform;
-      if(!name) { status.textContent='Platform found, but this URL does not contain a readable profile username. Open the actual profile page and copy its main profile URL (not a post, reel, video, or share link).'; return; }
-      if(!handle) handle=detected.handle;
-    }else{status.textContent='Please paste a profile link first.';return;}
-    const editingCard=editingKey?cards.find(x=>x.dataset.customKey===editingKey || channelIdentity(x)===editingKey):null;
-    const normalizeHandle=value=>String(value||'').trim().toLowerCase().replace(/^@+/,'').replace(/\\/$/,'');
-    const newHandleKey=normalizeHandle(handle);
-    const existsOnPage=cards.some(card=>{
-      if(card===editingCard || card.dataset.platform!==platform)return false;
-      const oldHandleKey=normalizeHandle(card.dataset.handle);
-      return (newHandleKey && oldHandleKey && newHandleKey===oldHandleKey) ||
-        (!newHandleKey && !oldHandleKey && (card.dataset.name||'').trim().toLowerCase()===name.toLowerCase());
-    });
-    const savedItems=readCustomChannels();
-    const existsInSaved=savedItems.some(item=>{
-      const sameItem=editingKey && ((item.key||[item.platform,item.name,item.handle||''].join('|'))===editingKey);
-      if(sameItem || item.platform!==platform)return false;
-      const oldHandleKey=normalizeHandle(item.handle);
-      return (newHandleKey && oldHandleKey && newHandleKey===oldHandleKey) ||
-        (!newHandleKey && !oldHandleKey && (item.name||'').trim().toLowerCase()===name.toLowerCase());
-    });
-    if(existsOnPage || existsInSaved){
-      status.textContent='Duplicate blocked: this platform account is already added. Existing accounts cannot be added again.';
-      return;
-    }
-    let item;
-    if(editingKey){
-      const idx=savedItems.findIndex(x=>(x.key||[x.platform,x.name,x.handle||''].join('|'))===editingKey || [x.platform,x.name,x.handle||''].join('|').toLowerCase()===editingKey.toLowerCase());
-      item={key:[platform,name,handle].join('|'),platform,name,handle,url,createdAt:new Date().toISOString()};
-      if(idx>=0)savedItems[idx]=item;else if(editingCard && !editingCard.dataset.customKey)savedItems.push(item);else savedItems.push(item);
-      if(editingCard){const oldIdentity=channelIdentity(editingCard);if(oldIdentity!==[platform,name,handle].join('|').toLowerCase()){deletedChannels.add(oldIdentity);try{localStorage.setItem(deletedChannelsStorageKey,JSON.stringify(Array.from(deletedChannels)));}catch(e){}}editingCard.dataset.platform=platform;editingCard.dataset.name=name;editingCard.dataset.handle=handle;editingCard.dataset.url=url;editingCard.dataset.customKey=item.key;editingCard.querySelector('h3').textContent=name;editingCard.querySelector('.platform').textContent=({youtube:'▶️ YouTube',facebook:'📘 Facebook',instagram:'📸 Instagram',threads:'🧵 Threads',other:'🌐 Other platform'})[platform]||'🌐 Platform';editingCard.querySelector('.handle').textContent=handle||'No handle added';}
-    }else{
-      item={key:[platform,name,handle].join('|'),platform,name,handle,url,createdAt:new Date().toISOString()};
-      savedItems.push(item);
-      const card=buildChannelCard(platform,name,handle,url);card.dataset.customKey=item.key;
-      document.getElementById('channelGrid').appendChild(card);cards.push(card);if(enabledChannels[platform]===undefined)enabledChannels[platform]=true;bindCard(card);
-    }
-    const localSaved=saveCustomChannels(savedItems);
-    if(enabledChannels[platform]===undefined)enabledChannels[platform]=true;
-    addForm.reset();
-    document.getElementById('platformDisplay').value='';
-    document.getElementById('editingChannelKey').value='';
-    addForm.querySelector('[type=submit]').textContent='Add to list';
-    document.querySelector('#addChannelPanel h3').textContent='Add a channel (demo)';
-    addPanel.hidden=false;
-    filterCards();
-    renderPrivacyChannelList();
-    if(editingKey){
-      status.textContent=localSaved?'Channel details updated and saved in this browser.':'Channel details updated for this page session; browser storage unavailable.';
-      return;
-    }
-    if(platform==='other'){
-      status.textContent=localSaved?'Added and saved in this browser. “Other platform” needs a database schema update for cloud saving.':'Added for this page session, but browser storage is unavailable.';
-      return;
-    }
-    if(cloudClient && cloudUser){
-      try{
-        const {data,error}=await cloudClient.from('channels').insert({
-          user_id:cloudUser.id,platform,display_name:name,handle:handle||null,
-          connection_status:'not_connected',updated_at:new Date().toISOString()
-        }).select('id').single();
-        if(error)throw error;
-        status.textContent='Channel added and saved to your Supabase account.';
-        cloudStatus.textContent='Channel list saved to your signed-in Supabase account. Social platform OAuth is still not connected.';
-      }catch(err){
-        status.textContent=(localSaved?'Channel added and saved in this browser. Cloud save failed: ':'Added for this page session. Cloud save failed: ')+(err.message||'check Supabase access policies');
-      }
-    }else{
-      status.textContent=localSaved?'Channel added and saved in this browser. Sign in to sync it to Supabase.':'Added for this page session, but browser storage is unavailable.';
-    }
-  });
-
-  search.addEventListener('input',filterCards);
-  document.getElementById('showAll').addEventListener('click',function(){
-    search.value = '';
-    filterCards();
-  });
-  filterCards();
-  connectCloud();
-})();
-</script>
-<script>(function(){const p=location.pathname.split('/').pop()||'index.html';document.querySelectorAll('.main-nav a').forEach(a=>{const u=new URL(a.href,location.href);const target=u.pathname.split('/').pop();if((p==='channels.html'&&target==='channels.html')||(p==='settings.html'&&target==='settings.html')||(p==='index.html'&&target==='index.html'&&u.hash==='#dashboard')){a.classList.add('active');a.setAttribute('aria-current','page');}})})();</script>
-<footer>Powered by ABDUS SATTAR</footer>
+<footer>NextGen Prototype • Dashboard preview • Real publishing is not connected</footer>
 <nav class="ng-bottom-nav" aria-label="Main navigation">
-<a href="index.html#dashboard" data-page="dashboard"><span>⌂</span><small>Dashboard</small></a>
+<a href="index.html#dashboard" data-page="dashboard" onclick="event.preventDefault();mobileNavigate('dashboard',this)"><span>⌂</span><small>Dashboard</small></a>
 <a href="channels.html" data-page="channels"><span>▶</span><small>Channels</small></a>
-<a href="index.html#content" data-page="content"><span>▤</span><small>Content</small></a>
-<a href="index.html#approvals" data-page="approvals"><span>✓</span><small>Approvals</small></a>
-<a href="index.html#schedule" data-page="schedule"><span>▦</span><small>Schedule</small></a>
+<a href="index.html#content" data-page="content" onclick="event.preventDefault();mobileNavigate('content',this)"><span>▤</span><small>Content</small></a>
+<a href="index.html#approvals" data-page="approvals" onclick="event.preventDefault();mobileNavigate('approvals',this)"><span>✓</span><small>Approvals</small></a>
+<a href="index.html#schedule" data-page="schedule" onclick="event.preventDefault();mobileNavigate('schedule',this)"><span>▦</span><small>Schedule</small></a>
 </nav>
-<style>
-.ng-bottom-nav{position:fixed;z-index:999;left:0;right:0;bottom:0;min-height:68px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;padding:5px 4px max(5px,env(safe-area-inset-bottom));background:#101923;border-top:1px solid #2a3948;box-shadow:0 -6px 24px #0005}
-.ng-bottom-nav a{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;border-radius:8px;background:transparent;color:#aebed0;text-decoration:none;padding:4px 1px}
-.ng-bottom-nav a span{font-size:19px;line-height:22px}.ng-bottom-nav a small{font-size:10px;text-align:center}
-.ng-bottom-nav a.active{color:#58a2ff;background:#1b2b3d;font-weight:700}
-body{padding-bottom:82px!important}
-@media(max-width:420px){.ng-bottom-nav a small{font-size:9px}.ng-bottom-nav a span{font-size:18px}}
-</style>
+
+<script>
+
+function filterQueue(){
+  var search = (document.getElementById('queueSearch').value || '').trim().toLowerCase();
+  var channel = document.getElementById('queueChannel').value;
+  var statusFilter = document.getElementById('queueStatus').value;
+  var visible = 0;
+  document.querySelectorAll('.queue-item').forEach(function(card){
+    var title = (card.dataset.draftTitle || '').toLowerCase();
+    var statusEl = document.getElementById(card.dataset.statusId);
+    var status = statusEl ? statusEl.textContent : '';
+    var channelSelect = card.querySelector('.draft-channel');
+    var selectedChannel = channelSelect ? channelSelect.value : '';
+    var matchesSearch = !search || title.indexOf(search) !== -1;
+    var matchesChannel = channel === 'all' || selectedChannel === channel;
+    var matchesStatus = statusFilter === 'all' ||
+      (statusFilter === 'Approved' && status.indexOf('Approved') === 0) ||
+      (statusFilter === 'Rejected' && status.indexOf('Rejected') === 0) ||
+      (statusFilter === 'Revised' && status.indexOf('Revised') === 0) ||
+      (statusFilter === 'Pending approval' && status.indexOf('Pending approval') === 0);
+    card.style.display = matchesSearch && matchesChannel && matchesStatus ? '' : 'none';
+    if(card.style.display !== 'none') visible++;
+  });
+  document.getElementById('queueCount').textContent = 'Showing ' + visible + ' of ' + document.querySelectorAll('.queue-item').length + ' drafts';
+}
+
+function clearQueueFilters(){
+  var search = document.getElementById('queueSearch');
+  var channel = document.getElementById('queueChannel');
+  var status = document.getElementById('queueStatus');
+  if(search) search.value = '';
+  if(channel) channel.value = 'all';
+  if(status) status.value = 'all';
+  filterQueue();
+}
+
+function updateDraftSummary(){
+  var pending = 0, approved = 0, revision = 0;
+  document.querySelectorAll('.queue-item').forEach(function(card){
+    var statusEl = document.getElementById(card.dataset.statusId);
+    var status = statusEl ? statusEl.textContent : '';
+    if(status.indexOf('Approved') === 0) approved++;
+    else if(status.indexOf('Rejected') === 0 || status.indexOf('Revised') === 0) revision++;
+    else pending++;
+  });
+  var p = document.getElementById('pendingDraftCount');
+  var a = document.getElementById('approvedDraftCount');
+  var r = document.getElementById('revisionDraftCount');
+  if(p) p.textContent = pending;
+  if(a) a.textContent = approved;
+  if(r) r.textContent = revision;
+  if(typeof renderApprovalQueue==='function') renderApprovalQueue();
+}
+
+function renderApprovalQueue(){
+  var host=document.getElementById('approvalQueueSummary');
+  if(!host)return;
+  var cards=Array.from(document.querySelectorAll('.queue-item'));
+  if(!cards.length){host.innerHTML='<p class="muted">No draft items are available in the Content Queue.</p>';return;}
+  var pending=cards.filter(function(card){
+    var el=document.getElementById(card.dataset.statusId);
+    var status=el?el.textContent:'';
+    return status.indexOf('Approved')!==0 && status.indexOf('Rejected')!==0 && status.indexOf('Revised')!==0;
+  });
+  if(!pending.length){host.innerHTML='<p class="status">No pending drafts. Review status is up to date.</p>';return;}
+  host.innerHTML='';
+  pending.forEach(function(card){
+    var id=card.dataset.statusId;
+    var title=card.dataset.draftTitle || 'Untitled draft';
+    var channel=card.querySelector('.draft-channel');
+    var channelName=channel && channel.options && channel.selectedIndex>=0 ? channel.options[channel.selectedIndex].text : 'Channel not selected';
+    var row=document.createElement('div');
+    row.style.cssText='padding:12px 0;border-bottom:1px solid #293752';
+    var heading=document.createElement('strong');heading.textContent=title;
+    var detail=document.createElement('p');detail.className='muted';detail.textContent='Channel: '+channelName+' · Status: Pending approval';
+    var button=document.createElement('button');button.type='button';button.className='action active';button.textContent='Review draft';
+    button.addEventListener('click',function(){reviewDraft(id);window.scrollTo(0,0);});
+    row.appendChild(heading);row.appendChild(detail);row.appendChild(button);host.appendChild(row);
+  });
+}
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(function(page){
+    page.classList.remove('show');
+  });
+  var target = document.getElementById(id);
+  if(target) target.classList.add('show');
+  if(id==='approvals') renderApprovalQueue();
+}
+
+var draftStatusIds = ['bedStatus', 'sofaStatus', 'tableStatus'];
+var checklistStorageKey = 'nextgen-demo-review-checklist-by-draft';
+var draftStorageKey = 'nextgen-demo-draft-statuses';
+var activeDraftId = 'bedStatus';
+
+var reviewContentById = {
+  bedStatus: {
+    title: 'Luxury Wooden Bed Reel',
+    content: 'Create a vertical 9:16 cinematic product showcase of a luxury wooden bed. Start with a close-up of the polished wood and carved details, then slowly reveal the full bed in an elegant bedroom. Keep the product shape and wood finish accurate. No people or watermark.',
+    caption: 'Bring timeless elegance to your bedroom with this beautifully crafted wooden bed. Rich finish, detailed carving and a royal look. ✨ Which bedroom style would you choose?',
+    hashtags: '#Furniture #WoodenBed #LuxuryFurniture #BedroomDesign #HomeDecor #FurnitureDesign #Reels #Shorts'
+  },
+  sofaStatus: {
+    title: 'Royal Sofa Set Short',
+    content: 'Create a vertical 9:16 furniture showcase featuring a premium royal sofa set. Begin with the upholstery texture, then slowly reveal the complete sofa and its design details in a stylish living room. Use smooth camera movement and balanced lighting. No people or watermark.',
+    caption: 'Make your living room feel warm, elegant and inviting with a royal sofa set designed to stand out. ✨ What colour would you pick for your home?',
+    hashtags: '#SofaSet #Furniture #LivingRoomDesign #LuxuryFurniture #HomeDecor #InteriorDesign #Reels #Shorts'
+  },
+  tableStatus: {
+    title: 'Carved Centre Table Reel',
+    content: 'Create a vertical 9:16 cinematic showcase of an ornate wooden centre table. Highlight the honey-brown polished finish, floral carving, curved legs and lower shelf with close-up details followed by a full product shot. Preserve the product geometry. No people or watermark.',
+    caption: 'A statement piece for a beautiful home. Admire the polished finish and intricate carving on this elegant wooden centre table. ✨ Would you place it in your living room?',
+    hashtags: '#CentreTable #WoodenFurniture #FurnitureDesign #LuxuryInteriors #HomeDecor #LivingRoom #Reels #Shorts'
+  }
+};
+
+function renderReviewContent(id){
+  var draft = reviewContentById[id] || reviewContentById.bedStatus;
+  document.getElementById('reviewContentText').textContent = draft.content;
+  document.getElementById('reviewCaptionText').textContent = draft.caption;
+  document.getElementById('reviewHashtagsText').textContent = draft.hashtags;
+}
+
+function reviewDraft(id){
+  activeDraftId = draftStatusIds.indexOf(id) >= 0 ? id : 'bedStatus';
+  var titleById = {bedStatus:'Luxury Wooden Bed Reel',sofaStatus:'Royal Sofa Set Short',tableStatus:'Carved Centre Table Reel'};
+  document.getElementById('activeReviewTitle').textContent = 'Reviewing: ' + titleById[activeDraftId];
+  renderReviewContent(activeDraftId);
+  restoreChecklistForDraft(activeDraftId);
+  showPage('approvals');
+}
+
+function getChecklistState(){
+  return Array.from(document.querySelectorAll('.review-check')).map(function(check){return check.checked;});
+}
+
+function saveChecklist(){
+  try {
+    var all = JSON.parse(localStorage.getItem(checklistStorageKey) || '{}');
+    all[activeDraftId] = getChecklistState();
+    localStorage.setItem(checklistStorageKey, JSON.stringify(all));
+  } catch(error) {}
+}
+
+function restoreChecklistForDraft(id){
+  var saved = [];
+  try {
+    var all = JSON.parse(localStorage.getItem(checklistStorageKey) || '{}');
+    saved = Array.isArray(all[id]) ? all[id] : [];
+  } catch(error) {}
+  document.querySelectorAll('.review-check').forEach(function(check,index){
+    check.checked = saved[index] === true;
+  });
+}
+
+function saveDraftStatuses(){
+  var saved = {};
+  draftStatusIds.forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) saved[id] = el.textContent;
+  });
+  try { localStorage.setItem(draftStorageKey, JSON.stringify(saved)); } catch(error) {}
+}
+
+function setDraftStatus(id, message){
+  var status = document.getElementById(id);
+  if(status){
+    status.textContent = message;
+    saveDraftStatuses();
+    updateDraftSummary();
+    filterQueue();
+    /* Keep any saved draft-plan approval labels in sync with the latest review decision. */
+    if(typeof renderDraftSchedule === 'function') renderDraftSchedule();
+  }
+}
+
+function approveDraft(id){
+  activeDraftId = draftStatusIds.indexOf(id) >= 0 ? id : 'bedStatus';
+  restoreChecklistForDraft(activeDraftId);
+  var titleById = {bedStatus:'Luxury Wooden Bed Reel',sofaStatus:'Royal Sofa Set Short',tableStatus:'Carved Centre Table Reel'};
+  document.getElementById('activeReviewTitle').textContent = 'Reviewing: ' + titleById[activeDraftId];
+  renderReviewContent(activeDraftId);
+  var checks = document.querySelectorAll('.review-check');
+  var allChecked = Array.from(checks).every(function(check){
+    return check.checked;
+  });
+
+  if(!allChecked){
+    showPage('approvals');
+    alert('Please complete all five review checklist items first.');
+    return;
+  }
+
+  setDraftStatus(id, 'Approved for selected channel (demo only)');
+  alert('Demo only. Nothing was published or scheduled.');
+}
+
+function rejectDraft(id){
+  setDraftStatus(id, 'Rejected — revision needed');
+}
+
+function reviseDraft(id){
+  setDraftStatus(id, 'Revised — pending review');
+  showPage('approvals');
+}
+
+
+
+function resetChecklist(){
+  document.querySelectorAll('.review-check').forEach(function(check){
+    check.checked = false;
+  });
+  saveChecklist();
+}
+
+function restoreDemoReviewState(){
+  try {
+    var savedStatuses = JSON.parse(localStorage.getItem(draftStorageKey) || '{}');
+    draftStatusIds.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el && typeof savedStatuses[id] === 'string') el.textContent = savedStatuses[id];
+    });
+
+  } catch(error) {
+    /* Keep the prototype usable if browser storage is unavailable. */
+  }
+}
+
+document.querySelectorAll('.draft-channel').forEach(function(select){
+  var key = 'nextgen-demo-channel-' + select.dataset.statusId;
+  try {
+    var saved = localStorage.getItem(key);
+    if(saved && Array.from(select.options).some(function(o){return o.value === saved || o.textContent === saved;})) select.value = saved;
+  } catch(error) {}
+  select.addEventListener('change', function(){
+    try { localStorage.setItem(key, select.value); } catch(error) {}
+    filterQueue();
+  });
+});
+
+document.querySelectorAll('.review-check').forEach(function(check){
+  check.addEventListener('change', saveChecklist);
+});
+restoreDemoReviewState();
+filterQueue();
+updateDraftSummary();
+
+function restoreSchedulePlan(){
+  var key = 'nextgen-demo-schedule-plan';
+  try {
+    var saved = JSON.parse(localStorage.getItem(key) || 'null');
+    if(Array.isArray(saved)){
+      document.querySelectorAll('.schedule-slot').forEach(function(slot){
+        slot.checked = saved.indexOf(slot.value) !== -1;
+      });
+      var status = document.getElementById('scheduleSaveStatus');
+      if(status) status.textContent = 'Saved plan loaded on this device (' + saved.length + ' slot' + (saved.length===1?'':'s') + ' selected).';
+    }
+  } catch(error) {}
+}
+function saveSchedulePlan(){
+  var selected = Array.from(document.querySelectorAll('.schedule-slot:checked')).map(function(slot){return slot.value;});
+  var key = 'nextgen-demo-schedule-plan';
+  try {
+    localStorage.setItem(key, JSON.stringify(selected));
+    var status = document.getElementById('scheduleSaveStatus');
+    if(status) status.textContent = 'Plan saved on this device: ' + (selected.length ? selected.join(', ') : 'no slots selected') + '. No background reminders are active.';
+  } catch(error) {
+    var status = document.getElementById('scheduleSaveStatus');
+    if(status) status.textContent = 'Could not save in this browser. Your selections are still visible until you leave this page.';
+  }
+}
+restoreSchedulePlan();
+
+var draftScheduleKey = 'nextgen-draft-post-schedule-v1';
+function readDraftSchedule(){
+  try { var value = JSON.parse(localStorage.getItem(draftScheduleKey) || '[]'); return Array.isArray(value) ? value : []; }
+  catch(error) { return []; }
+}
+function renderDraftSchedule(){
+  var list = document.getElementById('draftScheduleList');
+  if(!list) return;
+  var items = readDraftSchedule();
+  if(!items.length){ list.innerHTML = '<p class="muted">No planned draft posts yet.</p>'; return; }
+  var savedStatuses = {};
+  try { savedStatuses = JSON.parse(localStorage.getItem('nextgen-demo-draft-statuses') || '{}') || {}; } catch(error) {}
+  var statusByTitle = {
+    'Luxury Wooden Bed Reel':'bedStatus',
+    'Royal Sofa Set Short':'sofaStatus',
+    'Carved Centre Table Reel':'tableStatus'
+  };
+  list.innerHTML = '';
+  items.forEach(function(item,index){
+    var row = document.createElement('div');
+    row.style.cssText = 'padding:12px 0;border-bottom:1px solid #293752';
+    var title = document.createElement('strong'); title.textContent = item.title;
+    var details = document.createElement('p'); details.className = 'muted';
+    details.textContent = item.date + ' at ' + item.time;
+    var status = document.createElement('p'); status.className = 'status';
+    status.style.cssText = 'display:inline-block;padding:7px 10px;border-radius:7px;border:1px solid #806633;background:#302818;color:#ffe1a6;line-height:1.5';
+    var statusId = statusByTitle[item.title];
+    var approval = statusId && savedStatuses[statusId] ? savedStatuses[statusId] : 'Pending approval';
+    if(approval.indexOf('Approved') === 0){
+      status.style.cssText = 'display:inline-block;padding:7px 10px;border-radius:7px;border:1px solid #34785a;background:#142f26;color:#a9f0ca;line-height:1.5';
+    } else if(approval.indexOf('Rejected') === 0){
+      status.style.cssText = 'display:inline-block;padding:7px 10px;border-radius:7px;border:1px solid #8a4444;background:#351c22;color:#ffc0c0;line-height:1.5';
+    } else if(approval.indexOf('Revised') === 0){
+      status.style.cssText = 'display:inline-block;padding:7px 10px;border-radius:7px;border:1px solid #456caa;background:#182944;color:#c4d8ff;line-height:1.5';
+    }
+    status.textContent = 'Approval: ' + approval + ' · Draft plan only';
+    var actions = document.createElement('div');
+    var find = document.createElement('button'); find.type = 'button'; find.className = 'action';
+    find.textContent = 'Find in Content Queue';
+    find.onclick = function(){
+      window.location.href = './?draft=' + encodeURIComponent(statusId) + '&refresh=20261026p#content';
+    };
+    var review = document.createElement('button'); review.type = 'button'; review.className = 'action';
+    review.textContent = 'Open Review Checklist';
+    review.onclick = function(){
+      var reviewKey = item.title === 'Royal Sofa Set Short' ? 'sofa' : item.title === 'Carved Centre Table Reel' ? 'table' : 'bed';
+      window.location.href = 'review.html?draft=' + reviewKey + '&refresh=20261026n';
+    };
+    var remove = document.createElement('button'); remove.type = 'button'; remove.className = 'action';
+    remove.textContent = 'Remove plan'; remove.onclick = function(){
+      var current = readDraftSchedule(); current.splice(index,1);
+      try { localStorage.setItem(draftScheduleKey, JSON.stringify(current)); } catch(error) {}
+      renderDraftSchedule();
+    };
+    actions.appendChild(find); actions.appendChild(review); actions.appendChild(remove);
+    row.appendChild(title); row.appendChild(details); row.appendChild(status); row.appendChild(actions); list.appendChild(row);
+  });
+}
+function saveDraftSchedule(){
+  var title = document.getElementById('scheduledDraftSelect').value;
+  var date = document.getElementById('scheduledDraftDate').value;
+  var time = document.getElementById('scheduledDraftTime').value;
+  var status = document.getElementById('draftScheduleStatus');
+  if(!date || !time){ status.textContent = 'Please choose both a date and a time.'; return; }
+  var chosen = new Date(date + 'T' + time);
+  if(Number.isNaN(chosen.getTime())){ status.textContent = 'Please enter a valid date and time.'; return; }
+  if(chosen.getTime() < Date.now() - 60000){ status.textContent = 'Choose a future date and time for this draft plan.'; return; }
+  var items = readDraftSchedule();
+  if(items.some(function(item){ return item.title === title && item.date === date && item.time === time; })){
+    status.textContent = 'This exact draft plan already exists. Change the date or time, or remove the existing plan.';
+    return;
+  }
+  items.push({title:title,date:date,time:time,status:'Draft — approval required'});
+  items.sort(function(a,b){ return (a.date + 'T' + a.time).localeCompare(b.date + 'T' + b.time); });
+  try {
+    localStorage.setItem(draftScheduleKey, JSON.stringify(items));
+    status.textContent = 'Saved as a draft plan. It is not published or sent to a platform.';
+    renderDraftSchedule();
+  } catch(error) {
+    status.textContent = 'Could not save in this browser. No post was published.';
+  }
+}
+renderDraftSchedule();
+
+function setMode(auto){
+  var mode = document.getElementById('mode');
+  var modeText = document.getElementById('modeText');
+  var manualButton = document.getElementById('manualButton');
+  var autoButton = document.getElementById('autoButton');
+
+  mode.textContent = auto
+    ? 'Auto Approval Mode — DEMO ON'
+    : 'Manual Approval Mode — ON';
+
+  modeText.textContent = auto
+    ? 'Demo toggle only. Real safety checks and automatic publishing are not connected.'
+    : 'Content requires your approval before publishing.';
+
+  manualButton.classList.toggle('active', !auto);
+  autoButton.classList.toggle('active', auto);
+
+  manualButton.setAttribute('aria-pressed', String(!auto));
+  autoButton.setAttribute('aria-pressed', String(auto));
+
+  try {
+    localStorage.setItem('nextgen-demo-approval-mode', auto ? 'auto' : 'manual');
+  } catch (error) {
+    /* Keep mode switching usable if browser storage is unavailable. */
+  }
+}
+
+/* Manual Approval is the safe default. Restore Auto only if the user previously selected it. */
+(function restoreApprovalMode(){
+  try {
+    setMode(localStorage.getItem('nextgen-demo-approval-mode') === 'auto');
+  } catch (error) {
+    setMode(false);
+  }
+})();
+function mobileNavigate(section,button){
+  var nav=document.querySelector('.studio-nav');
+  if(nav)nav.classList.remove('nav-expanded');
+  if(section==='channels'){window.location.href='channels.html';return}
+  if(section==='settings'){window.location.href='settings.html';return}
+  if(['schedule','approvals','content','dashboard'].indexOf(section)!==-1){
+    showPage(section);
+    document.querySelectorAll('.ng-bottom-nav a').forEach(function(a){a.classList.toggle('active',a.dataset.page===section)});
+    if(section==='dashboard') history.replaceState(null,'',window.location.pathname);
+    else history.replaceState(null,'','#'+section);
+    window.scrollTo(0,0);
+  }
+}
+function toggleTopMenu(id){
+  ['addMenu','notificationMenu','profileMenu'].forEach(function(menuId){
+    var el=document.getElementById(menuId);
+    if(el)el.hidden=(menuId!==id || !el.hidden);
+  });
+}
+document.addEventListener('click',function(event){
+  if(!event.target.closest('.studio-top-right')&&!event.target.closest('.top-popover')){
+    ['addMenu','notificationMenu','profileMenu'].forEach(function(id){var el=document.getElementById(id);if(el)el.hidden=true;});
+  }
+});
+function studioNavTo(section){
+  document.querySelectorAll('.studio-navbtn').forEach(function(b){b.classList.remove('active')});
+  if(section==='dashboard'){showPage('dashboard');return}
+  if(section==='content'){showPage('content')}
+  else if(section==='settings'){window.location.href='settings.html';return}
+  document.querySelectorAll('.studio-navbtn').forEach(function(b){if((section==='content'&&b.textContent.trim()==='Content'))b.classList.add('active')});
+  window.scrollTo(0,0);
+}
+function studioScroll(id){
+  showPage('dashboard');
+  document.querySelectorAll('.studio-navbtn').forEach(function(b){b.classList.remove('active')});
+  var target=document.getElementById(id);
+  if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 <script>
 (function(){
-var path=location.pathname.split('/').pop()||'index.html';
-var current=path==='channels.html'?'channels':(path==='settings.html'||path==='privacy-settings.html'?'settings':(path==='help-centre.html'?'settings':'dashboard'));
-document.querySelectorAll('.ng-bottom-nav a').forEach(function(a){if(a.dataset.page===current)a.classList.add('active')});
+ const config=window.NEXTGEN_SUPABASE_CONFIG;
+ const configured=config && config.url && config.anonKey &&
+   config.url.indexOf('https://')===0 &&
+   config.url.indexOf('PASTE_')===-1 &&
+   config.anonKey.indexOf('PASTE_')===-1;
+ if(!configured || !window.supabase || !window.supabase.createClient){return;}
+ const client=window.supabase.createClient(config.url,config.anonKey);
+ window.nextgenSignOut=async function(){
+   const result=await client.auth.signOut();
+   if(result.error){alert('Could not sign out. Please try again.');return;}
+   window.location.href='login.html';
+ };
+ client.auth.getSession().then(function(result){
+   if(!result.data.session){
+     window.location.replace('login.html');
+     return;
+   }
+   const button=document.getElementById('signOutButton');
+   if(button) button.style.display='block';
+ });
 })();
 </script>
+<script>
+/* Allow direct mobile links to open a section and focus the requested draft. */
+(function(){
+  function openLinkedSection(){
+    var section = (window.location.hash || "").replace("#","");
+    var params = new URLSearchParams(window.location.search);
+    var draftId = params.get("draft");
+    if(["dashboard","content","approvals","schedule","settings"].indexOf(section)!==-1 && typeof showPage==="function"){
+      showPage(section);
+    }
+    if(draftId && ["bedStatus","sofaStatus","tableStatus"].indexOf(draftId)!==-1){
+      if(section === "content"){
+        if(typeof clearQueueFilters === "function") clearQueueFilters();
+        var card = document.querySelector('.queue-item[data-status-id="' + draftId + '"]');
+        if(card){
+          card.style.display = '';
+          card.style.outline = '2px solid #91aaff';
+          card.style.outlineOffset = '3px';
+          card.scrollIntoView({behavior:'smooth',block:'center'});
+          window.setTimeout(function(){ card.style.outline = ''; card.style.outlineOffset = ''; }, 2500);
+        }
+      } else if(section === "approvals" && typeof reviewDraft === "function"){
+        reviewDraft(draftId);
+      }
+    }
+  }
+  window.addEventListener("load", openLinkedSection);
+})();
+</script>
+
+
+
 </body>
 </html>
