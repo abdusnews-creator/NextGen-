@@ -69,6 +69,13 @@ body:has(.ng-bottom-nav){padding-bottom:76px!important}
 <div class="setting"><div><strong>Content notifications</strong><p>Show in-app reminders for items waiting for review (prototype preference).</p></div><input class="switch" id="notifications" type="checkbox" checked aria-label="Content notifications"></div>
 <div class="setting"><div><strong>Background mode preference</strong><p>Remember that you want NextGen to run continuously when a real background service is implemented. This switch does not run a worker yet.</p></div><input class="switch" id="background" type="checkbox" checked aria-label="Background mode preference"></div>
 <p class="status" id="status" role="status" aria-live="polite"></p></section>
+<section class="panel"><h2>Approval Safety</h2>
+<p>Publishing mode: <strong>Manual Approval Mode — ON</strong></p>
+<p>Auto Approval Mode: <strong>OFF</strong></p>
+<div class="setting"><div><strong>Manual Approval (Recommended)</strong><p>Content stays pending until you review and approve it. This is the default mode.</p></div></div>
+<div class="notice">Auto mode is a demo toggle only. If later connected to a real backend, it must auto-approve only low-risk, brand-safe content after spelling, factual, copyright, duplicate, and platform-policy checks. Sensitive, uncertain, complaint-related, or failing content must remain pending manual review.</div>
+<div class="notice">This is a front-end prototype. Channel pause settings and approval mode are saved only in this browser on this device. Real account connections, secure login, shared database, automated checks, scheduling, and 24/7 background monitoring are not implemented yet. No publishing or scheduling is performed by this prototype.</div>
+</section>
 <section class="panel"><h2>Privacy & account controls</h2><p class="muted">Manage channel details, enable/disable entries, and remove entries from your NextGen list in Privacy Settings.</p><a class="btn primary" href="privacy-settings.html">Open Privacy Settings →</a></section>
 <section class="panel"><h2>Safety & permissions</h2><div class="notice">This is a front-end prototype. Preferences are stored locally on this device only. Real platform permissions, account-wide sync, publishing, and 24/7 background processing are not connected. No content is published by these switches.</div></section>
 </main></div>
