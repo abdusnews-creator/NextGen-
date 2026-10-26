@@ -28,8 +28,8 @@
 <label class="check"><input type="checkbox" class="checkitem"> Copyright checked</label>
 <label class="check"><input type="checkbox" class="checkitem"> Duplicate content checked</label>
 <label class="check"><input type="checkbox" class="checkitem"> Platform policy and brand safety checked</label>
-<button class="btn" id="approve">Approve (demo only)</button><button class="btn reject" id="reject">Reject draft</button><button class="btn" style="background:#293752;color:#fff" id="reset">Reset checklist</button>
-<p id="status" class="status" aria-live="polite">Pending review</p><p class="muted">Review status is saved in this browser on this device only.</p>
+<button class="btn" id="approve">Approve for review only</button><button class="btn reject" id="reject">Reject draft</button><button class="btn" style="background:#293752;color:#fff" id="reset">Reset checklist</button>
+<p id="status" class="status" aria-live="polite">Pending review</p><p class="muted">Review status is saved on this device; when Supabase is configured and signed in, full draft data and review checks sync to your private account.</p>
 <p class="warning">Demo only: this page does not publish or schedule posts to YouTube, Facebook, Instagram or Threads.</p>
 </div>
 </main>
@@ -59,7 +59,19 @@ async function connectReviewCloud(){
   const {data,error}=await reviewSupabase.auth.getUser();
   if(error||!data.user){el.textContent='Sign in on the NextGen Login page to enable account-specific review sync.';return}
   reviewUser=data.user;
-  el.textContent='Signed in: cloud review sync is ready for this account. Reviews remain private to this account.';
+  try{
+    const {data:rows,error:loadError}=await reviewSupabase.from('content_drafts').select('id,title,caption,content,metadata,status,approval_mode,updated_at').eq('user_id',reviewUser.id).order('updated_at',{ascending:false}).limit(30);
+    if(loadError)throw loadError;
+    const ids=reviewCloudIds();
+    const cloudByKey={};
+    (rows||[]).forEach(row=>{const k=row.metadata&&row.metadata.draft_key;if(k&&['bed','sofa','table'].includes(k)){ids[reviewUser.id+':'+k]=row.id;cloudByKey[k]=row;}});
+    localStorage.setItem(cloudDraftKey,JSON.stringify(ids));
+    window.nextgenCloudDrafts=cloudByKey;
+    el.textContent='Signed in: loaded '+(rows||[]).length+' private cloud draft(s). Changes save to this account; nothing is published or scheduled.';
+    renderQueue();
+  }catch(e){
+    el.textContent='Signed in, but cloud drafts could not load. Apply the latest database schema, then retry. '+(e.message||'').slice(0,120);
+  }
 }
 async function saveCloudReview(value){
   if(!reviewUser||!reviewSupabase)return;
@@ -70,15 +82,28 @@ async function saveCloudReview(value){
     const isApproved=value.indexOf('Approved')===0;
     const isRejected=value.indexOf('Rejected')===0;
     const targetStatus=isApproved?'approved':isRejected?'rejected':'pending_approval';
-    const title=(postTitleInput?.value||drafts[select.value].title||select.value).trim().slice(0,140);
-    const caption=(document.getElementById('caption')?.textContent||'').trim();
+    const title=(postTitleInput.value||drafts[select.value].title||select.value).trim().slice(0,140);
+    const caption=document.getElementById('caption').textContent.trim();
+    const content=document.getElementById('content').textContent.trim();
+    const metadata={
+      draft_key:select.value,platform:platformSelect.value,topic:topicInput.value.trim(),
+      hashtags:document.getElementById('hashtags').textContent,
+      tags:document.getElementById('tags').textContent,
+      keywords:document.getElementById('keywords').textContent,
+      thumbnail_prompt:document.getElementById('thumbnailPrompt').textContent,
+      primary_keyword:document.getElementById('primaryKeyword').textContent,
+      secondary_keywords:document.getElementById('secondaryKeywords').textContent,
+      seo_description:document.getElementById('seoDescription').textContent,
+      review_checklist:checks.map(c=>c.checked),
+      seo_checklist:seoChecks.map(c=>c.checked)
+    };
     if(draftId){
       const {data,error}=await reviewSupabase.from('content_drafts').select('id').eq('id',draftId).eq('user_id',reviewUser.id).maybeSingle();
       if(error)throw error;
       if(!data)draftId=null;
     }
     if(!draftId){
-      const {data,error}=await reviewSupabase.from('content_drafts').insert({user_id:reviewUser.id,title,caption,status:'pending_approval',approval_mode:'manual'}).select('id').single();
+      const {data,error}=await reviewSupabase.from('content_drafts').insert({user_id:reviewUser.id,title,caption,content,metadata,status:'pending_approval',approval_mode:'manual'}).select('id').single();
       if(error)throw error;
       draftId=data.id;ids[key]=draftId;localStorage.setItem(cloudDraftKey,JSON.stringify(ids));
     }
@@ -89,17 +114,17 @@ async function saveCloudReview(value){
       platform_safety_checked:checks[4].checked,reviewed_at:new Date().toISOString()
     },{onConflict:'draft_id'});
     if(reviewError)throw reviewError;
-    const {error:updateError}=await reviewSupabase.from('content_drafts').update({title,caption,status:targetStatus,approval_mode:'manual'}).eq('id',draftId).eq('user_id',reviewUser.id);
+    const {error:updateError}=await reviewSupabase.from('content_drafts').update({title,caption,content,metadata,status:targetStatus,approval_mode:'manual'}).eq('id',draftId).eq('user_id',reviewUser.id);
     if(updateError)throw updateError;
-    el.textContent='Saved to your private Supabase account: '+targetStatus.replace('_',' ')+'. No post was published or scheduled.';
+    el.textContent='Full draft and review checks saved to your private account: '+targetStatus.replace('_',' ')+'. Nothing was published or scheduled.';
   }catch(e){
-    el.textContent='Cloud save failed: '+(e.message||'check Supabase schema and sign-in').slice(0,180)+'. Local status is still saved on this device.';
+    el.textContent='Cloud save failed: '+(e.message||'apply the latest schema and check sign-in').slice(0,180)+'. Local status is still saved on this device.';
   }
 }
 
 function readStates(){try{return JSON.parse(localStorage.getItem(stateKey)||'{}')}catch(e){return {}}}
 function readDashboardStates(){try{return JSON.parse(localStorage.getItem(dashboardKey)||'{}')}catch(e){return {}}}
-function writeStatus(value){const states=readStates();states[select.value]=value;try{localStorage.setItem(stateKey,JSON.stringify(states));const shared=readDashboardStates();shared[draftIds[select.value]]=value.indexOf('Approved')===0?'Approved for selected channel (demo only)':value.indexOf('Rejected')===0?'Rejected — revision needed':'Pending approval';localStorage.setItem(dashboardKey,JSON.stringify(shared))}catch(e){};statusEl.textContent=value;saveCloudReview(value);renderQueue()}
+function writeStatus(value){const states=readStates();states[select.value]=value;try{localStorage.setItem(stateKey,JSON.stringify(states));const shared=readDashboardStates();shared[draftIds[select.value]]=value.indexOf('Approved')===0?'Approved for selected channel — nothing published or scheduled':value.indexOf('Rejected')===0?'Rejected — revision needed':'Pending approval';localStorage.setItem(dashboardKey,JSON.stringify(shared))}catch(e){};statusEl.textContent=value;saveCloudReview(value);renderQueue()}
 function renderQueue(){
   const queue=document.getElementById('reviewQueue');
   const summary=document.getElementById('queueSummary');
@@ -113,13 +138,13 @@ function renderQueue(){
   let pending=0,approved=0,rejected=0;
   queue.replaceChildren();
   items.forEach(item=>{
-    const value=shared[draftIds[item.id]]||states[item.id]||'Pending review';
+    const cloud=(window.nextgenCloudDrafts||{})[item.id];const cloudStatus=cloud?(cloud.status==='approved'?'Approved for review only':cloud.status==='rejected'?'Rejected — revision needed':'Pending review'):null;const value=cloudStatus||shared[draftIds[item.id]]||states[item.id]||'Pending review';
     if(/^Approved/.test(value))approved++;else if(/^Rejected/.test(value))rejected++;else pending++;
     const card=document.createElement('div');card.className='queueItem';
     const h=document.createElement('h4');h.textContent=item.name;
     const s=document.createElement('p');s.className='queueStatus';s.textContent=value;
     const b=document.createElement('button');b.type='button';b.textContent=item.id===select.value?'Currently open':'Open draft';
-    b.addEventListener('click',()=>{select.value=item.id;topicInput.value=item.id==='bed'?'Luxury Wooden Bed':item.id==='sofa'?'Royal Sofa Set':'Carved Centre Table';render();window.scrollTo({top:0,behavior:'smooth'});});
+    b.addEventListener('click',()=>{select.value=item.id;const cloud=(window.nextgenCloudDrafts||{})[item.id];topicInput.value=cloud&&cloud.metadata&&cloud.metadata.topic|| (item.id==='bed'?'Luxury Wooden Bed':item.id==='sofa'?'Royal Sofa Set':'Carved Centre Table');postTitleInput.value=cloud&&cloud.title||'';render();if(cloud){if(cloud.caption)document.getElementById('caption').textContent=cloud.caption;if(cloud.content)document.getElementById('content').textContent=cloud.content;const m=cloud.metadata||{};[['hashtags','hashtags'],['tags','tags'],['keywords','keywords'],['thumbnailPrompt','thumbnail_prompt'],['primaryKeyword','primary_keyword'],['secondaryKeywords','secondary_keywords'],['seoDescription','seo_description']].forEach(([id,key])=>{if(m[key])document.getElementById(id).textContent=m[key]});if(Array.isArray(m.review_checklist))checks.forEach((c,i)=>c.checked=!!m.review_checklist[i]);if(Array.isArray(m.seo_checklist))seoChecks.forEach((c,i)=>c.checked=!!m.seo_checklist[i]);statusEl.textContent=cloud.status==='approved'?'Approved for review only — nothing published or scheduled':cloud.status==='rejected'?'Rejected — revise draft before review':'Pending review';}window.scrollTo({top:0,behavior:'smooth'});});
     card.append(h,s,b);queue.appendChild(card);
   });
   summary.textContent='Queue summary: '+pending+' pending · '+approved+' approved (demo) · '+rejected+' rejected';
@@ -204,6 +229,6 @@ connectReviewCloud();
   render();
 })();
 document.getElementById('reset').addEventListener('click',()=>{checks.forEach(c=>c.checked=false);writeStatus('Pending review — checklist reset')});
-document.getElementById('approve').addEventListener('click',()=>{if(!checks.every(c=>c.checked)){statusEl.textContent='Please tick all five checklist items first.';return}writeStatus('Approved (demo only) — nothing published or scheduled')});
+document.getElementById('approve').addEventListener('click',()=>{if(!checks.every(c=>c.checked)){statusEl.textContent='Please tick all five checklist items first.';return}writeStatus('Approved for review only — nothing published or scheduled')});
 document.getElementById('reject').addEventListener('click',()=>writeStatus('Rejected — revise draft before review (demo only)'));
 </script></body></html>
