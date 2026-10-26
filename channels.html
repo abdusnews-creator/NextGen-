@@ -48,7 +48,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
 <div class="top">
   <div>
     <h2>Channel Management</h2>
-    <p class="note">DEMO CONTROLS — browser-only test settings, not connected to real social accounts.</p>
+    <p class="note" id="cloudStatus">DEMO CONTROLS — browser-only test settings, not connected to real social accounts.</p>
   </div>
 </div>
 <div class="notice" style="margin-top:14px">
@@ -126,6 +126,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
 
 <footer>Powered by ABDUS SATTAR</footer>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./supabase-config.js"></script>
 <script>
 (function(){
   const cards = Array.from(document.querySelectorAll('.card[data-platform]'));
@@ -134,6 +135,9 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   const storageKey = 'nextgen-demo-paused-channels-v1';
   const enabledStorageKey = 'nextgen-demo-enabled-channels-v1';
   const approvalStorageKey = 'nextgen-demo-approval-mode-v1';
+  const cloudStatus = document.getElementById('cloudStatus');
+  let cloudClient = null, cloudUser = null;
+  try { const cfg=window.NEXTGEN_SUPABASE_CONFIG||{}; if(window.supabase?.createClient && /^https:\/\//.test(cfg.url||'') && cfg.anonKey && !cfg.url.includes('PASTE_') && !cfg.anonKey.includes('PASTE_')) cloudClient=window.supabase.createClient(cfg.url,cfg.anonKey); } catch(e) {}
   const approvalModeLabel = document.getElementById('approvalModeLabel');
   const autoModeLabel = document.getElementById('autoModeLabel');
   const approvalModeStatus = document.getElementById('approvalModeStatus');
@@ -174,9 +178,39 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   try { pausedChannels = JSON.parse(localStorage.getItem(storageKey) || '{}') || {}; }
   catch (error) { pausedChannels = {}; }
 
-  function saveState(){
+  async function saveState(){
     try { localStorage.setItem(storageKey, JSON.stringify(pausedChannels)); }
     catch (error) { /* The UI still works for this page session if storage is unavailable. */ }
+    if(cloudClient && cloudUser){
+      const changed=Object.keys(pausedChannels).filter(k=>pausedChannels[k]);
+      try{
+        const {data:rows,error:readError}=await cloudClient.from('channels').select('id,platform').eq('user_id',cloudUser.id);
+        if(readError) throw readError;
+        for(const card of cards){
+          const platform=card.dataset.platform;
+          const row=(rows||[]).find(x=>x.platform===platform);
+          const values={connection_status:pausedChannels[platform]?'paused':'not_connected',updated_at:new Date().toISOString()};
+          if(row){const {error}=await cloudClient.from('channels').update(values).eq('id',row.id).eq('user_id',cloudUser.id);if(error)throw error;}
+          else {const {error}=await cloudClient.from('channels').insert({user_id:cloudUser.id,platform,display_name:card.dataset.name,handle:card.dataset.handle,...values});if(error)throw error;}
+        }
+        cloudStatus.textContent='Supabase connected: channel pause state saved to your signed-in account. Social platform OAuth is still not connected.';
+      }catch(err){cloudStatus.textContent='Cloud sync failed: '+(err.message||'check Supabase schema and access policies')+'. Browser demo state remains saved locally.';}
+    }
+  }
+  async function connectCloud(){
+    if(!cloudClient){cloudStatus.textContent='Supabase not configured yet — channel controls remain browser-only. Configure supabase-config.js and sign in first.';return;}
+    try{
+      const {data,error}=await cloudClient.auth.getUser();
+      if(error)throw error;
+      cloudUser=data.user;
+      if(!cloudUser){cloudStatus.textContent='Supabase configured, but no signed-in user. Sign in through NextGen Login to enable per-account channel sync.';return;}
+      const {data:rows,error:readError}=await cloudClient.from('channels').select('id,platform,connection_status').eq('user_id',cloudUser.id);
+      if(readError)throw readError;
+      (rows||[]).forEach(row=>{if(row.connection_status==='paused')pausedChannels[row.platform]=true;});
+      try{localStorage.setItem(storageKey,JSON.stringify(pausedChannels));}catch(e){}
+      cards.forEach(renderCard);
+      cloudStatus.textContent='Signed in: channel pause state can sync to Supabase. Real social accounts are not connected.';
+    }catch(err){cloudStatus.textContent='Supabase connection needs setup: '+(err.message||'check project configuration and database schema');}
   }
 
   function renderCard(card){
@@ -237,6 +271,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     filterCards();
   });
   filterCards();
+  connectCloud();
 })();
 </script>
 </body>
