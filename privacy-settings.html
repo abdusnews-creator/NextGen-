@@ -20,7 +20,17 @@ form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-
 .status{margin-top:12px;font-size:13px;min-height:18px;color:var(--good)}.notice{background:#302818;border:1px solid #806633;color:#ffe1a6;padding:12px;border-radius:10px;font-size:13px;line-height:1.55;margin-top:14px}
 footer{max-width:1100px;margin:0 auto;padding:0 16px 22px;text-align:right;color:var(--muted);font-size:12px}
 @media(max-width:700px){.layout{grid-template-columns:1fr;margin-top:14px}nav{display:flex;gap:4px;overflow:auto}nav a{white-space:nowrap}form{grid-template-columns:1fr}form .wide{grid-column:auto}main h1{font-size:24px}}
-.main-nav{max-width:1100px;margin:12px auto 0;padding:8px 16px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}.main-nav a{display:block;padding:10px 13px;border:1px solid var(--line);border-radius:8px;background:#10182a;color:var(--muted);white-space:nowrap}.main-nav a:hover{background:#202b42;color:var(--text)}.main-nav a.active{background:#263452;color:#fff;font-weight:700}@media(max-width:700px){.main-nav{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;padding:8px 12px}.main-nav a{font-size:14px;padding:10px 12px}}</style>
+.main-nav{display:none!important}.main-nav a{display:block;padding:10px 13px;border:1px solid var(--line);border-radius:8px;background:#10182a;color:var(--muted);white-space:nowrap}.main-nav a:hover{background:#202b42;color:var(--text)}.main-nav a.active{background:#263452;color:#fff;font-weight:700}@media(max-width:700px){.main-nav{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;padding:8px 12px}.main-nav a{font-size:14px;padding:10px 12px}}
+/* NextGen shared responsive header and footer polish */
+header{background:linear-gradient(110deg,#111b30 0%,#101827 70%,#102746 100%);box-shadow:0 5px 22px #0003}
+.brand,header h1,header strong{letter-spacing:-.35px}
+.tag{font-weight:500;letter-spacing:.1px}
+button,a,input{transition:background-color .18s ease,border-color .18s ease,color .18s ease}
+.ng-bottom-nav{backdrop-filter:blur(14px);background:rgba(12,20,34,.96)!important;border-top:1px solid #2b4262!important;box-shadow:0 -8px 28px #0005!important}
+.ng-bottom-nav a{min-height:52px}
+.ng-bottom-nav a.active{color:#63b3ff!important;background:linear-gradient(180deg,#193453,#14263b)!important;box-shadow:inset 0 2px 0 #2696ff}
+@media(max-width:600px){header{padding-left:16px!important;padding-right:16px!important}.tag{font-size:12px}.ng-bottom-nav{min-height:72px}}
+</style>
 </head>
 <body>
 <header><div><div class="brand">NextGen</div><p class="tag">Smart Automation. Smarter Growth.</p></div></header>
