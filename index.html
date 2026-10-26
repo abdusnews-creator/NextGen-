@@ -585,8 +585,16 @@ function saveDraftSchedule(){
   var time = document.getElementById('scheduledDraftTime').value;
   var status = document.getElementById('draftScheduleStatus');
   if(!date || !time){ status.textContent = 'Please choose both a date and a time.'; return; }
+  var chosen = new Date(date + 'T' + time);
+  if(Number.isNaN(chosen.getTime())){ status.textContent = 'Please enter a valid date and time.'; return; }
+  if(chosen.getTime() < Date.now() - 60000){ status.textContent = 'Choose a future date and time for this draft plan.'; return; }
   var items = readDraftSchedule();
+  if(items.some(function(item){ return item.title === title && item.date === date && item.time === time; })){
+    status.textContent = 'This exact draft plan already exists. Change the date or time, or remove the existing plan.';
+    return;
+  }
   items.push({title:title,date:date,time:time,status:'Draft — approval required'});
+  items.sort(function(a,b){ return (a.date + 'T' + a.time).localeCompare(b.date + 'T' + b.time); });
   try {
     localStorage.setItem(draftScheduleKey, JSON.stringify(items));
     status.textContent = 'Saved as a draft plan. It is not published or sent to a platform.';
