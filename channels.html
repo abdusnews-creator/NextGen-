@@ -333,7 +333,22 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   const customChannelsStorageKey='nextgen-custom-channels-v1';
   const editingChannelKey=document.createElement('input');editingChannelKey.type='hidden';editingChannelKey.id='editingChannelKey';document.getElementById('addChannelForm').appendChild(editingChannelKey);
   function readCustomChannels(){
-    try{const value=JSON.parse(localStorage.getItem(customChannelsStorageKey)||'[]');return Array.isArray(value)?value:[];}catch(e){return [];}
+    try{
+      const value=JSON.parse(localStorage.getItem(customChannelsStorageKey)||'[]');
+      if(!Array.isArray(value))return [];
+      const seen=new Set();
+      const unique=value.filter(item=>{
+        if(!item || !item.name || !item.platform)return false;
+        const identity=[item.platform,(item.url||'').toLowerCase(),(item.name||'').trim().toLowerCase(),(item.handle||'').trim().toLowerCase()].join('|');
+        if(seen.has(identity))return false;
+        seen.add(identity);
+        return true;
+      });
+      if(unique.length!==value.length){
+        try{localStorage.setItem(customChannelsStorageKey,JSON.stringify(unique));}catch(e){}
+      }
+      return unique;
+    }catch(e){return [];}
   }
   function saveCustomChannels(items){
     try{localStorage.setItem(customChannelsStorageKey,JSON.stringify(items));return true;}catch(e){return false;}
@@ -376,6 +391,10 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
       const platform=detectPlatformFromUrl(raw);
       if(!platform)return null;
       const parts=parsed.pathname.split('/').filter(Boolean);
+      const firstPart=(parts[0]||'').toLowerCase();
+      if(['share','sharer','sharing','posts','reel','reels','stories'].includes(firstPart) || parsed.pathname.toLowerCase().includes('/share/')){
+        return {platform,name:'',handle:'',shareLink:true};
+      }
       let handle='';
       if(platform==='youtube'){
         handle=parts.find(x=>x.startsWith('@')) || (parts[0]==='channel'||parts[0]==='c'||parts[0]==='user' ? (parts[1]||'') : (parts[0]||''));
@@ -403,6 +422,10 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
       handleInput.value=detected.handle;
       document.getElementById('platformDisplay').value=detected.platform.charAt(0).toUpperCase()+detected.platform.slice(1);
       document.getElementById('addChannelStatus').textContent='Platform detected. Channel name and handle are estimated from the profile link.';
+    }else if(detected && detected.shareLink){
+      nameInput.value='';handleInput.value='';
+      document.getElementById('platformDisplay').value=detected.platform.charAt(0).toUpperCase()+detected.platform.slice(1);
+      document.getElementById('addChannelStatus').textContent='This looks like a Share/Post link, not a profile link. Open the actual page/channel profile and copy its profile URL.';
     }else{
       nameInput.value='';handleInput.value='';document.getElementById('platformDisplay').value='';
       document.getElementById('addChannelStatus').textContent='Platform not detected. Paste a full Facebook, YouTube, Instagram or Threads profile link.';
@@ -419,6 +442,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     if(url){try{const parsed=new URL(url);if(!['http:','https:'].includes(parsed.protocol))throw new Error();url=parsed.href;}catch(e){status.textContent='Please enter a valid Facebook / YouTube / social profile link.';return;}
       const detected=detectChannelFromUrl(url);
       if(!detected || !detected.platform){status.textContent='Could not detect platform. Use a Facebook, YouTube, Instagram or Threads profile link.';return;}
+      if(detected.shareLink){status.textContent='This is a Share/Post link, not a profile link. Please paste the actual page/channel profile URL. Nothing was added.';return;}
       platform=detected.platform;
       document.getElementById('newPlatform').value=platform;
       if(!name) { status.textContent='Could not read a channel name from this link. Try a profile link with a username in its address.'; return; }
