@@ -135,6 +135,29 @@ body{background:#0f141b;color:#f1f5f9;font-family:Arial,Helvetica,sans-serif}
 .top-popover .pop-divider{height:1px;background:#293847;margin:6px 2px}
 @media(max-width:680px){.studio-brand{font-size:18px!important}.studio-top-right{gap:5px}.top-icon-btn{width:34px;height:36px}.top-popover{top:56px;right:8px}}
 </style>
+<style>
+/* Mobile Studio bottom navigation and reliable hamburger drawer */
+.studio-menu{cursor:pointer;position:relative;z-index:120;min-width:38px;min-height:38px;display:grid;place-items:center;border-radius:8px}
+.studio-menu:hover{background:#263442}
+@media(min-width:681px){
+ .studio-nav.nav-expanded{width:248px}
+}
+@media(max-width:680px){
+ body{padding-bottom:72px}
+ .studio-shell{display:block;min-height:auto}
+ .studio-nav{position:fixed;z-index:110;top:62px;bottom:0;left:0;width:min(290px,84vw);height:auto;display:flex;flex-direction:column;align-items:stretch;overflow-y:auto;overflow-x:hidden;gap:4px;padding:14px 10px 24px;background:#0e151d;border-right:1px solid #2b3948;box-shadow:12px 0 32px #0008;transform:translateX(-110%);visibility:hidden;transition:transform .2s ease,visibility .2s ease}
+ .studio-nav.nav-expanded{transform:translateX(0);visibility:visible}
+ .studio-nav .studio-channel{display:flex}
+ .studio-nav .studio-navbtn{width:100%;min-width:0;flex-shrink:0}
+ .studio-main{padding:16px 12px 26px}
+ .studio-mobile-bottom{position:fixed;z-index:105;left:0;right:0;bottom:0;height:68px;padding:5px 4px max(5px,env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:2px;background:#101923;border-top:1px solid #2a3948;box-shadow:0 -6px 24px #0005}
+ .studio-mobile-bottom button{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;border-radius:8px;background:transparent;color:#aebed0;font-size:10px;padding:4px 1px}
+ .studio-mobile-bottom button .bottom-icon{font-size:19px;line-height:22px}
+ .studio-mobile-bottom button.active{color:#58a2ff;background:#1b2b3d;font-weight:700}
+ .studio-mobile-bottom button:active{background:#263b52}
+}
+@media(min-width:681px){.studio-mobile-bottom{display:none}}
+</style>
 </head>
 
 <body>
@@ -188,6 +211,15 @@ body{background:#0f141b;color:#f1f5f9;font-family:Arial,Helvetica,sans-serif}
   <button class="studio-navbtn" type="button" onclick="window.location.href='login.html'"><span class="studio-nav-icon">⇥</span>Sign in</button>
   <button id="signOutButton" class="studio-navbtn" type="button" style="display:none" onclick="nextgenSignOut()"><span class="studio-nav-icon">↪</span>Sign out</button>
 </nav>
+<div class="studio-mobile-bottom" role="navigation" aria-label="Mobile main navigation">
+  <button type="button" class="active" data-bottom="dashboard" onclick="mobileNavigate('dashboard',this)"><span class="bottom-icon">⌂</span><span>Home</span></button>
+  <button type="button" data-bottom="channels" onclick="mobileNavigate('channels',this)"><span class="bottom-icon">▶</span><span>Channels</span></button>
+  <button type="button" data-bottom="content" onclick="mobileNavigate('content',this)"><span class="bottom-icon">▤</span><span>Content</span></button>
+  <button type="button" data-bottom="approvals" onclick="mobileNavigate('approvals',this)"><span class="bottom-icon">✓</span><span>Approvals</span></button>
+  <button type="button" data-bottom="schedule" onclick="mobileNavigate('schedule',this)"><span class="bottom-icon">▦</span><span>Schedule</span></button>
+  <button type="button" data-bottom="settings" onclick="mobileNavigate('settings',this)"><span class="bottom-icon">⚙</span><span>Settings</span></button>
+</div>
+
 
 <main class="studio-main">
 <section id="dashboard" class="page show">
@@ -735,6 +767,17 @@ function setMode(auto){
     setMode(false);
   }
 })();
+function mobileNavigate(section,button){
+  document.querySelectorAll('.studio-mobile-bottom button').forEach(function(b){b.classList.toggle('active',b===button)});
+  var nav=document.querySelector('.studio-nav');
+  if(nav)nav.classList.remove('nav-expanded');
+  if(section==='channels'){window.location.href='channels.html';return}
+  if(section==='settings'){window.location.href='settings.html';return}
+  if(section==='schedule'){showPage('schedule');window.scrollTo(0,0);return}
+  if(section==='approvals'){showPage('approvals');window.scrollTo(0,0);return}
+  if(section==='content'){showPage('content');window.scrollTo(0,0);return}
+  showPage('dashboard');window.scrollTo(0,0);
+}
 function toggleTopMenu(id){
   ['addMenu','notificationMenu','profileMenu'].forEach(function(menuId){
     var el=document.getElementById(menuId);
