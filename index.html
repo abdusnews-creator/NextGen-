@@ -575,7 +575,9 @@ function renderDraftSchedule(){
     var actions = document.createElement('div');
     var find = document.createElement('button'); find.type = 'button'; find.className = 'action';
     find.textContent = 'Find in Content Queue';
-    find.onclick = function(){ window.location.href = './?refresh=20261026i#content'; };
+    find.onclick = function(){
+      window.location.href = './?draft=' + encodeURIComponent(statusId) + '&refresh=20261026p#content';
+    };
     var review = document.createElement('button'); review.type = 'button'; review.className = 'action';
     review.textContent = 'Open Review Checklist';
     review.onclick = function(){
@@ -681,12 +683,29 @@ function setMode(auto){
 })();
 </script>
 <script>
-/* Allow direct mobile links to open a specific dashboard section. */
+/* Allow direct mobile links to open a section and focus the requested draft. */
 (function(){
   function openLinkedSection(){
     var section = (window.location.hash || "").replace("#","");
+    var params = new URLSearchParams(window.location.search);
+    var draftId = params.get("draft");
     if(["dashboard","content","approvals","schedule","settings"].indexOf(section)!==-1 && typeof showPage==="function"){
       showPage(section);
+    }
+    if(draftId && ["bedStatus","sofaStatus","tableStatus"].indexOf(draftId)!==-1){
+      if(section === "content"){
+        if(typeof clearQueueFilters === "function") clearQueueFilters();
+        var card = document.querySelector('.queue-item[data-status-id="' + draftId + '"]');
+        if(card){
+          card.style.display = '';
+          card.style.outline = '2px solid #91aaff';
+          card.style.outlineOffset = '3px';
+          card.scrollIntoView({behavior:'smooth',block:'center'});
+          window.setTimeout(function(){ card.style.outline = ''; card.style.outlineOffset = ''; }, 2500);
+        }
+      } else if(section === "approvals" && typeof reviewDraft === "function"){
+        reviewDraft(draftId);
+      }
     }
   }
   window.addEventListener("load", openLinkedSection);
