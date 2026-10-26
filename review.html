@@ -5,6 +5,36 @@
 <meta name="theme-color" content="#0b1020"><title>NextGen — Content Review</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#0b1020;color:#eef3ff;font:16px Arial,sans-serif}header{padding:20px;background:#141e32;border-bottom:1px solid #293752}h1{margin:0;color:#91aaff}header p{margin:6px 0;color:#c1cbe0}.credit{text-align:right;font-size:11px;color:#a5b3cc}main{max-width:850px;margin:auto;padding:16px}.card{background:#141e32;border:1px solid #293752;border-radius:13px;padding:18px;margin:14px 0}label{display:block;margin:12px 0;color:#c1cbe0}select{display:block;width:100%;padding:13px;margin-top:6px;border-radius:8px;background:#0b1020;color:#fff;border:1px solid #91aaff;font-size:16px}.preview{background:#1a2740;padding:14px;border-radius:10px;margin-top:14px;overflow-wrap:anywhere}.fieldbox{background:#0e1729;border:1px solid #354968;border-radius:10px;padding:12px;margin:12px 0}.fieldbox p{margin:8px 0}.fieldbox b{color:#d8e2ff}.fieldbox textarea{display:block;width:100%;min-height:86px;padding:11px;margin-top:8px;border-radius:8px;background:#141e32;color:#eef3ff;border:1px solid #455b80;font:14px/1.5 Arial,sans-serif;resize:vertical}.preview h3{color:#91aaff}.tag{color:#b8c9ff;line-height:1.7}.check{display:flex;gap:10px;align-items:flex-start;margin:16px 0;line-height:1.4}.check input{width:20px;height:20px;flex-shrink:0}.btn{padding:13px 16px;border:0;border-radius:8px;background:#91aaff;color:#0b1020;font-weight:bold;font-size:15px;margin:5px 5px 5px 0}.muted{color:#a5b3cc;font-size:13px}.warning{background:#302818;border:1px solid #806633;color:#ffe1a6;padding:12px;border-radius:9px}.status{font-weight:bold;color:#ffd27d}.btn.reject{background:#7b303b;color:#fff}.btn:disabled{opacity:.45}.copyrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.copybtn{padding:9px 12px;border:1px solid #91aaff;border-radius:8px;background:#0b1020;color:#dbe5ff;font-size:14px;font-weight:bold}.metaText{overflow-wrap:anywhere;line-height:1.7}.thumbPreview{display:block;width:100%;max-width:560px;aspect-ratio:16/9;object-fit:cover;border:1px solid #455b80;border-radius:10px;background:#0b1020}.thumbNote{color:#a5b3cc;font-size:12px;line-height:1.5}.queueGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}.queueItem{background:#0e1729;border:1px solid #354968;border-radius:10px;padding:12px;min-width:0}.queueItem h4{margin:0 0 8px}.queueStatus{font-size:12px;color:#ffd27d;margin:0 0 10px;overflow-wrap:anywhere}.queueItem button{width:100%;padding:9px;border:1px solid #91aaff;border-radius:8px;background:#202b42;color:#eef3ff;font-weight:bold}@media(max-width:600px){.queueGrid{grid-template-columns:1fr}}
+
+/* NextGen shared brand system: consistent dark-blue header/footer on every page */
+:root{--ng-bg:#0b1020;--ng-panel:#141e32;--ng-line:#293752;--ng-text:#eef3ff;--ng-muted:#a5b3cc;--ng-accent:#91aaff}
+body{background-color:var(--ng-bg);color:var(--ng-text)}
+body>header,body>main>header,body>.card>header{
+ background:linear-gradient(110deg,#10213f 0%,#173b70 58%,#102544 100%)!important;
+ color:#f4f7ff;border-bottom:1px solid #35547e!important;
+}
+body>header .brand,body>header h1,body>main>header h1{color:#f4f7ff}
+body>header .tag,body>header p,body>main>header p{color:#c5d9ff}
+body>footer,footer.ng-shared-footer{
+ display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+ padding:14px 18px calc(14px + env(safe-area-inset-bottom));margin-top:24px;
+ color:#c5d9ff;background:linear-gradient(110deg,#10213f,#173b70 58%,#102544);
+ border-top:1px solid #35547e;font-size:12px
+}
+body>footer .credit,footer .credit{color:#d4e2ff;text-align:right}
+.ng-bottom-nav{
+ position:fixed;z-index:1000;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+ gap:2px;padding:7px 6px calc(7px + env(safe-area-inset-bottom));
+ background:rgba(9,20,39,.97);border-top:1px solid #35547e;backdrop-filter:blur(12px)
+}
+.ng-bottom-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;
+ padding:5px 2px;border-radius:9px;color:#b8c9e8;text-decoration:none;font-size:11px}
+.ng-bottom-nav a span{font-size:19px;line-height:1.15}
+.ng-bottom-nav a small{font-size:10px;white-space:nowrap}
+.ng-bottom-nav a.active{color:#fff;background:#203e6b}
+body:has(.ng-bottom-nav){padding-bottom:76px!important}
+@media(max-width:480px){body>footer{padding-left:14px;padding-right:14px}.ng-bottom-nav a small{font-size:9px}}
+
 </style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./supabase-config.js"></script>
 </head>
 <body>
@@ -231,4 +261,11 @@ connectReviewCloud();
 document.getElementById('reset').addEventListener('click',()=>{checks.forEach(c=>c.checked=false);writeStatus('Pending review — checklist reset')});
 document.getElementById('approve').addEventListener('click',()=>{if(!checks.every(c=>c.checked)){statusEl.textContent='Please tick all five checklist items first.';return}writeStatus('Approved for review only — nothing published or scheduled')});
 document.getElementById('reject').addEventListener('click',()=>writeStatus('Rejected — revise draft before review (demo only)'));
-</script></body></html>
+</script><nav class="ng-bottom-nav" aria-label="Main navigation">
+<a href="index.html#dashboard" data-page="dashboard"><span>⌂</span><small>Dashboard</small></a>
+<a href="channels.html" data-page="channels"><span>▶</span><small>Channels</small></a>
+<a href="index.html#content" data-page="content"><span>▤</span><small>Content</small></a>
+<a href="index.html#approvals" data-page="approvals"><span>✓</span><small>Approvals</small></a>
+<a href="index.html#schedule" data-page="schedule"><span>▦</span><small>Schedule</small></a>
+</nav>
+</body></html>
