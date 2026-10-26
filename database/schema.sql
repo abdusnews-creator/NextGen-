@@ -29,6 +29,8 @@ create table if not exists public.content_drafts (
   channel_id uuid references public.channels(id) on delete set null,
   title text not null,
   caption text not null default '',
+  content text not null default '',
+  metadata jsonb not null default '{}'::jsonb,
   status text not null default 'pending_approval'
     check (status in ('draft','pending_approval','approved','rejected','revised','scheduled','published')),
   approval_mode text not null default 'manual'
@@ -38,6 +40,10 @@ create table if not exists public.content_drafts (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+-- Idempotent migration for projects created before full draft cloud sync.
+alter table public.content_drafts add column if not exists content text not null default '';
+alter table public.content_drafts add column if not exists metadata jsonb not null default '{}'::jsonb;
 
 create table if not exists public.draft_reviews (
   id uuid primary key default gen_random_uuid(),
