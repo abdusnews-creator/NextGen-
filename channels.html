@@ -70,6 +70,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
       </select>
       <input id="newChannelName" type="text" placeholder="Channel / profile name" aria-label="Channel name" required maxlength="80" style="flex:1;min-width:180px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
       <input id="newChannelHandle" type="text" placeholder="@handle (optional)" aria-label="Channel handle" maxlength="100" style="flex:1;min-width:160px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
+      <input id="newChannelUrl" type="url" placeholder="Facebook / YouTube profile link (optional)" aria-label="Channel URL" style="flex:1;min-width:220px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
       <button type="submit" class="primary">Add to list</button>
       <button type="button" id="cancelAddChannel">Cancel</button>
     </div>
@@ -227,7 +228,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
         if(row.connection_status==='paused')pausedChannels[row.platform]=true;
         const exists=cards.some(card=>card.dataset.name===row.display_name && (card.dataset.handle||'')===(row.handle||'') && card.dataset.platform===row.platform);
         if(!exists && ['youtube','facebook','instagram','threads'].includes(row.platform)){
-          const extra=buildChannelCard(row.platform,row.display_name,row.handle||'');
+          const extra=buildChannelCard(row.platform,row.display_name,row.handle||'',row.url||'');
           document.getElementById('channelGrid').appendChild(extra);
           cards.push(extra);
           if(enabledChannels[row.platform]===undefined)enabledChannels[row.platform]=true;
@@ -275,6 +276,18 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
 
   function bindCard(card){
     renderCard(card);
+    const editButton=card.querySelector('.edit-button');
+    if(editButton) editButton.addEventListener('click',function(){
+      const panel=document.getElementById('addChannelPanel');
+      document.getElementById('newPlatform').value=card.dataset.platform;
+      document.getElementById('newChannelName').value=card.dataset.name||'';
+      document.getElementById('newChannelHandle').value=card.dataset.handle||'';
+      document.getElementById('newChannelUrl').value=card.dataset.url||'';
+      document.getElementById('editingChannelKey').value=card.dataset.customKey||'';
+      document.getElementById('addChannelForm').querySelector('[type=submit]').textContent='Save changes';
+      document.querySelector('#addChannelPanel h3').textContent='Edit channel details';
+      panel.hidden=false;document.getElementById('newChannelName').focus();
+    });
     card.querySelector('.enable-button').addEventListener('click',function(){
       const platform = card.dataset.platform;
       enabledChannels[platform] = enabledChannels[platform] === false;
@@ -292,12 +305,13 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
         ' review: Manual approval is required. Real account verification is not connected yet.');
     });
   }
-  function buildChannelCard(platform,name,handle){
+  function buildChannelCard(platform,name,handle,url){
     const card=document.createElement('section');
     card.className='card';
     card.dataset.platform=platform;
     card.dataset.name=name;
     card.dataset.handle=handle;
+    card.dataset.url=url||'';
     const heading=document.createElement('div');
     heading.className='platform';
     heading.textContent=({youtube:'▶️ YouTube',facebook:'📘 Facebook',instagram:'📸 Instagram',threads:'🧵 Threads',other:'🌐 Other platform'})[platform]||'🌐 Platform';
@@ -308,14 +322,16 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     const connection=document.createElement('span');connection.className='connection';
     statusEl.append(dot,connection);
     const actions=document.createElement('div');actions.className='actions';
-    [['pause-button','Pause channel'],['enable-button','Disable channel'],['primary review-button','Review']].forEach(function(item){
+    [['pause-button','Pause channel'],['enable-button','Disable channel'],['primary review-button','Review'],['edit-button','Edit details']].forEach(function(item){
       const b=document.createElement('button');b.type='button';b.className=item[0];b.textContent=item[1];actions.appendChild(b);
     });
+    if(url){const link=document.createElement('p');link.className='handle';const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Open profile link';link.appendChild(a);card.appendChild(link);}
     card.append(heading,title,handleEl,statusEl,actions);
     return card;
   }
 
   const customChannelsStorageKey='nextgen-custom-channels-v1';
+  const editingChannelKey=document.createElement('input');editingChannelKey.type='hidden';editingChannelKey.id='editingChannelKey';document.getElementById('addChannelForm').appendChild(editingChannelKey);
   function readCustomChannels(){
     try{const value=JSON.parse(localStorage.getItem(customChannelsStorageKey)||'[]');return Array.isArray(value)?value:[];}catch(e){return [];}
   }
@@ -326,7 +342,8 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     if(!item || !item.name || !item.platform) return;
     const exists=cards.some(card=>card.dataset.name===item.name && (card.dataset.handle||'')===(item.handle||'') && card.dataset.platform===item.platform);
     if(!exists){
-      const extra=buildChannelCard(item.platform,item.name,item.handle||'');
+      const extra=buildChannelCard(item.platform,item.name,item.handle||'',item.url||'');
+      extra.dataset.customKey=item.key||[item.platform,item.name,item.handle||''].join('|');
       document.getElementById('channelGrid').appendChild(extra);
       cards.push(extra);
     }
@@ -339,28 +356,53 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     addPanel.hidden = !addPanel.hidden;
     if(!addPanel.hidden) document.getElementById('newChannelName').focus();
   });
-  document.getElementById('cancelAddChannel').addEventListener('click',function(){addPanel.hidden=true;});
+  document.getElementById('cancelAddChannel').addEventListener('click',function(){addPanel.hidden=true;addForm.reset();document.getElementById('editingChannelKey').value='';addForm.querySelector('[type=submit]').textContent='Add to list';document.querySelector('#addChannelPanel h3').textContent='Add a channel (demo)';});
+  document.getElementById('newChannelUrl').addEventListener('change',function(){
+    const raw=this.value.trim();if(!raw)return;try{const host=new URL(raw).hostname.toLowerCase().replace(/^www\./,'');const p=host.includes('youtube.com')||host==='youtu.be'?'youtube':host.includes('facebook.com')||host==='fb.watch'?'facebook':host.includes('instagram.com')?'instagram':host.includes('threads.net')?'threads':null;if(p){document.getElementById('newPlatform').value=p;document.getElementById('addChannelStatus').textContent='Platform automatically selected from the link: '+p+'.';}}catch(e){}
+  });
   addForm.addEventListener('submit',async function(event){
     event.preventDefault();
     const platform=document.getElementById('newPlatform').value;
     const name=document.getElementById('newChannelName').value.trim();
-    const handle=document.getElementById('newChannelHandle').value.trim();
+    let handle=document.getElementById('newChannelHandle').value.trim();
+    let url=document.getElementById('newChannelUrl').value.trim();
+    const editingKey=document.getElementById('editingChannelKey').value;
     const status=document.getElementById('addChannelStatus');
     if(!name){status.textContent='Please enter a channel name.';return;}
-    const exists=cards.some(card=>card.dataset.platform===platform && card.dataset.name.toLowerCase()===name.toLowerCase() && (card.dataset.handle||'').toLowerCase()===handle.toLowerCase());
+    if(url){try{const parsed=new URL(url);if(!['http:','https:'].includes(parsed.protocol))throw new Error();url=parsed.href;}catch(e){status.textContent='Please enter a valid Facebook / YouTube / social profile link.';return;}
+      const host=new URL(url).hostname.toLowerCase().replace(/^www\./,'');
+      const detected=host.includes('youtube.com')||host==='youtu.be'?'youtube':host.includes('facebook.com')||host==='fb.watch'?'facebook':host.includes('instagram.com')?'instagram':host.includes('threads.net')?'threads':null;
+      if(detected && detected!==platform){document.getElementById('newPlatform').value=detected;status.textContent='Platform detected from link: '+detected+'. Please confirm, then tap Add to list / Save changes.';return;}
+    }
+    const editingCard=editingKey?cards.find(x=>x.dataset.customKey===editingKey):null;
+    const exists=cards.some(card=>card!==editingCard && card.dataset.platform===platform && card.dataset.name.toLowerCase()===name.toLowerCase() && (card.dataset.handle||'').toLowerCase()===handle.toLowerCase());
     if(exists){status.textContent='This channel is already in the list.';return;}
-    const item={platform,name,handle,createdAt:new Date().toISOString()};
     const savedItems=readCustomChannels();
-    savedItems.push(item);
+    let item;
+    if(editingKey){
+      const idx=savedItems.findIndex(x=>(x.key||[x.platform,x.name,x.handle||''].join('|'))===editingKey);
+      item={key:[platform,name,handle].join('|'),platform,name,handle,url,createdAt:new Date().toISOString()};
+      if(idx>=0)savedItems[idx]=item;else savedItems.push(item);
+      if(editingCard){editingCard.dataset.platform=platform;editingCard.dataset.name=name;editingCard.dataset.handle=handle;editingCard.dataset.url=url;editingCard.dataset.customKey=item.key;editingCard.querySelector('h3').textContent=name;editingCard.querySelector('.platform').textContent=({youtube:'▶️ YouTube',facebook:'📘 Facebook',instagram:'📸 Instagram',threads:'🧵 Threads',other:'🌐 Other platform'})[platform]||'🌐 Platform';editingCard.querySelector('.handle').textContent=handle||'No handle added';}
+    }else{
+      item={key:[platform,name,handle].join('|'),platform,name,handle,url,createdAt:new Date().toISOString()};
+      savedItems.push(item);
+      const card=buildChannelCard(platform,name,handle,url);card.dataset.customKey=item.key;
+      document.getElementById('channelGrid').appendChild(card);cards.push(card);if(enabledChannels[platform]===undefined)enabledChannels[platform]=true;bindCard(card);
+    }
     const localSaved=saveCustomChannels(savedItems);
-    const card=buildChannelCard(platform,name,handle);
-    document.getElementById('channelGrid').appendChild(card);
-    cards.push(card);
     if(enabledChannels[platform]===undefined)enabledChannels[platform]=true;
     bindCard(card);
     addForm.reset();
+    document.getElementById('editingChannelKey').value='';
+    addForm.querySelector('[type=submit]').textContent='Add to list';
+    document.querySelector('#addChannelPanel h3').textContent='Add a channel (demo)';
     addPanel.hidden=true;
     filterCards();
+    if(editingKey){
+      status.textContent=localSaved?'Channel details updated and saved in this browser.':'Channel details updated for this page session; browser storage unavailable.';
+      return;
+    }
     if(platform==='other'){
       status.textContent=localSaved?'Added and saved in this browser. “Other platform” needs a database schema update for cloud saving.':'Added for this page session, but browser storage is unavailable.';
       return;
