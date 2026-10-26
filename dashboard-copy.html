@@ -214,12 +214,18 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 </style>
 
+
+/* NextGen brand name and tagline */
+.studio-brand{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:2px!important;line-height:1.15!important}
+.studio-brand-name{font-size:27px!important;font-weight:800!important;letter-spacing:.2px!important}
+.studio-tagline{display:block!important;font-size:10px!important;font-weight:500!important;letter-spacing:.25px!important;color:#aabbd0!important;white-space:nowrap!important}
+@media(max-width:680px){.studio-brand{gap:2px!important}.studio-brand-name{font-size:23px!important}.studio-tagline{font-size:8px!important;letter-spacing:0!important}}
 </head>
 
 <body>
 <header class="studio-top">
   <button class="studio-menu" type="button" aria-label="Menu" onclick="document.querySelector('.studio-nav').classList.toggle('nav-expanded')">☰</button>
-  <div class="studio-brand">NextGen</div>
+  <div class="studio-brand"><span class="studio-brand-name">NextGen</span><span class="studio-tagline">Smart Automation. Smarter Growth.</span></div>
   <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" onkeydown="if(event.key==='Enter'){showPage('content');document.getElementById('queueSearch').value=this.value;filterQueue()}">
   <div class="studio-top-right">
     <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="toggleTopMenu('addMenu')">+</button>
