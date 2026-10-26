@@ -655,5 +655,28 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
 })();
 </script>
 <script>(function(){const p=location.pathname.split('/').pop()||'index.html';document.querySelectorAll('.main-nav a').forEach(a=>{const u=new URL(a.href,location.href);const target=u.pathname.split('/').pop();if((p==='channels.html'&&target==='channels.html')||(p==='settings.html'&&target==='settings.html')||(p==='index.html'&&target==='index.html'&&u.hash==='#dashboard')){a.classList.add('active');a.setAttribute('aria-current','page');}})})();</script>
+<nav class="ng-bottom-nav" aria-label="Main navigation">
+<a href="index.html#dashboard" data-page="dashboard"><span>⌂</span><small>Dashboard</small></a>
+<a href="channels.html" data-page="channels"><span>▶</span><small>Channels</small></a>
+<a href="index.html#content" data-page="content"><span>▤</span><small>Content</small></a>
+<a href="index.html#approvals" data-page="approvals"><span>✓</span><small>Approvals</small></a>
+<a href="index.html#schedule" data-page="schedule"><span>▦</span><small>Schedule</small></a>
+<a href="settings.html" data-page="settings"><span>⚙</span><small>Settings</small></a>
+</nav>
+<style>
+.ng-bottom-nav{position:fixed;z-index:999;left:0;right:0;bottom:0;min-height:68px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:2px;padding:5px 4px max(5px,env(safe-area-inset-bottom));background:#101923;border-top:1px solid #2a3948;box-shadow:0 -6px 24px #0005}
+.ng-bottom-nav a{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;border-radius:8px;background:transparent;color:#aebed0;text-decoration:none;padding:4px 1px}
+.ng-bottom-nav a span{font-size:19px;line-height:22px}.ng-bottom-nav a small{font-size:10px;text-align:center}
+.ng-bottom-nav a.active{color:#58a2ff;background:#1b2b3d;font-weight:700}
+body{padding-bottom:82px!important}
+@media(max-width:420px){.ng-bottom-nav a small{font-size:9px}.ng-bottom-nav a span{font-size:18px}}
+</style>
+<script>
+(function(){
+var path=location.pathname.split('/').pop()||'index.html';
+var current=path==='channels.html'?'channels':(path==='settings.html'||path==='privacy-settings.html'?'settings':(path==='help-centre.html'?'settings':'dashboard'));
+document.querySelectorAll('.ng-bottom-nav a').forEach(function(a){if(a.dataset.page===current)a.classList.add('active')});
+})();
+</script>
 </body>
 </html>
