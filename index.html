@@ -799,10 +799,13 @@ function mobileNavigate(section,button){
   if(nav)nav.classList.remove('nav-expanded');
   if(section==='channels'){window.location.href='channels.html';return}
   if(section==='settings'){window.location.href='settings.html';return}
-  if(section==='schedule'){showPage('schedule');window.scrollTo(0,0);return}
-  if(section==='approvals'){showPage('approvals');window.scrollTo(0,0);return}
-  if(section==='content'){showPage('content');window.scrollTo(0,0);return}
-  showPage('dashboard');window.scrollTo(0,0);
+  if(['schedule','approvals','content','dashboard'].indexOf(section)!==-1){
+    showPage(section);
+    document.querySelectorAll('.ng-bottom-nav a').forEach(function(a){a.classList.toggle('active',a.dataset.page===section)});
+    if(section==='dashboard') history.replaceState(null,'',window.location.pathname);
+    else history.replaceState(null,'','#'+section);
+    window.scrollTo(0,0);
+  }
 }
 function toggleTopMenu(id){
   ['addMenu','notificationMenu','profileMenu'].forEach(function(menuId){
