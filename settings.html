@@ -29,6 +29,36 @@ header .brand{color:#f4f8ff!important}
 header .tag{color:#b8d7f5!important}
 .bottom{background:rgba(5,20,37,.98)!important;border-top:1px solid #1689d4!important;box-shadow:0 -8px 28px #0005!important;backdrop-filter:blur(14px)}
 .bottom a{min-height:54px}
+
+/* NextGen shared brand system: consistent dark-blue header/footer on every page */
+:root{--ng-bg:#0b1020;--ng-panel:#141e32;--ng-line:#293752;--ng-text:#eef3ff;--ng-muted:#a5b3cc;--ng-accent:#91aaff}
+body{background-color:var(--ng-bg);color:var(--ng-text)}
+body>header,body>main>header,body>.card>header{
+ background:linear-gradient(110deg,#10213f 0%,#173b70 58%,#102544 100%)!important;
+ color:#f4f7ff;border-bottom:1px solid #35547e!important;
+}
+body>header .brand,body>header h1,body>main>header h1{color:#f4f7ff}
+body>header .tag,body>header p,body>main>header p{color:#c5d9ff}
+body>footer,footer.ng-shared-footer{
+ display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+ padding:14px 18px calc(14px + env(safe-area-inset-bottom));margin-top:24px;
+ color:#c5d9ff;background:linear-gradient(110deg,#10213f,#173b70 58%,#102544);
+ border-top:1px solid #35547e;font-size:12px
+}
+body>footer .credit,footer .credit{color:#d4e2ff;text-align:right}
+.ng-bottom-nav{
+ position:fixed;z-index:1000;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+ gap:2px;padding:7px 6px calc(7px + env(safe-area-inset-bottom));
+ background:rgba(9,20,39,.97);border-top:1px solid #35547e;backdrop-filter:blur(12px)
+}
+.ng-bottom-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;
+ padding:5px 2px;border-radius:9px;color:#b8c9e8;text-decoration:none;font-size:11px}
+.ng-bottom-nav a span{font-size:19px;line-height:1.15}
+.ng-bottom-nav a small{font-size:10px;white-space:nowrap}
+.ng-bottom-nav a.active{color:#fff;background:#203e6b}
+body:has(.ng-bottom-nav){padding-bottom:76px!important}
+@media(max-width:480px){body>footer{padding-left:14px;padding-right:14px}.ng-bottom-nav a small{font-size:9px}}
+
 </style></head><body>
 <header><div class="brand">NextGen</div><p class="tag">Smart Automation. Smarter Growth.</p></header>
 <div class="layout"><nav aria-label="Settings sections"><a class="active" href="settings.html">⚙️ General Settings</a><a href="privacy-settings.html">🔒 Privacy & Channels</a><a href="help-centre.html">❔ Help Centre</a></nav>
@@ -43,6 +73,13 @@ header .tag{color:#b8d7f5!important}
 <section class="panel"><h2>Safety & permissions</h2><div class="notice">This is a front-end prototype. Preferences are stored locally on this device only. Real platform permissions, account-wide sync, publishing, and 24/7 background processing are not connected. No content is published by these switches.</div></section>
 </main></div>
 <footer>Powered by ABDUS SATTAR</footer>
+<nav class="ng-bottom-nav" aria-label="Main navigation">
+<a href="index.html#dashboard" data-page="dashboard"><span>⌂</span><small>Dashboard</small></a>
+<a href="channels.html" data-page="channels"><span>▶</span><small>Channels</small></a>
+<a href="index.html#content" data-page="content"><span>▤</span><small>Content</small></a>
+<a href="index.html#approvals" data-page="approvals"><span>✓</span><small>Approvals</small></a>
+<a href="index.html#schedule" data-page="schedule"><span>▦</span><small>Schedule</small></a>
+</nav>
 <nav class="bottom" aria-label="Main navigation"><a href="index.html#dashboard"><span>⌂</span>Dashboard</a><a href="channels.html"><span>▶</span>Channels</a><a href="index.html#content"><span>▤</span>Content</a><a href="index.html#approvals"><span>✓</span>Approvals</a><a href="index.html#schedule"><span>▦</span>Schedule</a></nav>
 <script>
 (function(){const $=id=>document.getElementById(id);const key='nextgen-general-settings-v1';let prefs={manual:true,auto:false,notifications:true,background:true};try{prefs={...prefs,...JSON.parse(localStorage.getItem(key)||'{}')};}catch(e){}function render(){ $('manual').checked=!!prefs.manual;$('auto').checked=!!prefs.auto;$('notifications').checked=!!prefs.notifications;$('background').checked=!!prefs.background;}function save(changed){if(changed==='auto'&&prefs.auto){prefs.manual=false;}if(changed==='manual'&&prefs.manual){prefs.auto=false;}if(!prefs.manual&&!prefs.auto){prefs.manual=true;}try{localStorage.setItem(key,JSON.stringify(prefs));$('status').textContent='Preference saved on this device.';}catch(e){$('status').textContent='Browser storage unavailable; preference may not persist.';}render();}['manual','auto','notifications','background'].forEach(id=>$(id).addEventListener('change',()=>{prefs[id]=$(id).checked;save(id)}));render();})();
