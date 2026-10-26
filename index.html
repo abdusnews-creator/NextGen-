@@ -461,7 +461,7 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
 <nav class="ng-bottom-nav" aria-label="Main navigation">
 <a href="index.html#dashboard" data-page="dashboard" onclick="event.preventDefault();mobileNavigate('dashboard',this)"><span>⌂</span><small>Dashboard</small></a>
 <a href="dashboard-copy.html" data-page="duplicate-dashboard"><span>▣</span><small>Duplicate Dashboard</small></a>
-<a href="channels.html" data-page="channels"><span>▶</span><small>Channels</small></a>
+<a href="dashboard-copy.html" data-page="channels"><span>▶</span><small>Channels</small></a>
 <a href="index.html#content" data-page="content" onclick="event.preventDefault();mobileNavigate('content',this)"><span>▤</span><small>Content</small></a>
 <a href="index.html#approvals" data-page="approvals" onclick="event.preventDefault();mobileNavigate('approvals',this)"><span>✓</span><small>Approvals</small></a>
 <a href="index.html#schedule" data-page="schedule" onclick="event.preventDefault();mobileNavigate('schedule',this)"><span>▦</span><small>Schedule</small></a>
@@ -957,5 +957,42 @@ function studioScroll(id){
 
 
 
+<script>
+/* Navigation safety net: keep mobile navigation usable even if an inline handler fails. */
+(function(){
+  function activate(section, anchor){
+    if(section==='channels' || section==='duplicate-dashboard'){
+      window.location.href='dashboard-copy.html'; return;
+    }
+    if(section==='settings'){window.location.href='settings.html';return;}
+    if(['dashboard','content','approvals','schedule'].indexOf(section)<0)return;
+    if(typeof window.showPage==='function')window.showPage(section);
+    document.querySelectorAll('.ng-bottom-nav a').forEach(function(a){
+      a.classList.toggle('active',a.dataset.page===section);
+    });
+    if(section==='dashboard')history.replaceState(null,'',window.location.pathname);
+    else history.replaceState(null,'','#'+section);
+    window.scrollTo(0,0);
+    var drawer=document.querySelector('.studio-nav');
+    if(drawer)drawer.classList.remove('nav-expanded');
+  }
+  document.querySelectorAll('.ng-bottom-nav a').forEach(function(a){
+    a.addEventListener('click',function(e){
+      var section=a.dataset.page;
+      if(['dashboard','content','approvals','schedule','channels','duplicate-dashboard'].indexOf(section)!==-1){
+        e.preventDefault();activate(section,a);
+      }
+    });
+  });
+  var section=(location.hash||'').slice(1);
+  if(['dashboard','content','approvals','schedule'].indexOf(section)!==-1){
+    activate(section,null);
+  } else {
+    document.querySelectorAll('.ng-bottom-nav a').forEach(function(a){
+      a.classList.toggle('active',a.dataset.page==='dashboard');
+    });
+  }
+})();
+</script>
 </body>
 </html>
