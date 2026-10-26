@@ -505,5 +505,17 @@ function setMode(auto){
  });
 })();
 </script>
+<script>
+/* Allow direct mobile links to open a specific dashboard section. */
+(function(){
+  function openLinkedSection(){
+    var section = (window.location.hash || "").replace("#","");
+    if(["dashboard","content","approvals","schedule","settings"].indexOf(section)!==-1 && typeof showPage==="function"){
+      showPage(section);
+    }
+  }
+  window.addEventListener("load", openLinkedSection);
+})();
+</script>
 </body>
 </html>
