@@ -252,7 +252,7 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
     <div class="top-popover-head"><b>NextGen account</b><small>Account and preferences</small></div>
     <button type="button" onclick="alert('Switch Account: multi-account login is not connected yet.')"><span>⇄</span> Switch Account</button>
     <button type="button" onclick="alert('Google Account linking is not connected yet.')"><span class="google-mark">G</span> Google Account</button>
-    <button type="button" onclick="window.location.href='settings.html'"><span>⚙</span> Settings</button>
+    <button type="button" onclick="toggleTopMenu('profileMenu');var p=document.querySelector('.settings-list');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});"><span>⚙</span> Settings</button>
     <button type="button" onclick="alert('Send feedback: feedback form is not connected yet.')"><span>▤</span> Send feedback</button>
     <div class="pop-divider"></div>
     <button type="button" onclick="window.location.href='privacy-settings.html'"><span>◎</span> Account status</button>
