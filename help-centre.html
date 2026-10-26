@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0f141b">
+<title>NextGen Help Centre</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0f141b;color:#edf3fa;font-family:Arial,Helvetica,sans-serif}
+header{height:68px;padding:0 18px;display:flex;align-items:center;gap:14px;background:#111a24;border-bottom:1px solid #293746;position:sticky;top:0}
+header a{color:#9ec5ff;text-decoration:none}header strong{font-size:20px}.wrap{max-width:920px;margin:0 auto;padding:24px 16px 32px}
+.intro{padding:20px;background:#151f2a;border:1px solid #2b3948;border-radius:15px;margin-bottom:18px}.intro h1{font-size:26px;margin:0 0 8px}.muted{color:#9aadc1;font-size:14px;line-height:1.5}
+.scope{font-size:12px;color:#c9d9eb;background:#1a2a3a;border-radius:9px;padding:10px 12px;margin-top:14px}
+.chat{border:1px solid #2a3948;background:#121b25;border-radius:15px;overflow:hidden}.chat-head{padding:15px 18px;border-bottom:1px solid #2a3948;display:flex;align-items:center;gap:12px}.bot-icon{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#244c82;color:#fff;font-size:20px}.chat-head small{display:block;color:#93a8bd;margin-top:4px}
+.messages{height:360px;max-height:52vh;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px}.msg{max-width:88%;padding:12px 14px;border-radius:13px;font-size:14px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}.bot{align-self:flex-start;background:#202d3b;border:1px solid #304255}.user{align-self:flex-end;background:#214a78;color:white}.quick{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 14px}.quick button{border:1px solid #405b77;border-radius:20px;background:#182736;color:#dceaff;padding:9px 12px;font-size:12px}
+.composer{display:flex;gap:8px;padding:14px;border-top:1px solid #2a3948}.composer input{flex:1;min-width:0;border:1px solid #3b4c5e;border-radius:10px;background:#0c131b;color:#fff;padding:13px;font-size:14px}.composer button{border:0;border-radius:10px;background:#3578d4;color:white;font-weight:700;padding:0 18px}.hint{font-size:12px;color:#8ea2b8;padding:0 16px 14px}
+@media(max-width:520px){.wrap{padding:14px 10px 22px}.intro{padding:16px}.intro h1{font-size:22px}.messages{height:48vh;padding:12px}.msg{max-width:94%}.composer{padding:10px}.composer button{padding:0 14px}}
+</style></head>
+<body>
+<header><a href="./" aria-label="Back to NextGen">←</a><strong>NextGen Help Centre</strong></header>
+<main class="wrap">
+<section class="intro"><h1>How can I help with NextGen?</h1><p class="muted">Ask about using NextGen, channels, content drafts, approvals, scheduling, settings, account access, and supported platform connections.</p><div class="scope">🔒 Service-only support: this assistant is restricted to NextGen and its supported workflows. Unrelated questions are not answered.</div></section>
+<section class="chat" aria-label="NextGen support chat">
+<div class="chat-head"><div class="bot-icon">✦</div><div><b>NextGen Support Assistant</b><small>Limited to NextGen product help</small></div></div>
+<div id="messages" class="messages" aria-live="polite"><div class="msg bot">Hello! I can help with NextGen features only. Try asking about adding a channel, content drafts, approvals, the mobile menu, settings, or scheduling. I won't answer unrelated questions.</div></div>
+<div class="quick">
+<button type="button" onclick="quickAsk('How do I add a channel?')">Add a channel</button>
+<button type="button" onclick="quickAsk('How does Manual Approval work?')">Approval mode</button>
+<button type="button" onclick="quickAsk('How do I add content?')">Add content</button>
+<button type="button" onclick="quickAsk('How do I use the mobile navigation?')">Mobile navigation</button>
+</div>
+<form id="chatForm" class="composer"><input id="chatInput" autocomplete="off" maxlength="600" placeholder="Ask a NextGen-related question…" aria-label="Your NextGen support question" required><button type="submit">Send</button></form>
+<div class="hint">Prototype support chat. Answers use a strict topic allowlist and local help text; a live AI service is not connected yet.</div>
+</section></main>
+<script>
+function addMessage(text,kind){var el=document.createElement('div');el.className='msg '+kind;el.textContent=text;var list=document.getElementById('messages');list.appendChild(el);list.scrollTop=list.scrollHeight}
+function answerFor(raw){
+ var q=raw.toLowerCase();
+ var allowed=/(nextgen|channel|content|draft|approval|approve|reject|publish|publishing|schedule|scheduled|settings|dashboard|mobile|menu|navigation|login|sign in|account|help centre|help center|analytics|youtube|facebook|instagram|threads|privacy|notification|profile|add post|add video|caption|hashtag|comment|automation|background|manual|auto approval|subscription|connect|connected|reel|shorts|queue|app|web page)/i;
+ if(!allowed.test(q))return "I can only help with NextGen and its supported product workflows. Please ask about channels, content, approvals, scheduling, settings, account access, or supported integrations.";
+ if(/add.*channel|channel.*add|connect.*channel/i.test(q))return "To add a channel, use the + button in the top-right and choose “Add channel”, or open Channels from the navigation. The channel connection flow and platform permissions must be completed before live data or publishing can work.";
+ if(/add.*content|content.*add|draft|caption|hashtag|reel|shorts|video idea/i.test(q))return "Open Content from the bottom navigation (mobile) or the main menu, then open the Content Queue to review demo drafts. Current drafts are prototype data; creating or approving a draft does not publish it.";
+ if(/manual|approval|approve|reject|auto approval|publish|publishing/i.test(q))return "Manual Approval is the safe default. Keep Auto Approval OFF unless you deliberately enable it. Content must not be published or scheduled without your explicit approval in the current prototype; real automated safety checks and publishing are not connected.";
+ if(/schedule|scheduled|time|8.?00|2.?00|6.?00/i.test(q))return "Open Schedule from the navigation. Scheduling is currently a prototype screen/plan only; the 24/7 background worker and actual platform scheduling are not yet active.";
+ if(/mobile|bottom|hamburger|three lines|menu|navigation/i.test(q))return "On mobile, use the bottom bar for Home, Channels, Content, Approvals, Schedule, and Settings. Tap the ☰ button at the top-left to open the side menu. If an old version appears, refresh the page.";
+ if(/setting|privacy|account status|notification|profile|switch account|login|sign in|password/i.test(q))return "Use the profile menu at the top-right for account options and Settings from the menu/navigation for preferences. Some account options are placeholders; real multi-account switching and notification services are not connected yet.";
+ if(/analytics|views|subscriber|revenue|watch time|earning|monet/i.test(q))return "The dashboard is prepared for channel analytics, but live views, watch time, subscribers, and revenue are not connected. The dashes are intentional and avoid showing invented numbers.";
+ if(/youtube|facebook|instagram|threads|comment|integration|connected|connection/i.test(q))return "NextGen is designed for YouTube, Facebook, Instagram, and Threads. Live OAuth/API access, analytics, comment replies, and publishing must be connected and verified separately; this prototype does not perform those actions.";
+ if(/background|24.?7|automation|worker|server/i.test(q))return "The 24/7 background service, automatic recovery, and monitoring are planned requirements, but they are not active in this web prototype yet.";
+ if(/help centre|help center|support|what can you help/i.test(q))return "I can help with NextGen channels, content queue, approvals, scheduling, mobile navigation, settings, account access, and the status of supported integrations. I won't answer unrelated questions.";
+ return "I can help only with NextGen features. Please ask a more specific question about channels, content drafts, approval modes, scheduling, mobile navigation, settings, analytics, or integrations.";
+}
+function sendQuestion(q){var input=document.getElementById('chatInput');var text=q.trim();if(!text)return;addMessage(text,'user');input.value='';addMessage(answerFor(text),'bot')}
+function quickAsk(q){sendQuestion(q)}
+document.getElementById('chatForm').addEventListener('submit',function(e){e.preventDefault();sendQuestion(document.getElementById('chatInput').value)});
+</script></body></html>
