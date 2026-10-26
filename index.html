@@ -224,10 +224,16 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
 
 <section id="schedule" class="page">
   <h2>Schedule</h2>
-  <div class="card"><h3>8:00 AM</h3><p>Content preparation plan</p></div>
-  <div class="card"><h3>2:00 PM</h3><p>Content preparation plan</p></div>
-  <div class="card"><h3>6:00 PM</h3><p>Content preparation plan</p></div>
-  <div class="warning">These are planned times, not active background jobs.</div>
+  <p class="muted">Choose the daily content-preparation slots you want to keep in your plan.</p>
+  <div class="card">
+    <h3>Daily Content Preparation</h3>
+    <label class="check-row"><input type="checkbox" class="schedule-slot" value="08:00" checked> <strong>8:00 AM</strong> — prepare 3 new furniture video ideas, captions and hashtags</label>
+    <label class="check-row"><input type="checkbox" class="schedule-slot" value="14:00" checked> <strong>2:00 PM</strong> — prepare 3 new furniture video ideas, captions and hashtags</label>
+    <label class="check-row"><input type="checkbox" class="schedule-slot" value="18:00" checked> <strong>6:00 PM</strong> — prepare 3 new furniture video ideas, captions and hashtags</label>
+    <button type="button" class="action active" onclick="saveSchedulePlan()">Save Schedule Plan</button>
+    <p id="scheduleSaveStatus" class="muted" aria-live="polite">Default plan: all three slots selected.</p>
+  </div>
+  <div class="warning">Plan only: saving these choices stores them in this browser on this device. It does not create alarms, run in the background, generate content automatically, or publish/schedule posts. Manual approval remains required.</div>
 </section>
 
 <section id="settings" class="page">
@@ -479,6 +485,33 @@ document.querySelectorAll('.review-check').forEach(function(check){
 restoreDemoReviewState();
 filterQueue();
 updateDraftSummary();
+
+function restoreSchedulePlan(){
+  var key = 'nextgen-demo-schedule-plan';
+  try {
+    var saved = JSON.parse(localStorage.getItem(key) || 'null');
+    if(Array.isArray(saved)){
+      document.querySelectorAll('.schedule-slot').forEach(function(slot){
+        slot.checked = saved.indexOf(slot.value) !== -1;
+      });
+      var status = document.getElementById('scheduleSaveStatus');
+      if(status) status.textContent = 'Saved plan loaded on this device (' + saved.length + ' slot' + (saved.length===1?'':'s') + ' selected).';
+    }
+  } catch(error) {}
+}
+function saveSchedulePlan(){
+  var selected = Array.from(document.querySelectorAll('.schedule-slot:checked')).map(function(slot){return slot.value;});
+  var key = 'nextgen-demo-schedule-plan';
+  try {
+    localStorage.setItem(key, JSON.stringify(selected));
+    var status = document.getElementById('scheduleSaveStatus');
+    if(status) status.textContent = 'Plan saved on this device: ' + (selected.length ? selected.join(', ') : 'no slots selected') + '. No background reminders are active.';
+  } catch(error) {
+    var status = document.getElementById('scheduleSaveStatus');
+    if(status) status.textContent = 'Could not save in this browser. Your selections are still visible until you leave this page.';
+  }
+}
+restoreSchedulePlan();
 
 function setMode(auto){
   var mode = document.getElementById('mode');
