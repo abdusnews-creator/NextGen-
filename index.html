@@ -114,9 +114,14 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
   <div class="card">
     <h3>Luxury Wooden Bed Reel</h3>
     <p class="muted">Cinematic furniture product showcase.</p>
+    <label class="muted">Target channel
+      <select class="draft-channel" data-status-id="bedStatus" aria-label="Target channel for Luxury Wooden Bed Reel">
+        <option>YouTube</option><option>Facebook</option><option>Instagram</option><option>Threads</option>
+      </select>
+    </label>
     <span id="bedStatus" class="status">Pending approval</span>
     <p>
-      <button type="button" class="action" onclick="reviewDraft()">Review</button>
+      <button type="button" class="action" onclick="reviewDraft('bedStatus')">Review</button>
       <button type="button" class="action" onclick="approveDraft('bedStatus')">Approve</button>
       <button type="button" class="action" onclick="rejectDraft('bedStatus')">Reject</button>
       <button type="button" class="action" onclick="reviseDraft('bedStatus')">Mark Revised</button>
@@ -126,9 +131,14 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
   <div class="card">
     <h3>Royal Sofa Set Short</h3>
     <p class="muted">Highlight comfort and premium design.</p>
+    <label class="muted">Target channel
+      <select class="draft-channel" data-status-id="sofaStatus" aria-label="Target channel for Royal Sofa Set Short">
+        <option>YouTube</option><option>Facebook</option><option>Instagram</option><option>Threads</option>
+      </select>
+    </label>
     <span id="sofaStatus" class="status">Pending approval</span>
     <p>
-      <button type="button" class="action" onclick="reviewDraft()">Review</button>
+      <button type="button" class="action" onclick="reviewDraft('sofaStatus')">Review</button>
       <button type="button" class="action" onclick="approveDraft('sofaStatus')">Approve</button>
       <button type="button" class="action" onclick="rejectDraft('sofaStatus')">Reject</button>
       <button type="button" class="action" onclick="reviseDraft('sofaStatus')">Mark Revised</button>
@@ -138,9 +148,14 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
   <div class="card">
     <h3>Carved Centre Table Reel</h3>
     <p class="muted">Showcase wood finish and craftsmanship.</p>
+    <label class="muted">Target channel
+      <select class="draft-channel" data-status-id="tableStatus" aria-label="Target channel for Carved Centre Table Reel">
+        <option>YouTube</option><option>Facebook</option><option>Instagram</option><option>Threads</option>
+      </select>
+    </label>
     <span id="tableStatus" class="status">Pending approval</span>
     <p>
-      <button type="button" class="action" onclick="reviewDraft()">Review</button>
+      <button type="button" class="action" onclick="reviewDraft('tableStatus')">Review</button>
       <button type="button" class="action" onclick="approveDraft('tableStatus')">Approve</button>
       <button type="button" class="action" onclick="rejectDraft('tableStatus')">Reject</button>
       <button type="button" class="action" onclick="reviseDraft('tableStatus')">Mark Revised</button>
@@ -152,6 +167,7 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
   <h2>Approvals</h2>
   <div class="card">
     <h3>Review Checklist</h3>
+    <p id="activeReviewTitle" class="muted">Reviewing: Luxury Wooden Bed Reel</p>
     <p class="muted">Complete all five checks before approving a draft.</p>
 
     <label class="check-row"><input type="checkbox" class="review-check"> Spelling checked</label>
@@ -202,13 +218,41 @@ function showPage(id){
   if(target) target.classList.add('show');
 }
 
-function reviewDraft(){
+var draftStatusIds = ['bedStatus', 'sofaStatus', 'tableStatus'];
+var checklistStorageKey = 'nextgen-demo-review-checklist-by-draft';
+var draftStorageKey = 'nextgen-demo-draft-statuses';
+var activeDraftId = 'bedStatus';
+
+function reviewDraft(id){
+  activeDraftId = draftStatusIds.indexOf(id) >= 0 ? id : 'bedStatus';
+  var titleById = {bedStatus:'Luxury Wooden Bed Reel',sofaStatus:'Royal Sofa Set Short',tableStatus:'Carved Centre Table Reel'};
+  document.getElementById('activeReviewTitle').textContent = 'Reviewing: ' + titleById[activeDraftId];
+  restoreChecklistForDraft(activeDraftId);
   showPage('approvals');
 }
 
-var draftStatusIds = ['bedStatus', 'sofaStatus', 'tableStatus'];
-var checklistStorageKey = 'nextgen-demo-review-checklist';
-var draftStorageKey = 'nextgen-demo-draft-statuses';
+function getChecklistState(){
+  return Array.from(document.querySelectorAll('.review-check')).map(function(check){return check.checked;});
+}
+
+function saveChecklist(){
+  try {
+    var all = JSON.parse(localStorage.getItem(checklistStorageKey) || '{}');
+    all[activeDraftId] = getChecklistState();
+    localStorage.setItem(checklistStorageKey, JSON.stringify(all));
+  } catch(error) {}
+}
+
+function restoreChecklistForDraft(id){
+  var saved = [];
+  try {
+    var all = JSON.parse(localStorage.getItem(checklistStorageKey) || '{}');
+    saved = Array.isArray(all[id]) ? all[id] : [];
+  } catch(error) {}
+  document.querySelectorAll('.review-check').forEach(function(check,index){
+    check.checked = saved[index] === true;
+  });
+}
 
 function saveDraftStatuses(){
   var saved = {};
@@ -239,7 +283,7 @@ function approveDraft(id){
     return;
   }
 
-  setDraftStatus(id, 'Approved (demo only)');
+  setDraftStatus(id, 'Approved for selected channel (demo only)');
   alert('Demo only. Nothing was published or scheduled.');
 }
 
@@ -273,16 +317,22 @@ function restoreDemoReviewState(){
       var el = document.getElementById(id);
       if(el && typeof savedStatuses[id] === 'string') el.textContent = savedStatuses[id];
     });
-    var savedChecklist = JSON.parse(localStorage.getItem(checklistStorageKey) || 'null');
-    if(Array.isArray(savedChecklist)){
-      document.querySelectorAll('.review-check').forEach(function(check, index){
-        check.checked = savedChecklist[index] === true;
-      });
-    }
+
   } catch(error) {
     /* Keep the prototype usable if browser storage is unavailable. */
   }
 }
+
+document.querySelectorAll('.draft-channel').forEach(function(select){
+  var key = 'nextgen-demo-channel-' + select.dataset.statusId;
+  try {
+    var saved = localStorage.getItem(key);
+    if(saved && Array.from(select.options).some(function(o){return o.value === saved || o.textContent === saved;})) select.value = saved;
+  } catch(error) {}
+  select.addEventListener('change', function(){
+    try { localStorage.setItem(key, select.value); } catch(error) {}
+  });
+});
 
 document.querySelectorAll('.review-check').forEach(function(check){
   check.addEventListener('change', saveChecklist);
