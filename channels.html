@@ -113,9 +113,15 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
 
 <section class="card" style="margin-top:20px">
   <h3>Approval Safety</h3>
-  <p>Manual Approval Mode: <strong>ON by default</strong></p>
-  <p>Auto Approval Mode: <strong>OFF by default</strong></p>
-  <div class="notice">This is a front-end prototype. Pause settings are saved only in this browser on this device. They do not pause activity on social platforms. Real account connections, secure login, shared database, approval checks, scheduling, and background monitoring are not implemented yet.</div>
+  <p>Publishing mode: <strong id="approvalModeLabel">Manual Approval Mode — ON</strong></p>
+  <p>Auto Approval Mode: <strong id="autoModeLabel">OFF</strong></p>
+  <div class="actions">
+    <button type="button" class="primary" id="manualModeButton">Manual Approval (Recommended)</button>
+    <button type="button" id="autoModeButton">Enable Auto Approval</button>
+  </div>
+  <p class="muted" id="approvalModeStatus" aria-live="polite">Manual approval is the default. Content must be reviewed before publishing.</p>
+  <div class="notice">Auto mode is a demo toggle only. If later connected to a real backend, it must auto-approve only low-risk, brand-safe content after spelling, factual, copyright, duplicate, and platform-policy checks. Sensitive, uncertain, complaint-related, or failing content must remain pending manual review. No publishing or scheduling is performed by this prototype.</div>
+  <div class="notice" style="margin-top:10px">This is a front-end prototype. Channel pause settings and approval mode are saved only in this browser on this device. Real account connections, secure login, shared database, automated checks, scheduling, and 24/7 background monitoring are not implemented yet.</div>
 </section>
 
 <footer>Powered by ABDUS SATTAR</footer>
@@ -127,6 +133,41 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   const count = document.getElementById('channelCount');
   const storageKey = 'nextgen-demo-paused-channels-v1';
   const enabledStorageKey = 'nextgen-demo-enabled-channels-v1';
+  const approvalStorageKey = 'nextgen-demo-approval-mode-v1';
+  const approvalModeLabel = document.getElementById('approvalModeLabel');
+  const autoModeLabel = document.getElementById('autoModeLabel');
+  const approvalModeStatus = document.getElementById('approvalModeStatus');
+  const manualModeButton = document.getElementById('manualModeButton');
+  const autoModeButton = document.getElementById('autoModeButton');
+  let approvalMode = 'manual';
+  try { approvalMode = localStorage.getItem(approvalStorageKey) === 'auto' ? 'auto' : 'manual'; } catch (error) {}
+  function renderApprovalMode(){
+    const isAuto = approvalMode === 'auto';
+    approvalModeLabel.textContent = isAuto ? 'Auto Approval Mode — DEMO ON' : 'Manual Approval Mode — ON';
+    autoModeLabel.textContent = isAuto ? 'ON (demo only)' : 'OFF';
+    manualModeButton.setAttribute('aria-pressed', String(!isAuto));
+    autoModeButton.setAttribute('aria-pressed', String(isAuto));
+    approvalModeStatus.textContent = isAuto
+      ? 'Auto mode is enabled only for this browser demo. No content is auto-approved or published.'
+      : 'Manual approval is active. Content must be reviewed before publishing.';
+    autoModeButton.textContent = isAuto ? 'Turn Auto Approval OFF' : 'Enable Auto Approval';
+  }
+  manualModeButton.addEventListener('click',function(){
+    approvalMode='manual';
+    try { localStorage.setItem(approvalStorageKey,approvalMode); } catch (error) {}
+    renderApprovalMode();
+  });
+  autoModeButton.addEventListener('click',function(){
+    if(approvalMode==='auto'){
+      approvalMode='manual';
+    }else{
+      if(!window.confirm('Enable Auto Approval in this browser demo? This does not publish content or activate real automation.')) return;
+      approvalMode='auto';
+    }
+    try { localStorage.setItem(approvalStorageKey,approvalMode); } catch (error) {}
+    renderApprovalMode();
+  });
+  renderApprovalMode();
   let pausedChannels = {};
   let enabledChannels = {youtube:true,facebook:true,instagram:true,threads:true};
   try { enabledChannels = Object.assign(enabledChannels, JSON.parse(localStorage.getItem(enabledStorageKey) || '{}') || {}); } catch (error) {}
