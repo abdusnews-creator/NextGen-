@@ -25,6 +25,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 .status .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warn);margin-right:7px}
 .status.paused .dot{background:#ff9c9c}
 .actions{justify-content:flex-start}
+/* Channel-level controls are managed only from Settings → Privacy Settings. */
+#channelGrid .pause-button,#channelGrid .enable-button{display:none!important}
 .primary{background:var(--accent);color:#07101f;font-weight:bold}
 .muted,.note{color:var(--muted);font-size:14px;line-height:1.6}
 .notice{background:#302818;border:1px solid #806633;color:#ffe1a6;padding:13px;border-radius:10px;line-height:1.5;font-size:13px}
@@ -129,12 +131,6 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   </div>
 </section>
 </div>
-
-<section class="card" id="privacy-settings" style="margin-top:20px">
-  <h3>Settings → Privacy Settings</h3>
-  <p class="muted">Edit channel details or remove a channel from your NextGen list here. This does not disconnect or delete the real social-media account.</p>
-  <div id="privacyChannelList" style="display:grid;gap:10px"></div>
-</section>
 
 <section class="card" style="margin-top:20px">
   <h3>Approval Safety</h3>
