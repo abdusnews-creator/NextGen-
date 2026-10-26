@@ -260,7 +260,22 @@ function setMode(auto){
 
   manualButton.setAttribute('aria-pressed', String(!auto));
   autoButton.setAttribute('aria-pressed', String(auto));
+
+  try {
+    localStorage.setItem('nextgen-demo-approval-mode', auto ? 'auto' : 'manual');
+  } catch (error) {
+    /* Keep mode switching usable if browser storage is unavailable. */
+  }
 }
+
+/* Manual Approval is the safe default. Restore Auto only if the user previously selected it. */
+(function restoreApprovalMode(){
+  try {
+    setMode(localStorage.getItem('nextgen-demo-approval-mode') === 'auto');
+  } catch (error) {
+    setMode(false);
+  }
+})();
 </script>
 </body>
 </html>
