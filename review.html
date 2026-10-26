@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0b1020"><title>NextGen — Content Review</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0b1020;color:#eef3ff;font:16px Arial,sans-serif}header{padding:20px;background:#141e32;border-bottom:1px solid #293752}h1{margin:0;color:#91aaff}header p{margin:6px 0;color:#c1cbe0}.credit{text-align:right;font-size:11px;color:#a5b3cc}main{max-width:850px;margin:auto;padding:16px}.card{background:#141e32;border:1px solid #293752;border-radius:13px;padding:18px;margin:14px 0}label{display:block;margin:12px 0;color:#c1cbe0}select{display:block;width:100%;padding:13px;margin-top:6px;border-radius:8px;background:#0b1020;color:#fff;border:1px solid #91aaff;font-size:16px}.preview{background:#1a2740;padding:14px;border-radius:10px;margin-top:14px;overflow-wrap:anywhere}.preview h3{color:#91aaff}.tag{color:#b8c9ff;line-height:1.7}.check{display:flex;gap:10px;align-items:flex-start;margin:16px 0;line-height:1.4}.check input{width:20px;height:20px;flex-shrink:0}.btn{padding:13px 16px;border:0;border-radius:8px;background:#91aaff;color:#0b1020;font-weight:bold;font-size:15px;margin:5px 5px 5px 0}.muted{color:#a5b3cc;font-size:13px}.warning{background:#302818;border:1px solid #806633;color:#ffe1a6;padding:12px;border-radius:9px}.status{font-weight:bold;color:#ffd27d}
+*{box-sizing:border-box}body{margin:0;background:#0b1020;color:#eef3ff;font:16px Arial,sans-serif}header{padding:20px;background:#141e32;border-bottom:1px solid #293752}h1{margin:0;color:#91aaff}header p{margin:6px 0;color:#c1cbe0}.credit{text-align:right;font-size:11px;color:#a5b3cc}main{max-width:850px;margin:auto;padding:16px}.card{background:#141e32;border:1px solid #293752;border-radius:13px;padding:18px;margin:14px 0}label{display:block;margin:12px 0;color:#c1cbe0}select{display:block;width:100%;padding:13px;margin-top:6px;border-radius:8px;background:#0b1020;color:#fff;border:1px solid #91aaff;font-size:16px}.preview{background:#1a2740;padding:14px;border-radius:10px;margin-top:14px;overflow-wrap:anywhere}.preview h3{color:#91aaff}.tag{color:#b8c9ff;line-height:1.7}.check{display:flex;gap:10px;align-items:flex-start;margin:16px 0;line-height:1.4}.check input{width:20px;height:20px;flex-shrink:0}.btn{padding:13px 16px;border:0;border-radius:8px;background:#91aaff;color:#0b1020;font-weight:bold;font-size:15px;margin:5px 5px 5px 0}.muted{color:#a5b3cc;font-size:13px}.warning{background:#302818;border:1px solid #806633;color:#ffe1a6;padding:12px;border-radius:9px}.status{font-weight:bold;color:#ffd27d}.btn.reject{background:#7b303b;color:#fff}.btn:disabled{opacity:.45}
 </style></head>
 <body>
 <header><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><div><h1>NextGen</h1><p>Smart Automation. Smarter Growth.</p></div><div class="credit">Powered by<br><b>ABDUS SATTAR</b></div></div></header>
@@ -23,8 +23,8 @@
 <label class="check"><input type="checkbox" class="checkitem"> Copyright checked</label>
 <label class="check"><input type="checkbox" class="checkitem"> Duplicate content checked</label>
 <label class="check"><input type="checkbox" class="checkitem"> Platform policy and brand safety checked</label>
-<button class="btn" id="approve">Approve review (demo only)</button><button class="btn" style="background:#293752;color:#fff" id="reset">Reset checklist</button>
-<p id="status" class="status" aria-live="polite">Pending review</p>
+<button class="btn" id="approve">Approve (demo only)</button><button class="btn reject" id="reject">Reject draft</button><button class="btn" style="background:#293752;color:#fff" id="reset">Reset checklist</button>
+<p id="status" class="status" aria-live="polite">Pending review</p><p class="muted">Review status is saved in this browser on this device only.</p>
 <p class="warning">Demo only: this page does not publish or schedule posts to YouTube, Facebook, Instagram or Threads.</p>
 </div>
 </main>
@@ -35,8 +35,13 @@ sofa:{title:'Royal Sofa Set Short',content:'Create a vertical 9:16 furniture sho
 table:{title:'Carved Centre Table Reel',content:'Create a vertical 9:16 cinematic showcase of an ornate wooden centre table. Highlight the honey-brown polished finish, floral carving, curved legs and lower shelf with close-up details followed by a full product shot. Preserve the product geometry. No people or watermark.',caption:'A statement piece for a beautiful home. Admire the polished finish and intricate carving on this elegant wooden centre table. ✨ Would you place it in your living room?',hashtags:'#CentreTable #WoodenFurniture #FurnitureDesign #LuxuryInteriors #HomeDecor #LivingRoom #Reels #Shorts'}
 };
 const select=document.getElementById('draft'), checks=[...document.querySelectorAll('.checkitem')];
-function render(){const d=drafts[select.value];document.getElementById('title').textContent=d.title;document.getElementById('content').textContent=d.content;document.getElementById('caption').textContent=d.caption;document.getElementById('hashtags').textContent=d.hashtags;checks.forEach(c=>c.checked=false);document.getElementById('status').textContent='Pending review'}
+const statusEl=document.getElementById('status');
+const stateKey='nextgen-review-status-v1';
+function readStates(){try{return JSON.parse(localStorage.getItem(stateKey)||'{}')}catch(e){return {}}}
+function writeStatus(value){const states=readStates();states[select.value]=value;try{localStorage.setItem(stateKey,JSON.stringify(states))}catch(e){};statusEl.textContent=value}
+function render(){const d=drafts[select.value];document.getElementById('title').textContent=d.title;document.getElementById('content').textContent=d.content;document.getElementById('caption').textContent=d.caption;document.getElementById('hashtags').textContent=d.hashtags;checks.forEach(c=>c.checked=false);statusEl.textContent=readStates()[select.value]||'Pending review'}
 select.addEventListener('change',render);
-document.getElementById('reset').addEventListener('click',()=>{checks.forEach(c=>c.checked=false);document.getElementById('status').textContent='Checklist reset — pending review'});
-document.getElementById('approve').addEventListener('click',()=>{if(!checks.every(c=>c.checked)){document.getElementById('status').textContent='Please tick all five checklist items first.';return}document.getElementById('status').textContent='Review approved in demo only — nothing was published or scheduled.'});
+document.getElementById('reset').addEventListener('click',()=>{checks.forEach(c=>c.checked=false);writeStatus('Pending review — checklist reset')});
+document.getElementById('approve').addEventListener('click',()=>{if(!checks.every(c=>c.checked)){statusEl.textContent='Please tick all five checklist items first.';return}writeStatus('Approved (demo only) — nothing published or scheduled')});
+document.getElementById('reject').addEventListener('click',()=>writeStatus('Rejected — revise draft before review (demo only)'));
 </script></body></html>
