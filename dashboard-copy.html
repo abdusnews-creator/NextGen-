@@ -239,6 +239,12 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
  .channel-review-status{font-size:17px;margin-bottom:26px}
  .channel-review-button{font-size:21px!important;padding:14px 25px!important}
 }
+/* Make channel section and every card use the full available screen width */
+.studio-main{width:100%;max-width:none!important;padding-left:12px!important;padding-right:12px!important}
+.studio-main>.top,.studio-main>.top>div{width:100%;max-width:none!important;min-width:0}
+.channel-review-layout{width:100%;grid-template-columns:minmax(0,1fr)!important}
+.channel-review-card{width:100%;max-width:none!important}
+@media(min-width:681px){.studio-main{padding-left:24px!important;padding-right:24px!important}}
 </style>
 </head>
 
