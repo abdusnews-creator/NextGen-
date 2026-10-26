@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1020"><title>NextGen | Sign in (direct page)</title>
+<style>*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:18px;background:linear-gradient(145deg,#0b1020,#172544);color:#eef3ff;font:16px/1.5 system-ui,Arial,sans-serif}.card{width:min(100%,460px);padding:26px;background:#141e32;border:1px solid #2a3958;border-radius:18px}.brand{font-size:30px;font-weight:850;color:#91aaff}.muted{font-size:13px;color:#a5b3cc}label{display:block;margin:14px 0 6px;font-weight:650}input[type=email],input[type=password],input[type=text],input[type=tel]{width:100%;padding:13px;border:1px solid #465777;border-radius:10px;background:#0d1628;color:#fff;font:inherit}.phone-row{display:grid;grid-template-columns:1fr;gap:8px}.phone-row input{min-width:0}button,.back{display:block;width:100%;margin-top:12px;padding:12px;border-radius:10px;border:1px solid #53688d;background:#91aaff;color:#0b1020;font-weight:750;font-size:1rem;text-align:center;text-decoration:none;cursor:pointer}.secondary{background:#22324f;color:#eef3ff}.facebook{background:#263f70;color:#fff;border-color:#496aa5}.note{margin-top:16px;padding:12px;border-radius:10px;background:#302818;border:1px solid #806633;color:#ffe1a6;font-size:13px}.credit{text-align:right;font-size:11px;color:#a5b3cc;margin-top:22px}.save{display:flex;gap:8px;align-items:center;font-size:13px;color:#c5d0e5;font-weight:400}.save input{width:auto}.divider{display:flex;gap:10px;align-items:center;color:#8292b1;font-size:12px;margin:16px 0 4px}.divider:before,.divider:after{content:'';height:1px;background:#344461;flex:1}.hidden{display:none!important}.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.topline h1{margin:0;font-size:25px}.create-link{border:0;background:transparent;color:#a9bcff;text-decoration:underline;font-size:14px;font-weight:700;padding:4px;margin:0;width:auto;white-space:nowrap}.social-row{display:flex;gap:8px;margin-top:12px}.social-row button{flex:1;min-width:0;width:auto;margin:0;padding:10px 4px;font-size:12px;line-height:1.2;overflow-wrap:anywhere}.social-label{margin:14px 0 0;font-size:13px;color:#c5d0e5;font-weight:700}@media(max-width:360px){.card{padding:18px}.social-row{gap:5px}.social-row button{font-size:11px;padding:9px 2px}}
+/* NextGen shared brand system: consistent dark-blue header/footer on every page */
+:root{--ng-bg:#0b1020;--ng-panel:#141e32;--ng-line:#293752;--ng-text:#eef3ff;--ng-muted:#a5b3cc;--ng-accent:#91aaff}
+body{background-color:var(--ng-bg);color:var(--ng-text)}
+body>header,body>main>header,body>.card>header{
+ background:linear-gradient(110deg,#10213f 0%,#173b70 58%,#102544 100%)!important;
+ color:#f4f7ff;border-bottom:1px solid #35547e!important;
+}
+body>header .brand,body>header h1,body>main>header h1{color:#f4f7ff}
+body>header .tag,body>header p,body>main>header p{color:#c5d9ff}
+body>footer,footer.ng-shared-footer{
+ display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+ padding:14px 18px calc(14px + env(safe-area-inset-bottom));margin-top:24px;
+ color:#c5d9ff;background:linear-gradient(110deg,#10213f,#173b70 58%,#102544);
+ border-top:1px solid #35547e;font-size:12px
+}
+body>footer .credit,footer .credit{color:#d4e2ff;text-align:right}
+.ng-bottom-nav{
+ position:fixed;z-index:1000;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+ gap:2px;padding:7px 6px calc(7px + env(safe-area-inset-bottom));
+ background:rgba(9,20,39,.97);border-top:1px solid #35547e;backdrop-filter:blur(12px)
+}
+.ng-bottom-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;
+ padding:5px 2px;border-radius:9px;color:#b8c9e8;text-decoration:none;font-size:11px}
+.ng-bottom-nav a span{font-size:19px;line-height:1.15}
+.ng-bottom-nav a small{font-size:10px;white-space:nowrap}
+.ng-bottom-nav a.active{color:#fff;background:#203e6b}
+body:has(.ng-bottom-nav){padding-bottom:76px!important}
+@media(max-width:480px){body>footer{padding-left:14px;padding-right:14px}.ng-bottom-nav a small{font-size:9px}}
+
+</style><style>
+body:before{content:"NextGen";position:fixed;top:12px;left:18px;color:#f4f7ff;font-size:20px;font-weight:800;letter-spacing:.2px}
+
+.card{margin-bottom:45px}
+</style></head>
+<body><main class="card"><div class="brand">NextGen</div><p>Smart Automation. Smarter Growth.</p><div class="topline"><h1 id="heading">Sign in</h1><button type="button" class="create-link" id="switchButton">Create a new Account</button></div><p class="muted">Choose a sign-in option, or use your email from any provider.</p>
+<button type="button" class="secondary" id="googleButton">Sign in with Google Account</button>
+<div class="note" id="googleNote">Google Account Chooser needs NextGen's Google OAuth client ID and authorized domain. This setup is not complete yet.</div>
+<div class="divider">OR USE EMAIL / MOBILE</div>
+<form id="authForm">
+<label for="identifier">Username, Email or Mobile Number</label><input id="identifier" name="identifier" type="text" autocomplete="username" list="savedIdentifiers" placeholder="Enter username, email or mobile number" required><datalist id="savedIdentifiers"></datalist>
+<label class="save"><input type="checkbox" id="rememberEmail"> Remember this email or mobile on this device</label>
+<div id="passwordWrap"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required></div>
+<button id="submitButton" type="submit">Sign in</button></form>
+<div class="social-label">Sign in with 👇</div><div class="social-row"><button type="button" class="facebook" id="facebookButton">Facebook</button><button type="button" class="secondary" id="instagramButton">Instagram</button><button type="button" class="secondary" id="threadsButton">Threads</button></div>
+<div class="note" id="socialNote">Facebook, Instagram and Threads sign-in need platform app configuration and approved OAuth redirect URLs. These buttons are setup placeholders until configured.</div>
+<p class="muted">Email/password authentication can be enabled after Supabase is configured. Username and mobile-number/OTP sign-in are not enabled yet.</p><p class="muted" id="status" aria-live="polite"></p><a class="back secondary" href="./index.html">← Back to Dashboard</a><div class="credit">Powered by <b>ABDUS SATTAR</b></div></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./supabase-config.js"></script>
+<script>
+const GOOGLE_CLIENT_ID = '';
+let createMode=false;
+const heading=document.getElementById('heading'),identifier=document.getElementById('identifier'),password=document.getElementById('password'),submit=document.getElementById('submitButton'),switchButton=document.getElementById('switchButton'),status=document.getElementById('status'),form=document.getElementById('authForm'),remember=document.getElementById('rememberEmail'),savedIdentifiers=document.getElementById('savedIdentifiers');
+function loadSavedIdentifiers(){try{const items=JSON.parse(localStorage.getItem('nextgen_saved_identifiers')||'[]');savedIdentifiers.replaceChildren(...items.filter(x=>typeof x==='string').map(x=>{const o=document.createElement('option');o.value=x;return o;}));}catch(e){}}
+loadSavedIdentifiers();
+function saveIdentifier(){const value=identifier.value.trim();const isEmail=value.includes('@');const isMobile=/^[+()\d\s.-]{7,20}$/.test(value)&&/\d{7,}/.test(value);if(remember.checked&&(isEmail||isMobile)){try{const items=JSON.parse(localStorage.getItem('nextgen_saved_identifiers')||'[]');localStorage.setItem('nextgen_saved_identifiers',JSON.stringify([value,...items.filter(x=>x!==value)].slice(0,10)));loadSavedIdentifiers();}catch(e){}}}
+identifier.addEventListener('change',saveIdentifier);
+switchButton.addEventListener('click',()=>{createMode=!createMode;heading.textContent=createMode?'Create account':'Sign in';submit.textContent=createMode?'Create account':'Sign in';password.autocomplete=createMode?'new-password':'current-password';switchButton.textContent=createMode?'Back to Sign in':'Create a new Account';status.textContent='';});
+let supabaseClient=null;
+try{
+ const cfg=window.NEXTGEN_SUPABASE_CONFIG||{};
+ if(window.supabase?.createClient&&/^https:\/\//.test(cfg.url||'')&&cfg.anonKey&&!cfg.url.includes('PASTE_')&&!cfg.anonKey.includes('PASTE_')){
+  supabaseClient=window.supabase.createClient(cfg.url,cfg.anonKey);
+ }
+}catch(err){console.error('NextGen auth setup:',err);}
+form.addEventListener('submit',async e=>{
+ e.preventDefault();saveIdentifier();
+ const email=identifier.value.trim();
+ if(!supabaseClient){status.textContent='Authentication is not connected yet. First configure the Supabase Project URL and publishable/anon key in supabase-config.js.';return;}
+ if(!email.includes('@')){status.textContent='For now, enter a valid email address. Username and mobile/OTP sign-in are not enabled yet.';return;}
+ submit.disabled=true;status.textContent=createMode?'Creating account…':'Signing in…';
+ try{
+  if(createMode){
+   const {data,error}=await supabaseClient.auth.signUp({email,password:password.value,options:{emailRedirectTo:location.origin+'/NextGen/signin.html'}});
+   if(error)throw error;
+   status.textContent=data.session?'Account created. You are signed in.':'Account request submitted. Check your email to confirm the account before signing in.';
+   if(data.session)setTimeout(()=>location.href='./index.html',900);
+  }else{
+   const {data,error}=await supabaseClient.auth.signInWithPassword({email,password:password.value});
+   if(error)throw error;
+   status.textContent='Signed in successfully. Opening NextGen…';
+   setTimeout(()=>location.href='./index.html',600);
+  }
+ }catch(err){status.textContent=err?.message||'Authentication failed. Check your email/password and Supabase settings.';}
+ finally{submit.disabled=false;}
+});
+document.getElementById('googleButton').addEventListener('click',()=>{if(!GOOGLE_CLIENT_ID){status.textContent='Google Account Chooser is not active yet: configure the real Google OAuth client ID and authorized domain first.';return;}if(!window.google?.accounts?.id){status.textContent='Google Sign-In library is still loading. Please try again.';return;}window.google.accounts.id.initialize({client_id:GOOGLE_CLIENT_ID,callback:()=>{status.textContent='Google response received. Server-side token verification and account linking must be implemented before login can complete.';},auto_select:false});window.google.accounts.id.prompt();});
+document.getElementById('facebookButton').addEventListener('click',()=>{status.textContent='Facebook sign-in is not active yet. Meta app credentials, redirect URLs and server-side token verification must be configured.';});
+document.getElementById('instagramButton').addEventListener('click',()=>{status.textContent='Instagram sign-in is not active yet. Meta app credentials, redirect URLs and server-side token verification must be configured.';});
+document.getElementById('threadsButton').addEventListener('click',()=>{status.textContent='Threads sign-in is not active yet. Threads/Meta app configuration, redirect URLs and server-side token verification must be configured.';});
+</script><script src="https://accounts.google.com/gsi/client" async defer></script><footer class="ng-shared-footer"><span>NextGen · Smart Automation. Smarter Growth.</span><span class="credit">Powered by ABDUS SATTAR</span></footer>
+</body></html>
