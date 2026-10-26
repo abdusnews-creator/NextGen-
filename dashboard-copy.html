@@ -338,13 +338,14 @@ main.studio-main #channelCards .channel-review-button,main.studio-main #channelC
   <div>
     <h2 class="channel-page-title">Channels</h2>
     <p class="channel-page-subtitle">Manage your connected social media channels</p>
-    <p class="note" id="cloudStatus" style="display:none">DEMO CONTROLS — browser-only test settings, not connected to real social accounts.</p>
-  <div class="notice" style="display:none;margin-top:14px">
+    <p class="note" id="cloudStatus" style="display:block">DEMO CONTROLS — browser-only test settings, not connected to real social accounts.</p>
+  <div class="notice" style="display:block;margin-top:14px">
     <strong>Demo controls are below.</strong> Channel controls only save demo state in this browser; they do not pause or publish on YouTube, Facebook, Instagram, or Threads.
   </div>
   </div>
   <div style="display:flex;width:100%;box-sizing:border-box;gap:10px;align-items:center;flex-wrap:wrap;margin-top:20px">
     <input id="channelSearch" type="search" aria-label="Search channels" placeholder="⌕  Search channels..." oninput="filterChannelCards()" style="flex:1;min-width:0;padding:13px 15px;border-radius:10px;border:1px solid #1b4e80;background:#0d2340;color:#eef3ff;font-size:14px">
+    <button type="button" class="action" onclick="document.getElementById('channelSearch').value='';filterChannelCards()" style="padding:13px 18px">Show all</button>
     <button type="button" class="action active" onclick="window.location.href='channels.html'" style="padding:13px 18px">＋ Add Channel</button>
   </div>
   <div id="channelSearchEmpty" class="muted" style="display:none;margin-top:16px">No matching channels found.</div>
@@ -374,6 +375,17 @@ main.studio-main #channelCards .channel-review-button,main.studio-main #channelC
       
     </article>
   </div>
+</div>
+<section class="card" style="width:100%;box-sizing:border-box;margin-top:22px;padding:24px;border-radius:18px">
+  <h2 style="margin:0 0 18px">Approval Safety</h2>
+  <p>Publishing mode: <strong>Manual Approval Mode — ON</strong></p>
+  <p>Auto Approval Mode: <strong>OFF</strong></p>
+  <button type="button" class="action active" style="width:100%;margin:12px 0" onclick="window.location.href='settings.html'">Manual Approval (Recommended)</button>
+  <button type="button" class="action" style="margin:0 0 14px" onclick="window.location.href='settings.html'">Enable Auto Approval</button>
+  <p class="muted">Manual approval is the default. Content must be reviewed before publishing.</p>
+  <div class="notice" style="margin-top:16px">Auto mode is a demo toggle only. If later connected to a real backend, it must auto-approve only low-risk, brand-safe content after spelling, factual, copyright, duplicate, and platform-policy checks. Sensitive, uncertain, complaint-related, or failing content must remain pending manual review. No publishing or scheduling is performed by this prototype.</div>
+  <div class="notice" style="margin-top:16px">This is a front-end prototype. Channel pause settings and approval mode are saved only in this browser on this device. Real account connections, secure login, shared database, automated checks, scheduling, and 24/7 background monitoring are not implemented yet.</div>
+</section>
 </div>
 </main>
 <script>
