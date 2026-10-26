@@ -110,8 +110,26 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
 
 <section id="content" class="page">
   <h2>Content Queue</h2>
-
   <div class="card">
+    <h3>Find Content</h3>
+    <label class="muted" for="queueSearch">Search drafts</label>
+    <input id="queueSearch" type="search" placeholder="Search bed, sofa, table..." oninput="filterQueue()" style="display:block;width:100%;padding:11px;margin:6px 0 12px;border-radius:8px;border:1px solid #53688d;background:#0b1020;color:#eef3ff">
+    <div class="channels">
+      <label class="muted">Channel
+        <select id="queueChannel" onchange="filterQueue()" style="display:block;width:100%;padding:10px;margin-top:6px;background:#0b1020;color:#eef3ff;border:1px solid #53688d;border-radius:8px">
+          <option value="all">All channels</option><option>YouTube</option><option>Facebook</option><option>Instagram</option><option>Threads</option>
+        </select>
+      </label>
+      <label class="muted">Status
+        <select id="queueStatus" onchange="filterQueue()" style="display:block;width:100%;padding:10px;margin-top:6px;background:#0b1020;color:#eef3ff;border:1px solid #53688d;border-radius:8px">
+          <option value="all">All statuses</option><option value="Pending approval">Pending approval</option><option value="Approved">Approved</option><option value="Rejected">Rejected</option><option value="Revised">Revised</option>
+        </select>
+      </label>
+    </div>
+    <p id="queueCount" class="muted" aria-live="polite">Showing 3 drafts</p>
+  </div>
+
+  <div class="card queue-item" data-draft-title="Luxury Wooden Bed Reel" data-status-id="bedStatus">
     <h3>Luxury Wooden Bed Reel</h3>
     <p class="muted">Cinematic furniture product showcase.</p>
     <label class="muted">Target channel
@@ -128,7 +146,7 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
     </p>
   </div>
 
-  <div class="card">
+  <div class="card queue-item" data-draft-title="Royal Sofa Set Short" data-status-id="sofaStatus">
     <h3>Royal Sofa Set Short</h3>
     <p class="muted">Highlight comfort and premium design.</p>
     <label class="muted">Target channel
@@ -145,7 +163,7 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
     </p>
   </div>
 
-  <div class="card">
+  <div class="card queue-item" data-draft-title="Carved Centre Table Reel" data-status-id="tableStatus">
     <h3>Carved Centre Table Reel</h3>
     <p class="muted">Showcase wood finish and craftsmanship.</p>
     <label class="muted">Target channel
@@ -210,6 +228,31 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
 <footer>NextGen Prototype • Dashboard preview • Real publishing is not connected</footer>
 
 <script>
+
+function filterQueue(){
+  var search = (document.getElementById('queueSearch').value || '').trim().toLowerCase();
+  var channel = document.getElementById('queueChannel').value;
+  var statusFilter = document.getElementById('queueStatus').value;
+  var visible = 0;
+  document.querySelectorAll('.queue-item').forEach(function(card){
+    var title = (card.dataset.draftTitle || '').toLowerCase();
+    var statusEl = document.getElementById(card.dataset.statusId);
+    var status = statusEl ? statusEl.textContent : '';
+    var channelSelect = card.querySelector('.draft-channel');
+    var selectedChannel = channelSelect ? channelSelect.value : '';
+    var matchesSearch = !search || title.indexOf(search) !== -1;
+    var matchesChannel = channel === 'all' || selectedChannel === channel;
+    var matchesStatus = statusFilter === 'all' ||
+      (statusFilter === 'Approved' && status.indexOf('Approved') === 0) ||
+      (statusFilter === 'Rejected' && status.indexOf('Rejected') === 0) ||
+      (statusFilter === 'Revised' && status.indexOf('Revised') === 0) ||
+      (statusFilter === 'Pending approval' && status.indexOf('Pending approval') === 0);
+    card.style.display = matchesSearch && matchesChannel && matchesStatus ? '' : 'none';
+    if(card.style.display !== 'none') visible++;
+  });
+  document.getElementById('queueCount').textContent = 'Showing ' + visible + ' of ' + document.querySelectorAll('.queue-item').length + ' drafts';
+}
+
 function showPage(id){
   document.querySelectorAll('.page').forEach(function(page){
     page.classList.remove('show');
@@ -272,6 +315,10 @@ function setDraftStatus(id, message){
 }
 
 function approveDraft(id){
+  activeDraftId = draftStatusIds.indexOf(id) >= 0 ? id : 'bedStatus';
+  restoreChecklistForDraft(activeDraftId);
+  var titleById = {bedStatus:'Luxury Wooden Bed Reel',sofaStatus:'Royal Sofa Set Short',tableStatus:'Carved Centre Table Reel'};
+  document.getElementById('activeReviewTitle').textContent = 'Reviewing: ' + titleById[activeDraftId];
   var checks = document.querySelectorAll('.review-check');
   var allChecked = Array.from(checks).every(function(check){
     return check.checked;
@@ -326,6 +373,7 @@ document.querySelectorAll('.draft-channel').forEach(function(select){
   } catch(error) {}
   select.addEventListener('change', function(){
     try { localStorage.setItem(key, select.value); } catch(error) {}
+    filterQueue();
   });
 });
 
@@ -333,6 +381,7 @@ document.querySelectorAll('.review-check').forEach(function(check){
   check.addEventListener('change', saveChecklist);
 });
 restoreDemoReviewState();
+filterQueue();
 
 function setMode(auto){
   var mode = document.getElementById('mode');
