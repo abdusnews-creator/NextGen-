@@ -245,6 +245,13 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
 .channel-review-layout{width:100%;grid-template-columns:minmax(0,1fr)!important}
 .channel-review-card{width:100%;max-width:none!important}
 @media(min-width:681px){.studio-main{padding-left:24px!important;padding-right:24px!important}}
+
+/* Final mobile full-width override */
+main.studio-main{display:block!important;width:100%!important;max-width:none!important;margin:0!important;padding:18px 12px 96px!important}
+main.studio-main #channelCards.channels{display:grid!important;grid-template-columns:1fr!important;width:100%!important;max-width:none!important;gap:16px!important}
+main.studio-main #channelCards .channel-review-card{display:block!important;width:100%!important;max-width:none!important;min-width:0!important;margin:0!important;padding:24px 22px!important}
+main.studio-main .top{display:block!important;width:100%!important;max-width:none!important}
+@media(min-width:651px){main.studio-main{padding:24px!important}}
 </style>
 </head>
 
