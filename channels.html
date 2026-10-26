@@ -205,7 +205,7 @@ body>header.studio-top .top-popover[hidden]{display:none!important}
 <body>
 <header class="studio-top">
   <button class="studio-menu" type="button" aria-label="Menu" onclick="document.querySelector('.channel-drawer')?.classList.toggle('nav-expanded')">☰</button>
-  <div class="studio-brand">NextGen</div>
+  <div class="studio-brand" style="font-size:20px;letter-spacing:.75px"><span style="color:#00BFFF">N</span>extGen</div>
   <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" onkeydown="if(event.key==='Enter'){document.getElementById('channelSearch').value=this.value;document.getElementById('channelSearch').dispatchEvent(new Event('input'))}">
   <div class="studio-top-right">
     <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="document.getElementById('addChannelButton').click()">+</button>
