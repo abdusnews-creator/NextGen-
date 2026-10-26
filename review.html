@@ -37,9 +37,12 @@ table:{title:'Carved Centre Table Reel',content:'Create a vertical 9:16 cinemati
 const select=document.getElementById('draft'), checks=[...document.querySelectorAll('.checkitem')];
 const statusEl=document.getElementById('status');
 const stateKey='nextgen-review-status-v1';
+const dashboardKey='nextgen-demo-draft-statuses';
+const draftIds={bed:'bedStatus',sofa:'sofaStatus',table:'tableStatus'};
 function readStates(){try{return JSON.parse(localStorage.getItem(stateKey)||'{}')}catch(e){return {}}}
-function writeStatus(value){const states=readStates();states[select.value]=value;try{localStorage.setItem(stateKey,JSON.stringify(states))}catch(e){};statusEl.textContent=value}
-function render(){const d=drafts[select.value];document.getElementById('title').textContent=d.title;document.getElementById('content').textContent=d.content;document.getElementById('caption').textContent=d.caption;document.getElementById('hashtags').textContent=d.hashtags;checks.forEach(c=>c.checked=false);statusEl.textContent=readStates()[select.value]||'Pending review'}
+function readDashboardStates(){try{return JSON.parse(localStorage.getItem(dashboardKey)||'{}')}catch(e){return {}}}
+function writeStatus(value){const states=readStates();states[select.value]=value;try{localStorage.setItem(stateKey,JSON.stringify(states));const shared=readDashboardStates();shared[draftIds[select.value]]=value.indexOf('Approved')===0?'Approved for selected channel (demo only)':value.indexOf('Rejected')===0?'Rejected — revision needed':'Pending approval';localStorage.setItem(dashboardKey,JSON.stringify(shared))}catch(e){};statusEl.textContent=value}
+function render(){const d=drafts[select.value];document.getElementById('title').textContent=d.title;document.getElementById('content').textContent=d.content;document.getElementById('caption').textContent=d.caption;document.getElementById('hashtags').textContent=d.hashtags;checks.forEach(c=>c.checked=false);const shared=readDashboardStates()[draftIds[select.value]];const local=readStates()[select.value];statusEl.textContent=shared||local||'Pending review'}
 select.addEventListener('change',render);
 document.getElementById('reset').addEventListener('click',()=>{checks.forEach(c=>c.checked=false);writeStatus('Pending review — checklist reset')});
 document.getElementById('approve').addEventListener('click',()=>{if(!checks.every(c=>c.checked)){statusEl.textContent='Please tick all five checklist items first.';return}writeStatus('Approved (demo only) — nothing published or scheduled')});
