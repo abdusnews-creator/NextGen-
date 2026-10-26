@@ -14,20 +14,77 @@ a{color:#b9c8ff}.credit{text-align:right;font-size:11px;color:#a5b3cc;margin-top
 </style></head>
 <body><main class="panel">
 <h1>NextGen</h1><p>Smart Automation. Smarter Growth.</p>
-<h2>Sign in</h2><p class="muted">Account access screen prototype</p>
+<h2>Sign in</h2><p class="muted">Sign in or create your NextGen account</p>
 <form id="loginForm">
 <label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
 <label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required>
-<button type="submit">Continue</button>
+<button id="signInButton" type="submit">Sign in</button>
+<button id="signUpButton" type="button" style="background:#233654;color:#eef3ff;border:1px solid #53688d">Create account</button>
 </form>
-<div id="message" class="warning" role="status">Demo only: authentication is not connected. Do not enter a real password. This page does not send or save your credentials.</div>
+<div id="message" class="warning" role="status">Supabase is not configured yet. Do not enter a real password until your project settings are added.</div>
 <p><a href="index.html">← Back to Dashboard</a></p>
 <div class="credit">Powered by<br><b>ABDUS SATTAR</b></div>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 <script>
-document.getElementById('loginForm').addEventListener('submit',function(event){
- event.preventDefault();
- document.getElementById('message').textContent='Sign-in is not active yet. No credentials were sent or saved. Real account authentication will be connected after the database provider is configured.';
- document.getElementById('password').value='';
-});
+(function(){
+ const form=document.getElementById('loginForm');
+ const emailInput=document.getElementById('email');
+ const passwordInput=document.getElementById('password');
+ const message=document.getElementById('message');
+ const signInButton=document.getElementById('signInButton');
+ const signUpButton=document.getElementById('signUpButton');
+ let client=null;
+ const config=window.NEXTGEN_SUPABASE_CONFIG;
+ const configured=config && config.url && config.anonKey &&
+   config.url.indexOf('https://')===0 &&
+   config.url.indexOf('PASTE_')===-1 &&
+   config.anonKey.indexOf('PASTE_')===-1;
+ if(configured && window.supabase && window.supabase.createClient){
+   client=window.supabase.createClient(config.url,config.anonKey);
+   message.textContent='Supabase settings detected. You can sign in or create an account.';
+ } else {
+   signInButton.disabled=true;
+   signUpButton.disabled=true;
+   signInButton.style.opacity='.55';
+   signUpButton.style.opacity='.55';
+   message.textContent='Setup required: create a Supabase project, add its Project URL and publishable/anon key to supabase-config.js, then redeploy. Do not enter a real password yet.';
+ }
+ form.addEventListener('submit',async function(event){
+   event.preventDefault();
+   if(!client){return;}
+   signInButton.disabled=true;
+   message.textContent='Signing in…';
+   try{
+     const result=await client.auth.signInWithPassword({email:emailInput.value.trim(),password:passwordInput.value});
+     if(result.error) throw result.error;
+     passwordInput.value='';
+     message.textContent='Signed in successfully. Opening the dashboard…';
+     window.location.href='index.html';
+   }catch(error){
+     message.textContent='Sign-in failed: '+(error.message || 'Please check your email and password.');
+     passwordInput.value='';
+   }finally{signInButton.disabled=false;}
+ });
+ signUpButton.addEventListener('click',async function(){
+   if(!client){return;}
+   if(!emailInput.value.trim() || !passwordInput.value){
+     message.textContent='Enter your email and choose a password first.';
+     return;
+   }
+   signUpButton.disabled=true;
+   message.textContent='Creating account…';
+   try{
+     const result=await client.auth.signUp({email:emailInput.value.trim(),password:passwordInput.value,options:{emailRedirectTo:window.location.origin+window.location.pathname}});
+     if(result.error) throw result.error;
+     passwordInput.value='';
+     message.textContent=result.data.session
+       ? 'Account created. You can now sign in.'
+       : 'Account request created. Check your email for a confirmation link before signing in.';
+   }catch(error){
+     message.textContent='Account creation failed: '+(error.message || 'Please try again.');
+   }finally{signUpButton.disabled=false;}
+ });
+})();
 </script></body></html>
