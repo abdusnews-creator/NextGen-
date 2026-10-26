@@ -239,6 +239,14 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
           bindCard(extra);
         }
       });
+      /* Final deduplication after cloud rows load, using platform + normalized handle. */
+      const finalSeen=new Set();
+      cards=cards.filter(card=>{
+        const handle=(card.dataset.handle||'').trim().toLowerCase();
+        const key=(card.dataset.platform||'').trim().toLowerCase()+'|'+(handle || (card.dataset.name||'').trim().toLowerCase());
+        if(finalSeen.has(key)){card.remove();return false;}
+        finalSeen.add(key);return true;
+      });
       try{localStorage.setItem(storageKey,JSON.stringify(pausedChannels));}catch(e){}
       cards.forEach(renderCard);
       filterCards();
