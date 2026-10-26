@@ -116,14 +116,60 @@ body{background:#0f141b;color:#f1f5f9;font-family:Arial,Helvetica,sans-serif}
 @media(max-width:1050px){.studio-nav{width:215px}.studio-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-content-grid{grid-template-columns:1fr}.studio-brand{min-width:170px}}
 @media(max-width:680px){.studio-top{height:62px;padding:0 12px;gap:9px}.studio-brand{min-width:0;font-size:18px}.studio-brand .studio-mark{width:32px;height:24px}.studio-search{display:none}.studio-top-right{gap:10px}.studio-shell{display:block}.studio-nav{width:100%;display:flex;overflow-x:auto;gap:4px;padding:8px;border-right:0;border-bottom:1px solid #25313e}.studio-channel{display:none}.studio-nav .studio-navbtn{width:auto;min-width:max-content;margin:0;padding:10px 12px}.studio-nav-icon{width:auto}.studio-main{padding:18px 12px 32px}.studio-pagehead{align-items:flex-start;flex-direction:column}.studio-pagehead h2{font-size:24px}.studio-period{padding:9px 12px}.studio-metrics{gap:10px}.studio-metric{padding:14px}.studio-metric-value{font-size:24px}.studio-metric-label{font-size:12px}.studio-metric-icon{width:32px;height:32px}.studio-panel{padding:15px}.studio-video{grid-template-columns:100px minmax(0,1fr) 14px;gap:10px}.studio-thumb{height:70px;font-size:25px}.studio-video-title{font-size:12px}.studio-video-stats{gap:10px}.studio-content-grid{display:block}}
 </style>
+<style>
+.studio-mark{display:none!important}
+.studio-brand{min-width:150px!important}
+.studio-brand:after{content:"";display:none}
+.studio-top-right{gap:16px}
+.top-icon-btn{width:40px;height:40px;border:0;border-radius:50%;display:grid;place-items:center;background:transparent;color:#dbe6f5;font-size:23px;position:relative}
+.top-icon-btn:hover{background:#253446}
+.top-add-btn{background:#172b43;border:1px solid #2e4968;color:#e8f2ff;font-size:25px}
+.top-profile-btn{width:34px;height:34px;font-size:15px;background:#2449bc;color:white}
+.studio-top{position:sticky}
+.top-popover{position:absolute;top:62px;right:72px;width:270px;max-width:calc(100vw - 24px);background:#111d2a;border:1px solid #2c3b4c;border-radius:15px;box-shadow:0 14px 40px #0008;padding:10px;z-index:100}
+.top-popover[hidden]{display:none}
+.top-popover-head{padding:12px;border-bottom:1px solid #2a3948;margin-bottom:6px;color:#edf4ff}
+.top-popover-head small{display:block;color:#93a7bd;margin-top:4px}
+.top-popover button,.top-popover a{display:flex;align-items:center;gap:12px;width:100%;padding:11px 12px;border:0;border-radius:8px;background:transparent;color:#e0eaf6;text-decoration:none;text-align:left;font-size:14px}
+.top-popover button:hover,.top-popover a:hover{background:#223144}
+.top-popover .pop-divider{height:1px;background:#293847;margin:6px 2px}
+@media(max-width:680px){.studio-brand{font-size:18px!important}.studio-top-right{gap:5px}.top-icon-btn{width:34px;height:36px}.top-popover{top:56px;right:8px}}
+</style>
 </head>
 
 <body>
 <header class="studio-top">
   <button class="studio-menu" type="button" aria-label="Menu" onclick="document.querySelector('.studio-nav').classList.toggle('nav-expanded')">☰</button>
-  <div class="studio-brand"><span class="studio-mark">▶</span><span>NextGen Studio</span></div>
+  <div class="studio-brand">NextGen</div>
   <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" onkeydown="if(event.key==='Enter'){showPage('content');document.getElementById('queueSearch').value=this.value;filterQueue()}">
-  <div class="studio-top-right"><span title="Help">ⓘ</span><span title="Notifications">♧</span><span class="studio-avatar" aria-label="Account">N</span></div>
+  <div class="studio-top-right">
+    <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="toggleTopMenu('addMenu')">+</button>
+    <button class="top-icon-btn" type="button" aria-label="Notifications" onclick="toggleTopMenu('notificationMenu')">♧</button>
+    <button class="top-icon-btn top-profile-btn" type="button" aria-label="Profile menu" onclick="toggleTopMenu('profileMenu')">A</button>
+  </div>
+  <div id="addMenu" class="top-popover" hidden>
+    <button type="button" onclick="window.location.href='channels.html'"><span>＋</span> Add channel</button>
+    <button type="button" onclick="studioNavTo('content')"><span>▣</span> Add content</button>
+  </div>
+  <div id="notificationMenu" class="top-popover" hidden style="right:42px">
+    <div class="top-popover-head"><b>Notifications</b><small>No new notifications</small></div>
+    <button type="button" onclick="toggleTopMenu('notificationMenu')">Close</button>
+  </div>
+  <div id="profileMenu" class="top-popover" hidden>
+    <div class="top-popover-head"><b>NextGen account</b><small>Manage your account and preferences</small></div>
+    <button type="button" onclick="alert('Account switching will be available when multi-account login is implemented.')"><span>⇄</span> Switch account</button>
+    <button type="button" onclick="alert('Google Account linking is not connected yet.')"><span style="font-size:18px;font-weight:bold">G</span> Google Account</button>
+    <button type="button" onclick="window.location.href='settings.html'"><span>⚙</span> Settings</button>
+    <div class="pop-divider"></div>
+    <button type="button" onclick="window.location.href='privacy-settings.html'"><span>◎</span> Account status</button>
+    <button type="button" onclick="alert('Thanks for your feedback!')"><span>▤</span> Send feedback</button>
+    <div class="pop-divider"></div>
+    <button type="button" onclick="window.open('https://support.google.com/youtube/','_blank')"><span>?</span> Help Centre</button>
+    <button type="button" onclick="window.open('https://www.youtube.com/','_blank')"><span>▶</span> YouTube ↗</button>
+    <div class="pop-divider"></div>
+    <button type="button" onclick="window.location.href='privacy-settings.html'"><span>⬟</span> Privacy policy</button>
+    <button type="button" onclick="window.location.href='privacy-settings.html'"><span>▤</span> Terms of Service</button>
+  </div>
 </header>
 
 <div class="studio-shell">
@@ -689,6 +735,17 @@ function setMode(auto){
     setMode(false);
   }
 })();
+function toggleTopMenu(id){
+  ['addMenu','notificationMenu','profileMenu'].forEach(function(menuId){
+    var el=document.getElementById(menuId);
+    if(el)el.hidden=(menuId!==id || !el.hidden);
+  });
+}
+document.addEventListener('click',function(event){
+  if(!event.target.closest('.studio-top-right')&&!event.target.closest('.top-popover')){
+    ['addMenu','notificationMenu','profileMenu'].forEach(function(id){var el=document.getElementById(id);if(el)el.hidden=true;});
+  }
+});
 function studioNavTo(section){
   document.querySelectorAll('.studio-navbtn').forEach(function(b){b.classList.remove('active')});
   if(section==='dashboard'){showPage('dashboard');return}
