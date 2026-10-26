@@ -213,6 +213,10 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
 @media(max-width:680px){.studio-top{gap:8px}.studio-brand{font-size:17px!important}.studio-brand:before{width:30px;height:30px;font-size:21px}.studio-top-right{gap:5px}.studio-avatar{width:32px;height:32px}.studio-main{padding-top:13px}.studio-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-panel{border-radius:12px}.ng-bottom-nav{padding-bottom:calc(8px + env(safe-area-inset-bottom))}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 </style>
+
+/* Confirmed removal of the decorative N logo */
+.studio-brand:before{content:none!important;display:none!important;width:0!important;height:0!important;background:none!important;box-shadow:none!important}
+.studio-brand .studio-mark{display:none!important}
 </head>
 
 <body>
