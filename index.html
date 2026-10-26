@@ -544,20 +544,39 @@ function renderDraftSchedule(){
   if(!list) return;
   var items = readDraftSchedule();
   if(!items.length){ list.innerHTML = '<p class="muted">No planned draft posts yet.</p>'; return; }
+  var savedStatuses = {};
+  try { savedStatuses = JSON.parse(localStorage.getItem('nextgen-demo-draft-statuses') || '{}') || {}; } catch(error) {}
+  var statusByTitle = {
+    'Luxury Wooden Bed Reel':'bedStatus',
+    'Royal Sofa Set Short':'sofaStatus',
+    'Carved Centre Table Reel':'tableStatus'
+  };
   list.innerHTML = '';
   items.forEach(function(item,index){
     var row = document.createElement('div');
-    row.style.cssText = 'padding:10px 0;border-bottom:1px solid #293752';
+    row.style.cssText = 'padding:12px 0;border-bottom:1px solid #293752';
     var title = document.createElement('strong'); title.textContent = item.title;
     var details = document.createElement('p'); details.className = 'muted';
-    details.textContent = item.date + ' at ' + item.time + ' · Draft — approval required';
+    details.textContent = item.date + ' at ' + item.time;
+    var status = document.createElement('p'); status.className = 'status';
+    var statusId = statusByTitle[item.title];
+    var approval = statusId && savedStatuses[statusId] ? savedStatuses[statusId] : 'Pending approval';
+    status.textContent = 'Approval: ' + approval + ' · Draft plan only';
+    var actions = document.createElement('div');
+    var find = document.createElement('button'); find.type = 'button'; find.className = 'action';
+    find.textContent = 'Find in Content Queue';
+    find.onclick = function(){ window.location.href = './?refresh=20261026i#content'; };
+    var review = document.createElement('button'); review.type = 'button'; review.className = 'action';
+    review.textContent = 'Open Review Checklist';
+    review.onclick = function(){ window.location.href = 'review.html?refresh=20261026d'; };
     var remove = document.createElement('button'); remove.type = 'button'; remove.className = 'action';
     remove.textContent = 'Remove plan'; remove.onclick = function(){
       var current = readDraftSchedule(); current.splice(index,1);
       try { localStorage.setItem(draftScheduleKey, JSON.stringify(current)); } catch(error) {}
       renderDraftSchedule();
     };
-    row.appendChild(title); row.appendChild(details); row.appendChild(remove); list.appendChild(row);
+    actions.appendChild(find); actions.appendChild(review); actions.appendChild(remove);
+    row.appendChild(title); row.appendChild(details); row.appendChild(status); row.appendChild(actions); list.appendChild(row);
   });
 }
 function saveDraftSchedule(){
