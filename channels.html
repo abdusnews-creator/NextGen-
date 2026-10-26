@@ -67,7 +67,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     <div class="toolbar">
       <input id="newPlatform" type="hidden" value="youtube">
       <input id="newChannelUrl" type="url" placeholder="Handle — paste profile link here" aria-label="Handle / profile link" required style="flex:1;min-width:220px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
-      <input id="newChannelName" type="text" placeholder="Channel Name / Profile Name (auto-filled)" aria-label="Detected channel name" readonly required maxlength="80" style="flex:1;min-width:180px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
+      <input id="newChannelName" type="text" placeholder="Channel Name / Profile Name (auto-filled)" aria-label="Detected channel name" readonly maxlength="80" style="flex:1;min-width:180px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
       <input id="newChannelHandle" type="text" placeholder="Handle (auto-filled)" aria-label="Detected handle" readonly maxlength="100" style="flex:1;min-width:160px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
       <input id="platformDisplay" type="text" placeholder="Platform (auto-detected)" aria-label="Detected platform" readonly style="flex:1;min-width:160px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
       <button type="submit" class="primary">Add to list</button>
@@ -88,6 +88,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     <button type="button" class="pause-button">Pause channel</button>
     <button type="button" class="enable-button" aria-pressed="true">Disable channel</button>
     <button type="button" class="primary review-button">Review</button>
+    <button type="button" class="delete-button">Remove</button>
   </div>
 </section>
 
@@ -288,6 +289,21 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
       document.querySelector('#addChannelPanel h3').textContent='Edit channel details';
       panel.hidden=false;document.getElementById('newChannelName').focus();
     });
+    const deleteButton=card.querySelector('.delete-button');
+    if(deleteButton) deleteButton.addEventListener('click',function(){
+      const label=card.dataset.name||'this channel';
+      if(!window.confirm('Remove "'+label+'" from the NextGen channel list on this browser? This will not disconnect or delete the real social account.'))return;
+      const identity=channelIdentity(card);
+      deletedChannels.add(identity);
+      try{localStorage.setItem(deletedChannelsStorageKey,JSON.stringify(Array.from(deletedChannels)));}catch(e){}
+      if(card.dataset.customKey){
+        const items=readCustomChannels().filter(item=>[item.platform,item.name,item.handle||''].join('|').toLowerCase()!==identity);
+        saveCustomChannels(items);
+      }
+      card.remove();
+      cards=cards.filter(item=>item!==card);
+      filterCards();
+    });
     card.querySelector('.enable-button').addEventListener('click',function(){
       const platform = card.dataset.platform;
       enabledChannels[platform] = enabledChannels[platform] === false;
@@ -322,7 +338,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     const connection=document.createElement('span');connection.className='connection';
     statusEl.append(dot,connection);
     const actions=document.createElement('div');actions.className='actions';
-    [['pause-button','Pause channel'],['enable-button','Disable channel'],['primary review-button','Review'],['edit-button','Edit details']].forEach(function(item){
+    [['pause-button','Pause channel'],['enable-button','Disable channel'],['primary review-button','Review'],['edit-button','Edit details'],['delete-button','Remove']].forEach(function(item){
       const b=document.createElement('button');b.type='button';b.className=item[0];b.textContent=item[1];actions.appendChild(b);
     });
     if(url){const link=document.createElement('p');link.className='handle';const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Open profile link';link.appendChild(a);card.appendChild(link);}
@@ -331,6 +347,14 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   }
 
   const customChannelsStorageKey='nextgen-custom-channels-v1';
+  const deletedChannelsStorageKey='nextgen-deleted-channels-v1';
+  function channelIdentity(card){return [card.dataset.platform||'',card.dataset.name||'',card.dataset.handle||''].join('|').toLowerCase();}
+  function readDeletedChannels(){try{const v=JSON.parse(localStorage.getItem(deletedChannelsStorageKey)||'[]');return Array.isArray(v)?v:[];}catch(e){return [];}}
+  const deletedChannels=new Set(readDeletedChannels());
+  cards=cards.filter(card=>{
+    if(deletedChannels.has(channelIdentity(card))){card.remove();return false;}
+    return true;
+  });
   const editingChannelKey=document.createElement('input');editingChannelKey.type='hidden';editingChannelKey.id='editingChannelKey';document.getElementById('addChannelForm').appendChild(editingChannelKey);
   function readCustomChannels(){
     try{
@@ -355,6 +379,8 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   }
   readCustomChannels().forEach(item=>{
     if(!item || !item.name || !item.platform) return;
+    const itemIdentity=[item.platform,item.name,item.handle||''].join('|').toLowerCase();
+    if(deletedChannels.has(itemIdentity))return;
     const exists=cards.some(card=>card.dataset.name===item.name && (card.dataset.handle||'')===(item.handle||'') && card.dataset.platform===item.platform);
     if(!exists){
       const extra=buildChannelCard(item.platform,item.name,item.handle||'',item.url||'');
@@ -416,16 +442,17 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     const handleInput=document.getElementById('newChannelHandle');
     if(!raw){nameInput.value='';handleInput.value='';document.getElementById('platformDisplay').value='';return;}
     const detected=detectChannelFromUrl(raw);
-    if(detected){
+    if(detected && detected.shareLink){
+      nameInput.value='';handleInput.value='';
+      document.getElementById('newPlatform').value=detected.platform;
+      document.getElementById('platformDisplay').value=detected.platform.charAt(0).toUpperCase()+detected.platform.slice(1);
+      document.getElementById('addChannelStatus').textContent='This is a Share/Post link, not a profile link. Open the actual page/channel profile and copy its profile URL.';
+    }else if(detected){
       document.getElementById('newPlatform').value=detected.platform;
       nameInput.value=detected.name;
       handleInput.value=detected.handle;
       document.getElementById('platformDisplay').value=detected.platform.charAt(0).toUpperCase()+detected.platform.slice(1);
-      document.getElementById('addChannelStatus').textContent='Platform detected. Channel name and handle are estimated from the profile link.';
-    }else if(detected && detected.shareLink){
-      nameInput.value='';handleInput.value='';
-      document.getElementById('platformDisplay').value=detected.platform.charAt(0).toUpperCase()+detected.platform.slice(1);
-      document.getElementById('addChannelStatus').textContent='This looks like a Share/Post link, not a profile link. Open the actual page/channel profile and copy its profile URL.';
+      document.getElementById('addChannelStatus').textContent='Platform detected. Name is estimated from the profile URL, not verified against the real account.';
     }else{
       nameInput.value='';handleInput.value='';document.getElementById('platformDisplay').value='';
       document.getElementById('addChannelStatus').textContent='Platform not detected. Paste a full Facebook, YouTube, Instagram or Threads profile link.';
