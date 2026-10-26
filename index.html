@@ -233,6 +233,27 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
     <button type="button" class="action active" onclick="saveSchedulePlan()">Save Schedule Plan</button>
     <p id="scheduleSaveStatus" class="muted" aria-live="polite">Default plan: all three slots selected.</p>
   </div>
+  <div class="card">
+    <h3>Draft Post Schedule</h3>
+    <p class="muted">Choose an existing draft and save a planned date/time. It stays a draft and requires your approval; nothing is published.</p>
+    <label class="check-row">Draft Post
+      <select id="scheduledDraftSelect" style="display:block;width:100%;padding:12px;margin-top:7px;background:#0b1020;color:#eef3ff;border:1px solid #53688d;border-radius:8px">
+        <option value="Luxury Wooden Bed Reel">Luxury Wooden Bed Reel</option>
+        <option value="Royal Sofa Set Short">Royal Sofa Set Short</option>
+        <option value="Carved Centre Table Reel">Carved Centre Table Reel</option>
+      </select>
+    </label>
+    <label class="check-row">Planned date
+      <input id="scheduledDraftDate" type="date" style="display:block;width:100%;padding:12px;margin-top:7px;background:#0b1020;color:#eef3ff;border:1px solid #53688d;border-radius:8px">
+    </label>
+    <label class="check-row">Planned time
+      <input id="scheduledDraftTime" type="time" value="08:00" style="display:block;width:100%;padding:12px;margin-top:7px;background:#0b1020;color:#eef3ff;border:1px solid #53688d;border-radius:8px">
+    </label>
+    <button type="button" class="action active" onclick="saveDraftSchedule()">Save as Draft Plan</button>
+    <p id="draftScheduleStatus" class="muted" aria-live="polite">No post will be published by saving a plan.</p>
+    <h3>Saved Draft Plans</h3>
+    <div id="draftScheduleList" class="draft"><p class="muted">No planned draft posts yet.</p></div>
+  </div>
   <div class="warning">Plan only: saving these choices stores them in this browser on this device. It does not create alarms, run in the background, generate content automatically, or publish/schedule posts. Manual approval remains required.</div>
 </section>
 
@@ -512,6 +533,50 @@ function saveSchedulePlan(){
   }
 }
 restoreSchedulePlan();
+
+var draftScheduleKey = 'nextgen-draft-post-schedule-v1';
+function readDraftSchedule(){
+  try { var value = JSON.parse(localStorage.getItem(draftScheduleKey) || '[]'); return Array.isArray(value) ? value : []; }
+  catch(error) { return []; }
+}
+function renderDraftSchedule(){
+  var list = document.getElementById('draftScheduleList');
+  if(!list) return;
+  var items = readDraftSchedule();
+  if(!items.length){ list.innerHTML = '<p class="muted">No planned draft posts yet.</p>'; return; }
+  list.innerHTML = '';
+  items.forEach(function(item,index){
+    var row = document.createElement('div');
+    row.style.cssText = 'padding:10px 0;border-bottom:1px solid #293752';
+    var title = document.createElement('strong'); title.textContent = item.title;
+    var details = document.createElement('p'); details.className = 'muted';
+    details.textContent = item.date + ' at ' + item.time + ' · Draft — approval required';
+    var remove = document.createElement('button'); remove.type = 'button'; remove.className = 'action';
+    remove.textContent = 'Remove plan'; remove.onclick = function(){
+      var current = readDraftSchedule(); current.splice(index,1);
+      try { localStorage.setItem(draftScheduleKey, JSON.stringify(current)); } catch(error) {}
+      renderDraftSchedule();
+    };
+    row.appendChild(title); row.appendChild(details); row.appendChild(remove); list.appendChild(row);
+  });
+}
+function saveDraftSchedule(){
+  var title = document.getElementById('scheduledDraftSelect').value;
+  var date = document.getElementById('scheduledDraftDate').value;
+  var time = document.getElementById('scheduledDraftTime').value;
+  var status = document.getElementById('draftScheduleStatus');
+  if(!date || !time){ status.textContent = 'Please choose both a date and a time.'; return; }
+  var items = readDraftSchedule();
+  items.push({title:title,date:date,time:time,status:'Draft — approval required'});
+  try {
+    localStorage.setItem(draftScheduleKey, JSON.stringify(items));
+    status.textContent = 'Saved as a draft plan. It is not published or sent to a platform.';
+    renderDraftSchedule();
+  } catch(error) {
+    status.textContent = 'Could not save in this browser. No post was published.';
+  }
+}
+renderDraftSchedule();
 
 function setMode(auto){
   var mode = document.getElementById('mode');
