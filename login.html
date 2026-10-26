@@ -1,90 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0b1020"><title>NextGen | Sign in</title>
-<style>
-*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:18px;background:#0b1020;color:#eef3ff;font-family:Arial,sans-serif}
-.panel{width:100%;max-width:430px;background:#141e32;border:1px solid #293752;border-radius:18px;padding:25px;box-shadow:0 18px 55px #0004}
-h1{margin:0;color:#91aaff;font-size:32px}p{color:#c1cbe0;line-height:1.5}.muted{font-size:13px;color:#a5b3cc}
-label{display:block;margin:16px 0 6px;font-size:14px}input{width:100%;padding:13px;border:1px solid #53688d;border-radius:9px;background:#0b1020;color:#eef3ff;font-size:16px}
-button{width:100%;padding:13px;margin-top:18px;border:0;border-radius:9px;background:#91aaff;color:#0b1020;font-weight:bold;font-size:16px}
-.warning{margin-top:16px;padding:12px;border:1px solid #806633;background:#302818;color:#ffe1a6;border-radius:9px;font-size:13px;line-height:1.45}
-a{color:#b9c8ff}.credit{text-align:right;font-size:11px;color:#a5b3cc;margin-top:24px}
-</style></head>
-<body><main class="panel">
-<h1>NextGen</h1><p>Smart Automation. Smarter Growth.</p>
-<h2>Sign in</h2><p class="muted">Sign in or create your NextGen account</p>
-<form id="loginForm">
-<label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
-<label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required>
-<button id="signInButton" type="submit">Sign in</button>
-<button id="signUpButton" type="button" style="background:#233654;color:#eef3ff;border:1px solid #53688d">Create account</button>
-</form>
-<div id="message" class="warning" role="status">Supabase is not configured yet. Do not enter a real password until your project settings are added.</div>
-<p><a href="index.html">← Back to Dashboard</a></p>
-<div class="credit">Powered by<br><b>ABDUS SATTAR</b></div>
-</main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
-<script>
-(function(){
- const form=document.getElementById('loginForm');
- const emailInput=document.getElementById('email');
- const passwordInput=document.getElementById('password');
- const message=document.getElementById('message');
- const signInButton=document.getElementById('signInButton');
- const signUpButton=document.getElementById('signUpButton');
- let client=null;
- const config=window.NEXTGEN_SUPABASE_CONFIG;
- const configured=config && config.url && config.anonKey &&
-   config.url.indexOf('https://')===0 &&
-   config.url.indexOf('PASTE_')===-1 &&
-   config.anonKey.indexOf('PASTE_')===-1;
- if(configured && window.supabase && window.supabase.createClient){
-   client=window.supabase.createClient(config.url,config.anonKey);
-   message.textContent='Supabase settings detected. You can sign in or create an account.';
- } else {
-   signInButton.disabled=true;
-   signUpButton.disabled=true;
-   signInButton.style.opacity='.55';
-   signUpButton.style.opacity='.55';
-   message.textContent='Setup required: create a Supabase project, add its Project URL and publishable/anon key to supabase-config.js, then redeploy. Do not enter a real password yet.';
- }
- form.addEventListener('submit',async function(event){
-   event.preventDefault();
-   if(!client){return;}
-   signInButton.disabled=true;
-   message.textContent='Signing in…';
-   try{
-     const result=await client.auth.signInWithPassword({email:emailInput.value.trim(),password:passwordInput.value});
-     if(result.error) throw result.error;
-     passwordInput.value='';
-     message.textContent='Signed in successfully. Opening the dashboard…';
-     window.location.href='index.html';
-   }catch(error){
-     message.textContent='Sign-in failed: '+(error.message || 'Please check your email and password.');
-     passwordInput.value='';
-   }finally{signInButton.disabled=false;}
- });
- signUpButton.addEventListener('click',async function(){
-   if(!client){return;}
-   if(!emailInput.value.trim() || !passwordInput.value){
-     message.textContent='Enter your email and choose a password first.';
-     return;
-   }
-   signUpButton.disabled=true;
-   message.textContent='Creating account…';
-   try{
-     const result=await client.auth.signUp({email:emailInput.value.trim(),password:passwordInput.value,options:{emailRedirectTo:window.location.origin+window.location.pathname}});
-     if(result.error) throw result.error;
-     passwordInput.value='';
-     message.textContent=result.data.session
-       ? 'Account created. You can now sign in.'
-       : 'Account request created. Check your email for a confirmation link before signing in.';
-   }catch(error){
-     message.textContent='Account creation failed: '+(error.message || 'Please try again.');
-   }finally{signUpButton.disabled=false;}
- });
-})();
-</script></body></html>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1020"><title>NextGen | Sign in</title>
+<style>*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:18px;background:linear-gradient(145deg,#0b1020,#172544);color:#eef3ff;font:16px/1.5 system-ui,Arial,sans-serif}.card{width:min(100%,440px);padding:26px;background:#141e32;border:1px solid #2a3958;border-radius:18px}.brand{font-size:30px;font-weight:850;color:#91aaff}.muted{font-size:13px;color:#a5b3cc}label{display:block;margin:16px 0 6px;font-weight:650}input{width:100%;padding:13px;border:1px solid #465777;border-radius:10px;background:#0d1628;color:#fff;font:inherit}button,.back{display:block;width:100%;margin-top:12px;padding:12px;border-radius:10px;border:1px solid #53688d;background:#91aaff;color:#0b1020;font-weight:750;font-size:1rem;text-align:center;text-decoration:none;cursor:pointer}.secondary{background:#22324f;color:#eef3ff}.note{margin-top:16px;padding:12px;border-radius:10px;background:#302818;border:1px solid #806633;color:#ffe1a6;font-size:13px}.credit{text-align:right;font-size:11px;color:#a5b3cc;margin-top:22px}</style></head>
+<body><main class="card"><div class="brand">NextGen</div><p>Smart Automation. Smarter Growth.</p><h1 id="heading">Sign in</h1><p class="muted">Choose a supported sign-in account or enter your email address.</p>
+<div class="note"><b>Email account picker:</b> Once Google/identity-provider sign-in is configured, it can show accounts available for selection. This website demo cannot scan or list every email stored on your phone.</div>
+<button type="button" class="secondary" onclick="alert('Google sign-in is not connected yet. No account was accessed.')">Continue with Google (setup pending)</button>
+<form id="authForm"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required><div id="passwordWrap"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required></div><button id="submitButton" type="submit">Sign in (demo only)</button></form>
+<button class="secondary" type="button" id="switchButton">Create a new account instead</button><p class="muted" id="status" aria-live="polite"></p><a class="back secondary" href="./index.html">← Back to Dashboard</a><div class="credit">Powered by <b>ABDUS SATTAR</b></div></main>
+<script>let createMode=false;const heading=document.getElementById('heading'),password=document.getElementById('password'),submit=document.getElementById('submitButton'),switchButton=document.getElementById('switchButton'),status=document.getElementById('status'),form=document.getElementById('authForm');switchButton.addEventListener('click',()=>{createMode=!createMode;heading.textContent=createMode?'Create account':'Sign in';submit.textContent=createMode?'Create account (demo only)':'Sign in (demo only)';password.autocomplete=createMode?'new-password':'current-password';switchButton.textContent=createMode?'Already have an account? Sign in':'Create a new account instead';status.textContent='';});form.addEventListener('submit',e=>{e.preventDefault();status.textContent='Prototype only: authentication is not connected. No account was created and no sign-in occurred.';});</script></body></html>
