@@ -221,12 +221,23 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
       if(error)throw error;
       cloudUser=data.user;
       if(!cloudUser){cloudStatus.textContent='Supabase configured, but no signed-in user. Sign in through NextGen Login to enable per-account channel sync.';return;}
-      const {data:rows,error:readError}=await cloudClient.from('channels').select('id,platform,connection_status').eq('user_id',cloudUser.id);
+      const {data:rows,error:readError}=await cloudClient.from('channels').select('id,platform,display_name,handle,connection_status').eq('user_id',cloudUser.id);
       if(readError)throw readError;
-      (rows||[]).forEach(row=>{if(row.connection_status==='paused')pausedChannels[row.platform]=true;});
+      (rows||[]).forEach(row=>{
+        if(row.connection_status==='paused')pausedChannels[row.platform]=true;
+        const exists=cards.some(card=>card.dataset.name===row.display_name && (card.dataset.handle||'')===(row.handle||'') && card.dataset.platform===row.platform);
+        if(!exists && ['youtube','facebook','instagram','threads'].includes(row.platform)){
+          const extra=buildChannelCard(row.platform,row.display_name,row.handle||'');
+          document.getElementById('channelGrid').appendChild(extra);
+          cards.push(extra);
+          if(enabledChannels[row.platform]===undefined)enabledChannels[row.platform]=true;
+          bindCard(extra);
+        }
+      });
       try{localStorage.setItem(storageKey,JSON.stringify(pausedChannels));}catch(e){}
       cards.forEach(renderCard);
-      cloudStatus.textContent='Signed in: channel pause state can sync to Supabase. Real social accounts are not connected.';
+      filterCards();
+      cloudStatus.textContent='Signed in: channel list and pause state loaded from Supabase. Social platform OAuth is still not connected.';
     }catch(err){cloudStatus.textContent='Supabase connection needs setup: '+(err.message||'check project configuration and database schema');}
   }
 
@@ -281,6 +292,45 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
         ' review: Manual approval is required. Real account verification is not connected yet.');
     });
   }
+  function buildChannelCard(platform,name,handle){
+    const card=document.createElement('section');
+    card.className='card';
+    card.dataset.platform=platform;
+    card.dataset.name=name;
+    card.dataset.handle=handle;
+    const heading=document.createElement('div');
+    heading.className='platform';
+    heading.textContent=({youtube:'▶️ YouTube',facebook:'📘 Facebook',instagram:'📸 Instagram',threads:'🧵 Threads',other:'🌐 Other platform'})[platform]||'🌐 Platform';
+    const title=document.createElement('h3');title.textContent=name;
+    const handleEl=document.createElement('p');handleEl.className='handle';handleEl.textContent=handle||'No handle added';
+    const statusEl=document.createElement('p');statusEl.className='status';
+    const dot=document.createElement('span');dot.className='dot';
+    const connection=document.createElement('span');connection.className='connection';
+    statusEl.append(dot,connection);
+    const actions=document.createElement('div');actions.className='actions';
+    [['pause-button','Pause channel'],['enable-button','Disable channel'],['primary review-button','Review']].forEach(function(item){
+      const b=document.createElement('button');b.type='button';b.className=item[0];b.textContent=item[1];actions.appendChild(b);
+    });
+    card.append(heading,title,handleEl,statusEl,actions);
+    return card;
+  }
+
+  const customChannelsStorageKey='nextgen-custom-channels-v1';
+  function readCustomChannels(){
+    try{const value=JSON.parse(localStorage.getItem(customChannelsStorageKey)||'[]');return Array.isArray(value)?value:[];}catch(e){return [];}
+  }
+  function saveCustomChannels(items){
+    try{localStorage.setItem(customChannelsStorageKey,JSON.stringify(items));return true;}catch(e){return false;}
+  }
+  readCustomChannels().forEach(item=>{
+    if(!item || !item.name || !item.platform) return;
+    const exists=cards.some(card=>card.dataset.name===item.name && (card.dataset.handle||'')===(item.handle||'') && card.dataset.platform===item.platform);
+    if(!exists){
+      const extra=buildChannelCard(item.platform,item.name,item.handle||'');
+      document.getElementById('channelGrid').appendChild(extra);
+      cards.push(extra);
+    }
+  });
   cards.forEach(bindCard);
 
   const addPanel = document.getElementById('addChannelPanel');
@@ -290,25 +340,20 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     if(!addPanel.hidden) document.getElementById('newChannelName').focus();
   });
   document.getElementById('cancelAddChannel').addEventListener('click',function(){addPanel.hidden=true;});
-  addForm.addEventListener('submit',function(event){
+  addForm.addEventListener('submit',async function(event){
     event.preventDefault();
-    const platform = document.getElementById('newPlatform').value;
-    const name = document.getElementById('newChannelName').value.trim();
-    const handle = document.getElementById('newChannelHandle').value.trim();
-    const status = document.getElementById('addChannelStatus');
+    const platform=document.getElementById('newPlatform').value;
+    const name=document.getElementById('newChannelName').value.trim();
+    const handle=document.getElementById('newChannelHandle').value.trim();
+    const status=document.getElementById('addChannelStatus');
     if(!name){status.textContent='Please enter a channel name.';return;}
-    const card = document.createElement('section');
-    card.className='card';
-    card.dataset.platform=platform;
-    card.dataset.name=name;
-    card.dataset.handle=handle;
-    const heading=document.createElement('div');heading.className='platform';heading.textContent=({youtube:'▶️ YouTube',facebook:'📘 Facebook',instagram:'📸 Instagram',threads:'🧵 Threads',other:'🌐 Other platform'})[platform]||'🌐 Platform';
-    const title=document.createElement('h3');title.textContent=name;
-    const handleEl=document.createElement('p');handleEl.className='handle';handleEl.textContent=handle||'No handle added';
-    const statusEl=document.createElement('p');statusEl.className='status';const dot=document.createElement('span');dot.className='dot';const connection=document.createElement('span');connection.className='connection';statusEl.append(dot,connection);
-    const actions=document.createElement('div');actions.className='actions';
-    [['pause-button','Pause channel'],['enable-button','Disable channel'],['primary review-button','Review']].forEach(function(item){const b=document.createElement('button');b.type='button';b.className=item[0];b.textContent=item[1];actions.appendChild(b);});
-    card.append(heading,title,handleEl,statusEl,actions);
+    const exists=cards.some(card=>card.dataset.platform===platform && card.dataset.name.toLowerCase()===name.toLowerCase() && (card.dataset.handle||'').toLowerCase()===handle.toLowerCase());
+    if(exists){status.textContent='This channel is already in the list.';return;}
+    const item={platform,name,handle,createdAt:new Date().toISOString()};
+    const savedItems=readCustomChannels();
+    savedItems.push(item);
+    const localSaved=saveCustomChannels(savedItems);
+    const card=buildChannelCard(platform,name,handle);
     document.getElementById('channelGrid').appendChild(card);
     cards.push(card);
     if(enabledChannels[platform]===undefined)enabledChannels[platform]=true;
@@ -316,7 +361,25 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     addForm.reset();
     addPanel.hidden=true;
     filterCards();
-    status.textContent='Added to this browser demo only. Real account connection is not created.';
+    if(platform==='other'){
+      status.textContent=localSaved?'Added and saved in this browser. “Other platform” needs a database schema update for cloud saving.':'Added for this page session, but browser storage is unavailable.';
+      return;
+    }
+    if(cloudClient && cloudUser){
+      try{
+        const {data,error}=await cloudClient.from('channels').insert({
+          user_id:cloudUser.id,platform,display_name:name,handle:handle||null,
+          connection_status:'not_connected',updated_at:new Date().toISOString()
+        }).select('id').single();
+        if(error)throw error;
+        status.textContent='Channel added and saved to your Supabase account.';
+        cloudStatus.textContent='Channel list saved to your signed-in Supabase account. Social platform OAuth is still not connected.';
+      }catch(err){
+        status.textContent=(localSaved?'Channel added and saved in this browser. Cloud save failed: ':'Added for this page session. Cloud save failed: ')+(err.message||'check Supabase access policies');
+      }
+    }else{
+      status.textContent=localSaved?'Channel added and saved in this browser. Sign in to sync it to Supabase.':'Added for this page session, but browser storage is unavailable.';
+    }
   });
 
   search.addEventListener('input',filterCards);
