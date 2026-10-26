@@ -206,6 +206,27 @@ function reviewDraft(){
   showPage('approvals');
 }
 
+var draftStatusIds = ['bedStatus', 'sofaStatus', 'tableStatus'];
+var checklistStorageKey = 'nextgen-demo-review-checklist';
+var draftStorageKey = 'nextgen-demo-draft-statuses';
+
+function saveDraftStatuses(){
+  var saved = {};
+  draftStatusIds.forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) saved[id] = el.textContent;
+  });
+  try { localStorage.setItem(draftStorageKey, JSON.stringify(saved)); } catch(error) {}
+}
+
+function setDraftStatus(id, message){
+  var status = document.getElementById(id);
+  if(status){
+    status.textContent = message;
+    saveDraftStatuses();
+  }
+}
+
 function approveDraft(id){
   var checks = document.querySelectorAll('.review-check');
   var allChecked = Array.from(checks).every(function(check){
@@ -218,28 +239,55 @@ function approveDraft(id){
     return;
   }
 
-  var status = document.getElementById(id);
-  if(status) status.textContent = 'Approved (demo only)';
-
-  alert('Demo only. Nothing was published.');
+  setDraftStatus(id, 'Approved (demo only)');
+  alert('Demo only. Nothing was published or scheduled.');
 }
 
 function rejectDraft(id){
-  var status = document.getElementById(id);
-  if(status) status.textContent = 'Rejected — revision needed';
+  setDraftStatus(id, 'Rejected — revision needed');
 }
 
 function reviseDraft(id){
-  var status = document.getElementById(id);
-  if(status) status.textContent = 'Revised — pending review';
+  setDraftStatus(id, 'Revised — pending review');
   showPage('approvals');
+}
+
+function saveChecklist(){
+  var values = Array.from(document.querySelectorAll('.review-check')).map(function(check){
+    return check.checked;
+  });
+  try { localStorage.setItem(checklistStorageKey, JSON.stringify(values)); } catch(error) {}
 }
 
 function resetChecklist(){
   document.querySelectorAll('.review-check').forEach(function(check){
     check.checked = false;
   });
+  saveChecklist();
 }
+
+function restoreDemoReviewState(){
+  try {
+    var savedStatuses = JSON.parse(localStorage.getItem(draftStorageKey) || '{}');
+    draftStatusIds.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el && typeof savedStatuses[id] === 'string') el.textContent = savedStatuses[id];
+    });
+    var savedChecklist = JSON.parse(localStorage.getItem(checklistStorageKey) || 'null');
+    if(Array.isArray(savedChecklist)){
+      document.querySelectorAll('.review-check').forEach(function(check, index){
+        check.checked = savedChecklist[index] === true;
+      });
+    }
+  } catch(error) {
+    /* Keep the prototype usable if browser storage is unavailable. */
+  }
+}
+
+document.querySelectorAll('.review-check').forEach(function(check){
+  check.addEventListener('change', saveChecklist);
+});
+restoreDemoReviewState();
 
 function setMode(auto){
   var mode = document.getElementById('mode');
