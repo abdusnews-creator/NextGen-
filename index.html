@@ -356,6 +356,11 @@ body{background:#0f141b;color:#f1f5f9;font-family:Arial,Helvetica,sans-serif}
 <section id="approvals" class="page">
   <h2>Approvals</h2>
   <div class="card">
+    <h3>Channel Approval Status</h3>
+    <p class="muted">Pending drafts are listed here from the Content Queue. These are local demo statuses only; nothing is sent to a platform.</p>
+    <div id="approvalQueueSummary" aria-live="polite"><p class="muted">Loading pending drafts…</p></div>
+  </div>
+  <div class="card">
     <h3>Review Checklist</h3>
     <p id="activeReviewTitle" class="muted">Reviewing: Luxury Wooden Bed Reel</p>
     <div id="reviewContentDetails" class="draft" style="margin:14px 0;padding:16px">
@@ -423,11 +428,11 @@ body{background:#0f141b;color:#f1f5f9;font-family:Arial,Helvetica,sans-serif}
 
 <footer>NextGen Prototype • Dashboard preview • Real publishing is not connected</footer>
 <nav class="ng-bottom-nav" aria-label="Main navigation">
-<a href="index.html#dashboard" data-page="dashboard"><span>⌂</span><small>Dashboard</small></a>
+<a href="index.html#dashboard" data-page="dashboard" onclick="event.preventDefault();mobileNavigate('dashboard',this)"><span>⌂</span><small>Dashboard</small></a>
 <a href="channels.html" data-page="channels"><span>▶</span><small>Channels</small></a>
-<a href="index.html#content" data-page="content"><span>▤</span><small>Content</small></a>
-<a href="index.html#approvals" data-page="approvals"><span>✓</span><small>Approvals</small></a>
-<a href="index.html#schedule" data-page="schedule"><span>▦</span><small>Schedule</small></a>
+<a href="index.html#content" data-page="content" onclick="event.preventDefault();mobileNavigate('content',this)"><span>▤</span><small>Content</small></a>
+<a href="index.html#approvals" data-page="approvals" onclick="event.preventDefault();mobileNavigate('approvals',this)"><span>✓</span><small>Approvals</small></a>
+<a href="index.html#schedule" data-page="schedule" onclick="event.preventDefault();mobileNavigate('schedule',this)"><span>▦</span><small>Schedule</small></a>
 </nav>
 
 <script>
@@ -481,6 +486,34 @@ function updateDraftSummary(){
   if(p) p.textContent = pending;
   if(a) a.textContent = approved;
   if(r) r.textContent = revision;
+  if(typeof renderApprovalQueue==='function') renderApprovalQueue();
+}
+
+function renderApprovalQueue(){
+  var host=document.getElementById('approvalQueueSummary');
+  if(!host)return;
+  var cards=Array.from(document.querySelectorAll('.queue-item'));
+  if(!cards.length){host.innerHTML='<p class="muted">No draft items are available in the Content Queue.</p>';return;}
+  var pending=cards.filter(function(card){
+    var el=document.getElementById(card.dataset.statusId);
+    var status=el?el.textContent:'';
+    return status.indexOf('Approved')!==0 && status.indexOf('Rejected')!==0 && status.indexOf('Revised')!==0;
+  });
+  if(!pending.length){host.innerHTML='<p class="status">No pending drafts. Review status is up to date.</p>';return;}
+  host.innerHTML='';
+  pending.forEach(function(card){
+    var id=card.dataset.statusId;
+    var title=card.dataset.draftTitle || 'Untitled draft';
+    var channel=card.querySelector('.draft-channel');
+    var channelName=channel && channel.options && channel.selectedIndex>=0 ? channel.options[channel.selectedIndex].text : 'Channel not selected';
+    var row=document.createElement('div');
+    row.style.cssText='padding:12px 0;border-bottom:1px solid #293752';
+    var heading=document.createElement('strong');heading.textContent=title;
+    var detail=document.createElement('p');detail.className='muted';detail.textContent='Channel: '+channelName+' · Status: Pending approval';
+    var button=document.createElement('button');button.type='button';button.className='action active';button.textContent='Review draft';
+    button.addEventListener('click',function(){reviewDraft(id);window.scrollTo(0,0);});
+    row.appendChild(heading);row.appendChild(detail);row.appendChild(button);host.appendChild(row);
+  });
 }
 
 function showPage(id){
@@ -489,6 +522,7 @@ function showPage(id){
   });
   var target = document.getElementById(id);
   if(target) target.classList.add('show');
+  if(id==='approvals') renderApprovalQueue();
 }
 
 var draftStatusIds = ['bedStatus', 'sofaStatus', 'tableStatus'];
