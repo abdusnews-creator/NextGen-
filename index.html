@@ -267,16 +267,9 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
     <p>Powered by ABDUS SATTAR</p>
   </div>
   <div class="card" id="privacy-settings">
-    <h3>Privacy Settings</h3>
-    <p class="muted">Manage channel access and availability here. These controls are available only inside Settings → Privacy Settings, not on the Channels page.</p>
-    <div style="border-top:1px solid #29344c;margin-top:14px;padding-top:12px">
-      <h4 style="margin:0 0 8px">Channel Management</h4>
-      <div id="privacyChannelList" style="display:grid;gap:10px;margin:14px 0"></div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button type="button" class="action" onclick="nextgenAddChannel()">＋ Add Channel</button>
-    </div>
-      <p class="muted">These are local browser demo settings saved on this device. They do not connect to or control the real social accounts.</p>
-    </div>
+    <h3>Privacy & Channel Settings</h3>
+    <p class="muted">Open the separate settings page to manage channel access, edit profiles, enable/disable entries, or remove a channel from this local demo list.</p>
+    <p style="margin-top:14px"><a class="action" href="privacy-settings.html">Open Privacy Settings →</a></p>
   </div>
   <div class="card">
     <h3>Approval Safety</h3>
@@ -719,59 +712,7 @@ function setMode(auto){
 })();
 </script>
 
-<script>
-/* Privacy Settings channel management is embedded in dashboard Settings to avoid a separate-page 404. */
-(function(){
- const key='nextgen-settings-managed-channels-v1';
- const defaults=[
-  {id:'yt',name:'Royal Furniture House',platform:'YouTube',handle:'@RoyalFurnitureHouse',enabled:true},
-  {id:'fb',name:'Royal Furniture Zone',platform:'Facebook',handle:'@RoyalFurnitureZone',enabled:true},
-  {id:'ig',name:'Royal Furniture Zone',platform:'Instagram',handle:'@royalfurniturezone',enabled:true},
-  {id:'th',name:'Royal Furniture Zone',platform:'Threads',handle:'@royalfurniturezone',enabled:true}
- ];
- function normalizeChannel(ch){const compact=String(ch.handle||ch.name||'').replace(/^@/,'').toLowerCase().replace(/[._\\-\\s]+/g,'');const known={royalfurniturezone:'Royal Furniture Zone',royalfurniturehouse:'Royal Furniture House'};if(known[compact])ch.name=known[compact];return ch;}
- function load(){try{const v=JSON.parse(localStorage.getItem(key)||'null');return (Array.isArray(v)?v:defaults.slice()).map(normalizeChannel);}catch(e){return defaults.slice();}}
- let channels=load();
- function save(){try{localStorage.setItem(key,JSON.stringify(channels));}catch(e){} render();}
- function esc(s){return String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
- function render(){
-  const host=document.getElementById('privacyChannelList');if(!host)return;
-  host.innerHTML='';
-  channels.forEach((ch,i)=>{
-   const card=document.createElement('div');card.style.cssText='border:1px solid #29344c;border-radius:12px;padding:12px;background:#0f1729';
-   const head=document.createElement('div');head.style.cssText='display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center';
-   const info=document.createElement('div');info.innerHTML='<strong>'+esc(ch.name)+'</strong><div class="muted" style="font-size:13px;margin-top:4px">'+esc(ch.platform)+' · '+esc(ch.handle||'No handle')+' · '+(ch.enabled?'Enabled':'Disabled')+'</div>';
-   const actions=document.createElement('div');actions.style.cssText='display:flex;gap:6px;flex-wrap:wrap';
-   const addButton=(label,fn)=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.style.cssText='padding:7px 9px;font-size:12px';b.onclick=fn;actions.appendChild(b);};
-   addButton('Edit Channel',()=>edit(i));
-   addButton(ch.enabled?'Disable Channel':'Enable Channel',()=>{channels[i].enabled=!channels[i].enabled;save();});
-   addButton('Remove Channel',()=>{if(confirm('Remove '+ch.name+' from this local demo list?')){channels.splice(i,1);save();}});
-   head.append(info,actions);card.appendChild(head);host.appendChild(card);
-  });
-  if(!channels.length)host.innerHTML='<p class="muted">No channels added yet.</p>';
- }
- function edit(i){
-  const ch=channels[i];const name=prompt('Channel display name:',ch.name);if(name===null)return;
-  const handle=prompt('Channel handle or URL:',ch.handle||'');if(handle===null)return;
-  const platform=prompt('Platform (YouTube, Facebook, Instagram, Threads, or Other):',ch.platform);if(platform===null)return;
-  ch.name=name.trim()||ch.name;ch.handle=handle.trim();ch.platform=platform.trim()||ch.platform;save();
- }
- window.nextgenAddChannel=function(){
-  const url=prompt('Enter the channel profile URL or handle:');if(!url)return;
-  let platform='Other',handle=url.trim(),name='';
-  if(/youtube\.com|youtu\.be/i.test(url)){platform='YouTube';}
-  else if(/facebook\.com/i.test(url)){platform='Facebook';}
-  else if(/instagram\.com/i.test(url)){platform='Instagram';}
-  else if(/threads\.(com|net)/i.test(url)){platform='Threads';}
-  try{const u=new URL(/^https?:\/\//i.test(url)?url:'https://'+url);const parts=u.pathname.split('/').filter(Boolean);handle=parts.length?'@'+parts[parts.length-1].replace(/^@/,''):url.trim();}catch(e){}
-  const compact=handle.replace(/^@/,'').toLowerCase().replace(/[._\-\s]+/g,'');
-  name=({royalfurniturezone:'Royal Furniture Zone',royalfurniturehouse:'Royal Furniture House'})[compact]||handle.replace(/^@/,'').replace(/[._-]+/g,' ').replace(/\b\w/g,ch=>ch.toUpperCase());
-  const customName=prompt('Confirm channel display name:',name);if(customName===null)return;
-  channels.push({id:'ch-'+Date.now(),name:customName.trim()||name,platform,handle,enabled:true});save();
- };
- document.addEventListener('DOMContentLoaded',render);render();
-})();
-</script>
+
 
 </body>
 </html>
