@@ -36,6 +36,16 @@ input[type=search]{flex:1;min-width:180px;background:#10182a;border:1px solid va
 footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:12px;text-align:right}
 @media(max-width:600px){body{padding:12px}.grid{grid-template-columns:1fr}h1{font-size:25px}.card{padding:16px}}
 .main-nav{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:8px 0 20px;padding:8px;background:#10182a;border:1px solid var(--line);border-radius:12px}.main-nav a{display:block;padding:10px 13px;border-radius:8px;color:var(--muted);white-space:nowrap}.main-nav a:hover{background:#202b42;color:var(--text)}.main-nav a.active{background:#263452;color:#fff;font-weight:700}.main-nav a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}@media(max-width:600px){.main-nav{flex-wrap:nowrap;overflow-x:auto;margin:6px 0 16px;padding:6px;scrollbar-width:thin}.main-nav a{padding:10px 12px;font-size:14px}}
+
+/* NextGen shared responsive header and footer polish */
+header{background:linear-gradient(110deg,#111b30 0%,#101827 70%,#102746 100%);box-shadow:0 5px 22px #0003}
+.brand,header h1,header strong{letter-spacing:-.35px}
+.tag{font-weight:500;letter-spacing:.1px}
+button,a,input{transition:background-color .18s ease,border-color .18s ease,color .18s ease}
+.ng-bottom-nav{backdrop-filter:blur(14px);background:rgba(12,20,34,.96)!important;border-top:1px solid #2b4262!important;box-shadow:0 -8px 28px #0005!important}
+.ng-bottom-nav a{min-height:52px}
+.ng-bottom-nav a.active{color:#63b3ff!important;background:linear-gradient(180deg,#193453,#14263b)!important;box-shadow:inset 0 2px 0 #2696ff}
+@media(max-width:600px){header{padding-left:16px!important;padding-right:16px!important}.tag{font-size:12px}.ng-bottom-nav{min-height:72px}}
 </style>
 </head>
 <body>
