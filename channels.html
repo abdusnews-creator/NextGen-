@@ -8,8 +8,8 @@
 <style>
 :root{--bg:#0b1020;--card:#151d31;--text:#f5f7ff;--muted:#a8b3ca;--accent:#91aaff;--line:#29344c;--good:#8fe0b8;--warn:#ffd28b}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;padding:18px}
-main{max-width:1050px;margin:auto}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;padding:0}
+main{max-width:1050px;margin:0 auto;padding:0 18px}
 header,.top,.actions{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 h1{font-size:30px;margin:0}
 h2{margin-bottom:8px}
@@ -141,9 +141,15 @@ body>main>header.channel-studio-header p.tag{color:#b8d7f5!important;margin:4px 
 @media(max-width:680px){.studio-top{height:62px;padding:0 12px!important;gap:9px}.studio-brand{min-width:0;font-size:18px}.studio-search{display:none}.studio-top-right{gap:5px}.top-icon-btn{width:34px;height:36px}.top-popover{top:56px;right:8px}}
 
 </style>
+<style>
+/* Layout fix: Dashboard header spans the full viewport, page content stays centered */
+body>header.studio-top{width:100%;margin:0 0 22px!important;border-radius:0!important}
+body>main{max-width:1050px;margin:0 auto;padding:0 18px}
+@media(max-width:680px){body>main{padding:0 12px}}
+</style>
 </head>
 <body>
-<main>
+</main>
 <header class="studio-top">
   <button class="studio-menu" type="button" aria-label="Menu" onclick="document.querySelector('.channel-drawer')?.classList.toggle('nav-expanded')">☰</button>
   <div class="studio-brand">NextGen</div>
@@ -176,7 +182,8 @@ body>main>header.channel-studio-header p.tag{color:#b8d7f5!important;margin:4px 
     <button type="button" onclick="window.location.href='privacy-settings.html'"><span>⬟</span> Privacy policy</button>
     <button type="button" onclick="window.location.href='privacy-settings.html'"><span>▤</span> Terms of Service</button>
   </div>
-</header> 
+</header>
+<main>
 <div class="top">
   <div>
     <h2>Channel Management</h2>
