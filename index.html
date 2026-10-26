@@ -561,8 +561,16 @@ function renderDraftSchedule(){
     var details = document.createElement('p'); details.className = 'muted';
     details.textContent = item.date + ' at ' + item.time;
     var status = document.createElement('p'); status.className = 'status';
+    status.style.cssText = 'display:inline-block;padding:7px 10px;border-radius:7px;border:1px solid #806633;background:#302818;color:#ffe1a6;line-height:1.5';
     var statusId = statusByTitle[item.title];
     var approval = statusId && savedStatuses[statusId] ? savedStatuses[statusId] : 'Pending approval';
+    if(approval.indexOf('Approved') === 0){
+      status.style.cssText = 'display:inline-block;padding:7px 10px;border-radius:7px;border:1px solid #34785a;background:#142f26;color:#a9f0ca;line-height:1.5';
+    } else if(approval.indexOf('Rejected') === 0){
+      status.style.cssText = 'display:inline-block;padding:7px 10px;border-radius:7px;border:1px solid #8a4444;background:#351c22;color:#ffc0c0;line-height:1.5';
+    } else if(approval.indexOf('Revised') === 0){
+      status.style.cssText = 'display:inline-block;padding:7px 10px;border-radius:7px;border:1px solid #456caa;background:#182944;color:#c4d8ff;line-height:1.5';
+    }
     status.textContent = 'Approval: ' + approval + ' · Draft plan only';
     var actions = document.createElement('div');
     var find = document.createElement('button'); find.type = 'button'; find.className = 'action';
