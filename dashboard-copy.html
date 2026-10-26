@@ -216,6 +216,18 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
 @media(max-width:680px){.studio-top{gap:8px}.studio-brand{font-size:17px!important}.studio-brand:before{display:none}.studio-top-right{gap:5px}.studio-avatar{width:32px;height:32px}.studio-main{padding-top:13px}.studio-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-panel{border-radius:12px}.ng-bottom-nav{padding-bottom:calc(8px + env(safe-area-inset-bottom))}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 </style>
+<style>
+.profile-menu{position:absolute;top:62px;right:14px;z-index:5000;width:min(310px,calc(100vw - 24px));max-height:calc(100vh - 90px);overflow-y:auto;background:#111d31;border:1px solid #35547e;border-radius:13px;box-shadow:0 14px 38px #0008;padding:8px}
+.profile-menu button{display:flex;align-items:center;gap:12px;width:100%;min-height:46px;padding:10px 12px;text-align:left;border:0;border-radius:8px;background:transparent;color:#eef3ff;font-size:14px;cursor:pointer}
+.profile-menu button:active,.profile-menu button:hover{background:#203e6b}
+.profile-menu button>span:first-child{width:22px;text-align:center;font-size:18px;color:#c5d9ff}
+.profile-menu .google-mark{font-weight:800;color:#4285f4!important}
+.profile-menu .top-popover-head{padding:10px 12px 13px;border-bottom:1px solid #293752;margin-bottom:5px}
+.profile-menu .top-popover-head b{display:block;font-size:15px}
+.profile-menu .top-popover-head small{display:block;margin-top:4px;color:#a5b3cc}
+.profile-menu .pop-divider{height:1px;background:#293752;margin:5px 4px}
+.studio-top-right{position:relative}
+</style>
 </head>
 
 <body>
@@ -236,20 +248,16 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
     <div class="top-popover-head"><b>Notifications</b><small>No new notifications</small></div>
     <button type="button" onclick="toggleTopMenu('notificationMenu')">Close</button>
   </div>
-  <div id="profileMenu" class="top-popover" hidden>
-    <div class="top-popover-head"><b>NextGen account</b><small>Manage your account and preferences</small></div>
-    <button type="button" onclick="alert('Account switching will be available when multi-account login is implemented.')"><span>⇄</span> Switch account</button>
-    <button type="button" onclick="alert('Google Account linking is not connected yet.')"><span style="font-size:18px;font-weight:bold">G</span> Google Account</button>
+  <div id="profileMenu" class="top-popover profile-menu" hidden>
+    <div class="top-popover-head"><b>NextGen account</b><small>Account and preferences</small></div>
+    <button type="button" onclick="alert('Switch Account: multi-account login is not connected yet.')"><span>⇄</span> Switch Account</button>
+    <button type="button" onclick="alert('Google Account linking is not connected yet.')"><span class="google-mark">G</span> Google Account</button>
     <button type="button" onclick="window.location.href='settings.html'"><span>⚙</span> Settings</button>
+    <button type="button" onclick="alert('Send feedback: feedback form is not connected yet.')"><span>▤</span> Send feedback</button>
     <div class="pop-divider"></div>
     <button type="button" onclick="window.location.href='privacy-settings.html'"><span>◎</span> Account status</button>
-    <button type="button" onclick="alert('Thanks for your feedback!')"><span>▤</span> Send feedback</button>
-    <div class="pop-divider"></div>
     <button type="button" onclick="window.location.href='help-centre.html'"><span>?</span> Help Centre</button>
-    <button type="button" onclick="window.open('https://www.youtube.com/','_blank')"><span>▶</span> YouTube ↗</button>
-    <div class="pop-divider"></div>
-    <button type="button" onclick="window.location.href='privacy-settings.html'"><span>⬟</span> Privacy policy</button>
-    <button type="button" onclick="window.location.href='privacy-settings.html'"><span>▤</span> Terms of Service</button>
+    <button type="button" onclick="window.location.href='privacy-settings.html#terms'"><span>▤</span> Terms of Service</button>
   </div>
 </header>
 <main class="settings-list" aria-label="NextGen settings">
