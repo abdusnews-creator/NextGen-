@@ -112,6 +112,12 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
 
 <section id="content" class="page">
   <h2>Content Queue</h2>
+  <div class="stats" style="margin-bottom:16px">
+    <div class="card stat"><span class="muted">Pending review</span><strong id="pendingDraftCount">3</strong></div>
+    <div class="card stat"><span class="muted">Approved (demo)</span><strong id="approvedDraftCount">0</strong></div>
+    <div class="card stat"><span class="muted">Needs revision</span><strong id="revisionDraftCount">0</strong></div>
+  </div>
+  <p class="muted">These are local demo drafts. Approval records your review decision only; it never publishes or schedules a post.</p>
   <div class="card">
     <h3>Find Content</h3>
     <label class="muted" for="queueSearch">Search drafts</label>
@@ -128,7 +134,10 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
         </select>
       </label>
     </div>
-    <p id="queueCount" class="muted" aria-live="polite">Showing 3 drafts</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <p id="queueCount" class="muted" aria-live="polite">Showing 3 drafts</p>
+      <button type="button" class="action" onclick="clearQueueFilters()">Clear filters</button>
+    </div>
   </div>
 
   <div class="card queue-item" data-draft-title="Luxury Wooden Bed Reel" data-status-id="bedStatus">
@@ -196,7 +205,11 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
     <label class="check-row"><input type="checkbox" class="review-check"> Duplicate checked</label>
     <label class="check-row"><input type="checkbox" class="review-check"> Platform policy and brand safety checked</label>
 
-    <button type="button" class="action" onclick="resetChecklist()">Reset Checklist</button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
+      <button type="button" class="action" onclick="resetChecklist()">Reset Checklist</button>
+      <button type="button" class="action active" onclick="approveDraft(activeDraftId)">Approve reviewed draft (demo)</button>
+    </div>
+    <p class="muted">To approve: open a draft with Review, complete all five checks, then choose Approve reviewed draft.</p>
     <div class="warning" style="margin-top:15px">Checklist demonstration only. This prototype does not publish content.</div>
   </div>
 </section>
@@ -269,6 +282,33 @@ function filterQueue(){
   document.getElementById('queueCount').textContent = 'Showing ' + visible + ' of ' + document.querySelectorAll('.queue-item').length + ' drafts';
 }
 
+function clearQueueFilters(){
+  var search = document.getElementById('queueSearch');
+  var channel = document.getElementById('queueChannel');
+  var status = document.getElementById('queueStatus');
+  if(search) search.value = '';
+  if(channel) channel.value = 'all';
+  if(status) status.value = 'all';
+  filterQueue();
+}
+
+function updateDraftSummary(){
+  var pending = 0, approved = 0, revision = 0;
+  document.querySelectorAll('.queue-item').forEach(function(card){
+    var statusEl = document.getElementById(card.dataset.statusId);
+    var status = statusEl ? statusEl.textContent : '';
+    if(status.indexOf('Approved') === 0) approved++;
+    else if(status.indexOf('Rejected') === 0 || status.indexOf('Revised') === 0) revision++;
+    else pending++;
+  });
+  var p = document.getElementById('pendingDraftCount');
+  var a = document.getElementById('approvedDraftCount');
+  var r = document.getElementById('revisionDraftCount');
+  if(p) p.textContent = pending;
+  if(a) a.textContent = approved;
+  if(r) r.textContent = revision;
+}
+
 function showPage(id){
   document.querySelectorAll('.page').forEach(function(page){
     page.classList.remove('show');
@@ -327,6 +367,8 @@ function setDraftStatus(id, message){
   if(status){
     status.textContent = message;
     saveDraftStatuses();
+    updateDraftSummary();
+    filterQueue();
   }
 }
 
@@ -398,6 +440,7 @@ document.querySelectorAll('.review-check').forEach(function(check){
 });
 restoreDemoReviewState();
 filterQueue();
+updateDraftSummary();
 
 function setMode(auto){
   var mode = document.getElementById('mode');
