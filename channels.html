@@ -66,7 +66,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   <form id="addChannelForm">
     <div class="toolbar">
       <input id="newPlatform" type="hidden" value="youtube">
-      <input id="newChannelName" type="text" placeholder="Channel / profile name" aria-label="Channel name" required maxlength="80" style="flex:1;min-width:180px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
+      <input id="newChannelName" type="text" placeholder="Channel name will be detected from the link" aria-label="Detected channel name" readonly required maxlength="80" style="flex:1;min-width:180px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit"><p class="muted" style="width:100%;margin:0">Channel name is filled from the profile link when possible.</p>
       <input id="newChannelHandle" type="text" placeholder="@handle (optional)" aria-label="Channel handle" maxlength="100" style="flex:1;min-width:160px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
       <input id="newChannelUrl" type="url" placeholder="Paste Facebook / YouTube / Instagram / Threads profile link" aria-label="Channel URL" required style="flex:1;min-width:220px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
       <button type="submit" class="primary">Add to list</button>
@@ -367,14 +367,41 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     }catch(e){}
     return null;
   }
+  function detectChannelFromUrl(raw){
+    try{
+      const parsed=new URL(raw);
+      const platform=detectPlatformFromUrl(raw);
+      if(!platform)return null;
+      const parts=parsed.pathname.split('/').filter(Boolean);
+      let handle='';
+      if(platform==='youtube'){
+        handle=parts.find(x=>x.startsWith('@')) || (parts[0]==='channel'||parts[0]==='c'||parts[0]==='user' ? (parts[1]||'') : (parts[0]||''));
+      }else if(platform==='facebook'){
+        handle=parts[0]==='profile.php' ? (parsed.searchParams.get('id')||'') : (parts[0]||'');
+      }else{
+        handle=parts[0]||'';
+      }
+      if(!handle)return {platform,name:'',handle:''};
+      try{handle=decodeURIComponent(handle);}catch(e){}
+      const display=handle.startsWith('@')?handle.slice(1):handle;
+      const name=display.replace(/[._-]+/g,' ').replace(/\s+/g,' ').trim().replace(/\b\w/g,ch=>ch.toUpperCase());
+      return {platform,name:name.slice(0,80),handle:handle.startsWith('@')?handle:'@'+handle};
+    }catch(e){return null;}
+  }
   document.getElementById('newChannelUrl').addEventListener('input',function(){
-    const raw=this.value.trim();if(!raw)return;
-    const p=detectPlatformFromUrl(raw);
-    if(p){
-      document.getElementById('newPlatform').value=p;
-      document.getElementById('addChannelStatus').textContent='Detected platform: '+p.charAt(0).toUpperCase()+p.slice(1)+'.';
+    const raw=this.value.trim();
+    const nameInput=document.getElementById('newChannelName');
+    const handleInput=document.getElementById('newChannelHandle');
+    if(!raw){nameInput.value='';handleInput.value='';return;}
+    const detected=detectChannelFromUrl(raw);
+    if(detected){
+      document.getElementById('newPlatform').value=detected.platform;
+      nameInput.value=detected.name;
+      handleInput.value=detected.handle;
+      document.getElementById('addChannelStatus').textContent='Detected platform: '+detected.platform.charAt(0).toUpperCase()+detected.platform.slice(1)+'. Channel name is estimated from the profile link.';
     }else{
-      document.getElementById('addChannelStatus').textContent='Platform not detected yet. Paste a full Facebook, YouTube, Instagram or Threads profile link.';
+      nameInput.value='';handleInput.value='';
+      document.getElementById('addChannelStatus').textContent='Platform not detected. Paste a full Facebook, YouTube, Instagram or Threads profile link.';
     }
   });
   addForm.addEventListener('submit',async function(event){
@@ -385,13 +412,14 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     let url=document.getElementById('newChannelUrl').value.trim();
     const editingKey=document.getElementById('editingChannelKey').value;
     const status=document.getElementById('addChannelStatus');
-    if(!name){status.textContent='Please enter a channel name.';return;}
     if(url){try{const parsed=new URL(url);if(!['http:','https:'].includes(parsed.protocol))throw new Error();url=parsed.href;}catch(e){status.textContent='Please enter a valid Facebook / YouTube / social profile link.';return;}
-      const detected=detectPlatformFromUrl(url);
-      if(!detected){status.textContent='Could not detect platform. Use a Facebook, YouTube, Instagram or Threads profile link.';return;}
-      document.getElementById('newPlatform').value=detected;
-      platform=detected;
-    }
+      const detected=detectChannelFromUrl(url);
+      if(!detected || !detected.platform){status.textContent='Could not detect platform. Use a Facebook, YouTube, Instagram or Threads profile link.';return;}
+      platform=detected.platform;
+      document.getElementById('newPlatform').value=platform;
+      if(!name) { status.textContent='Could not read a channel name from this link. Try a profile link with a username in its address.'; return; }
+      if(!handle) handle=detected.handle;
+    }else{status.textContent='Please paste a profile link first.';return;}
     const editingCard=editingKey?cards.find(x=>x.dataset.customKey===editingKey):null;
     const exists=cards.some(card=>card!==editingCard && card.dataset.platform===platform && card.dataset.name.toLowerCase()===name.toLowerCase() && (card.dataset.handle||'').toLowerCase()===handle.toLowerCase());
     if(exists){status.textContent='This channel is already in the list.';return;}
