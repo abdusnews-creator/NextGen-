@@ -37,6 +37,8 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
 .check-row{display:block;margin:15px 0;line-height:1.5}
 .check-row input{margin-right:8px}
 @media(max-width:650px){
+ .channels{grid-template-columns:1fr!important}
+
  .layout{display:block}
  nav{width:100%;display:flex;overflow-x:auto;gap:5px}
  nav button{min-width:max-content;width:auto}
@@ -257,7 +259,7 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
 
 
 <main class="studio-main" style="max-width:1200px;margin:0 auto">
-<div class="top" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<div class="top" style="display:block;width:100%">
   <div>
     <h2>Channel Management</h2>
     <p class="note" id="cloudStatus">DEMO CONTROLS — browser-only test settings, not connected to real social accounts.</p>
@@ -265,16 +267,16 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
     <strong>Demo controls are below.</strong> Channel controls only save demo state in this browser; they do not pause or publish on YouTube, Facebook, Instagram, or Threads.
   </div>
   </div>
-  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:20px">
+  <div style="display:flex;width:100%;box-sizing:border-box;gap:10px;align-items:center;flex-wrap:wrap;margin-top:20px">
     <input id="channelSearch" type="search" aria-label="Search channels" placeholder="⌕  Search channels or platforms..." oninput="filterChannelCards()" style="flex:1;min-width:200px;padding:13px 15px;border-radius:10px;border:1px solid #34465d;background:#141e32;color:#eef3ff;font-size:14px">
     <button type="button" class="action active" onclick="window.location.href='channels.html'" style="padding:13px 18px">＋ Add Channel</button>
   </div>
   <div id="channelSearchEmpty" class="muted" style="display:none;margin-top:16px">No matching channels found.</div>
-  <div class="channels" id="channelCards" style="margin-top:18px">
+  <div class="channels" id="channelCards" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:14px;margin-top:18px">
     <article class="card" data-channel-card style="margin:0">
       <div style="display:flex;gap:12px;align-items:center"><div style="width:44px;height:44px;border-radius:12px;background:#282f3b;display:grid;place-items:center;font-size:22px">▶️</div><div><h3 style="margin:0 0 4px">YouTube</h3><div class="muted">Royal Furniture House</div></div></div>
       <p class="muted" style="margin:14px 0 8px">@RoyalFurnitureHouse</p><span class="status">Demo • Not connected</span>
-      <div style="margin-top:14px"><button class="action active" type="button" onclick="window.location.href='review.html'">Review</button></div>
+      <div style="margin-top:16px;display:block"><button class="action active" type="button" onclick="window.location.href='review.html'" style="display:inline-block;min-width:100px;padding:11px 18px;background:#00a8e8;color:#071526;border:1px solid #00a8e8;border-radius:9px;font-weight:800">Review</button></div>
       
     </article>
     <article class="card" data-channel-card style="margin:0">
