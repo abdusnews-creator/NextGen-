@@ -257,7 +257,6 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
 <nav class="studio-nav" aria-label="Main navigation">
   <div class="studio-channel"><div class="studio-channel-logo">♛</div><div><strong>Royal Furniture House</strong><small>@RoyalFurnitureHouse</small><small>YouTube channel</small></div></div>
   <button class="studio-navbtn active" type="button" onclick="showPage('dashboard');window.scrollTo(0,0)"><span class="studio-nav-icon">▦</span>Dashboard</button>
-  <button class="studio-navbtn" type="button" onclick="window.location.href='dashboard-copy.html'"><span class="studio-nav-icon">▣</span>Duplicate Dashboard</button>
   <button class="studio-navbtn" type="button" onclick="studioNavTo('content')"><span class="studio-nav-icon">▶</span>Content</button>
   <button class="studio-navbtn" type="button" onclick="studioScroll('channelAnalytics')"><span class="studio-nav-icon">▥</span>Analytics</button>
   <button class="studio-navbtn" type="button" onclick="studioScroll('latestComments')"><span class="studio-nav-icon">▤</span>Comments</button>
@@ -267,7 +266,6 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
   <button class="studio-navbtn" type="button" onclick="studioNavTo('settings')"><span class="studio-nav-icon">⚙</span>Settings</button>
   <button class="studio-navbtn" type="button" onclick="alert('Thanks for helping improve NextGen Studio.')"><span class="studio-nav-icon">▰</span>Send feedback</button>
   <button class="studio-navbtn" type="button" onclick="window.location.href='channels.html'"><span class="studio-nav-icon">◎</span>Manage channels</button>
-<button class="studio-navbtn" type="button" onclick="window.location.href='dashboard-copy.html'"><span class="studio-nav-icon">▣</span>Duplicate Dashboard</button>
   <button class="studio-navbtn" type="button" onclick="window.location.href='login.html'"><span class="studio-nav-icon">⇥</span>Sign in</button>
   <button id="signOutButton" class="studio-navbtn" type="button" style="display:none" onclick="nextgenSignOut()"><span class="studio-nav-icon">↪</span>Sign out</button>
 </nav>
@@ -460,7 +458,6 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
 <footer>NextGen Prototype • Dashboard preview • Real publishing is not connected</footer>
 <nav class="ng-bottom-nav" aria-label="Main navigation">
 <a href="index.html#dashboard" data-page="dashboard" onclick="event.preventDefault();mobileNavigate('dashboard',this)"><span>⌂</span><small>Dashboard</small></a>
-<a href="dashboard-copy.html" data-page="duplicate-dashboard"><span>▣</span><small>Duplicate Dashboard</small></a>
 <a href="dashboard-copy.html" data-page="channels"><span>▶</span><small>Channels</small></a>
 <a href="index.html#content" data-page="content" onclick="event.preventDefault();mobileNavigate('content',this)"><span>▤</span><small>Content</small></a>
 <a href="index.html#approvals" data-page="approvals" onclick="event.preventDefault();mobileNavigate('approvals',this)"><span>✓</span><small>Approvals</small></a>
@@ -961,8 +958,8 @@ function studioScroll(id){
 /* Navigation safety net: keep mobile navigation usable even if an inline handler fails. */
 (function(){
   function activate(section, anchor){
-    if(section==='channels' || section==='duplicate-dashboard'){
-      window.location.href='dashboard-copy.html'; return;
+    if(section==='channels'){
+      window.location.href='channels.html'; return;
     }
     if(section==='settings'){window.location.href='settings.html';return;}
     if(['dashboard','content','approvals','schedule'].indexOf(section)<0)return;
@@ -979,7 +976,7 @@ function studioScroll(id){
   document.querySelectorAll('.ng-bottom-nav a').forEach(function(a){
     a.addEventListener('click',function(e){
       var section=a.dataset.page;
-      if(['dashboard','content','approvals','schedule','channels','duplicate-dashboard'].indexOf(section)!==-1){
+      if(['dashboard','content','approvals','schedule','channels'].indexOf(section)!==-1){
         e.preventDefault();activate(section,a);
       }
     });
