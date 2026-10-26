@@ -433,6 +433,8 @@ function setDraftStatus(id, message){
     saveDraftStatuses();
     updateDraftSummary();
     filterQueue();
+    /* Keep any saved draft-plan approval labels in sync with the latest review decision. */
+    if(typeof renderDraftSchedule === 'function') renderDraftSchedule();
   }
 }
 
