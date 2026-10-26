@@ -229,7 +229,8 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
       if(readError)throw readError;
       (rows||[]).forEach(row=>{
         if(row.connection_status==='paused')pausedChannels[row.platform]=true;
-        const exists=cards.some(card=>card.dataset.name===row.display_name && (card.dataset.handle||'')===(row.handle||'') && card.dataset.platform===row.platform);
+        const rowHandle=(row.handle||'').trim().toLowerCase();
+        const exists=cards.some(card=>card.dataset.platform===row.platform && ((rowHandle && (card.dataset.handle||'').trim().toLowerCase()===rowHandle) || (!rowHandle && (card.dataset.name||'').trim().toLowerCase()===(row.display_name||'').trim().toLowerCase()));
         if(!exists && ['youtube','facebook','instagram','threads'].includes(row.platform)){
           const extra=buildChannelCard(row.platform,row.display_name,row.handle||'',row.url||'');
           document.getElementById('channelGrid').appendChild(extra);
@@ -409,7 +410,8 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     if(!item || !item.name || !item.platform) return;
     const itemIdentity=[item.platform,item.name,item.handle||''].join('|').toLowerCase();
     if(deletedChannels.has(itemIdentity))return;
-    const exists=cards.some(card=>card.dataset.name===item.name && (card.dataset.handle||'')===(item.handle||'') && card.dataset.platform===item.platform);
+    const itemHandle=(item.handle||'').trim().toLowerCase();
+    const exists=cards.some(card=>card.dataset.platform===item.platform && ((itemHandle && (card.dataset.handle||'').trim().toLowerCase()===itemHandle) || (!itemHandle && (card.dataset.name||'').trim().toLowerCase()===(item.name||'').trim().toLowerCase()));
     if(!exists){
       const extra=buildChannelCard(item.platform,item.name,item.handle||'',item.url||'');
       extra.dataset.customKey=item.key||[item.platform,item.name,item.handle||''].join('|');
@@ -417,6 +419,19 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
       cards.push(extra);
     }
   });
+  /* Remove duplicate channel cards by platform + handle, keeping the first (default) card. */
+  const seenChannelKeys=new Set();
+  cards=cards.filter(card=>{
+    const handle=(card.dataset.handle||'').trim().toLowerCase();
+    const key=(card.dataset.platform||'').trim().toLowerCase()+'|'+(handle || (card.dataset.name||'').trim().toLowerCase());
+    if(seenChannelKeys.has(key)){card.remove();return false;}
+    seenChannelKeys.add(key);return true;
+  });
+  const uniqueCustom=readCustomChannels().filter(item=>{
+    const handle=(item.handle||'').trim().toLowerCase();
+    return !cards.some(card=>card.dataset.customKey!==item.key && card.dataset.platform===item.platform && ((handle && (card.dataset.handle||'').trim().toLowerCase()===handle) || (!handle && (card.dataset.name||'').trim().toLowerCase()===(item.name||'').trim().toLowerCase()));
+  });
+  saveCustomChannels(uniqueCustom);
   cards.forEach(bindCard);
   renderPrivacyChannelList();
 
