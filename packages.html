@@ -11,6 +11,36 @@ header,main,footer{max-width:1120px;margin:auto;padding:22px}header{display:flex
 .hero{padding:34px 0 18px}.eyebrow{color:var(--green);font-weight:700;font-size:.8rem;letter-spacing:1.3px;text-transform:uppercase}h1{font-size:clamp(2rem,6vw,3.2rem);line-height:1.08;margin:10px 0 14px}.sub{max-width:720px;color:var(--muted)}
 .plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:16px;margin:24px 0}.plan{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column}.featured{border-color:#789ff7;box-shadow:0 0 0 1px #789ff733}.ultra{border-color:#d9ad54;box-shadow:0 0 0 1px #d9ad5422}.pill{display:inline-block;align-self:flex-start;border-radius:99px;padding:4px 9px;background:#263958;color:#cfe0ff;font-size:.76rem;font-weight:700}.ultra .pill{background:#4a3a1b;color:#ffe4a1}.price{font-size:2rem;font-weight:850;margin:10px 0 0}.price span{font-size:.85rem;font-weight:500;color:var(--muted)}.desc{color:var(--muted);min-height:65px}.plan ul{padding-left:20px;color:#dbe5f8;flex:1}.plan li{margin:9px 0}.no{color:#ffb4b4}.yes{color:var(--green)}
 button{width:100%;border:0;border-radius:11px;padding:12px 14px;font-weight:750;font-size:1rem;background:var(--blue);color:#0b1020;cursor:pointer}.secondary{background:#263958;color:#eaf1ff}.note{background:#10182a;border:1px solid var(--line);border-radius:14px;padding:16px;color:var(--muted);margin:18px 0}.note strong{color:var(--gold)}.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;margin:22px 0}table{width:100%;border-collapse:collapse;min-width:680px;background:#111a2d}th,td{text-align:left;padding:13px;border-bottom:1px solid var(--line)}th{color:#dbe6ff}td{color:var(--muted)}footer{color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);margin-top:30px}.credit{text-align:right;font-size:.75rem;margin-top:8px}
+
+/* NextGen shared brand system: consistent dark-blue header/footer on every page */
+:root{--ng-bg:#0b1020;--ng-panel:#141e32;--ng-line:#293752;--ng-text:#eef3ff;--ng-muted:#a5b3cc;--ng-accent:#91aaff}
+body{background-color:var(--ng-bg);color:var(--ng-text)}
+body>header,body>main>header,body>.card>header{
+ background:linear-gradient(110deg,#10213f 0%,#173b70 58%,#102544 100%)!important;
+ color:#f4f7ff;border-bottom:1px solid #35547e!important;
+}
+body>header .brand,body>header h1,body>main>header h1{color:#f4f7ff}
+body>header .tag,body>header p,body>main>header p{color:#c5d9ff}
+body>footer,footer.ng-shared-footer{
+ display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+ padding:14px 18px calc(14px + env(safe-area-inset-bottom));margin-top:24px;
+ color:#c5d9ff;background:linear-gradient(110deg,#10213f,#173b70 58%,#102544);
+ border-top:1px solid #35547e;font-size:12px
+}
+body>footer .credit,footer .credit{color:#d4e2ff;text-align:right}
+.ng-bottom-nav{
+ position:fixed;z-index:1000;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+ gap:2px;padding:7px 6px calc(7px + env(safe-area-inset-bottom));
+ background:rgba(9,20,39,.97);border-top:1px solid #35547e;backdrop-filter:blur(12px)
+}
+.ng-bottom-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;
+ padding:5px 2px;border-radius:9px;color:#b8c9e8;text-decoration:none;font-size:11px}
+.ng-bottom-nav a span{font-size:19px;line-height:1.15}
+.ng-bottom-nav a small{font-size:10px;white-space:nowrap}
+.ng-bottom-nav a.active{color:#fff;background:#203e6b}
+body:has(.ng-bottom-nav){padding-bottom:76px!important}
+@media(max-width:480px){body>footer{padding-left:14px;padding-right:14px}.ng-bottom-nav a small{font-size:9px}}
+
 </style></head>
 <body>
 <header><div class="brand">NextGen<small>Smart Automation. Smarter Growth.</small></div><a class="back" href="./index.html">← Dashboard</a></header>
@@ -39,4 +69,11 @@ button{width:100%;border:0;border-radius:11px;padding:12px 14px;font-weight:750;
 <tr><td>Content drafts, captions, basic hashtags</td><td>Included</td><td>Included</td><td>Included</td></tr><tr><td>Connected platform accounts (proposed)</td><td>1: YouTube, Facebook, or Instagram</td><td>3: YouTube, Facebook, Instagram, Threads</td><td>Up to 10 across supported services, including Telegram, WhatsApp, LinkedIn, X and others where integrations are permitted</td></tr><tr><td>Full SEO workflow</td><td>Not included</td><td>Included when integrations support it</td><td>Included when integrations support it</td></tr><tr><td>Live keyword / competitor data</td><td>Not included</td><td>After approved integration</td><td>After approved integration</td></tr><tr><td>Higher usage limits</td><td>Standard</td><td>Higher, if configured</td><td>Highest tier, subject to provider limits</td></tr><tr><td>Team / multi-channel tools</td><td>Basic limits</td><td>Configured limits</td><td>Priority limits once implemented</td></tr><tr><td>Auto-publishing</td><td>Not enabled</td><td>Not enabled</td><td>Not enabled</td></tr></tbody></table></div>
 <div class="note"><strong>Safety rule:</strong> Manual Approval remains ON by default. This page never publishes or schedules posts. API keys and payment secrets must never be stored in browser code.</div>
 </main><footer>NextGen · Smart Automation. Smarter Growth.<div class="credit">Powered by ABDUS SATTAR</div></footer>
+<nav class="ng-bottom-nav" aria-label="Main navigation">
+<a href="index.html#dashboard" data-page="dashboard"><span>⌂</span><small>Dashboard</small></a>
+<a href="channels.html" data-page="channels"><span>▶</span><small>Channels</small></a>
+<a href="index.html#content" data-page="content"><span>▤</span><small>Content</small></a>
+<a href="index.html#approvals" data-page="approvals"><span>✓</span><small>Approvals</small></a>
+<a href="index.html#schedule" data-page="schedule"><span>▦</span><small>Schedule</small></a>
+</nav>
 <script>function showPlan(name){alert(name+' is a proposed plan only. Checkout, early-payment discounts and account entitlements are not connected yet.');}</script></body></html>
