@@ -65,6 +65,7 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
   <button type="button" onclick="showPage('schedule')">Schedule</button>
   <button type="button" onclick="showPage('settings')">Settings</button>
   <button type="button" onclick="window.location.href='login.html'">Sign in</button>
+  <button id="signOutButton" type="button" style="display:none" onclick="nextgenSignOut()">Sign out</button>
 </nav>
 
 <main>
@@ -418,6 +419,32 @@ function setMode(auto){
   } catch (error) {
     setMode(false);
   }
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+(function(){
+ const config=window.NEXTGEN_SUPABASE_CONFIG;
+ const configured=config && config.url && config.anonKey &&
+   config.url.indexOf('https://')===0 &&
+   config.url.indexOf('PASTE_')===-1 &&
+   config.anonKey.indexOf('PASTE_')===-1;
+ if(!configured || !window.supabase || !window.supabase.createClient){return;}
+ const client=window.supabase.createClient(config.url,config.anonKey);
+ window.nextgenSignOut=async function(){
+   const result=await client.auth.signOut();
+   if(result.error){alert('Could not sign out. Please try again.');return;}
+   window.location.href='login.html';
+ };
+ client.auth.getSession().then(function(result){
+   if(!result.data.session){
+     window.location.replace('login.html');
+     return;
+   }
+   const button=document.getElementById('signOutButton');
+   if(button) button.style.display='block';
+ });
 })();
 </script>
 </body>
