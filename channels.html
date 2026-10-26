@@ -66,9 +66,10 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   <form id="addChannelForm">
     <div class="toolbar">
       <input id="newPlatform" type="hidden" value="youtube">
-      <input id="newChannelName" type="text" placeholder="Channel name will be detected from the link" aria-label="Detected channel name" readonly required maxlength="80" style="flex:1;min-width:180px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit"><p class="muted" style="width:100%;margin:0">Channel name is filled from the profile link when possible.</p>
-      <input id="newChannelHandle" type="text" placeholder="@handle (optional)" aria-label="Channel handle" maxlength="100" style="flex:1;min-width:160px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
-      <input id="newChannelUrl" type="url" placeholder="Paste Facebook / YouTube / Instagram / Threads profile link" aria-label="Channel URL" required style="flex:1;min-width:220px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
+      <input id="newChannelUrl" type="url" placeholder="Handle — paste profile link here" aria-label="Handle / profile link" required style="flex:1;min-width:220px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
+      <input id="newChannelName" type="text" placeholder="Channel Name / Profile Name (auto-filled)" aria-label="Detected channel name" readonly required maxlength="80" style="flex:1;min-width:180px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
+      <input id="newChannelHandle" type="text" placeholder="Handle (auto-filled)" aria-label="Detected handle" readonly maxlength="100" style="flex:1;min-width:160px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
+      <input id="platformDisplay" type="text" placeholder="Platform (auto-detected)" aria-label="Detected platform" readonly style="flex:1;min-width:160px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
       <button type="submit" class="primary">Add to list</button>
       <button type="button" id="cancelAddChannel">Cancel</button>
     </div>
@@ -281,6 +282,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
       document.getElementById('newChannelName').value=card.dataset.name||'';
       document.getElementById('newChannelHandle').value=card.dataset.handle||'';
       document.getElementById('newChannelUrl').value=card.dataset.url||'';
+      document.getElementById('platformDisplay').value=(card.dataset.platform||'').replace(/^./,ch=>ch.toUpperCase());
       document.getElementById('editingChannelKey').value=card.dataset.customKey||'';
       document.getElementById('addChannelForm').querySelector('[type=submit]').textContent='Save changes';
       document.querySelector('#addChannelPanel h3').textContent='Edit channel details';
@@ -392,15 +394,16 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     const raw=this.value.trim();
     const nameInput=document.getElementById('newChannelName');
     const handleInput=document.getElementById('newChannelHandle');
-    if(!raw){nameInput.value='';handleInput.value='';return;}
+    if(!raw){nameInput.value='';handleInput.value='';document.getElementById('platformDisplay').value='';return;}
     const detected=detectChannelFromUrl(raw);
     if(detected){
       document.getElementById('newPlatform').value=detected.platform;
       nameInput.value=detected.name;
       handleInput.value=detected.handle;
-      document.getElementById('addChannelStatus').textContent='Detected platform: '+detected.platform.charAt(0).toUpperCase()+detected.platform.slice(1)+'. Channel name is estimated from the profile link.';
+      document.getElementById('platformDisplay').value=detected.platform.charAt(0).toUpperCase()+detected.platform.slice(1);
+      document.getElementById('addChannelStatus').textContent='Platform detected. Channel name and handle are estimated from the profile link.';
     }else{
-      nameInput.value='';handleInput.value='';
+      nameInput.value='';handleInput.value='';document.getElementById('platformDisplay').value='';
       document.getElementById('addChannelStatus').textContent='Platform not detected. Paste a full Facebook, YouTube, Instagram or Threads profile link.';
     }
   });
@@ -439,6 +442,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     const localSaved=saveCustomChannels(savedItems);
     if(enabledChannels[platform]===undefined)enabledChannels[platform]=true;
     addForm.reset();
+    document.getElementById('platformDisplay').value='';
     document.getElementById('editingChannelKey').value='';
     addForm.querySelector('[type=submit]').textContent='Add to list';
     document.querySelector('#addChannelPanel h3').textContent='Add a channel (demo)';
