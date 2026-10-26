@@ -66,7 +66,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   <p class="status"><span class="dot"></span><span class="connection">App connection: Not verified</span></p>
   <div class="actions">
     <button type="button" class="pause-button">Pause channel</button>
-    <button type="button" class="enable-button" onclick="alert('Demo only: real platform connection is not configured.')">Enable / Disable</button>
+    <button type="button" class="enable-button" aria-pressed="true">Disable channel</button>
     <button type="button" class="primary review-button">Review</button>
   </div>
 </section>
@@ -78,7 +78,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   <p class="status"><span class="dot"></span><span class="connection">App connection: Not verified</span></p>
   <div class="actions">
     <button type="button" class="pause-button">Pause channel</button>
-    <button type="button" class="enable-button" onclick="alert('Demo only: real platform connection is not configured.')">Enable / Disable</button>
+    <button type="button" class="enable-button" aria-pressed="true">Disable channel</button>
     <button type="button" class="primary review-button">Review</button>
   </div>
 </section>
@@ -90,7 +90,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   <p class="status"><span class="dot"></span><span class="connection">App connection: Not verified</span></p>
   <div class="actions">
     <button type="button" class="pause-button">Pause channel</button>
-    <button type="button" class="enable-button" onclick="alert('Demo only: real platform connection is not configured.')">Enable / Disable</button>
+    <button type="button" class="enable-button" aria-pressed="true">Disable channel</button>
     <button type="button" class="primary review-button">Review</button>
   </div>
 </section>
@@ -102,7 +102,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   <p class="status"><span class="dot"></span><span class="connection">App connection: Not verified</span></p>
   <div class="actions">
     <button type="button" class="pause-button">Pause channel</button>
-    <button type="button" class="enable-button" onclick="alert('Demo only: real platform connection is not configured.')">Enable / Disable</button>
+    <button type="button" class="enable-button" aria-pressed="true">Disable channel</button>
     <button type="button" class="primary review-button">Review</button>
   </div>
 </section>
@@ -123,7 +123,10 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   const search = document.getElementById('channelSearch');
   const count = document.getElementById('channelCount');
   const storageKey = 'nextgen-demo-paused-channels-v1';
+  const enabledStorageKey = 'nextgen-demo-enabled-channels-v1';
   let pausedChannels = {};
+  let enabledChannels = {youtube:true,facebook:true,instagram:true,threads:true};
+  try { enabledChannels = Object.assign(enabledChannels, JSON.parse(localStorage.getItem(enabledStorageKey) || '{}') || {}); } catch (error) {}
   try { pausedChannels = JSON.parse(localStorage.getItem(storageKey) || '{}') || {}; }
   catch (error) { pausedChannels = {}; }
 
@@ -135,6 +138,10 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   function renderCard(card){
     const platform = card.dataset.platform;
     const isPaused = Boolean(pausedChannels[platform]);
+    const isEnabled = enabledChannels[platform] !== false;
+    const enableButton = card.querySelector('.enable-button');
+    enableButton.textContent = isEnabled ? 'Disable channel' : 'Enable channel';
+    enableButton.setAttribute('aria-pressed', String(isEnabled));
     const button = card.querySelector('.pause-button');
     const status = card.querySelector('.status');
     const connection = card.querySelector('.connection');
@@ -160,6 +167,12 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
 
   cards.forEach(function(card){
     renderCard(card);
+    card.querySelector('.enable-button').addEventListener('click',function(){
+      const platform = card.dataset.platform;
+      enabledChannels[platform] = enabledChannels[platform] === false;
+      try { localStorage.setItem(enabledStorageKey, JSON.stringify(enabledChannels)); } catch (error) {}
+      renderCard(card);
+    });
     card.querySelector('.pause-button').addEventListener('click',function(){
       const platform = card.dataset.platform;
       pausedChannels[platform] = !pausedChannels[platform];
