@@ -80,7 +80,7 @@ body:has(.ng-bottom-nav){padding-bottom:76px!important}
 <a href="index.html#approvals" data-page="approvals"><span>✓</span><small>Approvals</small></a>
 <a href="index.html#schedule" data-page="schedule"><span>▦</span><small>Schedule</small></a>
 </nav>
-<nav class="bottom" aria-label="Main navigation"><a href="index.html#dashboard"><span>⌂</span>Dashboard</a><a href="channels.html"><span>▶</span>Channels</a><a href="index.html#content"><span>▤</span>Content</a><a href="index.html#approvals"><span>✓</span>Approvals</a><a href="index.html#schedule"><span>▦</span>Schedule</a></nav>
+
 <script>
 (function(){const $=id=>document.getElementById(id);const key='nextgen-general-settings-v1';let prefs={manual:true,auto:false,notifications:true,background:true};try{prefs={...prefs,...JSON.parse(localStorage.getItem(key)||'{}')};}catch(e){}function render(){ $('manual').checked=!!prefs.manual;$('auto').checked=!!prefs.auto;$('notifications').checked=!!prefs.notifications;$('background').checked=!!prefs.background;}function save(changed){if(changed==='auto'&&prefs.auto){prefs.manual=false;}if(changed==='manual'&&prefs.manual){prefs.auto=false;}if(!prefs.manual&&!prefs.auto){prefs.manual=true;}try{localStorage.setItem(key,JSON.stringify(prefs));$('status').textContent='Preference saved on this device.';}catch(e){$('status').textContent='Browser storage unavailable; preference may not persist.';}render();}['manual','auto','notifications','background'].forEach(id=>$(id).addEventListener('change',()=>{prefs[id]=$(id).checked;save(id)}));render();})();
 </script></body></html>
