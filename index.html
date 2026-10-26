@@ -198,7 +198,13 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
   <div class="card">
     <h3>Review Checklist</h3>
     <p id="activeReviewTitle" class="muted">Reviewing: Luxury Wooden Bed Reel</p>
-    <p class="muted">Complete all five checks before approving a draft.</p>
+    <div id="reviewContentDetails" class="draft" style="margin:14px 0;padding:16px">
+      <h3>Content Preview</h3>
+      <p><strong>Video idea / content</strong></p><p id="reviewContentText">A cinematic vertical showcase of a luxury carved wooden bed, highlighting the polished wood finish, craftsmanship and elegant bedroom styling.</p>
+      <p><strong>Caption</strong></p><p id="reviewCaptionText">Bring timeless elegance to your bedroom with this beautifully crafted wooden bed. Rich finish, detailed carving and a royal look. ✨</p>
+      <p><strong>Hashtags</strong></p><p id="reviewHashtagsText">#Furniture #WoodenBed #LuxuryFurniture #BedroomDesign #HomeDecor #FurnitureDesign #Reels</p>
+    </div>
+    <p class="muted">Review the content, caption and hashtags below, then complete all five checks.</p>
 
     <label class="check-row"><input type="checkbox" class="review-check"> Spelling checked</label>
     <label class="check-row"><input type="checkbox" class="review-check"> Facts checked</label>
@@ -323,10 +329,39 @@ var checklistStorageKey = 'nextgen-demo-review-checklist-by-draft';
 var draftStorageKey = 'nextgen-demo-draft-statuses';
 var activeDraftId = 'bedStatus';
 
+var reviewContentById = {
+  bedStatus: {
+    title: 'Luxury Wooden Bed Reel',
+    content: 'Create a vertical 9:16 cinematic product showcase of a luxury wooden bed. Start with a close-up of the polished wood and carved details, then slowly reveal the full bed in an elegant bedroom. Keep the product shape and wood finish accurate. No people or watermark.',
+    caption: 'Bring timeless elegance to your bedroom with this beautifully crafted wooden bed. Rich finish, detailed carving and a royal look. ✨ Which bedroom style would you choose?',
+    hashtags: '#Furniture #WoodenBed #LuxuryFurniture #BedroomDesign #HomeDecor #FurnitureDesign #Reels #Shorts'
+  },
+  sofaStatus: {
+    title: 'Royal Sofa Set Short',
+    content: 'Create a vertical 9:16 furniture showcase featuring a premium royal sofa set. Begin with the upholstery texture, then slowly reveal the complete sofa and its design details in a stylish living room. Use smooth camera movement and balanced lighting. No people or watermark.',
+    caption: 'Make your living room feel warm, elegant and inviting with a royal sofa set designed to stand out. ✨ What colour would you pick for your home?',
+    hashtags: '#SofaSet #Furniture #LivingRoomDesign #LuxuryFurniture #HomeDecor #InteriorDesign #Reels #Shorts'
+  },
+  tableStatus: {
+    title: 'Carved Centre Table Reel',
+    content: 'Create a vertical 9:16 cinematic showcase of an ornate wooden centre table. Highlight the honey-brown polished finish, floral carving, curved legs and lower shelf with close-up details followed by a full product shot. Preserve the product geometry. No people or watermark.',
+    caption: 'A statement piece for a beautiful home. Admire the polished finish and intricate carving on this elegant wooden centre table. ✨ Would you place it in your living room?',
+    hashtags: '#CentreTable #WoodenFurniture #FurnitureDesign #LuxuryInteriors #HomeDecor #LivingRoom #Reels #Shorts'
+  }
+};
+
+function renderReviewContent(id){
+  var draft = reviewContentById[id] || reviewContentById.bedStatus;
+  document.getElementById('reviewContentText').textContent = draft.content;
+  document.getElementById('reviewCaptionText').textContent = draft.caption;
+  document.getElementById('reviewHashtagsText').textContent = draft.hashtags;
+}
+
 function reviewDraft(id){
   activeDraftId = draftStatusIds.indexOf(id) >= 0 ? id : 'bedStatus';
   var titleById = {bedStatus:'Luxury Wooden Bed Reel',sofaStatus:'Royal Sofa Set Short',tableStatus:'Carved Centre Table Reel'};
   document.getElementById('activeReviewTitle').textContent = 'Reviewing: ' + titleById[activeDraftId];
+  renderReviewContent(activeDraftId);
   restoreChecklistForDraft(activeDraftId);
   showPage('approvals');
 }
@@ -378,6 +413,7 @@ function approveDraft(id){
   restoreChecklistForDraft(activeDraftId);
   var titleById = {bedStatus:'Luxury Wooden Bed Reel',sofaStatus:'Royal Sofa Set Short',tableStatus:'Carved Centre Table Reel'};
   document.getElementById('activeReviewTitle').textContent = 'Reviewing: ' + titleById[activeDraftId];
+  renderReviewContent(activeDraftId);
   var checks = document.querySelectorAll('.review-check');
   var allChecked = Array.from(checks).every(function(check){
     return check.checked;
