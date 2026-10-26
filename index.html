@@ -183,13 +183,9 @@ body{background:#0f141b;color:#f1f5f9;font-family:Arial,Helvetica,sans-serif}
  .studio-nav .studio-channel{display:flex}
  .studio-nav .studio-navbtn{width:100%;min-width:0;flex-shrink:0}
  .studio-main{padding:16px 12px 26px}
- .studio-mobile-bottom{position:fixed;z-index:105;left:0;right:0;bottom:0;height:68px;padding:5px 4px max(5px,env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;background:rgba(8,22,39,.97);border-top:1px solid #1675bd;box-shadow:0 -8px 28px #0005}
- .studio-mobile-bottom button{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;border-radius:8px;background:transparent;color:#aebed0;font-size:10px;padding:4px 1px}
- .studio-mobile-bottom button .bottom-icon{font-size:19px;line-height:22px}
- .studio-mobile-bottom button.active{color:#58b7ff;background:linear-gradient(180deg,#193453,#14263b);box-shadow:inset 0 2px 0 #2696ff;font-weight:700}
- .studio-mobile-bottom button:active{background:#263b52}
+
 }
-@media(min-width:681px){.studio-mobile-bottom{display:none}}
+
 </style>
 </head>
 
@@ -244,15 +240,6 @@ body{background:#0f141b;color:#f1f5f9;font-family:Arial,Helvetica,sans-serif}
   <button class="studio-navbtn" type="button" onclick="window.location.href='login.html'"><span class="studio-nav-icon">⇥</span>Sign in</button>
   <button id="signOutButton" class="studio-navbtn" type="button" style="display:none" onclick="nextgenSignOut()"><span class="studio-nav-icon">↪</span>Sign out</button>
 </nav>
-<div class="studio-mobile-bottom" role="navigation" aria-label="Mobile main navigation">
-  <button type="button" class="active" data-bottom="dashboard" onclick="mobileNavigate('dashboard',this)"><span class="bottom-icon">⌂</span><span>Dashboard</span></button>
-  <button type="button" data-bottom="channels" onclick="mobileNavigate('channels',this)"><span class="bottom-icon">▶</span><span>Channels</span></button>
-  <button type="button" data-bottom="content" onclick="mobileNavigate('content',this)"><span class="bottom-icon">▤</span><span>Content</span></button>
-  <button type="button" data-bottom="approvals" onclick="mobileNavigate('approvals',this)"><span class="bottom-icon">✓</span><span>Approvals</span></button>
-  <button type="button" data-bottom="schedule" onclick="mobileNavigate('schedule',this)"><span class="bottom-icon">▦</span><span>Schedule</span></button>
-</div>
-
-
 <main class="studio-main">
 <section id="dashboard" class="page show">
   <div class="studio-pagehead"><div><h2>Channel Analytics</h2><p class="studio-subtitle">Welcome back! Your creator workspace is ready.</p></div><button type="button" class="studio-period" onclick="alert('Live analytics will appear after platform analytics are connected.')">▣ &nbsp; Last 28 days &nbsp;⌄</button></div>
@@ -434,6 +421,7 @@ body{background:#0f141b;color:#f1f5f9;font-family:Arial,Helvetica,sans-serif}
 </div>
 
 
+<footer>NextGen Prototype • Dashboard preview • Real publishing is not connected</footer>
 <nav class="ng-bottom-nav" aria-label="Main navigation">
 <a href="index.html#dashboard" data-page="dashboard"><span>⌂</span><small>Dashboard</small></a>
 <a href="channels.html" data-page="channels"><span>▶</span><small>Channels</small></a>
@@ -807,7 +795,6 @@ function setMode(auto){
   }
 })();
 function mobileNavigate(section,button){
-  document.querySelectorAll('.studio-mobile-bottom button').forEach(function(b){b.classList.toggle('active',b===button)});
   var nav=document.querySelector('.studio-nav');
   if(nav)nav.classList.remove('nav-expanded');
   if(section==='channels'){window.location.href='channels.html';return}
