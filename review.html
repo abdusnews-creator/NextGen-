@@ -5,14 +5,15 @@
 <meta name="theme-color" content="#0b1020"><title>NextGen — Content Review</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#0b1020;color:#eef3ff;font:16px Arial,sans-serif}header{padding:20px;background:#141e32;border-bottom:1px solid #293752}h1{margin:0;color:#91aaff}header p{margin:6px 0;color:#c1cbe0}.credit{text-align:right;font-size:11px;color:#a5b3cc}main{max-width:850px;margin:auto;padding:16px}.card{background:#141e32;border:1px solid #293752;border-radius:13px;padding:18px;margin:14px 0}label{display:block;margin:12px 0;color:#c1cbe0}select{display:block;width:100%;padding:13px;margin-top:6px;border-radius:8px;background:#0b1020;color:#fff;border:1px solid #91aaff;font-size:16px}.preview{background:#1a2740;padding:14px;border-radius:10px;margin-top:14px;overflow-wrap:anywhere}.fieldbox{background:#0e1729;border:1px solid #354968;border-radius:10px;padding:12px;margin:12px 0}.fieldbox p{margin:8px 0}.fieldbox b{color:#d8e2ff}.fieldbox textarea{display:block;width:100%;min-height:86px;padding:11px;margin-top:8px;border-radius:8px;background:#141e32;color:#eef3ff;border:1px solid #455b80;font:14px/1.5 Arial,sans-serif;resize:vertical}.preview h3{color:#91aaff}.tag{color:#b8c9ff;line-height:1.7}.check{display:flex;gap:10px;align-items:flex-start;margin:16px 0;line-height:1.4}.check input{width:20px;height:20px;flex-shrink:0}.btn{padding:13px 16px;border:0;border-radius:8px;background:#91aaff;color:#0b1020;font-weight:bold;font-size:15px;margin:5px 5px 5px 0}.muted{color:#a5b3cc;font-size:13px}.warning{background:#302818;border:1px solid #806633;color:#ffe1a6;padding:12px;border-radius:9px}.status{font-weight:bold;color:#ffd27d}.btn.reject{background:#7b303b;color:#fff}.btn:disabled{opacity:.45}.copyrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.copybtn{padding:9px 12px;border:1px solid #91aaff;border-radius:8px;background:#0b1020;color:#dbe5ff;font-size:14px;font-weight:bold}.metaText{overflow-wrap:anywhere;line-height:1.7}.thumbPreview{display:block;width:100%;max-width:560px;aspect-ratio:16/9;object-fit:cover;border:1px solid #455b80;border-radius:10px;background:#0b1020}.thumbNote{color:#a5b3cc;font-size:12px;line-height:1.5}.queueGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}.queueItem{background:#0e1729;border:1px solid #354968;border-radius:10px;padding:12px;min-width:0}.queueItem h4{margin:0 0 8px}.queueStatus{font-size:12px;color:#ffd27d;margin:0 0 10px;overflow-wrap:anywhere}.queueItem button{width:100%;padding:9px;border:1px solid #91aaff;border-radius:8px;background:#202b42;color:#eef3ff;font-weight:bold}@media(max-width:600px){.queueGrid{grid-template-columns:1fr}}
-</style></head>
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./supabase-config.js"></script>
+</head>
 <body>
 <header><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><div><h1>NextGen</h1><p>Smart Automation. Smarter Growth.</p></div><div class="credit">Powered by<br><b>ABDUS SATTAR</b></div></div></header>
 <main>
 <p><a href="./?refresh=20261026" style="color:#b8c9ff">← Back to Dashboard</a></p>
 <h2>Content Review</h2>
 <p class="muted">Choose a draft, platform and post topic. Thumbnail guidance adapts to the selected content.</p>
-<div class="card"><h3>Review Queue</h3><p class="muted">Check each draft's saved status on this device. Select Open draft to inspect or revise it. No content is published from this queue.</p><div class="queueGrid" id="reviewQueue"></div><p id="queueSummary" class="status" aria-live="polite"></p></div>
+<div class="card"><h3>Review Queue</h3><p id="cloudReviewStatus" class="muted" aria-live="polite">Cloud sync is optional. Configure Supabase and sign in to save reviews to your account.</p><p class="muted">Check each draft's saved status on this device. Select Open draft to inspect or revise it. No content is published from this queue.</p><div class="queueGrid" id="reviewQueue"></div><p id="queueSummary" class="status" aria-live="polite"></p></div>
 <div class="card">
 <label for="platform">Select platform<select id="platform"><option value="YouTube">YouTube</option><option value="Facebook">Facebook Page</option><option value="Instagram">Instagram</option><option value="Threads">Threads</option></select></label>
 <label for="postTitle">Post title<input id="postTitle" type="text" value="Luxury Wooden Bed | YouTube Short" maxlength="140" placeholder="Enter the title for this post" style="display:block;width:100%;padding:13px;margin-top:6px;border-radius:8px;background:#0b1020;color:#fff;border:1px solid #91aaff;font-size:16px"></label>\n<label for="topic">Post topic / subject<input id="topic" type="text" value="Luxury Wooden Bed" maxlength="140" placeholder="Enter this post topic" style="display:block;width:100%;padding:13px;margin-top:6px;border-radius:8px;background:#0b1020;color:#fff;border:1px solid #91aaff;font-size:16px"></label>
@@ -43,9 +44,62 @@ const statusEl=document.getElementById('status');
 const stateKey='nextgen-review-status-v1';
 const dashboardKey='nextgen-demo-draft-statuses';
 const draftIds={bed:'bedStatus',sofa:'sofaStatus',table:'tableStatus'};
+let reviewSupabase=null, reviewUser=null;
+const cloudDraftKey='nextgen-review-cloud-draft-ids-v1';
+function reviewCloudIds(){try{return JSON.parse(localStorage.getItem(cloudDraftKey)||'{}')}catch(e){return {}}}
+function reviewCloudReady(){
+  const c=window.NEXTGEN_SUPABASE_CONFIG;
+  if(!window.supabase||!c||!c.url||!c.anonKey||c.url.includes('PASTE_')||c.anonKey.includes('PASTE_'))return false;
+  if(!reviewSupabase)reviewSupabase=window.supabase.createClient(c.url,c.anonKey);
+  return true;
+}
+async function connectReviewCloud(){
+  const el=document.getElementById('cloudReviewStatus');
+  if(!reviewCloudReady()){el.textContent='Cloud sync not configured yet. The review queue currently saves on this device only.';return}
+  const {data,error}=await reviewSupabase.auth.getUser();
+  if(error||!data.user){el.textContent='Sign in on the NextGen Login page to enable account-specific review sync.';return}
+  reviewUser=data.user;
+  el.textContent='Signed in: cloud review sync is ready for this account. Reviews remain private to this account.';
+}
+async function saveCloudReview(value){
+  if(!reviewUser||!reviewSupabase)return;
+  const el=document.getElementById('cloudReviewStatus');
+  try{
+    const ids=reviewCloudIds(), key=reviewUser.id+':'+select.value;
+    let draftId=ids[key];
+    const isApproved=value.indexOf('Approved')===0;
+    const isRejected=value.indexOf('Rejected')===0;
+    const targetStatus=isApproved?'approved':isRejected?'rejected':'pending_approval';
+    const title=(postTitleInput?.value||drafts[select.value].title||select.value).trim().slice(0,140);
+    const caption=(document.getElementById('caption')?.textContent||'').trim();
+    if(draftId){
+      const {data,error}=await reviewSupabase.from('content_drafts').select('id').eq('id',draftId).eq('user_id',reviewUser.id).maybeSingle();
+      if(error)throw error;
+      if(!data)draftId=null;
+    }
+    if(!draftId){
+      const {data,error}=await reviewSupabase.from('content_drafts').insert({user_id:reviewUser.id,title,caption,status:'pending_approval',approval_mode:'manual'}).select('id').single();
+      if(error)throw error;
+      draftId=data.id;ids[key]=draftId;localStorage.setItem(cloudDraftKey,JSON.stringify(ids));
+    }
+    const {error:reviewError}=await reviewSupabase.from('draft_reviews').upsert({
+      user_id:reviewUser.id,draft_id:draftId,
+      spelling_checked:checks[0].checked,facts_checked:checks[1].checked,
+      copyright_checked:checks[2].checked,duplicate_checked:checks[3].checked,
+      platform_safety_checked:checks[4].checked,reviewed_at:new Date().toISOString()
+    },{onConflict:'draft_id'});
+    if(reviewError)throw reviewError;
+    const {error:updateError}=await reviewSupabase.from('content_drafts').update({title,caption,status:targetStatus,approval_mode:'manual'}).eq('id',draftId).eq('user_id',reviewUser.id);
+    if(updateError)throw updateError;
+    el.textContent='Saved to your private Supabase account: '+targetStatus.replace('_',' ')+'. No post was published or scheduled.';
+  }catch(e){
+    el.textContent='Cloud save failed: '+(e.message||'check Supabase schema and sign-in').slice(0,180)+'. Local status is still saved on this device.';
+  }
+}
+
 function readStates(){try{return JSON.parse(localStorage.getItem(stateKey)||'{}')}catch(e){return {}}}
 function readDashboardStates(){try{return JSON.parse(localStorage.getItem(dashboardKey)||'{}')}catch(e){return {}}}
-function writeStatus(value){const states=readStates();states[select.value]=value;try{localStorage.setItem(stateKey,JSON.stringify(states));const shared=readDashboardStates();shared[draftIds[select.value]]=value.indexOf('Approved')===0?'Approved for selected channel (demo only)':value.indexOf('Rejected')===0?'Rejected — revision needed':'Pending approval';localStorage.setItem(dashboardKey,JSON.stringify(shared))}catch(e){};statusEl.textContent=value}
+function writeStatus(value){const states=readStates();states[select.value]=value;try{localStorage.setItem(stateKey,JSON.stringify(states));const shared=readDashboardStates();shared[draftIds[select.value]]=value.indexOf('Approved')===0?'Approved for selected channel (demo only)':value.indexOf('Rejected')===0?'Rejected — revision needed':'Pending approval';localStorage.setItem(dashboardKey,JSON.stringify(shared))}catch(e){};statusEl.textContent=value;saveCloudReview(value);renderQueue()}
 function renderQueue(){
   const queue=document.getElementById('reviewQueue');
   const summary=document.getElementById('queueSummary');
@@ -141,6 +195,7 @@ document.getElementById('copyThumbnailPrompt').addEventListener('click',()=>copy
 document.getElementById('copyPrimaryKeyword').addEventListener('click',()=>copyReviewText('primaryKeyword','Main keyword'));
 document.getElementById('copySecondaryKeywords').addEventListener('click',()=>copyReviewText('secondaryKeywords','Related keywords'));
 document.getElementById('copySeoDescription').addEventListener('click',()=>copyReviewText('seoDescription','SEO description'));
+connectReviewCloud();
 /* Allow a saved draft plan to open the matching item directly in the review page. */
 (function selectDraftFromLink(){
   const params=new URLSearchParams(window.location.search);
