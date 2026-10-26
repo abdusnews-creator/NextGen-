@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b1020">
-<title>NextGen — Privacy & Channel Settings</title>
+<title>NextGen — Privacy Settings</title>
 <style>
 :root{--bg:#0b1020;--panel:#151d31;--panel2:#10182a;--line:#29344c;--text:#f5f7ff;--muted:#a8b3ca;--accent:#91aaff;--danger:#ffb3b3;--good:#a9f0ca}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
@@ -23,13 +23,13 @@ footer{max-width:1100px;margin:0 auto;padding:0 16px 22px;text-align:right;color
 </style>
 </head>
 <body>
-<header><div><div class="brand">NextGen</div><p class="tag">Smart Automation. Smarter Growth.</p></div><div class="actions"><a href="index.html">← Dashboard</a><a href="channels.html">Channels Page →</a></div></header>
+<header><div><div class="brand">NextGen</div><p class="tag">Smart Automation. Smarter Growth.</p></div><div class="actions"><a href="index.html">← Settings / Dashboard</a></div></header>
 <div class="layout">
-<nav aria-label="Settings navigation"><a href="index.html">Dashboard</a><a class="active" href="privacy-settings.html">Privacy & Channel Settings</a><a href="channels.html">Channel Management</a></nav>
+<nav aria-label="Settings navigation"><a href="index.html">Settings</a><a class="active" href="privacy-settings.html">Privacy Settings</a><a href="#channel-management">↳ Channel Management</a></nav>
 <main>
-<h1>Privacy & Channel Settings</h1>
-<p>Manage which social profiles appear in your NextGen workspace. This is a separate settings page, inspired by familiar account-settings layouts.</p>
-<div class="panel"><h2>Channel access and availability</h2><p class="muted">Edit details, disable/enable a channel, or remove it from this local demo list. These actions do not delete or disconnect the real social account.</p>
+<h1>Privacy Settings</h1>
+<p>Settings → Privacy Settings. Manage your channel list and availability here.</p>
+<div class="panel" id="channel-management"><h2>Channel Management</h2><p class="muted">Use Edit Channel, Remove Channel, Disable, and Enable to manage entries in your NextGen channel list. These actions do not delete or disconnect the real social account.</p>
 <div id="channelList" class="channel-list"></div>
 <div class="actions" style="margin-top:14px"><button id="addBtn" class="primary" type="button">＋ Add Channel</button><button id="resetBtn" type="button">Restore default list</button></div><p id="status" class="status" role="status" aria-live="polite"></p></div>
 <div class="panel" id="editor" hidden><h2 id="formTitle">Add channel</h2>
