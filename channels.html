@@ -376,6 +376,9 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   function channelIdentity(card){return [card.dataset.platform||'',card.dataset.name||'',card.dataset.handle||''].join('|').toLowerCase();}
   function readDeletedChannels(){try{const v=JSON.parse(localStorage.getItem(deletedChannelsStorageKey)||'[]');return Array.isArray(v)?v:[];}catch(e){return [];}}
   const deletedChannels=new Set(readDeletedChannels());
+  /* Restore the required default Threads account if an old browser-only removal hid it. */
+  ['threads|royal furniture zone|@royalfurniturezone','threads|royalfurniturezone|@royalfurniturezone'].forEach(identity=>deletedChannels.delete(identity));
+  try{localStorage.setItem(deletedChannelsStorageKey,JSON.stringify(Array.from(deletedChannels)));}catch(e){}
   cards=cards.filter(card=>{
     if(deletedChannels.has(channelIdentity(card))){card.remove();return false;}
     return true;
