@@ -269,7 +269,29 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
     <input id="channelSearch" type="search" aria-label="Search channels" placeholder="⌕  Search channels or platforms..." oninput="filterChannelCards()" style="flex:1;min-width:200px;padding:13px 15px;border-radius:10px;border:1px solid #34465d;background:#141e32;color:#eef3ff;font-size:14px">
     <button type="button" class="action active" onclick="window.location.href='channels.html'" style="padding:13px 18px">＋ Add Channel</button>
   </div>
-  <div id="channelSearchEmpty" class="muted" style="display:none;margin-top:16px">No matching channels here. Open Channel Management to view or add channels.</div>
+  <div id="channelSearchEmpty" class="muted" style="display:none;margin-top:16px">No matching channels found.</div>
+  <div class="channels" id="channelCards" style="margin-top:18px">
+    <article class="card" data-channel-card style="margin:0">
+      <div style="display:flex;gap:12px;align-items:center"><div style="width:44px;height:44px;border-radius:12px;background:#282f3b;display:grid;place-items:center;font-size:22px">▶️</div><div><h3 style="margin:0 0 4px">YouTube</h3><div class="muted">Royal Furniture House</div></div></div>
+      <p class="muted" style="margin:14px 0 8px">@RoyalFurnitureHouse</p><span class="status">Demo • Not connected</span>
+      <div style="margin-top:14px"><button class="action" type="button" onclick="window.location.href='channels.html'">Manage Channel</button></div>
+    </article>
+    <article class="card" data-channel-card style="margin:0">
+      <div style="display:flex;gap:12px;align-items:center"><div style="width:44px;height:44px;border-radius:12px;background:#282f3b;display:grid;place-items:center;font-size:22px">📘</div><div><h3 style="margin:0 0 4px">Facebook</h3><div class="muted">Royal Furniture Zone</div></div></div>
+      <p class="muted" style="margin:14px 0 8px">@RoyalFurnitureZone</p><span class="status">Demo • Not connected</span>
+      <div style="margin-top:14px"><button class="action" type="button" onclick="window.location.href='channels.html'">Manage Channel</button></div>
+    </article>
+    <article class="card" data-channel-card style="margin:0">
+      <div style="display:flex;gap:12px;align-items:center"><div style="width:44px;height:44px;border-radius:12px;background:#282f3b;display:grid;place-items:center;font-size:22px">📸</div><div><h3 style="margin:0 0 4px">Instagram</h3><div class="muted">Royal Furniture Zone</div></div></div>
+      <p class="muted" style="margin:14px 0 8px">@royalfurniturezone</p><span class="status">Demo • Not connected</span>
+      <div style="margin-top:14px"><button class="action" type="button" onclick="window.location.href='channels.html'">Manage Channel</button></div>
+    </article>
+    <article class="card" data-channel-card style="margin:0">
+      <div style="display:flex;gap:12px;align-items:center"><div style="width:44px;height:44px;border-radius:12px;background:#282f3b;display:grid;place-items:center;font-size:22px">🧵</div><div><h3 style="margin:0 0 4px">Threads</h3><div class="muted">Royal Furniture Zone</div></div></div>
+      <p class="muted" style="margin:14px 0 8px">@royalfurniturezone</p><span class="status">Demo • Not connected</span>
+      <div style="margin-top:14px"><button class="action" type="button" onclick="window.location.href='channels.html'">Manage Channel</button></div>
+    </article>
+  </div>
 </div>
 </main>
 <script>
