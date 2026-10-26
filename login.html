@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1020"><title>NextGen | Sign in</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:18px;background:#0b1020;color:#eef3ff;font-family:Arial,sans-serif}
+.panel{width:100%;max-width:430px;background:#141e32;border:1px solid #293752;border-radius:18px;padding:25px;box-shadow:0 18px 55px #0004}
+h1{margin:0;color:#91aaff;font-size:32px}p{color:#c1cbe0;line-height:1.5}.muted{font-size:13px;color:#a5b3cc}
+label{display:block;margin:16px 0 6px;font-size:14px}input{width:100%;padding:13px;border:1px solid #53688d;border-radius:9px;background:#0b1020;color:#eef3ff;font-size:16px}
+button{width:100%;padding:13px;margin-top:18px;border:0;border-radius:9px;background:#91aaff;color:#0b1020;font-weight:bold;font-size:16px}
+.warning{margin-top:16px;padding:12px;border:1px solid #806633;background:#302818;color:#ffe1a6;border-radius:9px;font-size:13px;line-height:1.45}
+a{color:#b9c8ff}.credit{text-align:right;font-size:11px;color:#a5b3cc;margin-top:24px}
+</style></head>
+<body><main class="panel">
+<h1>NextGen</h1><p>Smart Automation. Smarter Growth.</p>
+<h2>Sign in</h2><p class="muted">Account access screen prototype</p>
+<form id="loginForm">
+<label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+<label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required>
+<button type="submit">Continue</button>
+</form>
+<div id="message" class="warning" role="status">Demo only: authentication is not connected. Do not enter a real password. This page does not send or save your credentials.</div>
+<p><a href="index.html">← Back to Dashboard</a></p>
+<div class="credit">Powered by<br><b>ABDUS SATTAR</b></div>
+</main>
+<script>
+document.getElementById('loginForm').addEventListener('submit',function(event){
+ event.preventDefault();
+ document.getElementById('message').textContent='Sign-in is not active yet. No credentials were sent or saved. Real account authentication will be connected after the database provider is configured.';
+ document.getElementById('password').value='';
+});
+</script></body></html>
