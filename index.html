@@ -43,8 +43,8 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
  main{padding:12px}
  .stats,.drafts,.channels{grid-template-columns:1fr}
 }
-.studio-top-right button[aria-label="Notifications"]{font-size:0!important;position:relative!important}
-.studio-top-right button[aria-label="Notifications"]::before{content:"♧";font-size:23px!important;line-height:1}
+.studio-top-right button[aria-label="Notifications"]{font-size:0!important;position:relative!important;display:grid;place-items:center}
+.studio-top-right button[aria-label="Notifications"] .notification-bell{width:23px;height:23px;fill:none;stroke:#f4f8ff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}
 .studio-top-right button[aria-label="Notifications"]::after{content:"";position:absolute;top:5px;right:6px;width:8px;height:8px;border-radius:50%;background:#ff304f;border:2px solid #0b2442;box-sizing:content-box}
 </style>
 <style>
@@ -170,7 +170,7 @@ body{background:#0f141b;color:#f1f5f9;font-family:Arial,Helvetica,sans-serif}
   <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" onkeydown="if(event.key==='Enter'){showPage('content');document.getElementById('queueSearch').value=this.value;filterQueue()}">
   <div class="studio-top-right">
     <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="toggleTopMenu('addMenu')">+</button>
-    <button class="top-icon-btn" type="button" aria-label="Notifications" onclick="toggleTopMenu('notificationMenu')">♧</button>
+    <button class="top-icon-btn" type="button" aria-label="Notifications" onclick="toggleTopMenu('notificationMenu')"><svg class="notification-bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></button>
     <button class="top-icon-btn top-profile-btn" type="button" aria-label="Profile menu" onclick="toggleTopMenu('profileMenu')">A</button>
   </div>
   <div id="addMenu" class="top-popover" hidden>
