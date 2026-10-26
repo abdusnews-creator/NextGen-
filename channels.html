@@ -58,7 +58,24 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
 <div class="toolbar">
   <input id="channelSearch" type="search" placeholder="Search channels…" aria-label="Search channels">
   <button type="button" id="showAll">Show all</button>
+  <button type="button" class="primary" id="addChannelButton">＋ Add Channel</button>
 </div>
+<section class="card" id="addChannelPanel" hidden style="margin-top:14px">
+  <h3>Add a channel (demo)</h3>
+  <p class="muted">Add another platform profile to this browser preview. This does not connect a real social account.</p>
+  <form id="addChannelForm">
+    <div class="toolbar">
+      <select id="newPlatform" aria-label="Platform" required style="background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
+        <option value="youtube">YouTube</option><option value="facebook">Facebook</option><option value="instagram">Instagram</option><option value="threads">Threads</option><option value="other">Other platform</option>
+      </select>
+      <input id="newChannelName" type="text" placeholder="Channel / profile name" aria-label="Channel name" required maxlength="80" style="flex:1;min-width:180px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
+      <input id="newChannelHandle" type="text" placeholder="@handle (optional)" aria-label="Channel handle" maxlength="100" style="flex:1;min-width:160px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
+      <button type="submit" class="primary">Add to list</button>
+      <button type="button" id="cancelAddChannel">Cancel</button>
+    </div>
+    <p id="addChannelStatus" class="muted" aria-live="polite"></p>
+  </form>
+</section>
 <p class="counter" id="channelCount" aria-live="polite">Showing 4 channels</p>
 
 <div class="grid" id="channelGrid">
@@ -129,7 +146,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./supabase-config.js"></script>
 <script>
 (function(){
-  const cards = Array.from(document.querySelectorAll('.card[data-platform]'));
+  let cards = Array.from(document.querySelectorAll('.card[data-platform]'));
   const search = document.getElementById('channelSearch');
   const count = document.getElementById('channelCount');
   const storageKey = 'nextgen-demo-paused-channels-v1';
@@ -245,7 +262,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     count.textContent = 'Showing ' + visible + ' of ' + cards.length + ' channels';
   }
 
-  cards.forEach(function(card){
+  function bindCard(card){
     renderCard(card);
     card.querySelector('.enable-button').addEventListener('click',function(){
       const platform = card.dataset.platform;
@@ -263,6 +280,43 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
       alert(card.dataset.platform.charAt(0).toUpperCase()+card.dataset.platform.slice(1) +
         ' review: Manual approval is required. Real account verification is not connected yet.');
     });
+  }
+  cards.forEach(bindCard);
+
+  const addPanel = document.getElementById('addChannelPanel');
+  const addForm = document.getElementById('addChannelForm');
+  document.getElementById('addChannelButton').addEventListener('click',function(){
+    addPanel.hidden = !addPanel.hidden;
+    if(!addPanel.hidden) document.getElementById('newChannelName').focus();
+  });
+  document.getElementById('cancelAddChannel').addEventListener('click',function(){addPanel.hidden=true;});
+  addForm.addEventListener('submit',function(event){
+    event.preventDefault();
+    const platform = document.getElementById('newPlatform').value;
+    const name = document.getElementById('newChannelName').value.trim();
+    const handle = document.getElementById('newChannelHandle').value.trim();
+    const status = document.getElementById('addChannelStatus');
+    if(!name){status.textContent='Please enter a channel name.';return;}
+    const card = document.createElement('section');
+    card.className='card';
+    card.dataset.platform=platform;
+    card.dataset.name=name;
+    card.dataset.handle=handle;
+    const heading=document.createElement('div');heading.className='platform';heading.textContent=({youtube:'▶️ YouTube',facebook:'📘 Facebook',instagram:'📸 Instagram',threads:'🧵 Threads',other:'🌐 Other platform'})[platform]||'🌐 Platform';
+    const title=document.createElement('h3');title.textContent=name;
+    const handleEl=document.createElement('p');handleEl.className='handle';handleEl.textContent=handle||'No handle added';
+    const statusEl=document.createElement('p');statusEl.className='status';const dot=document.createElement('span');dot.className='dot';const connection=document.createElement('span');connection.className='connection';statusEl.append(dot,connection);
+    const actions=document.createElement('div');actions.className='actions';
+    [['pause-button','Pause channel'],['enable-button','Disable channel'],['primary review-button','Review']].forEach(function(item){const b=document.createElement('button');b.type='button';b.className=item[0];b.textContent=item[1];actions.appendChild(b);});
+    card.append(heading,title,handleEl,statusEl,actions);
+    document.getElementById('channelGrid').appendChild(card);
+    cards.push(card);
+    if(enabledChannels[platform]===undefined)enabledChannels[platform]=true;
+    bindCard(card);
+    addForm.reset();
+    addPanel.hidden=true;
+    filterCards();
+    status.textContent='Added to this browser demo only. Real account connection is not created.';
   });
 
   search.addEventListener('input',filterCards);
