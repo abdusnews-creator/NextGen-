@@ -65,9 +65,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   <p class="muted">Add another platform profile to this browser preview. This does not connect a real social account.</p>
   <form id="addChannelForm">
     <div class="toolbar">
-      <select id="newPlatform" aria-label="Platform" required style="background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
-        <option value="youtube">YouTube</option><option value="facebook">Facebook</option><option value="instagram">Instagram</option><option value="threads">Threads</option><option value="other">Other platform</option>
-      </select>
+      <input id="newPlatform" type="hidden" value="youtube">
       <input id="newChannelName" type="text" placeholder="Channel / profile name" aria-label="Channel name" required maxlength="80" style="flex:1;min-width:180px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
       <input id="newChannelHandle" type="text" placeholder="@handle (optional)" aria-label="Channel handle" maxlength="100" style="flex:1;min-width:160px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
       <input id="newChannelUrl" type="url" placeholder="Facebook / YouTube profile link (optional)" aria-label="Channel URL" style="flex:1;min-width:220px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
@@ -357,12 +355,31 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     if(!addPanel.hidden) document.getElementById('newChannelName').focus();
   });
   document.getElementById('cancelAddChannel').addEventListener('click',function(){addPanel.hidden=true;addForm.reset();document.getElementById('editingChannelKey').value='';addForm.querySelector('[type=submit]').textContent='Add to list';document.querySelector('#addChannelPanel h3').textContent='Add a channel (demo)';});
-  document.getElementById('newChannelUrl').addEventListener('change',function(){
-    const raw=this.value.trim();if(!raw)return;try{const host=new URL(raw).hostname.toLowerCase().replace(/^www\./,'');const p=host.includes('youtube.com')||host==='youtu.be'?'youtube':host.includes('facebook.com')||host==='fb.watch'?'facebook':host.includes('instagram.com')?'instagram':host.includes('threads.net')?'threads':null;if(p){document.getElementById('newPlatform').value=p;document.getElementById('addChannelStatus').textContent='Platform automatically selected from the link: '+p+'.';}}catch(e){}
+  function detectPlatformFromUrl(raw){
+    try{
+      const parsed=new URL(raw);
+      if(!['http:','https:'].includes(parsed.protocol))return null;
+      const host=parsed.hostname.toLowerCase().replace(/^www\./,'');
+      if(host==='youtube.com'||host.endsWith('.youtube.com')||host==='youtu.be')return 'youtube';
+      if(host==='facebook.com'||host.endsWith('.facebook.com')||host==='fb.watch')return 'facebook';
+      if(host==='instagram.com'||host.endsWith('.instagram.com'))return 'instagram';
+      if(host==='threads.net'||host.endsWith('.threads.net'))return 'threads';
+    }catch(e){}
+    return null;
+  }
+  document.getElementById('newChannelUrl').addEventListener('input',function(){
+    const raw=this.value.trim();if(!raw)return;
+    const p=detectPlatformFromUrl(raw);
+    if(p){
+      document.getElementById('newPlatform').value=p;
+      document.getElementById('addChannelStatus').textContent='Detected platform: '+p.charAt(0).toUpperCase()+p.slice(1)+'.';
+    }else{
+      document.getElementById('addChannelStatus').textContent='Platform not detected yet. Paste a full Facebook, YouTube, Instagram or Threads profile link.';
+    }
   });
   addForm.addEventListener('submit',async function(event){
     event.preventDefault();
-    const platform=document.getElementById('newPlatform').value;
+    let platform=document.getElementById('newPlatform').value;
     const name=document.getElementById('newChannelName').value.trim();
     let handle=document.getElementById('newChannelHandle').value.trim();
     let url=document.getElementById('newChannelUrl').value.trim();
@@ -370,9 +387,10 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     const status=document.getElementById('addChannelStatus');
     if(!name){status.textContent='Please enter a channel name.';return;}
     if(url){try{const parsed=new URL(url);if(!['http:','https:'].includes(parsed.protocol))throw new Error();url=parsed.href;}catch(e){status.textContent='Please enter a valid Facebook / YouTube / social profile link.';return;}
-      const host=new URL(url).hostname.toLowerCase().replace(/^www\./,'');
-      const detected=host.includes('youtube.com')||host==='youtu.be'?'youtube':host.includes('facebook.com')||host==='fb.watch'?'facebook':host.includes('instagram.com')?'instagram':host.includes('threads.net')?'threads':null;
-      if(detected && detected!==platform){document.getElementById('newPlatform').value=detected;status.textContent='Platform detected from link: '+detected+'. Please confirm, then tap Add to list / Save changes.';return;}
+      const detected=detectPlatformFromUrl(url);
+      if(!detected){status.textContent='Could not detect platform. Use a Facebook, YouTube, Instagram or Threads profile link.';return;}
+      document.getElementById('newPlatform').value=detected;
+      platform=detected;
     }
     const editingCard=editingKey?cards.find(x=>x.dataset.customKey===editingKey):null;
     const exists=cards.some(card=>card!==editingCard && card.dataset.platform===platform && card.dataset.name.toLowerCase()===name.toLowerCase() && (card.dataset.handle||'').toLowerCase()===handle.toLowerCase());
