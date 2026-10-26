@@ -458,8 +458,37 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     });
   });
   saveCustomChannels(uniqueCustom);
+
+  /* The separate Privacy Settings page is the shared browser-demo source of truth. */
+  const settingsManagedChannelsKey='nextgen-settings-managed-channels-v1';
+  try{
+    const managed=JSON.parse(localStorage.getItem(settingsManagedChannelsKey)||'null');
+    if(Array.isArray(managed)){
+      cards.forEach(card=>card.remove());
+      cards=[];
+      const platformMap={youtube:'youtube',facebook:'facebook',instagram:'instagram',threads:'threads',other:'other'};
+      managed.forEach(item=>{
+        if(!item || !item.name || !item.platform)return;
+        const platform=String(item.platform).toLowerCase();
+        if(!platformMap[platform])return;
+        const handle=String(item.handle||'');
+        const card=buildChannelCard(platformMap[platform],String(item.name),handle,String(item.url||''));
+        card.dataset.settingsManagedId=String(item.id||'');
+        card.dataset.customKey=[platformMap[platform],item.name,handle].join('|');
+        document.getElementById('channelGrid').appendChild(card);
+        cards.push(card);
+        enabledChannels[platformMap[platform]]=item.enabled!==false;
+      });
+      try{localStorage.setItem(enabledStorageKey,JSON.stringify(enabledChannels));}catch(e){}
+    }
+  }catch(e){}
   cards.forEach(bindCard);
   renderPrivacyChannelList();
+
+  /* Refresh this page if Privacy Settings is edited in another open tab. */
+  window.addEventListener('storage',function(event){
+    if(event.key===settingsManagedChannelsKey)window.location.reload();
+  });
 
   const addPanel = document.getElementById('addChannelPanel');
   const addForm = document.getElementById('addChannelForm');
