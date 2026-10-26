@@ -60,8 +60,7 @@ body>footer,footer.ng-shared-footer{
  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
  padding:14px 18px calc(14px + env(safe-area-inset-bottom));margin-top:24px;
  color:#c5d9ff;background:linear-gradient(110deg,#10213f,#173b70 58%,#102544);
- border-top:1px solid #35547e;font-size:12px
-}
+ border-top:1px solid #35547e;font-size:15px;font-weight:800;}
 body>footer .credit,footer .credit{color:#d4e2ff;text-align:right}
 .ng-bottom-nav{
  position:fixed;z-index:1000;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
@@ -76,6 +75,9 @@ body>footer .credit,footer .credit{color:#d4e2ff;text-align:right}
 body:has(.ng-bottom-nav){padding-bottom:76px!important}
 @media(max-width:480px){body>footer{padding-left:14px;padding-right:14px}.ng-bottom-nav a small{font-size:9px}}
 
+
+/* Slightly larger, bold footer/corner text */
+body>footer, footer.ng-shared-footer, body>footer .credit, footer .credit { font-size: 15px !important; font-weight: 800 !important; }
 </style>
 <style>
 /* NextGen Studio-inspired dashboard */
