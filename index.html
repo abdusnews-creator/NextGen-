@@ -114,14 +114,14 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
     <h3>Find Content</h3>
     <label class="muted" for="queueSearch">Search drafts</label>
     <input id="queueSearch" type="search" placeholder="Search bed, sofa, table..." oninput="filterQueue()" style="display:block;width:100%;padding:11px;margin:6px 0 12px;border-radius:8px;border:1px solid #53688d;background:#0b1020;color:#eef3ff">
-    <div class="channels">
-      <label class="muted">Channel
-        <select id="queueChannel" onchange="filterQueue()" style="display:block;width:100%;padding:10px;margin-top:6px;background:#0b1020;color:#eef3ff;border:1px solid #53688d;border-radius:8px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:10px">
+      <label style="display:block;color:#eef3ff;font-size:14px;font-weight:bold">CHANNEL FILTER
+        <select id="queueChannel" onchange="filterQueue()" style="display:block;width:100%;padding:12px;margin-top:7px;background:#0b1020;color:#eef3ff;border:2px solid #53688d;border-radius:8px;font-size:15px">
           <option value="all">All channels</option><option>YouTube</option><option>Facebook</option><option>Instagram</option><option>Threads</option>
         </select>
       </label>
-      <label class="muted">Status
-        <select id="queueStatus" onchange="filterQueue()" style="display:block;width:100%;padding:10px;margin-top:6px;background:#0b1020;color:#eef3ff;border:1px solid #53688d;border-radius:8px">
+      <label style="display:block;color:#eef3ff;font-size:14px;font-weight:bold">STATUS FILTER
+        <select id="queueStatus" onchange="filterQueue()" style="display:block;width:100%;padding:12px;margin-top:7px;background:#0b1020;color:#eef3ff;border:2px solid #91aaff;border-radius:8px;font-size:15px">
           <option value="all">All statuses</option><option value="Pending approval">Pending approval</option><option value="Approved">Approved</option><option value="Rejected">Rejected</option><option value="Revised">Revised</option>
         </select>
       </label>
