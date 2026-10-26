@@ -6,8 +6,8 @@
 <div class="note" id="googleNote">Google Account Chooser needs NextGen's Google OAuth client ID and authorized domain. This setup is not complete yet.</div>
 <div class="divider">OR USE EMAIL / MOBILE</div>
 <form id="authForm">
-<label for="identifier">Username, Email or Mobile Number</label><input id="identifier" name="identifier" type="text" autocomplete="username" list="savedEmails" placeholder="Enter username, email or mobile number" required><datalist id="savedEmails"></datalist>
-<label class="save"><input type="checkbox" id="rememberEmail"> Remember this email on this device</label>
+<label for="identifier">Username, Email or Mobile Number</label><input id="identifier" name="identifier" type="text" autocomplete="username" list="savedIdentifiers" placeholder="Enter username, email or mobile number" required><datalist id="savedIdentifiers"></datalist>
+<label class="save"><input type="checkbox" id="rememberEmail"> Remember this email or mobile on this device</label>
 <div id="passwordWrap"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required></div>
 <button id="submitButton" type="submit">Sign in</button></form>
 <div class="social-label">Sign in with 👇</div><div class="social-row"><button type="button" class="facebook" id="facebookButton">Facebook</button><button type="button" class="secondary" id="instagramButton">Instagram</button><button type="button" class="secondary" id="threadsButton">Threads</button></div>
@@ -17,11 +17,11 @@
 <script>
 const GOOGLE_CLIENT_ID = '';
 let createMode=false;
-const heading=document.getElementById('heading'),identifier=document.getElementById('identifier'),password=document.getElementById('password'),submit=document.getElementById('submitButton'),switchButton=document.getElementById('switchButton'),status=document.getElementById('status'),form=document.getElementById('authForm'),remember=document.getElementById('rememberEmail'),savedEmails=document.getElementById('savedEmails');
-function loadSavedEmails(){try{const items=JSON.parse(localStorage.getItem('nextgen_saved_emails')||'[]');savedEmails.replaceChildren(...items.filter(x=>typeof x==='string').map(x=>{const o=document.createElement('option');o.value=x;return o;}));}catch(e){}}
-loadSavedEmails();
-function saveEmail(){if(remember.checked&&identifier.value.trim().includes('@')){try{const items=JSON.parse(localStorage.getItem('nextgen_saved_emails')||'[]');localStorage.setItem('nextgen_saved_emails',JSON.stringify([identifier.value.trim(),...items.filter(x=>x!==identifier.value.trim())].slice(0,10)));loadSavedEmails();}catch(e){}}}
-identifier.addEventListener('change',saveEmail);
+const heading=document.getElementById('heading'),identifier=document.getElementById('identifier'),password=document.getElementById('password'),submit=document.getElementById('submitButton'),switchButton=document.getElementById('switchButton'),status=document.getElementById('status'),form=document.getElementById('authForm'),remember=document.getElementById('rememberEmail'),savedIdentifiers=document.getElementById('savedIdentifiers');
+function loadSavedIdentifiers(){try{const items=JSON.parse(localStorage.getItem('nextgen_saved_identifiers')||'[]');savedIdentifiers.replaceChildren(...items.filter(x=>typeof x==='string').map(x=>{const o=document.createElement('option');o.value=x;return o;}));}catch(e){}}
+loadSavedIdentifiers();
+function saveIdentifier(){const value=identifier.value.trim();const isEmail=value.includes('@');const isMobile=/^[+()\d\s.-]{7,20}$/.test(value)&&/\d{7,}/.test(value);if(remember.checked&&(isEmail||isMobile)){try{const items=JSON.parse(localStorage.getItem('nextgen_saved_identifiers')||'[]');localStorage.setItem('nextgen_saved_identifiers',JSON.stringify([value,...items.filter(x=>x!==value)].slice(0,10)));loadSavedIdentifiers();}catch(e){}}}
+identifier.addEventListener('change',saveIdentifier);
 switchButton.addEventListener('click',()=>{createMode=!createMode;heading.textContent=createMode?'Create account':'Sign in';submit.textContent=createMode?'Create account':'Sign in';password.autocomplete=createMode?'new-password':'current-password';switchButton.textContent=createMode?'Back to Sign in':'Create a new Account';status.textContent='';});
 let supabaseClient=null;
 try{
@@ -31,7 +31,7 @@ try{
  }
 }catch(err){console.error('NextGen auth setup:',err);}
 form.addEventListener('submit',async e=>{
- e.preventDefault();saveEmail();
+ e.preventDefault();saveIdentifier();
  const email=identifier.value.trim();
  if(!supabaseClient){status.textContent='Authentication is not connected yet. First configure the Supabase Project URL and publishable/anon key in supabase-config.js.';return;}
  if(!email.includes('@')){status.textContent='For now, enter a valid email address. Username and mobile/OTP sign-in are not enabled yet.';return;}
