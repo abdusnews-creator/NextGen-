@@ -220,9 +220,9 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
 
 <body>
 <header class="studio-top">
-  <button class="studio-menu" type="button" aria-label="Menu" onclick="document.querySelector('.studio-nav').classList.toggle('nav-expanded')">☰</button>
+  <button class="studio-menu" type="button" aria-label="Menu" onclick="return false">☰</button>
   <div class="studio-brand" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;line-height:1"><span class="studio-brand-name" style="font-size:20px;font-weight:800;letter-spacing:.75px;line-height:1.05"><span style="color:#00BFFF">N</span>extGen</span><span class="studio-tagline" style="display:block;font-size:6px;font-weight:700;letter-spacing:.1px;color:#aabbd0;white-space:nowrap;line-height:1.05">Smart Automation. Smarter Growth.</span></div>
-  <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" onkeydown="if(event.key==='Enter'){showPage('content');document.getElementById('queueSearch').value=this.value;filterQueue()}">
+  <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" onkeydown="if(event.key==='Enter'){window.location.href='index.html#content'}">
   <div class="studio-top-right">
     <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="toggleTopMenu('addMenu')">+</button>
     <button class="top-icon-btn" type="button" aria-label="Notifications" title="Notifications" onclick="toggleTopMenu('notificationMenu')"><svg class="notification-bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></button>
@@ -230,7 +230,7 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
   </div>
   <div id="addMenu" class="top-popover" hidden>
     <button type="button" onclick="window.location.href='channels.html'"><span>＋</span> Add channel</button>
-    <button type="button" onclick="studioNavTo('content')"><span>▣</span> Add content</button>
+    <button type="button" onclick="window.location.href='index.html#content'"><span>▣</span> Add content</button>
   </div>
   <div id="notificationMenu" class="top-popover" hidden style="right:42px">
     <div class="top-popover-head"><b>Notifications</b><small>No new notifications</small></div>
@@ -261,6 +261,7 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
 <a href="index.html#schedule" data-page="schedule" onclick="event.preventDefault();mobileNavigate('schedule',this)"><span>▦</span><small>Schedule</small></a>
 </nav>
 <script>
+function mobileNavigate(section,button){ if(section==='channels'){window.location.href='channels.html';return;} window.location.href='index.html#'+section; }
 function toggleTopMenu(id){
   ['addMenu','notificationMenu','profileMenu'].forEach(function(menuId){
     var el=document.getElementById(menuId);
