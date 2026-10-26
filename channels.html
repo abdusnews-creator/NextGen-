@@ -68,7 +68,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
       <input id="newPlatform" type="hidden" value="youtube">
       <input id="newChannelName" type="text" placeholder="Channel / profile name" aria-label="Channel name" required maxlength="80" style="flex:1;min-width:180px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
       <input id="newChannelHandle" type="text" placeholder="@handle (optional)" aria-label="Channel handle" maxlength="100" style="flex:1;min-width:160px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
-      <input id="newChannelUrl" type="url" placeholder="Facebook / YouTube profile link (optional)" aria-label="Channel URL" style="flex:1;min-width:220px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
+      <input id="newChannelUrl" type="url" placeholder="Paste Facebook / YouTube / Instagram / Threads profile link" aria-label="Channel URL" required style="flex:1;min-width:220px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
       <button type="submit" class="primary">Add to list</button>
       <button type="button" id="cancelAddChannel">Cancel</button>
     </div>
@@ -410,7 +410,6 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     }
     const localSaved=saveCustomChannels(savedItems);
     if(enabledChannels[platform]===undefined)enabledChannels[platform]=true;
-    bindCard(card);
     addForm.reset();
     document.getElementById('editingChannelKey').value='';
     addForm.querySelector('[type=submit]').textContent='Add to list';
