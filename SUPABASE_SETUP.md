@@ -17,7 +17,7 @@ The browser key is not a secret; access must be protected by Row Level Security.
 
 ## 3. Apply the database schema
 1. In the Supabase dashboard, open SQL Editor.
-2. Copy the contents of `database/schema.sql` into a new query and run it.
+2. Copy the latest contents of `database/schema.sql` into a new query and run it. The script includes an idempotent migration adding `content` and `metadata` to existing `content_drafts` tables; rerun it after schema updates.
 3. Check that the tables and RLS policies were created successfully.
 
 ## 4. Authentication settings
@@ -27,6 +27,6 @@ The browser key is not a secret; access must be protected by Row Level Security.
 
 ## Safety and current limitations
 - The login page uses Supabase Auth only when valid project settings are present.
-- Draft/channel CRUD is not connected yet; the schema is a foundation, not a live app database workflow.
+- Review Queue can save and load the supported draft fields per signed-in account when Supabase is configured and the latest schema has been applied. The Channels page currently syncs only limited channel state; this is not full production CRUD.
 - No social-media publishing, OAuth connections, background worker, or 24/7 automation is active.
 - Before commercial use, review the schema, security policies, recovery, logging, billing and privacy requirements.
