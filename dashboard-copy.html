@@ -252,6 +252,54 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
     <button type="button" onclick="window.location.href='privacy-settings.html'"><span>▤</span> Terms of Service</button>
   </div>
 </header>
+<main class="settings-list" aria-label="NextGen settings">
+  <h1 class="settings-title">Settings</h1>
+  <a class="settings-item" href="settings.html"><span class="settings-icon">⚙</span><span>General Settings</span><span class="settings-arrow">›</span></a>
+  <a class="settings-item" href="privacy-settings.html"><span class="settings-icon">♙</span><span>Privacy Settings</span><span class="settings-arrow">›</span></a>
+  <a class="settings-item" href="privacy-settings.html"><span class="settings-icon">🔒</span><span>Privacy Center</span><span class="settings-arrow">›</span></a>
+  <a class="settings-item" href="settings.html#device-requests"><span class="settings-icon">⌂</span><span>Device Requests</span><span class="settings-arrow">›</span></a>
+  <a class="settings-item" href="help-centre.html"><span class="settings-icon">ⓘ</span><span>Help &amp; Support</span><span class="settings-arrow">›</span></a>
+  <a class="settings-item" href="settings.html#link-history"><span class="settings-icon">🔗</span><span>Link History</span><span class="settings-arrow">›</span></a>
+  <button class="settings-item settings-dark" id="darkModeToggle" type="button" aria-pressed="true"><span class="settings-icon">☾</span><span>Dark Mode</span><span class="settings-toggle"><span id="darkModeState">ON</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></button>
+</main>
+<style>
+.settings-list{max-width:850px;margin:20px auto 40px;padding:0 18px 25px;min-height:45vh}
+.settings-title{font-size:28px;color:#f4f7ff;margin:18px 0 10px;padding-bottom:14px;border-bottom:1px solid #293752}
+.settings-item{display:flex;align-items:center;gap:18px;width:100%;min-height:76px;padding:16px 10px;border:0;border-bottom:1px solid #293752;background:transparent;color:#eef3ff;text-decoration:none;text-align:left;font:500 18px Arial,sans-serif;cursor:pointer}
+.settings-icon{width:38px;min-width:38px;text-align:center;font-size:25px;color:#c5d9ff}
+.settings-arrow{margin-left:auto;color:#9aaabd;font-size:30px;line-height:1}
+.settings-toggle{margin-left:auto;display:flex;align-items:center;gap:12px;color:#b8c9e8;font-size:13px}
+.toggle-track{width:44px;height:25px;border-radius:20px;background:#3869a5;padding:3px;display:flex;justify-content:flex-end}
+.toggle-thumb{width:19px;height:19px;background:white;border-radius:50%;display:block}
+.settings-dark[aria-pressed="false"] .toggle-track{background:#4b5563;justify-content:flex-start}
+@media(max-width:520px){.settings-list{padding:0 14px}.settings-title{font-size:24px}.settings-item{min-height:70px;font-size:17px;gap:14px}.settings-icon{width:32px;min-width:32px;font-size:23px}}
+</style>
+<script>
+(function(){
+ var button=document.getElementById('darkModeToggle');
+ var state=document.getElementById('darkModeState');
+ if(!button||!state)return;
+ var enabled=true;
+ try{enabled=localStorage.getItem('nextgen-copy-dark-mode')!=='off'}catch(e){}
+ function render(){
+   button.setAttribute('aria-pressed',String(enabled));
+   state.textContent=enabled?'ON':'OFF';
+   button.classList.toggle('dark-off',!enabled);
+   document.body.style.background=enabled?'#0b1020':'#f5f7fb';
+   document.body.style.color=enabled?'#eef3ff':'#18202b';
+   document.querySelectorAll('.settings-item').forEach(function(item){
+     item.style.color=enabled?'#eef3ff':'#18202b';
+     item.style.borderBottomColor=enabled?'#293752':'#d8dee8';
+   });
+   var title=document.querySelector('.settings-title');
+   if(title)title.style.color=enabled?'#f4f7ff':'#18202b';
+ }
+ button.addEventListener('click',function(){
+   enabled=!enabled;try{localStorage.setItem('nextgen-copy-dark-mode',enabled?'on':'off')}catch(e){}render();
+ });
+ render();
+})();
+</script>
 <footer>NextGen Prototype • Dashboard preview • Real publishing is not connected</footer>
 <nav class="ng-bottom-nav" aria-label="Main navigation">
 <a href="index.html#dashboard" data-page="dashboard" onclick="event.preventDefault();mobileNavigate('dashboard',this)"><span>⌂</span><small>Dashboard</small></a>
@@ -276,5 +324,6 @@ document.addEventListener('click',function(event){
   }
 });
 </script>
+
 </body>
 </html>
