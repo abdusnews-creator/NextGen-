@@ -262,11 +262,25 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
     <h2>Channel Management</h2>
     <p class="note" id="cloudStatus">DEMO CONTROLS — browser-only test settings, not connected to real social accounts.</p>
   <div class="notice" style="margin-top:14px">
-    <strong>Demo controls are below.</strong> Each platform card has Pause/Resume and Enable/Disable buttons. These buttons only save demo state in this browser; they do not pause or publish on YouTube, Facebook, Instagram, or Threads.
+    <strong>Demo controls are below.</strong> Channel controls only save demo state in this browser; they do not pause or publish on YouTube, Facebook, Instagram, or Threads.
   </div>
   </div>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:20px">
+    <input id="channelSearch" type="search" aria-label="Search channels" placeholder="⌕  Search channels or platforms..." oninput="filterChannelCards()" style="flex:1;min-width:200px;padding:13px 15px;border-radius:10px;border:1px solid #34465d;background:#141e32;color:#eef3ff;font-size:14px">
+    <button type="button" class="action active" onclick="window.location.href='channels.html'" style="padding:13px 18px">＋ Add Channel</button>
+  </div>
+  <div id="channelSearchEmpty" class="muted" style="display:none;margin-top:16px">No matching channels here. Open Channel Management to view or add channels.</div>
 </div>
 </main>
+<script>
+function filterChannelCards(){
+  const q=(document.getElementById('channelSearch').value||'').trim().toLowerCase();
+  const cards=document.querySelectorAll('[data-channel-card]');
+  let visible=0;
+  cards.forEach(card=>{const match=card.textContent.toLowerCase().includes(q);card.style.display=match?'':'none';if(match)visible++;});
+  document.getElementById('channelSearchEmpty').style.display=(q && visible===0)?'block':'none';
+}
+</script>
 <footer>NextGen Prototype • Dashboard preview • Real publishing is not connected</footer>
 <nav class="ng-bottom-nav" aria-label="Main navigation">
 <a href="index.html#dashboard" data-page="dashboard" onclick="event.preventDefault();mobileNavigate('dashboard',this)"><span>⌂</span><small>Dashboard</small></a>
