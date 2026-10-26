@@ -528,9 +528,26 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
       if(!handle) handle=detected.handle;
     }else{status.textContent='Please paste a profile link first.';return;}
     const editingCard=editingKey?cards.find(x=>x.dataset.customKey===editingKey || channelIdentity(x)===editingKey):null;
-    const exists=cards.some(card=>card!==editingCard && card.dataset.platform===platform && card.dataset.name.toLowerCase()===name.toLowerCase() && (card.dataset.handle||'').toLowerCase()===handle.toLowerCase());
-    if(exists){status.textContent='This channel is already in the list.';return;}
+    const normalizeHandle=value=>String(value||'').trim().toLowerCase().replace(/^@+/,'').replace(/\\/$/,'');
+    const newHandleKey=normalizeHandle(handle);
+    const existsOnPage=cards.some(card=>{
+      if(card===editingCard || card.dataset.platform!==platform)return false;
+      const oldHandleKey=normalizeHandle(card.dataset.handle);
+      return (newHandleKey && oldHandleKey && newHandleKey===oldHandleKey) ||
+        (!newHandleKey && !oldHandleKey && (card.dataset.name||'').trim().toLowerCase()===name.toLowerCase());
+    });
     const savedItems=readCustomChannels();
+    const existsInSaved=savedItems.some(item=>{
+      const sameItem=editingKey && ((item.key||[item.platform,item.name,item.handle||''].join('|'))===editingKey);
+      if(sameItem || item.platform!==platform)return false;
+      const oldHandleKey=normalizeHandle(item.handle);
+      return (newHandleKey && oldHandleKey && newHandleKey===oldHandleKey) ||
+        (!newHandleKey && !oldHandleKey && (item.name||'').trim().toLowerCase()===name.toLowerCase());
+    });
+    if(existsOnPage || existsInSaved){
+      status.textContent='Duplicate blocked: this platform account is already added. Existing accounts cannot be added again.';
+      return;
+    }
     let item;
     if(editingKey){
       const idx=savedItems.findIndex(x=>(x.key||[x.platform,x.name,x.handle||''].join('|'))===editingKey || [x.platform,x.name,x.handle||''].join('|').toLowerCase()===editingKey.toLowerCase());
