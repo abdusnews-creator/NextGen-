@@ -213,15 +213,29 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
   <h2>Settings</h2>
   <div class="card">
     <h3>Brand</h3>
-    <p>NextGen</p>
+    <p><strong>NextGen</strong></p>
     <p>Smart Automation. Smarter Growth.</p>
     <p>Powered by ABDUS SATTAR</p>
   </div>
   <div class="card">
-    <h3>Safety Defaults</h3>
-    <p>Manual Approval: ON by default</p>
-    <p>Auto Approval: OFF by default</p>
-    <p class="muted">Login, database, platform APIs, 24/7 worker and recovery are not implemented yet.</p>
+    <h3>Channel Management</h3>
+    <p class="muted">Open the separate channel page to review the four target platforms, their demo enable/disable controls, and pause/resume settings.</p>
+    <button type="button" class="action" onclick="window.location.href='channels.html'">Open Channels</button>
+    <p class="muted">These are local browser demo settings. They do not connect to or control the real social accounts.</p>
+  </div>
+  <div class="card">
+    <h3>Approval Safety</h3>
+    <p><strong>Manual Approval Mode:</strong> ON by default</p>
+    <p><strong>Auto Approval Mode:</strong> OFF by default</p>
+    <p class="muted">Keep posts pending until you explicitly approve them. If Auto Approval is added in a future version, it must remain opt-in and only handle low-risk content after spelling, factual, copyright, duplicate, and platform-policy checks. Sensitive, uncertain, complaint-related, or failed-check content must stay pending for manual review.</p>
+    <div class="warning">Prototype only: the mode switch on the dashboard is not connected to a real publishing service. No post is published or scheduled by this app.</div>
+  </div>
+  <div class="card">
+    <h3>System Status</h3>
+    <p>Web dashboard: <strong>Prototype</strong></p>
+    <p>Authentication and shared database: <strong>Setup pending</strong></p>
+    <p>Social platform API connections: <strong>Not verified</strong></p>
+    <p>24/7 background worker and recovery: <strong>Not implemented</strong></p>
   </div>
 </section>
 </main>
