@@ -46,6 +46,36 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
 .studio-top-right button[aria-label="Notifications"]{font-size:0!important;position:relative!important;display:grid;place-items:center}
 .studio-top-right button[aria-label="Notifications"] .notification-bell{width:23px;height:23px;fill:none;stroke:#f4f8ff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}
 .studio-top-right button[aria-label="Notifications"]::after{content:"";position:absolute;top:5px;right:6px;width:8px;height:8px;border-radius:50%;background:#ff304f;border:2px solid #0b2442;box-sizing:content-box}
+
+/* NextGen shared brand system: consistent dark-blue header/footer on every page */
+:root{--ng-bg:#0b1020;--ng-panel:#141e32;--ng-line:#293752;--ng-text:#eef3ff;--ng-muted:#a5b3cc;--ng-accent:#91aaff}
+body{background-color:var(--ng-bg);color:var(--ng-text)}
+body>header,body>main>header,body>.card>header{
+ background:linear-gradient(110deg,#10213f 0%,#173b70 58%,#102544 100%)!important;
+ color:#f4f7ff;border-bottom:1px solid #35547e!important;
+}
+body>header .brand,body>header h1,body>main>header h1{color:#f4f7ff}
+body>header .tag,body>header p,body>main>header p{color:#c5d9ff}
+body>footer,footer.ng-shared-footer{
+ display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+ padding:14px 18px calc(14px + env(safe-area-inset-bottom));margin-top:24px;
+ color:#c5d9ff;background:linear-gradient(110deg,#10213f,#173b70 58%,#102544);
+ border-top:1px solid #35547e;font-size:12px
+}
+body>footer .credit,footer .credit{color:#d4e2ff;text-align:right}
+.ng-bottom-nav{
+ position:fixed;z-index:1000;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+ gap:2px;padding:7px 6px calc(7px + env(safe-area-inset-bottom));
+ background:rgba(9,20,39,.97);border-top:1px solid #35547e;backdrop-filter:blur(12px)
+}
+.ng-bottom-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;
+ padding:5px 2px;border-radius:9px;color:#b8c9e8;text-decoration:none;font-size:11px}
+.ng-bottom-nav a span{font-size:19px;line-height:1.15}
+.ng-bottom-nav a small{font-size:10px;white-space:nowrap}
+.ng-bottom-nav a.active{color:#fff;background:#203e6b}
+body:has(.ng-bottom-nav){padding-bottom:76px!important}
+@media(max-width:480px){body>footer{padding-left:14px;padding-right:14px}.ng-bottom-nav a small{font-size:9px}}
+
 </style>
 <style>
 /* NextGen Studio-inspired dashboard */
@@ -404,6 +434,13 @@ body{background:#0f141b;color:#f1f5f9;font-family:Arial,Helvetica,sans-serif}
 </div>
 
 <footer>NextGen Prototype • Dashboard preview • Real publishing is not connected</footer>
+<nav class="ng-bottom-nav" aria-label="Main navigation">
+<a href="index.html#dashboard" data-page="dashboard"><span>⌂</span><small>Dashboard</small></a>
+<a href="channels.html" data-page="channels"><span>▶</span><small>Channels</small></a>
+<a href="index.html#content" data-page="content"><span>▤</span><small>Content</small></a>
+<a href="index.html#approvals" data-page="approvals"><span>✓</span><small>Approvals</small></a>
+<a href="index.html#schedule" data-page="schedule"><span>▦</span><small>Schedule</small></a>
+</nav>
 
 <script>
 
