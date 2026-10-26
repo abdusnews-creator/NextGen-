@@ -4,14 +4,14 @@
 <body><main class="card"><div class="brand">NextGen</div><p>Smart Automation. Smarter Growth.</p><div class="topline"><h1 id="heading">Sign in</h1><button type="button" class="create-link" id="switchButton">Create a new Account</button></div><p class="muted">Choose a sign-in option, or use your email from any provider.</p>
 <button type="button" class="secondary" id="googleButton">Sign in with Google Account</button>
 <div class="note" id="googleNote">Google Account Chooser needs NextGen's Google OAuth client ID and authorized domain. This setup is not complete yet.</div>
-<div class="social-label">Sign in with 👇</div><div class="social-row"><button type="button" class="facebook" id="facebookButton">Facebook</button><button type="button" class="secondary" id="instagramButton">Instagram</button><button type="button" class="secondary" id="threadsButton">Threads</button></div>
-<div class="note" id="socialNote">Facebook, Instagram and Threads sign-in need platform app configuration and approved OAuth redirect URLs. These buttons are setup placeholders until configured.</div>
 <div class="divider">OR USE EMAIL / MOBILE</div>
 <form id="authForm">
 <label for="identifier">Username, Email or Mobile Number</label><input id="identifier" name="identifier" type="text" autocomplete="username" list="savedEmails" placeholder="Enter username, email or mobile number" required><datalist id="savedEmails"></datalist>
 <label class="save"><input type="checkbox" id="rememberEmail"> Remember this email on this device</label>
 <div id="passwordWrap"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required></div>
 <button id="submitButton" type="submit">Sign in (demo only)</button></form>
+<div class="social-label">Sign in with 👇</div><div class="social-row"><button type="button" class="facebook" id="facebookButton">Facebook</button><button type="button" class="secondary" id="instagramButton">Instagram</button><button type="button" class="secondary" id="threadsButton">Threads</button></div>
+<div class="note" id="socialNote">Facebook, Instagram and Threads sign-in need platform app configuration and approved OAuth redirect URLs. These buttons are setup placeholders until configured.</div>
 <p class="muted">Use your username, any valid email provider (Gmail, Outlook/Hotmail, Yahoo, etc.) or mobile number in the same box. Email/mobile authentication and OTP are not connected yet.</p><p class="muted" id="status" aria-live="polite"></p><a class="back secondary" href="./index.html">← Back to Dashboard</a><div class="credit">Powered by <b>ABDUS SATTAR</b></div></main>
 <script>
 const GOOGLE_CLIENT_ID = '';
