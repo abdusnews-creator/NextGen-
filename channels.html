@@ -353,8 +353,9 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   const addPanel = document.getElementById('addChannelPanel');
   const addForm = document.getElementById('addChannelForm');
   document.getElementById('addChannelButton').addEventListener('click',function(){
-    addPanel.hidden = !addPanel.hidden;
-    if(!addPanel.hidden) document.getElementById('newChannelName').focus();
+    addPanel.hidden = false;
+    addPanel.scrollIntoView({behavior:'smooth',block:'start'});
+    document.getElementById('newChannelUrl').focus();
   });
   document.getElementById('cancelAddChannel').addEventListener('click',function(){addPanel.hidden=true;addForm.reset();document.getElementById('editingChannelKey').value='';addForm.querySelector('[type=submit]').textContent='Add to list';document.querySelector('#addChannelPanel h3').textContent='Add a channel (demo)';});
   function detectPlatformFromUrl(raw){
