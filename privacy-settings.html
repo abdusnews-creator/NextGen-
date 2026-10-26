@@ -76,10 +76,64 @@ body:has(.ng-bottom-nav){padding-bottom:76px!important}
 @media(max-width:480px){body>footer{padding-left:14px;padding-right:14px}.ng-bottom-nav a small{font-size:9px}}
 
 </style>
+<style>
+.studio-top{position:sticky;top:0;z-index:1200;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#101a2d;border-bottom:1px solid #293752;color:#eef3ff}
+.studio-menu,.top-icon-btn{border:0;background:transparent;color:#eef3ff;cursor:pointer;font-size:21px;min-width:38px;min-height:38px}
+.studio-brand{min-width:145px;color:#eef3ff}.studio-search{flex:1;min-width:80px;max-width:360px;padding:10px 12px;border-radius:10px;border:1px solid #293752;background:#0b1020;color:#eef3ff}
+.studio-top-right{margin-left:auto;display:flex;align-items:center;gap:6px;position:relative}
+.top-profile-btn{border-radius:50%;background:#273d60;font-weight:700}
+.top-popover{position:absolute;top:58px;right:12px;z-index:1500;background:#111d31;border:1px solid #35547e;border-radius:13px;padding:8px;min-width:220px;box-shadow:0 14px 38px #0008}
+.top-popover[hidden]{display:none!important}.top-popover button{display:flex;align-items:center;gap:10px;width:100%;min-height:42px;padding:10px;border:0;border-radius:8px;background:transparent;color:#eef3ff;text-align:left;cursor:pointer}
+.top-popover button:hover{background:#203e6b}.top-popover-head{padding:10px;border-bottom:1px solid #293752;margin-bottom:5px}.top-popover-head b,.top-popover-head small{display:block}.top-popover-head small{margin-top:4px;color:#a5b3cc}
+.profile-menu{position:absolute;top:58px;right:12px;width:min(310px,calc(100vw - 24px));max-height:calc(100vh - 90px);overflow-y:auto}.pop-divider{height:1px;background:#293752;margin:5px}
+.ng-bottom-nav{position:fixed;z-index:999;left:0;right:0;bottom:0;min-height:68px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;padding:5px 4px max(5px,env(safe-area-inset-bottom));background:#101923;border-top:1px solid #2a3948;box-shadow:0 -6px 24px #0005}
+.ng-bottom-nav a{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;border-radius:8px;background:transparent;color:#aebed0;text-decoration:none;padding:4px 1px}.ng-bottom-nav a span{font-size:19px;line-height:22px}.ng-bottom-nav a small{font-size:10px;text-align:center}.ng-bottom-nav a.active{color:#58a2ff;background:#1b2b3d;font-weight:700}
+body{padding-bottom:90px!important}.layout{display:block;max-width:900px;margin:22px auto;padding:0 16px}.main-nav,.layout>nav{display:none!important}
+@media(max-width:520px){.studio-top{gap:5px;padding:8px}.studio-brand{min-width:100px}.studio-search{max-width:120px;font-size:12px}.studio-tagline{font-size:6px!important}.ng-bottom-nav a small{font-size:9px}}
+</style>
 </head>
 <body>
-<header><div><div class="brand" style="letter-spacing:.75px"><span style="color:#00BFFF">N</span>extGen</div><p class="tag">Smart Automation. Smarter Growth.</p></div></header>
-<nav class="main-nav" aria-label="Main navigation"><a href="index.html#dashboard">Dashboard</a><a href="channels.html">Channels</a><a href="index.html#content">Content Queue</a><a href="index.html#approvals">Approvals</a><a href="index.html#schedule">Schedule</a><a class="active" aria-current="page" href="settings.html">Settings</a></nav>
+<header class="studio-top">
+  <button class="studio-menu" type="button" aria-label="Menu" onclick="return false">☰</button>
+  <div class="studio-brand" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;line-height:1"><span class="studio-brand-name" style="font-size:20px;font-weight:800;letter-spacing:.75px;line-height:1.05"><span style="color:#00BFFF">N</span>extGen</span><span class="studio-tagline" style="display:block;font-size:6px;font-weight:700;letter-spacing:.1px;color:#aabbd0;white-space:nowrap;line-height:1.05">Smart Automation. Smarter Growth.</span></div>
+  <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" onkeydown="if(event.key==='Enter'){window.location.href='index.html#content'}">
+  <div class="studio-top-right">
+    <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="toggleTopMenu('addMenu')">+</button>
+    <button class="top-icon-btn" type="button" aria-label="Notifications" title="Notifications" onclick="toggleTopMenu('notificationMenu')"><svg class="notification-bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></button>
+    <button class="top-icon-btn top-profile-btn" type="button" aria-label="Profile menu" onclick="toggleTopMenu('profileMenu')">A</button>
+  </div>
+  <div id="addMenu" class="top-popover" hidden>
+    <button type="button" onclick="window.location.href='channels.html'"><span>＋</span> Add channel</button>
+    <button type="button" onclick="window.location.href='index.html#content'"><span>▣</span> Add content</button>
+  </div>
+  <div id="notificationMenu" class="top-popover" hidden style="right:42px">
+    <div class="top-popover-head"><b>Notifications</b><small>No new notifications</small></div>
+    <button type="button" onclick="toggleTopMenu('notificationMenu')">Close</button>
+  </div>
+  <div id="profileMenu" class="top-popover profile-menu" hidden>
+    <div class="top-popover-head"><b>NextGen account</b><small>Account and preferences</small></div>
+    <button type="button" onclick="alert('Switch Account: multi-account login is not connected yet.')"><span>⇄</span> Switch Account</button>
+    <button type="button" onclick="alert('Google Account linking is not connected yet.')"><span class="google-mark">G</span> Google Account</button>
+    <button type="button" onclick="toggleTopMenu('profileMenu');var p=document.querySelector('.settings-list');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});"><span>⚙</span> Settings</button>
+    <button type="button" onclick="alert('Send feedback: feedback form is not connected yet.')"><span>▤</span> Send feedback</button>
+    <div class="pop-divider"></div>
+    <button type="button" onclick="window.location.href='privacy-settings.html'"><span>◎</span> Account status</button>
+    <button type="button" onclick="window.location.href='help-centre.html'"><span>?</span> Help Centre</button>
+    <button type="button" onclick="window.location.href='privacy-settings.html#terms'"><span>▤</span> Terms of Service</button>
+  </div>
+  <div id="profileMenu" class="top-popover profile-menu" hidden>
+    <div class="top-popover-head"><b>NextGen account</b><small>Account and preferences</small></div>
+    <button type="button" onclick="alert('Switch Account is not connected yet.')">⇄ Switch Account</button>
+    <button type="button" onclick="alert('Google Account linking is not connected yet.')">G Google Account</button>
+    <button type="button" onclick="window.location.href='settings.html'">⚙ Settings</button>
+    <button type="button" onclick="alert('Feedback form is not connected yet.')">▤ Send feedback</button>
+    <div class="pop-divider"></div>
+    <button type="button" onclick="window.location.href='privacy-settings.html'">◎ Account status</button>
+    <button type="button" onclick="window.location.href='help-centre.html'">? Help Centre</button>
+    <button type="button" onclick="window.location.href='privacy-settings.html#terms'">▤ Terms of Service</button>
+  </div>
+</header>
+
 <div class="layout">
 <nav aria-label="Settings navigation"><a href="settings.html">General Settings</a><a class="active" href="privacy-settings.html">Privacy Settings</a><a href="#channel-management">↳ Channel Management</a></nav>
 <main>
@@ -127,11 +181,11 @@ load();
 </script>
 <footer>Powered by ABDUS SATTAR</footer>
 <nav class="ng-bottom-nav" aria-label="Main navigation">
-<a href="index.html#dashboard" data-page="dashboard"><span>⌂</span><small>Dashboard</small></a>
+<a href="index.html#dashboard" data-page="dashboard" onclick="event.preventDefault();mobileNavigate('dashboard',this)"><span>⌂</span><small>Dashboard</small></a>
 <a href="channels.html" data-page="channels"><span>▶</span><small>Channels</small></a>
-<a href="index.html#content" data-page="content"><span>▤</span><small>Content</small></a>
-<a href="index.html#approvals" data-page="approvals"><span>✓</span><small>Approvals</small></a>
-<a href="index.html#schedule" data-page="schedule"><span>▦</span><small>Schedule</small></a>
+<a href="index.html#content" data-page="content" onclick="event.preventDefault();mobileNavigate('content',this)"><span>▤</span><small>Content</small></a>
+<a href="index.html#approvals" data-page="approvals" onclick="event.preventDefault();mobileNavigate('approvals',this)"><span>✓</span><small>Approvals</small></a>
+<a href="index.html#schedule" data-page="schedule" onclick="event.preventDefault();mobileNavigate('schedule',this)"><span>▦</span><small>Schedule</small></a>
 </nav>
 <style>
 .ng-bottom-nav{position:fixed;z-index:999;left:0;right:0;bottom:0;min-height:68px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;padding:5px 4px max(5px,env(safe-area-inset-bottom));background:#101923;border-top:1px solid #2a3948;box-shadow:0 -6px 24px #0005}
@@ -148,4 +202,5 @@ var current=path==='channels.html'?'channels':(path==='settings.html'||path==='p
 document.querySelectorAll('.ng-bottom-nav a').forEach(function(a){if(a.dataset.page===current)a.classList.add('active')});
 })();
 </script>
+<script>function toggleTopMenu(id){["profileMenu","addMenu","notificationMenu"].forEach(function(k){var e=document.getElementById(k);if(e)e.hidden=(k!==id||!e.hidden)})}document.addEventListener("click",function(e){if(!e.target.closest(".studio-top-right")&&!e.target.closest(".top-popover")){document.querySelectorAll(".top-popover").forEach(function(x){x.hidden=true})}});</script>
 </body></html>
