@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>NextGen — Privacy & Channel Settings</title>
+<style>
+:root{--bg:#0b1020;--panel:#151d31;--panel2:#10182a;--line:#29344c;--text:#f5f7ff;--muted:#a8b3ca;--accent:#91aaff;--danger:#ffb3b3;--good:#a9f0ca}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{padding:18px max(16px,calc((100% - 1100px)/2));border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap}
+.brand{font-size:25px;font-weight:700}.tag{margin:5px 0 0;color:var(--accent);font-size:13px}
+a{color:var(--accent);text-decoration:none}.layout{max-width:1100px;margin:24px auto;padding:0 16px;display:grid;grid-template-columns:240px minmax(0,1fr);gap:20px}
+nav,.panel,.channel{background:var(--panel);border:1px solid var(--line);border-radius:14px}
+nav{padding:12px;height:max-content}nav a{display:block;padding:12px;border-radius:9px;color:var(--text)}nav a.active{background:#263452;color:#fff}nav a:hover{background:#202b42}
+main h1{font-size:27px;margin:2px 0 8px}main>p{color:var(--muted);line-height:1.6}.panel{padding:18px;margin-top:18px}.panel h2{font-size:18px;margin:0 0 8px}.muted{color:var(--muted);font-size:13px;line-height:1.55}
+.channel-list{display:grid;gap:10px;margin-top:15px}.channel{padding:14px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;background:var(--panel2)}
+.channel strong{font-size:15px}.meta{font-size:13px;color:var(--muted);margin-top:5px;overflow-wrap:anywhere}
+.actions{display:flex;gap:7px;flex-wrap:wrap}button{background:#202b42;border:1px solid var(--line);color:var(--text);border-radius:9px;padding:9px 11px;font:inherit;cursor:pointer}button.primary{background:var(--accent);color:#07101f;font-weight:700}button.danger{border-color:#81494f;color:var(--danger)}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}label{display:grid;gap:6px;font-size:13px;color:var(--muted)}input,select{width:100%;padding:11px;background:#0b1020;color:var(--text);border:1px solid var(--line);border-radius:9px;font:inherit}form .wide{grid-column:1/-1}.form-actions{display:flex;gap:8px;flex-wrap:wrap}
+.status{margin-top:12px;font-size:13px;min-height:18px;color:var(--good)}.notice{background:#302818;border:1px solid #806633;color:#ffe1a6;padding:12px;border-radius:10px;font-size:13px;line-height:1.55;margin-top:14px}
+footer{max-width:1100px;margin:0 auto;padding:0 16px 22px;text-align:right;color:var(--muted);font-size:12px}
+@media(max-width:700px){.layout{grid-template-columns:1fr;margin-top:14px}nav{display:flex;gap:4px;overflow:auto}nav a{white-space:nowrap}form{grid-template-columns:1fr}form .wide{grid-column:auto}main h1{font-size:24px}}
+</style>
+</head>
+<body>
+<header><div><div class="brand">NextGen</div><p class="tag">Smart Automation. Smarter Growth.</p></div><div class="actions"><a href="index.html">← Dashboard</a><a href="channels.html">Channels Page →</a></div></header>
+<div class="layout">
+<nav aria-label="Settings navigation"><a href="index.html">Dashboard</a><a class="active" href="privacy-settings.html">Privacy & Channel Settings</a><a href="channels.html">Channel Management</a></nav>
+<main>
+<h1>Privacy & Channel Settings</h1>
+<p>Manage which social profiles appear in your NextGen workspace. This is a separate settings page, inspired by familiar account-settings layouts.</p>
+<div class="panel"><h2>Channel access and availability</h2><p class="muted">Edit details, disable/enable a channel, or remove it from this local demo list. These actions do not delete or disconnect the real social account.</p>
+<div id="channelList" class="channel-list"></div>
+<div class="actions" style="margin-top:14px"><button id="addBtn" class="primary" type="button">＋ Add Channel</button><button id="resetBtn" type="button">Restore default list</button></div><p id="status" class="status" role="status" aria-live="polite"></p></div>
+<div class="panel" id="editor" hidden><h2 id="formTitle">Add channel</h2>
+<form id="channelForm">
+<label>Platform<select id="platform" required><option value="YouTube">YouTube</option><option value="Facebook">Facebook</option><option value="Instagram">Instagram</option><option value="Threads">Threads</option><option value="Other">Other</option></select></label>
+<label>Display name<input id="name" required maxlength="80" placeholder="e.g. Royal Furniture Zone"></label>
+<label>Handle<input id="handle" maxlength="100" placeholder="@yourhandle"></label>
+<label>Profile URL<input id="url" type="url" placeholder="https://..."></label>
+<div class="wide form-actions"><button class="primary" type="submit">Save channel</button><button id="cancelBtn" type="button">Cancel</button></div>
+</form><p id="formStatus" class="status" role="status" aria-live="polite"></p></div>
+<div class="notice"><strong>Prototype notice:</strong> Changes are saved in this browser on this device. Shared account sync, secure permissions, and real social-platform controls are not connected yet.</div>
+</main></div>
+<footer>Powered by ABDUS SATTAR</footer>
+<script>
+(function(){
+const key='nextgen-settings-managed-channels-v1';
+const defaults=[
+{id:'yt',name:'Royal Furniture House',platform:'YouTube',handle:'@RoyalFurnitureHouse',url:'https://youtube.com/@royalfurniturehouse',enabled:true},
+{id:'fb',name:'Royal Furniture Zone',platform:'Facebook',handle:'@RoyalFurnitureZone',url:'',enabled:true},
+{id:'ig',name:'Royal Furniture Zone',platform:'Instagram',handle:'@royalfurniturezone',url:'',enabled:true},
+{id:'th',name:'Royal Furniture Zone',platform:'Threads',handle:'@royalfurniturezone',url:'',enabled:true}
+];
+let channels=[],editingId=null;
+const $=id=>document.getElementById(id);
+function normalize(v){return String(v||'').trim().toLowerCase().replace(/^@+/,'').replace(/[._\-\s]+/g,'');}
+function load(){try{const v=JSON.parse(localStorage.getItem(key)||'null');channels=Array.isArray(v)?v:defaults.map(x=>({...x}));}catch(e){channels=defaults.map(x=>({...x}));}const seen=new Set();channels=channels.filter(c=>{const k=String(c.platform).toLowerCase()+'|'+normalize(c.handle||c.name);if(seen.has(k))return false;seen.add(k);return true;});render();}
+function save(message){try{localStorage.setItem(key,JSON.stringify(channels));$('status').textContent=message||'Changes saved in this browser.';}catch(e){$('status').textContent='Could not save to browser storage.';}render();}
+function esc(v){return String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function render(){const host=$('channelList');host.innerHTML='';if(!channels.length){host.innerHTML='<p class="muted">No channels added yet.</p>';return;}channels.forEach(ch=>{const row=document.createElement('div');row.className='channel';const info=document.createElement('div');info.innerHTML='<strong>'+esc(ch.name)+'</strong><div class="meta">'+esc(ch.platform)+' · '+esc(ch.handle||'No handle')+' · '+(ch.enabled===false?'Disabled':'Enabled')+'</div>';const actions=document.createElement('div');actions.className='actions';const btn=(label,fn,cls)=>{const b=document.createElement('button');b.type='button';b.textContent=label;if(cls)b.className=cls;b.addEventListener('click',fn);actions.appendChild(b);};btn('Edit',()=>edit(ch.id));btn(ch.enabled===false?'Enable':'Disable',()=>{ch.enabled=ch.enabled===false;save(ch.name+(ch.enabled?' enabled.':' disabled.'));});btn('Remove',()=>{if(!confirm('Remove '+ch.name+' from the NextGen demo list? The real social account will not be deleted.'))return;channels=channels.filter(x=>x.id!==ch.id);save('Channel removed from this browser list.');},'danger');row.append(info,actions);host.appendChild(row);});}
+function edit(id){const ch=channels.find(x=>x.id===id);if(!ch)return;editingId=id;$('formTitle').textContent='Edit channel';$('platform').value=ch.platform;$('name').value=ch.name;$('handle').value=ch.handle||'';$('url').value=ch.url||'';$('editor').hidden=false;$('editor').scrollIntoView({behavior:'smooth',block:'start'});}
+function resetForm(){$('channelForm').reset();editingId=null;$('editor').hidden=true;$('formTitle').textContent='Add channel';$('formStatus').textContent='';}
+$('addBtn').addEventListener('click',()=>{resetForm();$('editor').hidden=false;$('editor').scrollIntoView({behavior:'smooth',block:'start'});});
+$('cancelBtn').addEventListener('click',resetForm);
+$('channelForm').addEventListener('submit',e=>{e.preventDefault();const platform=$('platform').value,name=$('name').value.trim(),handle=$('handle').value.trim(),url=$('url').value.trim();const candidateKey=platform.toLowerCase()+'|'+normalize(handle||name);const duplicate=channels.some(ch=>ch.id!==editingId&&(String(ch.platform).toLowerCase()+'|'+normalize(ch.handle||ch.name))===candidateKey);if(duplicate){$('formStatus').textContent='Duplicate blocked: this platform account is already in the list.';return;}const old=channels.find(x=>x.id===editingId);const ch={id:editingId||('ch-'+Date.now()),platform,name,handle,url,enabled:old?old.enabled:true};if(old)channels=channels.map(x=>x.id===editingId?ch:x);else channels.push(ch);save(old?'Channel details updated.':'Channel added.');resetForm();});
+$('resetBtn').addEventListener('click',()=>{if(!confirm('Restore the four default NextGen demo channels? Custom channel entries will be replaced.'))return;channels=defaults.map(x=>({...x}));save('Default channel list restored.');resetForm();});
+window.addEventListener('storage',e=>{if(e.key===key)load();});
+load();
+})();
+</script>
+</body></html>
