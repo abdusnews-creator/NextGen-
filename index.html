@@ -266,14 +266,17 @@ footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
     <p>Smart Automation. Smarter Growth.</p>
     <p>Powered by ABDUS SATTAR</p>
   </div>
-  <div class="card">
-    <h3>Channel Management</h3>
-    <p class="muted">Edit, remove, enable, or disable channels only from Privacy Settings. These controls are kept out of the Channels page.</p>
-    <div id="privacyChannelList" style="display:grid;gap:10px;margin:14px 0"></div>
+  <div class="card" id="privacy-settings">
+    <h3>Privacy Settings</h3>
+    <p class="muted">Manage channel access and availability here. These controls are available only inside Settings → Privacy Settings, not on the Channels page.</p>
+    <div style="border-top:1px solid #29344c;margin-top:14px;padding-top:12px">
+      <h4 style="margin:0 0 8px">Channel Management</h4>
+      <div id="privacyChannelList" style="display:grid;gap:10px;margin:14px 0"></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
       <button type="button" class="action" onclick="nextgenAddChannel()">＋ Add Channel</button>
     </div>
-    <p class="muted">These are local browser demo settings saved on this device. They do not connect to or control the real social accounts.</p>
+      <p class="muted">These are local browser demo settings saved on this device. They do not connect to or control the real social accounts.</p>
+    </div>
   </div>
   <div class="card">
     <h3>Approval Safety</h3>
