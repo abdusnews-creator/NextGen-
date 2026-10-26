@@ -296,12 +296,7 @@ function reviseDraft(id){
   showPage('approvals');
 }
 
-function saveChecklist(){
-  var values = Array.from(document.querySelectorAll('.review-check')).map(function(check){
-    return check.checked;
-  });
-  try { localStorage.setItem(checklistStorageKey, JSON.stringify(values)); } catch(error) {}
-}
+
 
 function resetChecklist(){
   document.querySelectorAll('.review-check').forEach(function(check){
