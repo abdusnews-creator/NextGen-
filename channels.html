@@ -147,10 +147,12 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     const connection = card.querySelector('.connection');
     button.textContent = isPaused ? 'Resume channel' : 'Pause channel';
     button.setAttribute('aria-pressed', String(isPaused));
-    status.classList.toggle('paused', isPaused);
-    connection.textContent = isPaused
-      ? 'Demo status: Paused in this browser'
-      : 'App connection: Not verified';
+    status.classList.toggle('paused', isPaused || !isEnabled);
+    connection.textContent = !isEnabled
+      ? 'Demo status: Disabled in this browser · Real account not connected'
+      : (isPaused
+        ? 'Demo status: Paused in this browser · Real account not connected'
+        : 'Demo enabled · Real account connection not verified');
   }
 
   function filterCards(){
