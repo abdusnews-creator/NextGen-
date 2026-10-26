@@ -66,7 +66,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   <form id="addChannelForm">
     <div class="toolbar">
       <input id="newPlatform" type="hidden" value="youtube">
-      <input id="newChannelUrl" type="url" placeholder="Handle — paste profile link here" aria-label="Handle / profile link" required style="flex:1;min-width:220px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
+      <input id="newChannelUrl" type="url" placeholder="Paste full profile URL (e.g. https://instagram.com/username)" aria-label="Profile URL" required style="flex:1;min-width:220px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
       <input id="newChannelName" type="text" placeholder="Channel Name / Profile Name (auto-filled)" aria-label="Detected channel name" readonly maxlength="80" style="flex:1;min-width:180px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
       <input id="newChannelHandle" type="text" placeholder="Handle (auto-filled)" aria-label="Detected handle" readonly maxlength="100" style="flex:1;min-width:160px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
       <input id="platformDisplay" type="text" placeholder="Platform (auto-detected)" aria-label="Detected platform" readonly style="flex:1;min-width:160px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit">
@@ -475,7 +475,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
       document.getElementById('addChannelStatus').textContent='Platform detected. Name is estimated from the profile URL, not verified against the real account.';
     }else{
       nameInput.value='';handleInput.value='';document.getElementById('platformDisplay').value='';
-      document.getElementById('addChannelStatus').textContent='Platform not detected. Paste a full Facebook, YouTube, Instagram or Threads profile link.';
+      document.getElementById('addChannelStatus').textContent='Paste the full profile URL including https://. A plain @username is not enough to identify its platform.';
     }
   });
   addForm.addEventListener('submit',async function(event){
@@ -488,11 +488,11 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     const status=document.getElementById('addChannelStatus');
     if(url){try{const parsed=new URL(url);if(!['http:','https:'].includes(parsed.protocol))throw new Error();url=parsed.href;}catch(e){status.textContent='Please enter a valid Facebook / YouTube / social profile link.';return;}
       const detected=detectChannelFromUrl(url);
-      if(!detected || !detected.platform){status.textContent='Could not detect platform. Use a Facebook, YouTube, Instagram or Threads profile link.';return;}
+      if(!detected || !detected.platform){status.textContent='Platform not detected. Paste the FULL profile URL including https:// — not just @username or a post/share link. Supported: youtube.com, facebook.com, instagram.com, threads.net.';return;}
       if(detected.shareLink){status.textContent='This is a Share/Post link, not a profile link. Please paste the actual page/channel profile URL. Nothing was added.';return;}
       platform=detected.platform;
       document.getElementById('newPlatform').value=platform;
-      if(!name) { status.textContent='Could not read a channel name from this link. Try a profile link with a username in its address.'; return; }
+      if(!name) { status.textContent='Platform found, but this URL does not contain a readable profile username. Open the actual profile page and copy its main profile URL (not a post, reel, video, or share link).'; return; }
       if(!handle) handle=detected.handle;
     }else{status.textContent='Please paste a profile link first.';return;}
     const editingCard=editingKey?cards.find(x=>x.dataset.customKey===editingKey || channelIdentity(x)===editingKey):null;
