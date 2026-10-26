@@ -1,109 +1,180 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
 <title>NextGen — Channels</title>
 <style>
-:root{--bg:#0b1020;--card:#151d31;--text:#f5f7ff;--muted:#a8b3ca;--accent:#70e1b5;--line:#29344c}
+:root{--bg:#0b1020;--card:#151d31;--text:#f5f7ff;--muted:#a8b3ca;--accent:#91aaff;--line:#29344c;--good:#8fe0b8;--warn:#ffd28b}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;padding:20px}
-main{max-width:1000px;margin:auto}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;padding:18px}
+main{max-width:1050px;margin:auto}
 header,.top,.actions{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 h1{font-size:30px;margin:0}
+h2{margin-bottom:8px}
 .tag{color:var(--accent);margin:8px 0 20px}
 a{color:var(--accent);text-decoration:none}
-.back,button{padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:#202b42;color:var(--text);cursor:pointer}
+.back,button{padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:#202b42;color:var(--text);cursor:pointer;font:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
-.platform{font-size:25px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}
+.platform{font-size:23px}
 .handle{color:var(--muted);overflow-wrap:anywhere}
-.status{margin:16px 0;color:#ffd28b;font-size:14px}
+.status{margin:16px 0;font-size:14px;line-height:1.5}
+.status .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warn);margin-right:7px}
+.status.paused .dot{background:#ff9c9c}
 .actions{justify-content:flex-start}
-.primary{background:var(--accent);color:#07150f;font-weight:bold}
-.note{color:var(--muted);font-size:14px;line-height:1.6}
+.primary{background:var(--accent);color:#07101f;font-weight:bold}
+.muted,.note{color:var(--muted);font-size:14px;line-height:1.6}
+.notice{background:#302818;border:1px solid #806633;color:#ffe1a6;padding:13px;border-radius:10px;line-height:1.5;font-size:13px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+input[type=search]{flex:1;min-width:180px;background:#10182a;border:1px solid var(--line);color:var(--text);padding:12px;border-radius:10px;font:inherit}
+.counter{color:var(--muted);font-size:13px;margin-top:12px}
 footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:12px;text-align:right}
-@media(max-width:600px){body{padding:14px}.grid{grid-template-columns:1fr}h1{font-size:25px}}
+@media(max-width:600px){body{padding:12px}.grid{grid-template-columns:1fr}h1{font-size:25px}.card{padding:16px}}
 </style>
 </head>
 <body>
 <main>
 <header>
-<div>
-<h1>NextGen</h1>
-<p class="tag">Smart Automation. Smarter Growth.</p>
-</div>
-<a class="back" href="index.html">← Dashboard</a>
+  <div>
+    <h1>NextGen</h1>
+    <p class="tag">Smart Automation. Smarter Growth.</p>
+  </div>
+  <a class="back" href="index.html">← Dashboard</a>
 </header>
 
-<h2>Channels</h2>
-<p class="note">Manage your social channels, review status, and pause or resume channel activity.</p>
-
-<div class="grid">
-<section class="card">
-<div class="platform">▶️ YouTube</div>
-<h3>Royal Furniture House</h3>
-<p class="handle">@RoyalFurnitureHouse</p>
-<p class="status">● App connection: Not verified</p>
-<div class="actions">
-<button onclick="toggle(this)">Pause channel</button>
-<button class="primary" onclick="review('YouTube')">Review</button>
+<div class="top">
+  <div>
+    <h2>Channels</h2>
+    <p class="note">View your target platforms and manage this browser's demo pause settings.</p>
+  </div>
 </div>
+
+<div class="toolbar">
+  <input id="channelSearch" type="search" placeholder="Search channels…" aria-label="Search channels">
+  <button type="button" id="showAll">Show all</button>
+</div>
+<p class="counter" id="channelCount" aria-live="polite">Showing 4 channels</p>
+
+<div class="grid" id="channelGrid">
+<section class="card" data-platform="youtube" data-name="Royal Furniture House" data-handle="@RoyalFurnitureHouse">
+  <div class="platform">▶️ YouTube</div>
+  <h3>Royal Furniture House</h3>
+  <p class="handle">@RoyalFurnitureHouse</p>
+  <p class="status"><span class="dot"></span><span class="connection">App connection: Not verified</span></p>
+  <div class="actions">
+    <button type="button" class="pause-button">Pause channel</button>
+    <button type="button" class="primary review-button">Review</button>
+  </div>
 </section>
 
-<section class="card">
-<div class="platform">📘 Facebook</div>
-<h3>Royal Furniture Zone</h3>
-<p class="handle">@RoyalFurnitureZone</p>
-<p class="status">● App connection: Not verified</p>
-<div class="actions">
-<button onclick="toggle(this)">Pause channel</button>
-<button class="primary" onclick="review('Facebook')">Review</button>
-</div>
+<section class="card" data-platform="facebook" data-name="Royal Furniture Zone" data-handle="@RoyalFurnitureZone">
+  <div class="platform">📘 Facebook</div>
+  <h3>Royal Furniture Zone</h3>
+  <p class="handle">@RoyalFurnitureZone</p>
+  <p class="status"><span class="dot"></span><span class="connection">App connection: Not verified</span></p>
+  <div class="actions">
+    <button type="button" class="pause-button">Pause channel</button>
+    <button type="button" class="primary review-button">Review</button>
+  </div>
 </section>
 
-<section class="card">
-<div class="platform">📸 Instagram</div>
-<h3>Royal Furniture Zone</h3>
-<p class="handle">@royalfurniturezone</p>
-<p class="status">● App connection: Not verified</p>
-<div class="actions">
-<button onclick="toggle(this)">Pause channel</button>
-<button class="primary" onclick="review('Instagram')">Review</button>
-</div>
+<section class="card" data-platform="instagram" data-name="Royal Furniture Zone" data-handle="@royalfurniturezone">
+  <div class="platform">📸 Instagram</div>
+  <h3>Royal Furniture Zone</h3>
+  <p class="handle">@royalfurniturezone</p>
+  <p class="status"><span class="dot"></span><span class="connection">App connection: Not verified</span></p>
+  <div class="actions">
+    <button type="button" class="pause-button">Pause channel</button>
+    <button type="button" class="primary review-button">Review</button>
+  </div>
 </section>
 
-<section class="card">
-<div class="platform">🧵 Threads</div>
-<h3>Royal Furniture Zone</h3>
-<p class="handle">@royalfurniturezone</p>
-<p class="status">● App connection: Not verified</p>
-<div class="actions">
-<button onclick="toggle(this)">Pause channel</button>
-<button class="primary" onclick="review('Threads')">Review</button>
-</div>
+<section class="card" data-platform="threads" data-name="Royal Furniture Zone" data-handle="@royalfurniturezone">
+  <div class="platform">🧵 Threads</div>
+  <h3>Royal Furniture Zone</h3>
+  <p class="handle">@royalfurniturezone</p>
+  <p class="status"><span class="dot"></span><span class="connection">App connection: Not verified</span></p>
+  <div class="actions">
+    <button type="button" class="pause-button">Pause channel</button>
+    <button type="button" class="primary review-button">Review</button>
+  </div>
 </section>
 </div>
 
 <section class="card" style="margin-top:20px">
-<h3>Approval Safety</h3>
-<p>Manual Approval Mode: <strong>ON by default</strong></p>
-<p>Auto Approval Mode: <strong>OFF by default</strong></p>
-<p class="note">This prototype does not publish or schedule posts. Real account connections, secure login, database, approval checks, scheduling, and background monitoring are not implemented yet.</p>
+  <h3>Approval Safety</h3>
+  <p>Manual Approval Mode: <strong>ON by default</strong></p>
+  <p>Auto Approval Mode: <strong>OFF by default</strong></p>
+  <div class="notice">This is a front-end prototype. Pause settings are saved only in this browser on this device. They do not pause activity on social platforms. Real account connections, secure login, shared database, approval checks, scheduling, and background monitoring are not implemented yet.</div>
 </section>
 
 <footer>Powered by ABDUS SATTAR</footer>
 </main>
 <script>
-function toggle(button){
- const paused=button.textContent==="Resume channel";
- button.textContent=paused?"Pause channel":"Resume channel";
- alert(paused?"Demo: channel resumed.":"Demo: channel paused.");
-}
-function review(platform){
- alert(platform+" review: Manual approval is required. Real account verification is not connected yet.");
-}
+(function(){
+  const cards = Array.from(document.querySelectorAll('.card[data-platform]'));
+  const search = document.getElementById('channelSearch');
+  const count = document.getElementById('channelCount');
+  const storageKey = 'nextgen-demo-paused-channels-v1';
+  let pausedChannels = {};
+  try { pausedChannels = JSON.parse(localStorage.getItem(storageKey) || '{}') || {}; }
+  catch (error) { pausedChannels = {}; }
+
+  function saveState(){
+    try { localStorage.setItem(storageKey, JSON.stringify(pausedChannels)); }
+    catch (error) { /* The UI still works for this page session if storage is unavailable. */ }
+  }
+
+  function renderCard(card){
+    const platform = card.dataset.platform;
+    const isPaused = Boolean(pausedChannels[platform]);
+    const button = card.querySelector('.pause-button');
+    const status = card.querySelector('.status');
+    const connection = card.querySelector('.connection');
+    button.textContent = isPaused ? 'Resume channel' : 'Pause channel';
+    button.setAttribute('aria-pressed', String(isPaused));
+    status.classList.toggle('paused', isPaused);
+    connection.textContent = isPaused
+      ? 'Demo status: Paused in this browser'
+      : 'App connection: Not verified';
+  }
+
+  function filterCards(){
+    const query = search.value.trim().toLowerCase();
+    let visible = 0;
+    cards.forEach(function(card){
+      const searchable = [card.dataset.platform,card.dataset.name,card.dataset.handle].join(' ').toLowerCase();
+      const match = searchable.includes(query);
+      card.hidden = !match;
+      if(match) visible++;
+    });
+    count.textContent = 'Showing ' + visible + ' of ' + cards.length + ' channels';
+  }
+
+  cards.forEach(function(card){
+    renderCard(card);
+    card.querySelector('.pause-button').addEventListener('click',function(){
+      const platform = card.dataset.platform;
+      pausedChannels[platform] = !pausedChannels[platform];
+      saveState();
+      renderCard(card);
+    });
+    card.querySelector('.review-button').addEventListener('click',function(){
+      alert(card.dataset.platform.charAt(0).toUpperCase()+card.dataset.platform.slice(1) +
+        ' review: Manual approval is required. Real account verification is not connected yet.');
+    });
+  });
+
+  search.addEventListener('input',filterCards);
+  document.getElementById('showAll').addEventListener('click',function(){
+    search.value = '';
+    filterCards();
+  });
+  filterCards();
+})();
 </script>
 </body>
 </html>
