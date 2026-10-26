@@ -578,7 +578,10 @@ function renderDraftSchedule(){
     find.onclick = function(){ window.location.href = './?refresh=20261026i#content'; };
     var review = document.createElement('button'); review.type = 'button'; review.className = 'action';
     review.textContent = 'Open Review Checklist';
-    review.onclick = function(){ window.location.href = 'review.html?refresh=20261026d'; };
+    review.onclick = function(){
+      var reviewKey = item.title === 'Royal Sofa Set Short' ? 'sofa' : item.title === 'Carved Centre Table Reel' ? 'table' : 'bed';
+      window.location.href = 'review.html?draft=' + reviewKey + '&refresh=20261026n';
+    };
     var remove = document.createElement('button'); remove.type = 'button'; remove.className = 'action';
     remove.textContent = 'Remove plan'; remove.onclick = function(){
       var current = readDraftSchedule(); current.splice(index,1);
