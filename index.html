@@ -729,7 +729,8 @@ function setMode(auto){
   {id:'ig',name:'Royal Furniture Zone',platform:'Instagram',handle:'@royalfurniturezone',enabled:true},
   {id:'th',name:'Royal Furniture Zone',platform:'Threads',handle:'@royalfurniturezone',enabled:true}
  ];
- function load(){try{const v=JSON.parse(localStorage.getItem(key)||'null');return Array.isArray(v)?v:defaults.slice();}catch(e){return defaults.slice();}}
+ function normalizeChannel(ch){const compact=String(ch.handle||ch.name||'').replace(/^@/,'').toLowerCase().replace(/[._\\-\\s]+/g,'');const known={royalfurniturezone:'Royal Furniture Zone',royalfurniturehouse:'Royal Furniture House'};if(known[compact])ch.name=known[compact];return ch;}
+ function load(){try{const v=JSON.parse(localStorage.getItem(key)||'null');return (Array.isArray(v)?v:defaults.slice()).map(normalizeChannel);}catch(e){return defaults.slice();}}
  let channels=load();
  function save(){try{localStorage.setItem(key,JSON.stringify(channels));}catch(e){} render();}
  function esc(s){return String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
