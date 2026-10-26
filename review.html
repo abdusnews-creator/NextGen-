@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0b1020"><title>NextGen — Content Review</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0b1020;color:#eef3ff;font:16px Arial,sans-serif}header{padding:20px;background:#141e32;border-bottom:1px solid #293752}h1{margin:0;color:#91aaff}header p{margin:6px 0;color:#c1cbe0}.credit{text-align:right;font-size:11px;color:#a5b3cc}main{max-width:850px;margin:auto;padding:16px}.card{background:#141e32;border:1px solid #293752;border-radius:13px;padding:18px;margin:14px 0}label{display:block;margin:12px 0;color:#c1cbe0}select{display:block;width:100%;padding:13px;margin-top:6px;border-radius:8px;background:#0b1020;color:#fff;border:1px solid #91aaff;font-size:16px}.preview{background:#1a2740;padding:14px;border-radius:10px;margin-top:14px;overflow-wrap:anywhere}.preview h3{color:#91aaff}.tag{color:#b8c9ff;line-height:1.7}.check{display:flex;gap:10px;align-items:flex-start;margin:16px 0;line-height:1.4}.check input{width:20px;height:20px;flex-shrink:0}.btn{padding:13px 16px;border:0;border-radius:8px;background:#91aaff;color:#0b1020;font-weight:bold;font-size:15px;margin:5px 5px 5px 0}.muted{color:#a5b3cc;font-size:13px}.warning{background:#302818;border:1px solid #806633;color:#ffe1a6;padding:12px;border-radius:9px}.status{font-weight:bold;color:#ffd27d}.btn.reject{background:#7b303b;color:#fff}.btn:disabled{opacity:.45}
+*{box-sizing:border-box}body{margin:0;background:#0b1020;color:#eef3ff;font:16px Arial,sans-serif}header{padding:20px;background:#141e32;border-bottom:1px solid #293752}h1{margin:0;color:#91aaff}header p{margin:6px 0;color:#c1cbe0}.credit{text-align:right;font-size:11px;color:#a5b3cc}main{max-width:850px;margin:auto;padding:16px}.card{background:#141e32;border:1px solid #293752;border-radius:13px;padding:18px;margin:14px 0}label{display:block;margin:12px 0;color:#c1cbe0}select{display:block;width:100%;padding:13px;margin-top:6px;border-radius:8px;background:#0b1020;color:#fff;border:1px solid #91aaff;font-size:16px}.preview{background:#1a2740;padding:14px;border-radius:10px;margin-top:14px;overflow-wrap:anywhere}.preview h3{color:#91aaff}.tag{color:#b8c9ff;line-height:1.7}.check{display:flex;gap:10px;align-items:flex-start;margin:16px 0;line-height:1.4}.check input{width:20px;height:20px;flex-shrink:0}.btn{padding:13px 16px;border:0;border-radius:8px;background:#91aaff;color:#0b1020;font-weight:bold;font-size:15px;margin:5px 5px 5px 0}.muted{color:#a5b3cc;font-size:13px}.warning{background:#302818;border:1px solid #806633;color:#ffe1a6;padding:12px;border-radius:9px}.status{font-weight:bold;color:#ffd27d}.btn.reject{background:#7b303b;color:#fff}.btn:disabled{opacity:.45}.copyrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.copybtn{padding:9px 12px;border:1px solid #91aaff;border-radius:8px;background:#0b1020;color:#dbe5ff;font-size:14px;font-weight:bold}
 </style></head>
 <body>
 <header><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><div><h1>NextGen</h1><p>Smart Automation. Smarter Growth.</p></div><div class="credit">Powered by<br><b>ABDUS SATTAR</b></div></div></header>
@@ -15,7 +15,7 @@
 <div class="card">
 <label for="draft">Select draft
 <select id="draft"><option value="bed">Luxury Wooden Bed Reel</option><option value="sofa">Royal Sofa Set Short</option><option value="table">Carved Centre Table Reel</option></select></label>
-<div class="preview"><h3 id="title">Luxury Wooden Bed Reel</h3><p><b>CONTENT / VIDEO IDEA</b></p><p id="content">Create a vertical 9:16 cinematic product showcase of a luxury wooden bed. Start with a close-up of the polished wood and carved details, then slowly reveal the full bed in an elegant bedroom. Keep the product shape and wood finish accurate. No people or watermark.</p><p><b>CAPTION</b></p><p id="caption">Bring timeless elegance to your bedroom with this beautifully crafted wooden bed. Rich finish, detailed carving and a royal look. ✨ Which bedroom style would you choose?</p><p><b>HASHTAGS</b></p><p id="hashtags" class="tag">#Furniture #WoodenBed #LuxuryFurniture #BedroomDesign #HomeDecor #FurnitureDesign #Reels #Shorts</p></div>
+<div class="preview"><h3 id="title">Luxury Wooden Bed Reel</h3><p><b>CONTENT / VIDEO IDEA</b></p><p id="content">Create a vertical 9:16 cinematic product showcase of a luxury wooden bed. Start with a close-up of the polished wood and carved details, then slowly reveal the full bed in an elegant bedroom. Keep the product shape and wood finish accurate. No people or watermark.</p><p><b>CAPTION</b></p><p id="caption">Bring timeless elegance to your bedroom with this beautifully crafted wooden bed. Rich finish, detailed carving and a royal look. ✨ Which bedroom style would you choose?</p><div class="copyrow"><button type="button" class="copybtn" id="copyCaption">Copy Caption</button></div><p><b>HASHTAGS</b></p><p id="hashtags" class="tag">#Furniture #WoodenBed #LuxuryFurniture #BedroomDesign #HomeDecor #FurnitureDesign #Reels #Shorts</p><div class="copyrow"><button type="button" class="copybtn" id="copyHashtags">Copy Hashtags</button></div><p id="copyFeedback" class="muted" aria-live="polite"></p></div>
 </div>
 <div class="card"><h3>Review Checklist</h3><p class="muted">Tick all five items after checking the draft.</p>
 <label class="check"><input type="checkbox" class="checkitem"> Spelling checked</label>
@@ -44,6 +44,27 @@ function readDashboardStates(){try{return JSON.parse(localStorage.getItem(dashbo
 function writeStatus(value){const states=readStates();states[select.value]=value;try{localStorage.setItem(stateKey,JSON.stringify(states));const shared=readDashboardStates();shared[draftIds[select.value]]=value.indexOf('Approved')===0?'Approved for selected channel (demo only)':value.indexOf('Rejected')===0?'Rejected — revision needed':'Pending approval';localStorage.setItem(dashboardKey,JSON.stringify(shared))}catch(e){};statusEl.textContent=value}
 function render(){const d=drafts[select.value];document.getElementById('title').textContent=d.title;document.getElementById('content').textContent=d.content;document.getElementById('caption').textContent=d.caption;document.getElementById('hashtags').textContent=d.hashtags;checks.forEach(c=>c.checked=false);const shared=readDashboardStates()[draftIds[select.value]];const local=readStates()[select.value];statusEl.textContent=shared||local||'Pending review'}
 select.addEventListener('change',render);
+async function copyReviewText(elementId,label){
+  const value=document.getElementById(elementId).textContent.trim();
+  const feedback=document.getElementById('copyFeedback');
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(value);
+    }else{
+      const helper=document.createElement('textarea');
+      helper.value=value;helper.setAttribute('readonly','');
+      helper.style.position='fixed';helper.style.opacity='0';
+      document.body.appendChild(helper);helper.select();
+      const copied=document.execCommand('copy');helper.remove();
+      if(!copied) throw new Error('copy unavailable');
+    }
+    feedback.textContent=label+' copied. You can paste it into your social post.';
+  }catch(error){
+    feedback.textContent='Copy was blocked by this browser. Press and hold the text above to select and copy it.';
+  }
+}
+document.getElementById('copyCaption').addEventListener('click',()=>copyReviewText('caption','Caption'));
+document.getElementById('copyHashtags').addEventListener('click',()=>copyReviewText('hashtags','Hashtags'));
 /* Allow a saved draft plan to open the matching item directly in the review page. */
 (function selectDraftFromLink(){
   const params=new URLSearchParams(window.location.search);
