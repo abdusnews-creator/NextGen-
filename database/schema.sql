@@ -84,7 +84,7 @@ security invoker
 set search_path = public
 as $$
 begin
-  if new.status = 'approved' and old.status is distinct from new.status then
+  if new.status = 'approved' and (tg_op = 'INSERT' or old.status is distinct from new.status) then
     if not exists (
       select 1 from public.draft_reviews r
       where r.draft_id = new.id
@@ -107,7 +107,7 @@ $$;
 
 drop trigger if exists content_drafts_approval_guard on public.content_drafts;
 create trigger content_drafts_approval_guard
-before update on public.content_drafts
+before insert or update on public.content_drafts
 for each row execute function public.enforce_review_before_approval();
 
 -- Important: real authentication, account provisioning, secret management,
