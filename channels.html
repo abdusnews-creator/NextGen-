@@ -311,10 +311,12 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
       row.style.cssText='display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:#10182a;border:1px solid var(--line);border-radius:10px;padding:12px';
       const info=document.createElement('div');
       const name=document.createElement('strong');name.textContent=card.dataset.name||'Unnamed channel';
-      const meta=document.createElement('p');meta.className='muted';meta.style.margin='5px 0 0';meta.textContent=(card.dataset.platform||'').toUpperCase()+' · '+(card.dataset.handle||'');
+      const meta=document.createElement('p');meta.className='muted';meta.style.margin='5px 0 0';
+      const isEnabled=enabledChannels[card.dataset.platform]!==false;
+      meta.textContent=(card.dataset.platform||'').toUpperCase()+' · '+(card.dataset.handle||'')+' · '+(isEnabled?'Enabled':'Disabled');
       info.append(name,meta);
       const actions=document.createElement('div');actions.className='actions';
-      const edit=document.createElement('button');edit.type='button';edit.textContent='Edit';
+      const edit=document.createElement('button');edit.type='button';edit.textContent='Edit Channel';
       edit.addEventListener('click',function(){
         document.getElementById('newPlatform').value=card.dataset.platform||'youtube';
         document.getElementById('newChannelName').value=card.dataset.name||'';
@@ -326,7 +328,15 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
         document.querySelector('#addChannelPanel h3').textContent='Edit channel details';
         const panel=document.getElementById('addChannelPanel');panel.hidden=false;panel.scrollIntoView({behavior:'smooth',block:'start'});
       });
-      const remove=document.createElement('button');remove.type='button';remove.textContent='Remove';
+      const toggle=document.createElement('button');toggle.type='button';toggle.textContent=isEnabled?'Disable Channel':'Enable Channel';
+      toggle.setAttribute('aria-pressed',String(isEnabled));
+      toggle.addEventListener('click',function(){
+        enabledChannels[card.dataset.platform]=enabledChannels[card.dataset.platform]===false;
+        try{localStorage.setItem(enabledStorageKey,JSON.stringify(enabledChannels));}catch(e){}
+        cards.filter(item=>item.dataset.platform===card.dataset.platform).forEach(renderCard);
+        renderPrivacyChannelList();
+      });
+      const remove=document.createElement('button');remove.type='button';remove.textContent='Remove Channel';
       remove.addEventListener('click',function(){
         const label=card.dataset.name||'this channel';
         if(!window.confirm('Remove "'+label+'" from the NextGen channel list on this browser? This will not disconnect or delete the real social account.'))return;
@@ -336,7 +346,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
         saveCustomChannels(items);
         card.remove();cards=cards.filter(item=>item!==card);filterCards();renderPrivacyChannelList();
       });
-      actions.append(edit,remove);row.append(info,actions);list.appendChild(row);
+      actions.append(edit,toggle,remove);row.append(info,actions);list.appendChild(row);
     });
   }
 
