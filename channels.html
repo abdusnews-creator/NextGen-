@@ -115,16 +115,66 @@ body>main>header.channel-studio-header p.tag{color:#b8d7f5!important;margin:4px 
 @media(max-width:600px){body>main>header.channel-studio-header{margin:-12px -12px 18px!important;padding:12px!important}}
 
 </style>
+<style>
+
+/* Exact shared Dashboard header styles, reused on Channels */
+.studio-top{height:72px;padding:0 26px!important;margin:0 0 22px!important;background:linear-gradient(110deg,#07182c 0%,#0b2442 65%,#103b65 100%)!important;border-bottom:1px solid #1675bd!important;display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:120;box-shadow:0 5px 22px #0004;border-radius:0!important;flex-wrap:nowrap!important}
+.studio-menu{font-size:25px;color:#cbd5e1;background:transparent;border:0;padding:6px;display:none}
+.studio-brand{display:flex;align-items:center;gap:10px;min-width:150px;font-size:22px;font-weight:700;color:#f8fafc!important;white-space:nowrap}
+.studio-search{height:42px;max-width:720px;flex:1;border-radius:28px;background:#202a36;border:1px solid #2d3948;color:#eef2f7;padding:0 18px;font-size:15px;outline:none;min-width:0}
+.studio-search:focus{border-color:#6686b8}
+.studio-top-right{display:flex;align-items:center;gap:16px;margin-left:auto;color:#bdc8d6}
+.top-icon-btn{width:40px;height:40px;border:0;border-radius:50%;display:grid;place-items:center;background:transparent;color:#dbe6f5;font-size:23px;position:relative;padding:0}
+.top-icon-btn:hover{background:#253446}
+.top-add-btn{background:#172b43;border:1px solid #2e4968;color:#e8f2ff;font-size:25px}
+.top-profile-btn{width:34px;height:34px;font-size:15px;background:#2449bc;color:white}
+.studio-top-right button[aria-label="Notifications"]{font-size:0!important;position:relative!important;display:grid;place-items:center}
+.studio-top-right button[aria-label="Notifications"] .notification-bell{width:23px;height:23px;fill:none;stroke:#f4f8ff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}
+.studio-top-right button[aria-label="Notifications"]::after{content:"";position:absolute;top:5px;right:6px;width:8px;height:8px;border-radius:50%;background:#ff304f;border:2px solid #0b2442;box-sizing:content-box}
+.top-popover{position:absolute;top:62px;right:72px;width:270px;max-width:calc(100vw - 24px);background:#111d2a;border:1px solid #2c3b4c;border-radius:15px;box-shadow:0 14px 40px #0008;padding:10px;z-index:130}
+.top-popover[hidden]{display:none}
+.top-popover-head{padding:12px;border-bottom:1px solid #2a3948;margin-bottom:6px;color:#edf4ff}
+.top-popover-head small{display:block;color:#93a7bd;margin-top:4px}
+.top-popover button,.top-popover a{display:flex;align-items:center;gap:12px;width:100%;padding:11px 12px;border:0;border-radius:8px;background:transparent;color:#e0eaf6;text-decoration:none;text-align:left;font-size:14px}
+.top-popover button:hover,.top-popover a:hover{background:#223144}
+.top-popover .pop-divider{height:1px;background:#293847;margin:6px 2px}
+@media(max-width:680px){.studio-top{height:62px;padding:0 12px!important;gap:9px}.studio-brand{min-width:0;font-size:18px}.studio-search{display:none}.studio-top-right{gap:5px}.top-icon-btn{width:34px;height:36px}.top-popover{top:56px;right:8px}}
+
+</style>
 </head>
 <body>
 <main>
-<header class="channel-studio-header">
-  <div class="channel-brand"><span class="channel-brand-mark" aria-hidden="true">N</span><div><h1>NextGen</h1><p class="tag">Smart Automation. Smarter Growth.</p></div></div>
-  <div class="channel-header-tools">
-    <input class="channel-header-search" type="search" placeholder="Search channels..." aria-label="Search channels" oninput="document.getElementById('channelSearch').value=this.value;document.getElementById('channelSearch').dispatchEvent(new Event('input'))">
-    <button type="button" class="channel-header-add" aria-label="Add channel" title="Add channel" onclick="document.getElementById('addChannelButton').click()">＋</button>
-    <button type="button" class="channel-header-bell" aria-label="Notifications" title="Notifications"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span></span></button>
-    <div class="channel-avatar" aria-label="NextGen account">N</div>
+<header class="studio-top">
+  <button class="studio-menu" type="button" aria-label="Menu" onclick="document.querySelector('.channel-drawer')?.classList.toggle('nav-expanded')">☰</button>
+  <div class="studio-brand">NextGen</div>
+  <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" oninput="document.getElementById('channelSearch').value=this.value;document.getElementById('channelSearch').dispatchEvent(new Event('input'))">
+  <div class="studio-top-right">
+    <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="document.getElementById('addChannelButton').click()">+</button>
+    <button class="top-icon-btn" type="button" aria-label="Notifications" title="Notifications" onclick="document.getElementById('notificationMenu').hidden=!document.getElementById('notificationMenu').hidden"><svg class="notification-bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></button>
+    <button class="top-icon-btn top-profile-btn" type="button" aria-label="Profile menu" onclick="document.getElementById('profileMenu').hidden=!document.getElementById('profileMenu').hidden">A</button>
+  </div>
+  <div id="addMenu" class="top-popover" hidden>
+    <button type="button" onclick="window.location.href='channels.html'"><span>＋</span> Add channel</button>
+    <button type="button" onclick="studioNavTo('content')"><span>▣</span> Add content</button>
+  </div>
+  <div id="notificationMenu" class="top-popover" hidden style="right:42px">
+    <div class="top-popover-head"><b>Notifications</b><small>No new notifications</small></div>
+    <button type="button" onclick="toggleTopMenu('notificationMenu')">Close</button>
+  </div>
+  <div id="profileMenu" class="top-popover" hidden>
+    <div class="top-popover-head"><b>NextGen account</b><small>Manage your account and preferences</small></div>
+    <button type="button" onclick="alert('Account switching will be available when multi-account login is implemented.')"><span>⇄</span> Switch account</button>
+    <button type="button" onclick="alert('Google Account linking is not connected yet.')"><span style="font-size:18px;font-weight:bold">G</span> Google Account</button>
+    <button type="button" onclick="window.location.href='settings.html'"><span>⚙</span> Settings</button>
+    <div class="pop-divider"></div>
+    <button type="button" onclick="window.location.href='privacy-settings.html'"><span>◎</span> Account status</button>
+    <button type="button" onclick="alert('Thanks for your feedback!')"><span>▤</span> Send feedback</button>
+    <div class="pop-divider"></div>
+    <button type="button" onclick="window.location.href='help-centre.html'"><span>?</span> Help Centre</button>
+    <button type="button" onclick="window.open('https://www.youtube.com/','_blank')"><span>▶</span> YouTube ↗</button>
+    <div class="pop-divider"></div>
+    <button type="button" onclick="window.location.href='privacy-settings.html'"><span>⬟</span> Privacy policy</button>
+    <button type="button" onclick="window.location.href='privacy-settings.html'"><span>▤</span> Terms of Service</button>
   </div>
 </header> 
 <div class="top">
