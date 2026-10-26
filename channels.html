@@ -88,8 +88,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     <button type="button" class="pause-button">Pause channel</button>
     <button type="button" class="enable-button" aria-pressed="true">Disable channel</button>
     <button type="button" class="primary review-button">Review</button>
-    <button type="button" class="delete-button">Remove</button>
-    <button type="button" class="delete-button">Remove</button>
+
   </div>
 </section>
 
@@ -102,7 +101,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     <button type="button" class="pause-button">Pause channel</button>
     <button type="button" class="enable-button" aria-pressed="true">Disable channel</button>
     <button type="button" class="primary review-button">Review</button>
-    <button type="button" class="delete-button">Remove</button>
+
   </div>
 </section>
 
@@ -132,6 +131,12 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
   </div>
 </section>
 </div>
+
+<section class="card" id="privacy-settings" style="margin-top:20px">
+  <h3>Settings → Privacy Settings</h3>
+  <p class="muted">Edit channel details or remove a channel from your NextGen list here. This does not disconnect or delete the real social-media account.</p>
+  <div id="privacyChannelList" style="display:grid;gap:10px"></div>
+</section>
 
 <section class="card" style="margin-top:20px">
   <h3>Approval Safety</h3>
@@ -276,38 +281,11 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
       if(match) visible++;
     });
     count.textContent = 'Showing ' + visible + ' of ' + cards.length + ' channels';
+    renderPrivacyChannelList();
   }
 
   function bindCard(card){
     renderCard(card);
-    const editButton=card.querySelector('.edit-button');
-    if(editButton) editButton.addEventListener('click',function(){
-      const panel=document.getElementById('addChannelPanel');
-      document.getElementById('newPlatform').value=card.dataset.platform;
-      document.getElementById('newChannelName').value=card.dataset.name||'';
-      document.getElementById('newChannelHandle').value=card.dataset.handle||'';
-      document.getElementById('newChannelUrl').value=card.dataset.url||'';
-      document.getElementById('platformDisplay').value=(card.dataset.platform||'').replace(/^./,ch=>ch.toUpperCase());
-      document.getElementById('editingChannelKey').value=card.dataset.customKey||'';
-      document.getElementById('addChannelForm').querySelector('[type=submit]').textContent='Save changes';
-      document.querySelector('#addChannelPanel h3').textContent='Edit channel details';
-      panel.hidden=false;document.getElementById('newChannelName').focus();
-    });
-    const deleteButton=card.querySelector('.delete-button');
-    if(deleteButton) deleteButton.addEventListener('click',function(){
-      const label=card.dataset.name||'this channel';
-      if(!window.confirm('Remove "'+label+'" from the NextGen channel list on this browser? This will not disconnect or delete the real social account.'))return;
-      const identity=channelIdentity(card);
-      deletedChannels.add(identity);
-      try{localStorage.setItem(deletedChannelsStorageKey,JSON.stringify(Array.from(deletedChannels)));}catch(e){}
-      if(card.dataset.customKey){
-        const items=readCustomChannels().filter(item=>[item.platform,item.name,item.handle||''].join('|').toLowerCase()!==identity);
-        saveCustomChannels(items);
-      }
-      card.remove();
-      cards=cards.filter(item=>item!==card);
-      filterCards();
-    });
     card.querySelector('.enable-button').addEventListener('click',function(){
       const platform = card.dataset.platform;
       enabledChannels[platform] = enabledChannels[platform] === false;
@@ -325,6 +303,45 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
         ' review: Manual approval is required. Real account verification is not connected yet.');
     });
   }
+  function renderPrivacyChannelList(){
+    const list=document.getElementById('privacyChannelList');
+    if(!list)return;
+    list.innerHTML='';
+    if(!cards.length){list.textContent='No channels to manage.';return;}
+    cards.forEach(function(card){
+      const row=document.createElement('div');
+      row.style.cssText='display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:#10182a;border:1px solid var(--line);border-radius:10px;padding:12px';
+      const info=document.createElement('div');
+      const name=document.createElement('strong');name.textContent=card.dataset.name||'Unnamed channel';
+      const meta=document.createElement('p');meta.className='muted';meta.style.margin='5px 0 0';meta.textContent=(card.dataset.platform||'').toUpperCase()+' · '+(card.dataset.handle||'');
+      info.append(name,meta);
+      const actions=document.createElement('div');actions.className='actions';
+      const edit=document.createElement('button');edit.type='button';edit.textContent='Edit';
+      edit.addEventListener('click',function(){
+        document.getElementById('newPlatform').value=card.dataset.platform||'youtube';
+        document.getElementById('newChannelName').value=card.dataset.name||'';
+        document.getElementById('newChannelHandle').value=card.dataset.handle||'';
+        document.getElementById('newChannelUrl').value=card.dataset.url||'';
+        document.getElementById('platformDisplay').value=(card.dataset.platform||'').replace(/^./,ch=>ch.toUpperCase());
+        document.getElementById('editingChannelKey').value=card.dataset.customKey||channelIdentity(card);
+        document.getElementById('addChannelForm').querySelector('[type=submit]').textContent='Save changes';
+        document.querySelector('#addChannelPanel h3').textContent='Edit channel details';
+        const panel=document.getElementById('addChannelPanel');panel.hidden=false;panel.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+      const remove=document.createElement('button');remove.type='button';remove.textContent='Remove';
+      remove.addEventListener('click',function(){
+        const label=card.dataset.name||'this channel';
+        if(!window.confirm('Remove "'+label+'" from the NextGen channel list on this browser? This will not disconnect or delete the real social account.'))return;
+        const identity=channelIdentity(card);deletedChannels.add(identity);
+        try{localStorage.setItem(deletedChannelsStorageKey,JSON.stringify(Array.from(deletedChannels)));}catch(e){}
+        const items=readCustomChannels().filter(item=>[item.platform,item.name,item.handle||''].join('|').toLowerCase()!==identity);
+        saveCustomChannels(items);
+        card.remove();cards=cards.filter(item=>item!==card);filterCards();renderPrivacyChannelList();
+      });
+      actions.append(edit,remove);row.append(info,actions);list.appendChild(row);
+    });
+  }
+
   function buildChannelCard(platform,name,handle,url){
     const card=document.createElement('section');
     card.className='card';
@@ -342,7 +359,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     const connection=document.createElement('span');connection.className='connection';
     statusEl.append(dot,connection);
     const actions=document.createElement('div');actions.className='actions';
-    [['pause-button','Pause channel'],['enable-button','Disable channel'],['primary review-button','Review'],['edit-button','Edit details'],['delete-button','Remove']].forEach(function(item){
+    [['pause-button','Pause channel'],['enable-button','Disable channel'],['primary review-button','Review']].forEach(function(item){
       const b=document.createElement('button');b.type='button';b.className=item[0];b.textContent=item[1];actions.appendChild(b);
     });
     if(url){const link=document.createElement('p');link.className='handle';const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Open profile link';link.appendChild(a);card.appendChild(link);}
@@ -394,6 +411,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     }
   });
   cards.forEach(bindCard);
+  renderPrivacyChannelList();
 
   const addPanel = document.getElementById('addChannelPanel');
   const addForm = document.getElementById('addChannelForm');
@@ -479,16 +497,16 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
       if(!name) { status.textContent='Could not read a channel name from this link. Try a profile link with a username in its address.'; return; }
       if(!handle) handle=detected.handle;
     }else{status.textContent='Please paste a profile link first.';return;}
-    const editingCard=editingKey?cards.find(x=>x.dataset.customKey===editingKey):null;
+    const editingCard=editingKey?cards.find(x=>x.dataset.customKey===editingKey || channelIdentity(x)===editingKey):null;
     const exists=cards.some(card=>card!==editingCard && card.dataset.platform===platform && card.dataset.name.toLowerCase()===name.toLowerCase() && (card.dataset.handle||'').toLowerCase()===handle.toLowerCase());
     if(exists){status.textContent='This channel is already in the list.';return;}
     const savedItems=readCustomChannels();
     let item;
     if(editingKey){
-      const idx=savedItems.findIndex(x=>(x.key||[x.platform,x.name,x.handle||''].join('|'))===editingKey);
+      const idx=savedItems.findIndex(x=>(x.key||[x.platform,x.name,x.handle||''].join('|'))===editingKey || [x.platform,x.name,x.handle||''].join('|').toLowerCase()===editingKey.toLowerCase());
       item={key:[platform,name,handle].join('|'),platform,name,handle,url,createdAt:new Date().toISOString()};
-      if(idx>=0)savedItems[idx]=item;else savedItems.push(item);
-      if(editingCard){editingCard.dataset.platform=platform;editingCard.dataset.name=name;editingCard.dataset.handle=handle;editingCard.dataset.url=url;editingCard.dataset.customKey=item.key;editingCard.querySelector('h3').textContent=name;editingCard.querySelector('.platform').textContent=({youtube:'▶️ YouTube',facebook:'📘 Facebook',instagram:'📸 Instagram',threads:'🧵 Threads',other:'🌐 Other platform'})[platform]||'🌐 Platform';editingCard.querySelector('.handle').textContent=handle||'No handle added';}
+      if(idx>=0)savedItems[idx]=item;else if(editingCard && !editingCard.dataset.customKey)savedItems.push(item);else savedItems.push(item);
+      if(editingCard){deletedChannels.delete(channelIdentity(editingCard));editingCard.dataset.platform=platform;editingCard.dataset.name=name;editingCard.dataset.handle=handle;editingCard.dataset.url=url;editingCard.dataset.customKey=item.key;editingCard.querySelector('h3').textContent=name;editingCard.querySelector('.platform').textContent=({youtube:'▶️ YouTube',facebook:'📘 Facebook',instagram:'📸 Instagram',threads:'🧵 Threads',other:'🌐 Other platform'})[platform]||'🌐 Platform';editingCard.querySelector('.handle').textContent=handle||'No handle added';}
     }else{
       item={key:[platform,name,handle].join('|'),platform,name,handle,url,createdAt:new Date().toISOString()};
       savedItems.push(item);
@@ -502,8 +520,9 @@ footer{margin-top:32px;border-top:1px solid var(--line);padding-top:16px;color:v
     document.getElementById('editingChannelKey').value='';
     addForm.querySelector('[type=submit]').textContent='Add to list';
     document.querySelector('#addChannelPanel h3').textContent='Add a channel (demo)';
-    addPanel.hidden=true;
+    addPanel.hidden=false;
     filterCards();
+    renderPrivacyChannelList();
     if(editingKey){
       status.textContent=localSaved?'Channel details updated and saved in this browser.':'Channel details updated for this page session; browser storage unavailable.';
       return;
