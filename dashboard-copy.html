@@ -252,6 +252,46 @@ main.studio-main #channelCards.channels{display:grid!important;grid-template-col
 main.studio-main #channelCards .channel-review-card{display:block!important;width:100%!important;max-width:none!important;min-width:0!important;margin:0!important;padding:24px 22px!important}
 main.studio-main .top{display:block!important;width:100%!important;max-width:none!important}
 @media(min-width:651px){main.studio-main{padding:24px!important}}
+
+/* Channels page layout aligned to the provided mobile reference */
+main.studio-main{width:100%!important;max-width:none!important;margin:0!important;padding:22px 20px 100px!important}
+.channel-page-title{font-size:30px!important;line-height:1.2;margin:0 0 4px!important;color:#f2f6ff!important}
+.channel-page-subtitle{font-size:15px;color:#c2d0e5;margin:0 0 22px!important}
+main.studio-main .top>div:first-child{margin-bottom:0}
+main.studio-main .top>div:nth-child(2){display:flex!important;flex-direction:row!important;align-items:center!important;flex-wrap:nowrap!important;gap:12px!important;margin-top:20px!important}
+main.studio-main #channelSearch{height:54px!important;flex:1 1 auto!important;width:auto!important;border-radius:13px!important;font-size:15px!important;padding:0 16px!important}
+main.studio-main .top>div:nth-child(2) button{height:54px!important;white-space:nowrap!important;margin:0!important;border:0!important;border-radius:13px!important;background:#079bf2!important;color:white!important;font-size:15px!important;padding:0 18px!important}
+main.studio-main #channelCards.channels{display:grid!important;grid-template-columns:minmax(0,1fr)!important;width:100%!important;gap:18px!important;margin-top:26px!important}
+main.studio-main #channelCards .channel-review-card{display:grid!important;grid-template-columns:76px minmax(0,1fr) auto!important;grid-template-rows:auto auto auto!important;column-gap:18px!important;row-gap:8px!important;align-items:center!important;width:100%!important;max-width:none!important;min-width:0!important;margin:0!important;padding:24px 26px!important;border:1px solid #154f80!important;border-radius:22px!important;background:linear-gradient(110deg,#0d2340,#0a1c34)!important}
+main.studio-main #channelCards .channel-review-head{display:contents!important}
+main.studio-main #channelCards .channel-review-icon{grid-column:1;grid-row:1/3;width:76px!important;height:76px!important;border-radius:18px!important;background:#ed263a!important;color:#fff!important;font-size:0!important}
+main.studio-main #channelCards .channel-review-icon{position:relative}
+main.studio-main #channelCards [data-channel-card]:nth-child(1) .channel-review-icon:after{content:"▶";font-size:30px;color:white;background:#fff2;border-radius:8px;padding:4px 10px}
+main.studio-main #channelCards [data-channel-card]:nth-child(2) .channel-review-icon{background:#087cf0!important}
+main.studio-main #channelCards [data-channel-card]:nth-child(2) .channel-review-icon:after{content:"f";font:bold 54px Arial;color:white}
+main.studio-main #channelCards [data-channel-card]:nth-child(3) .channel-review-icon{background:linear-gradient(35deg,#ffb900,#ff0069,#7b2cff)!important}
+main.studio-main #channelCards [data-channel-card]:nth-child(3) .channel-review-icon:after{content:"◎";font-size:55px;color:white}
+main.studio-main #channelCards [data-channel-card]:nth-child(4) .channel-review-icon{background:#000!important}
+main.studio-main #channelCards [data-channel-card]:nth-child(4) .channel-review-icon:after{content:"@" ;font-size:46px;color:white}
+main.studio-main #channelCards .channel-review-platform{grid-column:2;grid-row:1;font-size:23px!important;font-weight:800!important;line-height:1.2!important;color:#f2f6ff!important}
+main.studio-main #channelCards .channel-review-name{display:none!important}
+main.studio-main #channelCards .channel-review-handle{grid-column:2;grid-row:2;font-size:17px!important;line-height:1.35!important;color:#a9c5eb!important;margin:0!important;overflow-wrap:anywhere}
+main.studio-main #channelCards .channel-review-status{grid-column:1/3;grid-row:3;display:flex!important;align-items:center!important;gap:10px!important;font-size:15px!important;color:#dce7f7!important;margin:8px 0 0!important}
+main.studio-main #channelCards .channel-review-dot{width:11px!important;height:11px!important;background:#ffd16f!important}
+main.studio-main #channelCards .channel-review-card>div:last-child{grid-column:3;grid-row:1/3;margin:0!important}
+main.studio-main #channelCards .channel-review-button,main.studio-main #channelCards .channel-review-card button{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-width:130px!important;height:56px!important;padding:0 20px!important;border:0!important;border-radius:16px!important;background:#5686ff!important;color:#06152d!important;font-size:20px!important;font-weight:800!important;white-space:nowrap!important}
+@media(max-width:520px){
+ main.studio-main{padding:20px 14px 100px!important}
+ main.studio-main .top>div:nth-child(2){gap:8px!important}
+ main.studio-main .top>div:nth-child(2) button{padding:0 12px!important;font-size:13px!important}
+ main.studio-main #channelCards .channel-review-card{grid-template-columns:58px minmax(0,1fr) auto!important;column-gap:12px!important;padding:18px 14px!important;border-radius:18px!important}
+ main.studio-main #channelCards .channel-review-icon{width:58px!important;height:58px!important;border-radius:14px!important}
+ main.studio-main #channelCards .channel-review-platform{font-size:19px!important}
+ main.studio-main #channelCards .channel-review-handle{font-size:13px!important}
+ main.studio-main #channelCards .channel-review-status{font-size:12px!important;grid-column:1/4!important}
+ main.studio-main #channelCards .channel-review-button,main.studio-main #channelCards .channel-review-card button{min-width:88px!important;height:44px!important;padding:0 10px!important;font-size:15px!important;border-radius:12px!important}
+ main.studio-main #channelCards .channel-review-icon:after{transform:scale(.8)}
+}
 </style>
 </head>
 
@@ -296,14 +336,15 @@ main.studio-main .top{display:block!important;width:100%!important;max-width:non
 <main class="studio-main" style="max-width:1200px;margin:0 auto">
 <div class="top" style="display:block;width:100%">
   <div>
-    <h2>Channel Management</h2>
-    <p class="note" id="cloudStatus">DEMO CONTROLS — browser-only test settings, not connected to real social accounts.</p>
-  <div class="notice" style="margin-top:14px">
+    <h2 class="channel-page-title">Channels</h2>
+    <p class="channel-page-subtitle">Manage your connected social media channels</p>
+    <p class="note" id="cloudStatus" style="display:none">DEMO CONTROLS — browser-only test settings, not connected to real social accounts.</p>
+  <div class="notice" style="display:none;margin-top:14px">
     <strong>Demo controls are below.</strong> Channel controls only save demo state in this browser; they do not pause or publish on YouTube, Facebook, Instagram, or Threads.
   </div>
   </div>
   <div style="display:flex;width:100%;box-sizing:border-box;gap:10px;align-items:center;flex-wrap:wrap;margin-top:20px">
-    <input id="channelSearch" type="search" aria-label="Search channels" placeholder="⌕  Search channels or platforms..." oninput="filterChannelCards()" style="flex:1;min-width:200px;padding:13px 15px;border-radius:10px;border:1px solid #34465d;background:#141e32;color:#eef3ff;font-size:14px">
+    <input id="channelSearch" type="search" aria-label="Search channels" placeholder="⌕  Search channels..." oninput="filterChannelCards()" style="flex:1;min-width:0;padding:13px 15px;border-radius:10px;border:1px solid #1b4e80;background:#0d2340;color:#eef3ff;font-size:14px">
     <button type="button" class="action active" onclick="window.location.href='channels.html'" style="padding:13px 18px">＋ Add Channel</button>
   </div>
   <div id="channelSearchEmpty" class="muted" style="display:none;margin-top:16px">No matching channels found.</div>
