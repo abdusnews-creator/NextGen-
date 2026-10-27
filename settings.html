@@ -424,5 +424,75 @@ document.addEventListener('click',function(event){
  updateApprovalSummary();
 })();
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+<script>
+/* Cloud persistence for approval preferences; publishing remains disabled in this prototype. */
+(function(){
+  let client=null, userId=null, saving=false;
+  const statusLine=document.getElementById('autoApprovalStatusText');
+  function getClient(){
+    if(client)return client;
+    const cfg=window.NEXTGEN_SUPABASE_CONFIG||{};
+    if(!window.supabase||!cfg.url||!cfg.anonKey)throw new Error('Supabase client configuration unavailable.');
+    client=window.supabase.createClient(cfg.url,cfg.anonKey);
+    return client;
+  }
+  function currentValues(){
+    const manual=document.getElementById('manualApprovalSwitch')?.getAttribute('aria-checked')==='true';
+    const auto=document.getElementById('autoApprovalSwitch')?.getAttribute('aria-checked')==='true';
+    return {approval_mode:auto?'auto':'manual',auto_approval_enabled:auto};
+  }
+  async function saveCloud(){
+    if(saving||!userId)return;
+    saving=true;
+    try{
+      const c=getClient(), values=currentValues();
+      const {error}=await c.from('automation_settings').upsert({
+        owner_id:userId,
+        approval_mode:values.approval_mode,
+        auto_approval_enabled:values.auto_approval_enabled
+      },{onConflict:'owner_id'});
+      if(error)throw error;
+      if(statusLine)statusLine.title='Approval preference saved to your NextGen account.';
+    }catch(e){
+      if(statusLine)statusLine.title='Cloud save unavailable: '+(e?.message||'Please sign in again.');
+    }finally{saving=false;}
+  }
+  function alignSwitch(id,wantOn){
+    const el=document.getElementById(id);
+    if(el&&((el.getAttribute('aria-checked')==='true')!==wantOn))el.click();
+  }
+  async function init(){
+    try{
+      const c=getClient(), {data,error}=await c.auth.getSession();
+      if(error)throw error;
+      userId=data.session?.user?.id||null;
+      if(!userId)return;
+      const result=await c.from('automation_settings').select('approval_mode,auto_approval_enabled').eq('owner_id',userId).maybeSingle();
+      if(result.error)throw result.error;
+      const row=result.data;
+      if(row){
+        const autoOn=row.auto_approval_enabled===true&&row.approval_mode==='auto';
+        // Apply in a safe order so the UI's mutual-exclusion rules remain intact.
+        alignSwitch('manualApprovalSwitch',!autoOn);
+        alignSwitch('autoApprovalSwitch',autoOn);
+      }else{
+        await saveCloud(); // persist safe defaults: manual ON, auto OFF
+      }
+      c.auth.onAuthStateChange((_event,session)=>{userId=session?.user?.id||null;});
+    }catch(e){
+      if(statusLine)statusLine.title='Cloud approval settings not loaded: '+(e?.message||'Please sign in to sync settings.');
+    }
+  }
+  ['manualApprovalSwitch','autoApprovalSwitch'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.addEventListener('click',()=>setTimeout(saveCloud,0));
+  });
+  init();
+})();
+</script>
+
 </body>
 </html>
