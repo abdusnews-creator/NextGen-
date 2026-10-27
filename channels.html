@@ -610,6 +610,8 @@ async function restoreAddedDemoChannels(){
     if(status)status.textContent='Cloud channel loading unavailable: '+(error&&error.message?error.message:'Please refresh and sign in again.');
   }
 }
+const channelUrlInput=document.getElementById('newChannelUrl');
+if(channelUrlInput){channelUrlInput.addEventListener('input',autofillChannelFromUrl);channelUrlInput.addEventListener('change',autofillChannelFromUrl);}
 document.addEventListener('keydown',function(event){if(event.key==='Escape')closeAddChannelModal();});
 restoreAddedDemoChannels();
 </script>
