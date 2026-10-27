@@ -509,6 +509,32 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 </div>
 </main>
 <script>
+/* Restore top-bar controls on this standalone page as well as on the main dashboard. */
+function toggleTopMenu(id){
+  ['addMenu','notificationMenu','profileMenu'].forEach(function(menuId){
+    var menu=document.getElementById(menuId);
+    if(menu)menu.hidden=(menuId!==id || !menu.hidden);
+  });
+}
+function studioNavTo(section){
+  var routes={
+    dashboard:'index.html#dashboard',
+    content:'index.html#content',
+    approvals:'index.html#approvals',
+    schedule:'index.html#schedule',
+    channels:'channels.html',
+    settings:'settings.html'
+  };
+  if(routes[section])window.location.href=routes[section];
+}
+document.addEventListener('click',function(event){
+  if(!event.target.closest('.studio-top-right')&&!event.target.closest('.top-popover')){
+    ['addMenu','notificationMenu','profileMenu'].forEach(function(id){
+      var menu=document.getElementById(id);
+      if(menu)menu.hidden=true;
+    });
+  }
+});
 function filterChannelCards(){
   const q=(document.getElementById('channelSearch').value||'').trim().toLowerCase();
   const cards=document.querySelectorAll('[data-channel-card]');
