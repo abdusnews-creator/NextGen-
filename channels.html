@@ -334,6 +334,28 @@ main.studio-main #channelSearch{min-width:0!important;max-width:100%!important}
  main.studio-main #channelCards .channel-review-button,main.studio-main #channelCards .channel-review-card button{min-width:72px!important;padding-left:7px!important;padding-right:7px!important;font-size:13px!important}
 }
 </style>
+<style id="channels-top-header-scroll-fix">
+/* Keep only the top header fixed while the Channels content scrolls. */
+body>header.studio-top{
+ position:sticky!important;
+ top:0!important;
+ z-index:5000!important;
+ width:100%!important;
+ max-width:100%!important;
+ margin-top:0!important;
+ align-self:stretch!important;
+}
+@media(max-width:680px){
+ body>header.studio-top{
+  position:sticky!important;
+  top:0!important;
+  height:62px!important;
+  min-height:62px!important;
+  padding-top:0!important;
+  padding-bottom:0!important;
+ }
+}
+</style>
 </head>
 
 <body>
