@@ -114,6 +114,7 @@ body>main>header.channel-studio-header h1{color:#f8fafc!important;font-size:22px
 body>main>header.channel-studio-header p.tag{color:#b8d7f5!important;margin:4px 0 0!important;font-size:12px!important}
 @media(max-width:600px){body>main>header.channel-studio-header{margin:-12px -12px 18px!important;padding:12px!important}}
 
+.notification-bell-3d{font-size:25px;line-height:1;display:block;filter:drop-shadow(0 2px 1px #0008) drop-shadow(0 0 3px #f5b94255)}
 </style>
 <style>
 
@@ -209,7 +210,7 @@ body>header.studio-top .top-popover[hidden]{display:none!important}
   <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" onkeydown="if(event.key==='Enter'){document.getElementById('channelSearch').value=this.value;document.getElementById('channelSearch').dispatchEvent(new Event('input'))}">
   <div class="studio-top-right">
     <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="document.getElementById('addChannelButton').click()">+</button>
-    <button class="top-icon-btn" type="button" aria-label="Notifications" title="Notifications" onclick="document.getElementById('notificationMenu').hidden=!document.getElementById('notificationMenu').hidden"><svg class="notification-bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></button>
+    <button class="top-icon-btn" type="button" aria-label="Notifications" title="Notifications" onclick="document.getElementById('notificationMenu').hidden=!document.getElementById('notificationMenu').hidden"><span class="notification-bell-3d" aria-hidden="true">🔔</span></button>
     <button class="top-icon-btn top-profile-btn" type="button" aria-label="Profile menu" onclick="document.getElementById('profileMenu').hidden=!document.getElementById('profileMenu').hidden">A</button>
   </div>
   <div id="addMenu" class="top-popover" hidden>
