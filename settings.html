@@ -468,8 +468,10 @@ document.addEventListener('click',function(event){
       },{onConflict:'owner_id'});
       if(error)throw error;
       if(statusLine)statusLine.title='Approval preference saved to your NextGen account.';
+      return true;
     }catch(e){
       if(statusLine)statusLine.title='Cloud save unavailable: '+(e?.message||'Please sign in again.');
+      return false;
     }finally{saving=false;}
   }
   function alignSwitch(id,wantOn){
@@ -523,8 +525,8 @@ document.addEventListener('click',function(event){
     const status=document.getElementById('ideaScheduleStatus');
     if(!userId){if(status)status.textContent='Sign in first to save these times to your account.';return;}
     if(status)status.textContent='Saving…';
-    await saveCloud();
-    if(status)status.textContent='Schedule preferences saved (Asia/Kolkata): '+readIdeaTimes().join(', ')+'. Live scheduling/background worker is not active yet.';
+    const saved=await saveCloud();
+    if(status)status.textContent=saved?'Schedule preferences saved (Asia/Kolkata): '+readIdeaTimes().join(', ')+'. Live scheduling/background worker is not active yet.':'Save failed. Check sign-in and try again.';
   });
   ['manualApprovalSwitch','autoApprovalSwitch','backgroundPreferenceSwitch'].forEach(id=>{
     const el=document.getElementById(id);
