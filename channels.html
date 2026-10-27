@@ -966,9 +966,9 @@ body > footer { position:relative!important; }
     var raw=(field.value||'').trim();
     if(!raw)return;
     var url;
-    try{url=new URL(/^https?:\\/\\//i.test(raw)?raw:'https://'+raw);}
+    try{url=new URL(/^https?:\/\//i.test(raw)?raw:'https://'+raw);}
     catch(e){if(status)status.textContent='Please paste a complete profile link.';return;}
-    var host=url.hostname.toLowerCase().replace(/^(www|m|mobile)\\./,'');
+    var host=url.hostname.toLowerCase().replace(/^(www|m|mobile)\./,'');
     var parts=url.pathname.split('/').filter(Boolean).map(function(x){try{return decodeURIComponent(x)}catch(e){return x}});
     var platform='',handle='';
     if(host==='youtube.com'||host==='youtube-nocookie.com'){
