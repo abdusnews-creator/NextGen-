@@ -296,7 +296,16 @@ async function loadSavedCloudDrafts(){
    const h=document.createElement('h4');h.textContent=row.title||'Untitled draft';
    const p=document.createElement('p');p.className='queueStatus';p.textContent=(row.platform||'').toUpperCase()+' · '+(row.status||'draft')+' · Manual review';
    const body=document.createElement('p');body.className='muted';body.textContent=(row.caption||'').slice(0,180);
-   card.append(h,p,body);list.appendChild(card);
+   const use=document.createElement('button');use.type='button';use.textContent='Use as new draft';use.style.cssText='width:100%;padding:10px;border:1px solid #91aaff;border-radius:8px;background:#202b42;color:#eef3ff;font-weight:bold;margin-top:8px';
+   use.addEventListener('click',()=>{
+    document.getElementById('cloudDraftPlatform').value=['youtube','facebook','instagram','threads'].includes(row.platform)?row.platform:'youtube';
+    document.getElementById('cloudDraftTitle').value=row.title||'';
+    document.getElementById('cloudDraftCaption').value=row.caption||'';
+    const status=document.getElementById('cloudDraftCreateStatus');
+    status.textContent='Loaded into the form as a new draft. Saving will create a separate copy; the original remains unchanged.';
+    document.getElementById('cloudDraftCreator').scrollIntoView({behavior:'smooth',block:'start'});
+   });
+   card.append(h,p,body,use);list.appendChild(card);
   });
  }catch(e){list.textContent='Could not load cloud drafts: '+(e.message||'check sign-in').slice(0,120);}
 }
