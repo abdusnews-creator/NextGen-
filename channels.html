@@ -418,7 +418,54 @@ function filterChannelCards(){
     </div>
   </form>
 </div>
-\n<footer>NextGen Prototype • Dashboard preview • Real publishing is not connected</footer>
+\n<script>
+const addedChannelsKey='nextgen-demo-added-channels-v1';
+function openAddChannelModal(){
+  const modal=document.getElementById('addChannelModal');if(!modal)return;
+  modal.hidden=false;modal.style.display='flex';
+  document.getElementById('addChannelStatus').textContent='';
+  document.getElementById('newChannelName').focus();
+}
+function closeAddChannelModal(){
+  const modal=document.getElementById('addChannelModal');if(modal){modal.hidden=true;modal.style.display='none';}
+}
+function buildDemoChannel(item){
+  const article=document.createElement('article');article.className='card channel-review-card';article.setAttribute('data-channel-card','');
+  const icons={YouTube:'▶️',Facebook:'📘',Instagram:'📸',Threads:'🧵'};
+  const head=document.createElement('div');head.className='channel-review-head';
+  const icon=document.createElement('div');icon.className='channel-review-icon';icon.textContent=icons[item.platform]||'🔗';
+  const platform=document.createElement('div');platform.className='channel-review-platform';platform.textContent=item.platform||'Channel';head.append(icon,platform);
+  const name=document.createElement('h3');name.className='channel-review-name';name.textContent=item.name||'Untitled channel';
+  const handle=document.createElement('p');handle.className='channel-review-handle';handle.textContent=item.handle||'Handle not provided';
+  const state=document.createElement('div');state.className='channel-review-status';
+  const dot=document.createElement('span');dot.className='channel-review-dot';
+  const stateText=document.createElement('span');stateText.textContent='Demo channel · Not connected';state.append(dot,stateText);
+  article.append(head,name,handle,state);return article;
+}
+function addDemoChannel(event){
+  event.preventDefault();
+  const item={platform:document.getElementById('newChannelPlatform').value,name:document.getElementById('newChannelName').value.trim(),handle:document.getElementById('newChannelHandle').value.trim()};
+  const status=document.getElementById('addChannelStatus');
+  if(!item.name){status.textContent='Please enter a channel or page name.';return;}
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(addedChannelsKey)||'[]');if(!Array.isArray(saved))saved=[];}catch(error){}
+  saved.push(item);
+  try{localStorage.setItem(addedChannelsKey,JSON.stringify(saved));}catch(error){status.textContent='Browser storage is unavailable; channel may not remain after refresh.';}
+  document.getElementById('channelCards').appendChild(buildDemoChannel(item));
+  document.getElementById('addChannelForm').reset();closeAddChannelModal();
+  document.getElementById('channelSearch').value='';
+  const topSearch=document.querySelector('.studio-search');if(topSearch)topSearch.value='';
+  filterChannelCards();
+  const cards=document.querySelectorAll('[data-channel-card]');if(cards.length)cards[cards.length-1].scrollIntoView({behavior:'smooth',block:'center'});
+}
+function restoreAddedDemoChannels(){
+  let saved=[];try{saved=JSON.parse(localStorage.getItem(addedChannelsKey)||'[]');}catch(error){}
+  if(!Array.isArray(saved))return;
+  saved.forEach(item=>document.getElementById('channelCards').appendChild(buildDemoChannel(item)));
+}
+document.addEventListener('keydown',function(event){if(event.key==='Escape')closeAddChannelModal();});
+restoreAddedDemoChannels();
+</script>
+<footer>NextGen Prototype • Dashboard preview • Real publishing is not connected</footer>
 <nav class="ng-bottom-nav" aria-label="Main navigation">
 <a href="index.html#dashboard" data-page="dashboard"><span>⌂</span><small>Dashboard</small></a>
 <a href="channels.html" data-page="channels"><span>▶</span><small>Channels</small></a>
