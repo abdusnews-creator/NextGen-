@@ -470,7 +470,11 @@ function openAddChannelModal(){
   const modal=document.getElementById('addChannelModal');if(!modal)return;
   modal.hidden=false;modal.style.display='flex';
   document.getElementById('addChannelStatus').textContent='';
-  document.getElementById('newChannelName').focus();
+  const linkField=document.getElementById('newChannelUrl');
+  if(linkField){
+    linkField.focus();
+    linkField.select();
+  }
 }
 function closeAddChannelModal(){
   const modal=document.getElementById('addChannelModal');if(modal){modal.hidden=true;modal.style.display='none';}
