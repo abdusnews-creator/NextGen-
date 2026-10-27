@@ -517,28 +517,30 @@ function autofillChannelFromUrl(){
   let url;
   try{url=new URL(raw.includes('://')?raw:'https://'+raw);}catch(error){return;}
   const host=url.hostname.toLowerCase().replace(/^www\./,'');
-  const parts=url.pathname.split('/').filter(Boolean);
+  const parts=url.pathname.split('/').filter(Boolean).map(part=>decodeURIComponent(part));
   let platform='',handle='';
+  // Normalize common share/profile URL formats before filling the username field.
+  const cleanHandle=value=>(value||'').replace(/^@/,'').replace(/[?#].*$/,'').trim();
   if(host==='youtube.com'||host==='m.youtube.com'||host==='youtube-nocookie.com'){
     platform='YouTube';
     const atPart=parts.find(part=>part.startsWith('@'));
     const channelPart=parts.findIndex(part=>['channel','c','user'].includes(part.toLowerCase()));
-    if(atPart)handle=atPart;
-    else if(channelPart>=0&&parts[channelPart+1])handle=parts[channelPart+1];
+    if(atPart)handle=cleanHandle(atPart);
+    else if(channelPart>=0&&parts[channelPart+1])handle=cleanHandle(parts[channelPart+1]);
   }else if(host==='youtu.be'){
     platform='YouTube';
   }else if(host==='facebook.com'||host==='m.facebook.com'||host==='fb.com'){
     platform='Facebook';
-    handle=parts[0]||'';
-    if(['profile.php','watch.php','share','reel','groups','events','marketplace'].includes(handle.toLowerCase()))handle='';
-    if(handle.startsWith('@'))handle=handle.slice(1);
+    handle=cleanHandle(parts[0]||'');
+    if(['profile.php','watch.php','share','reel','reels','groups','events','marketplace','photo.php','story.php'].includes(handle.toLowerCase()))handle='';
+    if(handle.toLowerCase()==='pages'&&parts[1])handle=cleanHandle(parts[1]);
+    if(handle.toLowerCase()==='people'&&parts[1])handle=cleanHandle(parts[1]);
   }else if(host==='instagram.com'){
-    platform='Instagram';handle=parts[0]||'';
-    if(['p','reel','reels','stories','explore','accounts'].includes(handle.toLowerCase()))handle='';
-    if(handle.startsWith('@'))handle=handle.slice(1);
+    platform='Instagram';handle=cleanHandle(parts[0]||'');
+    if(['p','reel','reels','stories','explore','accounts','direct'].includes(handle.toLowerCase()))handle='';
   }else if(host==='threads.net'||host==='threads.com'){
-    platform='Threads';handle=parts[0]||'';
-    if(handle.startsWith('@'))handle=handle.slice(1);
+    platform='Threads';handle=cleanHandle(parts[0]||'');
+    if(['share','t'].includes(handle.toLowerCase()))handle=cleanHandle(parts[1]||'');
   }
   if(!platform){status.textContent='Could not identify platform. Paste a YouTube, Facebook, Instagram, or Threads profile link.';return;}
   document.getElementById('newChannelPlatform').value=platform;
