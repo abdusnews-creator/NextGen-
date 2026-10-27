@@ -298,7 +298,7 @@ main.studio-main #channelCards .channel-review-button,main.studio-main #channelC
 
 <body>
 <header class="studio-top">
-  <button class="studio-menu" type="button" aria-label="Menu" onclick="document.querySelector('.studio-nav').classList.toggle('nav-expanded')">☰</button>
+  <button class="studio-menu" type="button" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleStudioNav()">☰</button>
   <div class="studio-brand" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;line-height:1"><span class="studio-brand-name" style="font-size:20px;font-weight:800;letter-spacing:.2px;line-height:1.05"><span style="color:#00BFFF">N</span>extGen</span><span class="studio-tagline" style="display:block;font-size:6px;font-weight:700;letter-spacing:.1px;color:#aabbd0;white-space:nowrap;line-height:1.05">Smart Automation. Smarter Growth.</span></div>
   <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" oninput="var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards()}" onkeydown="if(event.key==='Enter'){event.preventDefault();var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards();q.scrollIntoView({behavior:'smooth',block:'center'})}}">
   <div class="studio-top-right">
@@ -391,6 +391,14 @@ main.studio-main #channelCards .channel-review-button,main.studio-main #channelC
 </div>
 </main>
 <script>
+function toggleStudioNav(){
+ const nav=document.querySelector('.studio-nav');
+ const button=document.querySelector('.studio-menu');
+ if(!nav||!button)return;
+ const expanded=nav.classList.toggle('nav-expanded');
+ button.setAttribute('aria-expanded',String(expanded));
+ button.setAttribute('aria-label',expanded?'Close navigation menu':'Open navigation menu');
+}
 function toggleTopMenu(menuId){
  const ids=['addMenu','notificationMenu','profileMenu'];
  ids.forEach(id=>{const el=document.getElementById(id);if(el)el.hidden=(id!==menuId)||!el.hidden;});
