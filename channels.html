@@ -384,6 +384,69 @@ main.studio-main {
 }
 </style>
 
+
+<style id="channels-android-scroll-repair">
+/* Android Chrome: keep the document itself scrollable beneath the fixed top bar. */
+html {
+  display:block!important;
+  height:auto!important;
+  min-height:100%!important;
+  overflow-y:scroll!important;
+  overflow-x:hidden!important;
+  -webkit-text-size-adjust:100%;
+}
+body {
+  display:block!important;
+  height:auto!important;
+  min-height:100vh!important;
+  min-height:100dvh!important;
+  max-height:none!important;
+  overflow:visible!important;
+  overflow-y:visible!important;
+  position:static!important;
+  touch-action:pan-y!important;
+}
+body > header.studio-top {
+  position:fixed!important;
+  top:0!important;
+}
+main.studio-main {
+  display:block!important;
+  height:auto!important;
+  min-height:calc(100vh - 62px)!important;
+  min-height:calc(100dvh - 62px)!important;
+  max-height:none!important;
+  overflow:visible!important;
+  touch-action:pan-y!important;
+  margin-top:0!important;
+}
+body > footer {
+  position:relative!important;
+  margin-bottom:84px!important;
+}
+@media(max-width:680px) {
+  body > main.studio-main { padding-top:84px!important; padding-bottom:140px!important; }
+}
+</style>
+<script id="channels-scroll-repair">
+(function(){
+  function repairChannelsScroll(){
+    document.documentElement.style.setProperty('overflow-y','scroll','important');
+    document.documentElement.style.setProperty('height','auto','important');
+    document.body.style.setProperty('height','auto','important');
+    document.body.style.setProperty('overflow-y','visible','important');
+    var main=document.querySelector('main.studio-main');
+    if(main){
+      main.style.setProperty('height','auto','important');
+      main.style.setProperty('max-height','none','important');
+      main.style.setProperty('overflow','visible','important');
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',repairChannelsScroll);
+  else repairChannelsScroll();
+})();
+</script>
+
 </head>
 
 <body>
