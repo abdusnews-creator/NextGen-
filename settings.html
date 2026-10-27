@@ -306,6 +306,15 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
 <div class="general-setting-card"><div class="general-setting-copy"><h2>Auto Approval Mode</h2><p>OFF by default. Do not auto-approve or publish content unless you explicitly enable this mode later.</p></div><button class="mode-switch" id="autoApprovalSwitch" type="button" role="switch" aria-checked="false" aria-label="Auto Approval Mode"><span></span></button></div>
 <div class="general-setting-card"><div class="general-setting-copy"><h2>Content notifications</h2><p>Show in-app reminders for items waiting for review (prototype preference).</p></div><button class="mode-switch is-on" id="contentNotificationsSwitch" type="button" role="switch" aria-checked="true" aria-label="Content notifications"><span></span></button></div>
 <div class="general-setting-card"><div class="general-setting-copy"><h2>Background mode preference</h2><p>Remember that you want NextGen to run continuously when a real background service is implemented. This switch does not run a worker yet.</p></div><button class="mode-switch is-on" id="backgroundPreferenceSwitch" type="button" role="switch" aria-checked="true" aria-label="Background mode preference"><span></span></button></div>
+<section class="approval-safety-card" aria-label="Daily Idea Schedule">
+<h2>Daily Idea Schedule</h2>
+<p class="approval-status-line">Choose when NextGen should prepare ideas. This saves your preferred times; a live scheduler/background worker is not active yet.</p>
+<div class="general-setting-card"><div class="general-setting-copy"><h3>Morning ideas</h3><p>Default: 8:00 AM</p></div><input id="ideaTime1" type="time" value="08:00" aria-label="Morning idea time" style="padding:10px;border-radius:8px;background:#0b1020;color:#eef3ff;border:1px solid #53688d"></div>
+<div class="general-setting-card"><div class="general-setting-copy"><h3>Afternoon ideas</h3><p>Default: 2:00 PM</p></div><input id="ideaTime2" type="time" value="14:00" aria-label="Afternoon idea time" style="padding:10px;border-radius:8px;background:#0b1020;color:#eef3ff;border:1px solid #53688d"></div>
+<div class="general-setting-card"><div class="general-setting-copy"><h3>Evening ideas</h3><p>Default: 6:00 PM</p></div><input id="ideaTime3" type="time" value="18:00" aria-label="Evening idea time" style="padding:10px;border-radius:8px;background:#0b1020;color:#eef3ff;border:1px solid #53688d"></div>
+<button type="button" class="general-back-button" id="saveIdeaSchedule">Save idea times</button>
+<p id="ideaScheduleStatus" class="muted" role="status">Default times are 08:00, 14:00, 18:00 (Asia/Kolkata).</p>
+</section>
 <section class="approval-safety-card" aria-label="Approval Safety">
 <h2>Approval Safety</h2>
 <p class="approval-status-line">Publishing mode: <strong id="publishingModeText">Manual Approval Mode — ON</strong></p>
@@ -454,7 +463,8 @@ document.addEventListener('click',function(event){
         owner_id:userId,
         approval_mode:values.approval_mode,
         auto_approval_enabled:values.auto_approval_enabled,
-        background_mode_enabled:values.background_mode_enabled
+        background_mode_enabled:values.background_mode_enabled,
+        daily_idea_times:readIdeaTimes()
       },{onConflict:'owner_id'});
       if(error)throw error;
       if(statusLine)statusLine.title='Approval preference saved to your NextGen account.';
@@ -472,12 +482,17 @@ document.addEventListener('click',function(event){
       if(error)throw error;
       userId=data.session?.user?.id||null;
       if(!userId)return;
-      const result=await c.from('automation_settings').select('approval_mode,auto_approval_enabled,background_mode_enabled').eq('owner_id',userId).maybeSingle();
+      const result=await c.from('automation_settings').select('approval_mode,auto_approval_enabled,background_mode_enabled,daily_idea_times').eq('owner_id',userId).maybeSingle();
       if(result.error)throw result.error;
       const row=result.data;
       if(row){
         const autoOn=row.auto_approval_enabled===true&&row.approval_mode==='auto';
         alignSwitch('backgroundPreferenceSwitch',row.background_mode_enabled===true);
+        if(Array.isArray(row.daily_idea_times)&&row.daily_idea_times.length===3){
+          ['ideaTime1','ideaTime2','ideaTime3'].forEach((id,i)=>{const input=document.getElementById(id);if(input)input.value=row.daily_idea_times[i];});
+          const scheduleStatus=document.getElementById('ideaScheduleStatus');
+          if(scheduleStatus)scheduleStatus.textContent='Saved to your account (Asia/Kolkata): '+row.daily_idea_times.join(', ')+'. Live scheduling is not active yet.';
+        }
         // Disable the current mode first; the UI prevents both modes being ON.
         if(autoOn){
           alignSwitch('manualApprovalSwitch',false);
@@ -497,6 +512,20 @@ document.addEventListener('click',function(event){
       if(statusLine)statusLine.title='Cloud approval settings not loaded: '+(e?.message||'Please sign in to sync settings.');
     }
   }
+  function readIdeaTimes(){
+    return ['ideaTime1','ideaTime2','ideaTime3'].map((id,i)=>{
+      const input=document.getElementById(id);
+      return input&&/^([01]\\d|2[0-3]):[0-5]\\d$/.test(input.value)?input.value:['08:00','14:00','18:00'][i];
+    });
+  }
+  const saveScheduleButton=document.getElementById('saveIdeaSchedule');
+  if(saveScheduleButton)saveScheduleButton.addEventListener('click',async()=>{
+    const status=document.getElementById('ideaScheduleStatus');
+    if(!userId){if(status)status.textContent='Sign in first to save these times to your account.';return;}
+    if(status)status.textContent='Saving…';
+    await saveCloud();
+    if(status)status.textContent='Schedule preferences saved (Asia/Kolkata): '+readIdeaTimes().join(', ')+'. Live scheduling/background worker is not active yet.';
+  });
   ['manualApprovalSwitch','autoApprovalSwitch','backgroundPreferenceSwitch'].forEach(id=>{
     const el=document.getElementById(id);
     if(el)el.addEventListener('click',()=>setTimeout(saveCloud,0));
