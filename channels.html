@@ -565,7 +565,10 @@ function autofillChannelFromUrl(){
     if(nameField.dataset.nameSource==='username-derived'){nameField.value='';delete nameField.dataset.nameSource;}
     status.textContent=platform+' and username detected. The actual Profile/Page Name must be retrieved from the platform using authorized API access; it will not be guessed from the username. Profile lookup is deployed. Verification needs sign-in and platform API authorization; YouTube also needs its API key configured.';
   }else{
-    status.textContent=platform+' detected. Username could not be reliably read from this link. The actual Profile/Page Name must come from authorized platform API access; Profile lookup is deployed, but verification needs sign-in and platform API authorization; YouTube also needs its API key configured.';
+    const isFacebookShare = platform==='Facebook' && parts.some(part=>['share','sharer.php'].includes(part.toLowerCase()));
+    status.textContent = isFacebookShare
+      ? 'Facebook share link detected, but this short link does not contain the Page username. Open the link in Facebook, go to the actual Page profile, then copy its profile URL (for example https://www.facebook.com/RoyalFurnitureZone/) and paste that URL here. NextGen cannot safely guess the Page name from a share code.'
+      : platform+' detected. Username could not be reliably read from this link. The actual Profile/Page Name must come from authorized platform API access; verification needs sign-in and platform API authorization; YouTube also needs its API key configured.';
   }
 }
 function openAddChannelModal(){
