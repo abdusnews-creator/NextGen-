@@ -537,7 +537,7 @@ function closeAddChannelModal(){
   const modal=document.getElementById('addChannelModal');if(modal){modal.hidden=true;modal.style.display='none';}
 }
 function buildDemoChannel(item){
-  const article=document.createElement('article');article.className='card channel-review-card';article.setAttribute('data-channel-card','');
+  const article=document.createElement('article');article.className='card channel-review-card';article.setAttribute('data-channel-card','');if(item.id)article.setAttribute('data-saved-channel-id',item.id);
   const icons={youtube:'▶️',facebook:'📘',instagram:'📸',threads:'🧵',YouTube:'▶️',Facebook:'📘',Instagram:'📸',Threads:'🧵'};
   const p=item.platform||'Channel';
   const head=document.createElement('div');head.className='channel-review-head';
@@ -569,7 +569,12 @@ async function addDemoChannel(event){
     const payload={owner_id:user.id,platform,display_name:name,handle:handle||null,profile_url:profileUrl||null,connection_status:'not_connected'};
     const savedResult=await client.from('channels').insert(payload).select('*').single();
     if(savedResult.error)throw savedResult.error;
-    document.getElementById('channelCards').appendChild(buildDemoChannel(savedResult.data));
+    const cards=document.getElementById('channelCards');
+    // Avoid duplicate cards if the saved channel was already rendered.
+    const existing=cards.querySelector('[data-saved-channel-id="'+savedResult.data.id+'"]');
+    if(!existing)cards.appendChild(buildDemoChannel(savedResult.data));
+    const cloudStatus=document.getElementById('cloudStatus');
+    if(cloudStatus)cloudStatus.textContent='Cloud sync active — channel saved to your NextGen account. Platform authorization is still separate.';
     document.getElementById('addChannelForm').reset();closeAddChannelModal();
     document.getElementById('channelSearch').value='';
     const topSearch=document.querySelector('.studio-search');if(topSearch)topSearch.value='';
@@ -580,18 +585,28 @@ async function addDemoChannel(event){
   }
 }
 async function restoreAddedDemoChannels(){
+  const status=document.getElementById('cloudStatus');
+  const cards=document.getElementById('channelCards');
   try{
     const client=getNextgenSupabaseClient();
     const sessionResult=await client.auth.getSession();
     if(sessionResult.error)throw sessionResult.error;
     const user=sessionResult.data.session&&sessionResult.data.session.user;
-    if(!user)return;
-    const result=await client.from('channels').select('*').order('created_at',{ascending:true});
+    if(!user){
+      if(status)status.textContent='Sign in to NextGen to load and save your channels in the cloud. The sample cards below are previews only.';
+      return;
+    }
+    if(status)status.textContent='Signed in — loading channels from your NextGen account…';
+    const result=await client.from('channels').select('id,owner_id,platform,display_name,handle,profile_url,connection_status,is_paused,created_at').order('created_at',{ascending:true});
     if(result.error)throw result.error;
-    const cards=document.getElementById('channelCards');
+    // Once cloud data is available, remove sample cards so they cannot be mistaken for saved accounts.
+    cards.querySelectorAll('[data-channel-card]').forEach(card=>card.remove());
     (result.data||[]).forEach(item=>cards.appendChild(buildDemoChannel(item)));
+    if(status)status.textContent=(result.data||[]).length
+      ? 'Cloud sync active — '+result.data.length+' saved channel(s) loaded from your NextGen account. Platform authorization is separate.'
+      : 'Cloud sync active — no channels saved yet. Tap + Add Channel to save your first channel.';
+    filterChannelCards();
   }catch(error){
-    const status=document.getElementById('cloudStatus');
     if(status)status.textContent='Cloud channel loading unavailable: '+(error&&error.message?error.message:'Please refresh and sign in again.');
   }
 }
