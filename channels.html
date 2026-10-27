@@ -403,6 +403,9 @@ function filterChannelCards(){
   <form id="addChannelForm" onsubmit="addDemoChannel(event)" style="width:min(100%,480px);background:#081f3a;border:1px solid #28547c;border-radius:16px;padding:22px;box-sizing:border-box;box-shadow:0 20px 60px #0009">
     <h2 id="addChannelTitle" style="margin:0 0 8px;color:#fff">Add a channel</h2>
     <p class="muted" style="margin:0 0 16px">Add a channel to this device's NextGen demo workspace. This does not connect or authorize the real platform account.</p>
+    <label for="newChannelUrl" style="display:block;margin:12px 0 6px">Profile / Channel link (paste URL)</label>
+    <input id="newChannelUrl" type="url" inputmode="url" placeholder="https://www.youtube.com/@yourchannel" oninput="autofillChannelFromUrl()" style="width:100%;box-sizing:border-box;padding:12px;border-radius:9px;background:#0d2340;color:#fff;border:1px solid #28547c">
+    <p class="muted" style="margin:6px 0 12px">Paste a YouTube, Facebook, Instagram, or Threads profile link to fill the platform and username automatically.</p>
     <label for="newChannelPlatform" style="display:block;margin:12px 0 6px">Platform</label>
     <select id="newChannelPlatform" required style="width:100%;padding:12px;border-radius:9px;background:#0d2340;color:#fff;border:1px solid #28547c">
       <option value="YouTube">YouTube</option><option value="Facebook">Facebook</option><option value="Instagram">Instagram</option><option value="Threads">Threads</option>
@@ -420,6 +423,53 @@ function filterChannelCards(){
 </div>
 \n<script>
 const addedChannelsKey='nextgen-demo-added-channels-v1';
+function prettifyChannelLabel(value){
+  return (value||'').replace(/^@/,'').replace(/[._-]+/g,' ').replace(/\\s+/g,' ').trim()
+    .replace(/\\b\\w/g,letter=>letter.toUpperCase());
+}
+function autofillChannelFromUrl(){
+  const field=document.getElementById('newChannelUrl');
+  const status=document.getElementById('addChannelStatus');
+  const raw=(field.value||'').trim();
+  if(!raw)return;
+  let url;
+  try{url=new URL(raw.includes('://')?raw:'https://'+raw);}catch(error){return;}
+  const host=url.hostname.toLowerCase().replace(/^www\\./,'');
+  const parts=url.pathname.split('/').filter(Boolean);
+  let platform='',handle='';
+  if(host==='youtube.com'||host==='m.youtube.com'||host==='youtube-nocookie.com'){
+    platform='YouTube';
+    const atPart=parts.find(part=>part.startsWith('@'));
+    const channelPart=parts.findIndex(part=>['channel','c','user'].includes(part.toLowerCase()));
+    if(atPart)handle=atPart;
+    else if(channelPart>=0&&parts[channelPart+1])handle=parts[channelPart+1];
+  }else if(host==='youtu.be'){
+    platform='YouTube';
+  }else if(host==='facebook.com'||host==='m.facebook.com'||host==='fb.com'){
+    platform='Facebook';
+    handle=parts[0]||'';
+    if(['profile.php','watch.php','share','reel','groups','events','marketplace'].includes(handle.toLowerCase()))handle='';
+    if(handle.startsWith('@'))handle=handle.slice(1);
+  }else if(host==='instagram.com'){
+    platform='Instagram';handle=parts[0]||'';
+    if(['p','reel','reels','stories','explore','accounts'].includes(handle.toLowerCase()))handle='';
+    if(handle.startsWith('@'))handle=handle.slice(1);
+  }else if(host==='threads.net'||host==='threads.com'){
+    platform='Threads';handle=parts[0]||'';
+    if(handle.startsWith('@'))handle=handle.slice(1);
+  }
+  if(!platform){status.textContent='Could not identify platform. Paste a YouTube, Facebook, Instagram, or Threads profile link.';return;}
+  document.getElementById('newChannelPlatform').value=platform;
+  if(handle){
+    const handleField=document.getElementById('newChannelHandle');
+    handleField.value='@'+handle;
+    const nameField=document.getElementById('newChannelName');
+    if(!nameField.value.trim())nameField.value=prettifyChannelLabel(handle);
+    status.textContent='Platform and username detected. The display name is a suggested label; official profile-name lookup needs platform API access.';
+  }else{
+    status.textContent='Platform detected. This link does not contain a readable username, so enter the channel/page name manually.';
+  }
+}
 function openAddChannelModal(){
   const modal=document.getElementById('addChannelModal');if(!modal)return;
   modal.hidden=false;modal.style.display='flex';
@@ -444,6 +494,7 @@ function buildDemoChannel(item){
 }
 function addDemoChannel(event){
   event.preventDefault();
+  autofillChannelFromUrl();
   const item={platform:document.getElementById('newChannelPlatform').value,name:document.getElementById('newChannelName').value.trim(),handle:document.getElementById('newChannelHandle').value.trim()};
   const status=document.getElementById('addChannelStatus');
   if(!item.name){status.textContent='Please enter a channel or page name.';return;}
