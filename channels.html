@@ -339,7 +339,7 @@ main.studio-main #channelCards .channel-review-button,main.studio-main #channelC
   <div>
     <h2 class="channel-page-title">Channels</h2>
     <p class="channel-page-subtitle">Manage your connected social media channels</p>
-    <p class="note" id="cloudStatus" style="display:block">DEMO CONTROLS — browser-only test settings, not connected to real social accounts.</p>
+    <p class="note" id="cloudStatus" style="display:block">Channel records save to your signed-in NextGen account. Social publishing is not connected yet.</p>
   <div class="notice" style="display:block;margin-top:14px">
     <strong>Demo controls are below.</strong> Channel controls only save demo state in this browser; they do not pause or publish on YouTube, Facebook, Instagram, or Threads.
   </div>
@@ -402,7 +402,7 @@ function filterChannelCards(){
 <div id="addChannelModal" role="dialog" aria-modal="true" aria-labelledby="addChannelTitle" hidden style="position:fixed;inset:0;z-index:10000;background:#020817cc;padding:18px;display:none;align-items:center;justify-content:center">
   <form id="addChannelForm" onsubmit="addDemoChannel(event)" style="width:min(100%,480px);background:#081f3a;border:1px solid #28547c;border-radius:16px;padding:22px;box-sizing:border-box;box-shadow:0 20px 60px #0009">
     <h2 id="addChannelTitle" style="margin:0 0 8px;color:#fff">Add a channel</h2>
-    <p class="muted" style="margin:0 0 16px">Add a channel to this device's NextGen demo workspace. This does not connect or authorize the real platform account.</p>
+    <p class="muted" style="margin:0 0 16px">Save a channel to your NextGen account. This does not connect or authorize the real platform account.</p>
     <label for="newChannelUrl" style="display:block;margin:12px 0 6px">Profile / Channel link (paste URL)</label>
     <input id="newChannelUrl" type="url" inputmode="url" placeholder="https://www.youtube.com/@yourchannel" oninput="autofillChannelFromUrl()" style="width:100%;box-sizing:border-box;padding:12px;border-radius:9px;background:#0d2340;color:#fff;border:1px solid #28547c">
     <p class="muted" style="margin:6px 0 12px">Paste a YouTube, Facebook, Instagram, or Threads profile link to fill the platform and username automatically.</p>
@@ -538,37 +538,62 @@ function closeAddChannelModal(){
 }
 function buildDemoChannel(item){
   const article=document.createElement('article');article.className='card channel-review-card';article.setAttribute('data-channel-card','');
-  const icons={YouTube:'▶️',Facebook:'📘',Instagram:'📸',Threads:'🧵'};
+  const icons={youtube:'▶️',facebook:'📘',instagram:'📸',threads:'🧵',YouTube:'▶️',Facebook:'📘',Instagram:'📸',Threads:'🧵'};
+  const p=item.platform||'Channel';
   const head=document.createElement('div');head.className='channel-review-head';
-  const icon=document.createElement('div');icon.className='channel-review-icon';icon.textContent=icons[item.platform]||'🔗';
-  const platform=document.createElement('div');platform.className='channel-review-platform';platform.textContent=item.platform||'Channel';head.append(icon,platform);
-  const name=document.createElement('h3');name.className='channel-review-name';name.textContent=item.name||'Untitled channel';
+  const icon=document.createElement('div');icon.className='channel-review-icon';icon.textContent=icons[p]||'🔗';
+  const platform=document.createElement('div');platform.className='channel-review-platform';platform.textContent=p.charAt(0).toUpperCase()+p.slice(1);head.append(icon,platform);
+  const name=document.createElement('h3');name.className='channel-review-name';name.textContent=item.display_name||item.name||'Untitled channel';
   const handle=document.createElement('p');handle.className='channel-review-handle';handle.textContent=item.handle||'Handle not provided';
   const state=document.createElement('div');state.className='channel-review-status';
   const dot=document.createElement('span');dot.className='channel-review-dot';
-  const stateText=document.createElement('span');stateText.textContent='Demo channel · Not connected';state.append(dot,stateText);
+  const stateText=document.createElement('span');stateText.textContent=item.connection_status==='connected'?'Platform connection: Connected':'Saved to NextGen · Platform not connected';state.append(dot,stateText);
   article.append(head,name,handle,state);return article;
 }
-function addDemoChannel(event){
+async function addDemoChannel(event){
   event.preventDefault();
-  autofillChannelFromUrl();
-  const item={platform:document.getElementById('newChannelPlatform').value,name:document.getElementById('newChannelName').value.trim(),handle:document.getElementById('newChannelHandle').value.trim()};
   const status=document.getElementById('addChannelStatus');
-  if(!item.name){status.textContent='Please enter a channel or page name.';return;}
-  let saved=[];try{saved=JSON.parse(localStorage.getItem(addedChannelsKey)||'[]');if(!Array.isArray(saved))saved=[];}catch(error){}
-  saved.push(item);
-  try{localStorage.setItem(addedChannelsKey,JSON.stringify(saved));}catch(error){status.textContent='Browser storage is unavailable; channel may not remain after refresh.';}
-  document.getElementById('channelCards').appendChild(buildDemoChannel(item));
-  document.getElementById('addChannelForm').reset();closeAddChannelModal();
-  document.getElementById('channelSearch').value='';
-  const topSearch=document.querySelector('.studio-search');if(topSearch)topSearch.value='';
-  filterChannelCards();
-  const cards=document.querySelectorAll('[data-channel-card]');if(cards.length)cards[cards.length-1].scrollIntoView({behavior:'smooth',block:'center'});
+  autofillChannelFromUrl();
+  const platform=(document.getElementById('newChannelPlatform').value||'').toLowerCase();
+  const name=document.getElementById('newChannelName').value.trim();
+  const handle=document.getElementById('newChannelHandle').value.trim();
+  const profileUrl=document.getElementById('newChannelUrl').value.trim();
+  if(!name){status.textContent='Please enter or verify the channel/page name.';return;}
+  status.textContent='Saving channel to your NextGen account…';
+  try{
+    const client=getNextgenSupabaseClient();
+    const sessionResult=await client.auth.getSession();
+    if(sessionResult.error)throw sessionResult.error;
+    const user=sessionResult.data.session&&sessionResult.data.session.user;
+    if(!user){status.textContent='Please sign in to NextGen first. Your channel has not been saved.';return;}
+    const payload={owner_id:user.id,platform,display_name:name,handle:handle||null,profile_url:profileUrl||null,connection_status:'not_connected'};
+    const savedResult=await client.from('channels').insert(payload).select('*').single();
+    if(savedResult.error)throw savedResult.error;
+    document.getElementById('channelCards').appendChild(buildDemoChannel(savedResult.data));
+    document.getElementById('addChannelForm').reset();closeAddChannelModal();
+    document.getElementById('channelSearch').value='';
+    const topSearch=document.querySelector('.studio-search');if(topSearch)topSearch.value='';
+    filterChannelCards();
+    const cards=document.querySelectorAll('[data-channel-card]');if(cards.length)cards[cards.length-1].scrollIntoView({behavior:'smooth',block:'center'});
+  }catch(error){
+    status.textContent='Could not save channel: '+(error&&error.message?error.message:'Please try again.');
+  }
 }
-function restoreAddedDemoChannels(){
-  let saved=[];try{saved=JSON.parse(localStorage.getItem(addedChannelsKey)||'[]');}catch(error){}
-  if(!Array.isArray(saved))return;
-  saved.forEach(item=>document.getElementById('channelCards').appendChild(buildDemoChannel(item)));
+async function restoreAddedDemoChannels(){
+  try{
+    const client=getNextgenSupabaseClient();
+    const sessionResult=await client.auth.getSession();
+    if(sessionResult.error)throw sessionResult.error;
+    const user=sessionResult.data.session&&sessionResult.data.session.user;
+    if(!user)return;
+    const result=await client.from('channels').select('*').order('created_at',{ascending:true});
+    if(result.error)throw result.error;
+    const cards=document.getElementById('channelCards');
+    (result.data||[]).forEach(item=>cards.appendChild(buildDemoChannel(item)));
+  }catch(error){
+    const status=document.getElementById('cloudStatus');
+    if(status)status.textContent='Cloud channel loading unavailable: '+(error&&error.message?error.message:'Please refresh and sign in again.');
+  }
 }
 document.addEventListener('keydown',function(event){if(event.key==='Escape')closeAddChannelModal();});
 restoreAddedDemoChannels();
