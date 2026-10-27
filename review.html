@@ -157,7 +157,14 @@ async function saveCloudReview(value){
       note:'Checklist: '+checks.map((c,i)=>(i+1)+'. '+(c.checked?'checked':'not checked')).join(', ')+'. Manual approval workflow; no publishing or scheduling.'
     });
     if(eventError)throw eventError;
+    window.nextgenCloudDrafts=window.nextgenCloudDrafts||{};
+    window.nextgenCloudDrafts[select.value]={
+      ...(window.nextgenCloudDrafts[select.value]||{}),
+      id:itemId,title,caption,platform,status:targetStatus,safety_checks,
+      updated_at:new Date().toISOString()
+    };
     el.textContent='Cloud saved: '+targetStatus.replace('_',' ')+'. Approval event recorded. Nothing was published or scheduled.';
+    renderQueue();
   }catch(e){
     el.textContent='Cloud save failed: '+(e.message||'check sign-in and table permissions').slice(0,180)+'. Local status remains on this device.';
   }
