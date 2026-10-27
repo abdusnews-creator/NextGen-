@@ -424,8 +424,8 @@ function filterChannelCards(){
 \n<script>
 const addedChannelsKey='nextgen-demo-added-channels-v1';
 function prettifyChannelLabel(value){
-  return (value||'').replace(/^@/,'').replace(/[._-]+/g,' ').replace(/\\s+/g,' ').trim()
-    .replace(/\\b\\w/g,letter=>letter.toUpperCase());
+  return (value||'').replace(/^@/,'').replace(/[._-]+/g,' ').replace(/\s+/g,' ').trim()
+    .replace(/\b\w/g,letter=>letter.toUpperCase());
 }
 function autofillChannelFromUrl(){
   const field=document.getElementById('newChannelUrl');
@@ -434,7 +434,7 @@ function autofillChannelFromUrl(){
   if(!raw)return;
   let url;
   try{url=new URL(raw.includes('://')?raw:'https://'+raw);}catch(error){return;}
-  const host=url.hostname.toLowerCase().replace(/^www\\./,'');
+  const host=url.hostname.toLowerCase().replace(/^www\./,'');
   const parts=url.pathname.split('/').filter(Boolean);
   let platform='',handle='';
   if(host==='youtube.com'||host==='m.youtube.com'||host==='youtube-nocookie.com'){
