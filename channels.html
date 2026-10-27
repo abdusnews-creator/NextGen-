@@ -335,25 +335,18 @@ main.studio-main #channelSearch{min-width:0!important;max-width:100%!important}
 }
 </style>
 <style id="channels-top-header-scroll-fix">
-/* Keep only the top header fixed while the Channels content scrolls. */
+/* Fixed positioning is reliable on mobile even when nested layout rules affect sticky. */
 body>header.studio-top{
- position:sticky!important;
- top:0!important;
+ position:fixed!important;
+ top:0!important;left:0!important;right:0!important;
  z-index:5000!important;
- width:100%!important;
- max-width:100%!important;
- margin-top:0!important;
- align-self:stretch!important;
+ width:100%!important;max-width:none!important;
+ margin:0!important;transform:none!important;
 }
+body>.studio-shell{padding-top:72px!important}
 @media(max-width:680px){
- body>header.studio-top{
-  position:sticky!important;
-  top:0!important;
-  height:62px!important;
-  min-height:62px!important;
-  padding-top:0!important;
-  padding-bottom:0!important;
- }
+ body>header.studio-top{height:62px!important;min-height:62px!important;padding-top:0!important;padding-bottom:0!important}
+ body>.studio-shell{padding-top:62px!important}
 }
 </style>
 </head>
