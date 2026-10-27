@@ -579,7 +579,7 @@ async function addDemoChannel(event){
     document.getElementById('channelSearch').value='';
     const topSearch=document.querySelector('.studio-search');if(topSearch)topSearch.value='';
     filterChannelCards();
-    const cards=document.querySelectorAll('[data-channel-card]');if(cards.length)cards[cards.length-1].scrollIntoView({behavior:'smooth',block:'center'});
+    const renderedCards=document.querySelectorAll('[data-channel-card]');if(renderedCards.length)renderedCards[renderedCards.length-1].scrollIntoView({behavior:'smooth',block:'center'});
   }catch(error){
     status.textContent='Could not save channel: '+(error&&error.message?error.message:'Please try again.');
   }
