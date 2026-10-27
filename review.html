@@ -44,6 +44,16 @@ body:has(.ng-bottom-nav){padding-bottom:76px!important}
 <h2>Content Review</h2>
 <p class="muted">Choose a draft, platform and post topic. Thumbnail guidance adapts to the selected content.</p>
 <div class="card"><h3>Review Queue</h3><p id="cloudReviewStatus" class="muted" aria-live="polite">Cloud sync is optional. Configure Supabase and sign in to save reviews to your account.</p><p class="muted">Check each draft's saved status on this device. Select Open draft to inspect or revise it. No content is published from this queue.</p><div class="queueGrid" id="reviewQueue"></div><p id="queueSummary" class="status" aria-live="polite"></p></div>
+<div class="card" id="cloudDraftCreator">
+<h3>Create a Cloud Draft</h3>
+<p class="muted">Save a draft to your signed-in NextGen account. It stays pending for manual review; this does not publish or schedule anything.</p>
+<label for="cloudDraftPlatform">Platform<select id="cloudDraftPlatform"><option value="youtube">YouTube</option><option value="facebook">Facebook</option><option value="instagram">Instagram</option><option value="threads">Threads</option></select></label>
+<label for="cloudDraftTitle">Draft title<input id="cloudDraftTitle" type="text" maxlength="180" placeholder="Enter draft title" style="display:block;width:100%;padding:13px;margin-top:6px;border-radius:8px;background:#0b1020;color:#fff;border:1px solid #91aaff;font-size:16px"></label>
+<label for="cloudDraftCaption">Caption / idea<textarea id="cloudDraftCaption" maxlength="5000" rows="4" placeholder="Write the caption or idea for review" style="display:block;width:100%;padding:13px;margin-top:6px;border-radius:8px;background:#0b1020;color:#fff;border:1px solid #91aaff;font-size:16px"></textarea></label>
+<button class="btn" type="button" id="saveCloudDraft">Save Cloud Draft</button>
+<p id="cloudDraftCreateStatus" class="status" aria-live="polite">Sign in to save a draft.</p>
+<h4>Saved account drafts</h4><div id="savedCloudDraftList" class="queueGrid"></div>
+</div>
 <div class="card">
 <label for="platform">Select platform<select id="platform"><option value="YouTube">YouTube</option><option value="Facebook">Facebook Page</option><option value="Instagram">Instagram</option><option value="Threads">Threads</option></select></label>
 <label for="postTitle">Post title<input id="postTitle" type="text" value="Luxury Wooden Bed | YouTube Short" maxlength="140" placeholder="Enter the title for this post" style="display:block;width:100%;padding:13px;margin-top:6px;border-radius:8px;background:#0b1020;color:#fff;border:1px solid #91aaff;font-size:16px"></label>\n<label for="topic">Post topic / subject<input id="topic" type="text" value="Luxury Wooden Bed" maxlength="140" placeholder="Enter this post topic" style="display:block;width:100%;padding:13px;margin-top:6px;border-radius:8px;background:#0b1020;color:#fff;border:1px solid #91aaff;font-size:16px"></label>
@@ -106,6 +116,7 @@ async function connectReviewCloud(){
     window.nextgenCloudDrafts=cloudByKey;
     el.textContent='Signed in: loaded '+(rows||[]).length+' saved cloud content item(s). Approval changes sync to this account; nothing is published or scheduled.';
     renderQueue();
+    await loadSavedCloudDrafts();
   }catch(e){
     el.textContent='Cloud content could not load: '+(e.message||'check the database schema and sign-in').slice(0,150);
   }
@@ -273,6 +284,44 @@ document.getElementById('copyThumbnailPrompt').addEventListener('click',()=>copy
 document.getElementById('copyPrimaryKeyword').addEventListener('click',()=>copyReviewText('primaryKeyword','Main keyword'));
 document.getElementById('copySecondaryKeywords').addEventListener('click',()=>copyReviewText('secondaryKeywords','Related keywords'));
 document.getElementById('copySeoDescription').addEventListener('click',()=>copyReviewText('seoDescription','SEO description'));
+async function loadSavedCloudDrafts(){
+ const list=document.getElementById('savedCloudDraftList');if(!list||!reviewSupabase||!reviewUser)return;
+ list.replaceChildren();
+ try{
+  const {data,error}=await reviewSupabase.from('content_items').select('id,title,caption,platform,status,created_at,safety_checks').eq('owner_id',reviewUser.id).order('created_at',{ascending:false}).limit(20);
+  if(error)throw error;
+  if(!data||!data.length){list.textContent='No cloud drafts saved yet.';return;}
+  data.forEach(row=>{
+   const card=document.createElement('div');card.className='queueItem';
+   const h=document.createElement('h4');h.textContent=row.title||'Untitled draft';
+   const p=document.createElement('p');p.className='queueStatus';p.textContent=(row.platform||'').toUpperCase()+' · '+(row.status||'draft')+' · Manual review';
+   const body=document.createElement('p');body.className='muted';body.textContent=(row.caption||'').slice(0,180);
+   card.append(h,p,body);list.appendChild(card);
+  });
+ }catch(e){list.textContent='Could not load cloud drafts: '+(e.message||'check sign-in').slice(0,120);}
+}
+const saveCloudDraftButton=document.getElementById('saveCloudDraft');
+if(saveCloudDraftButton)saveCloudDraftButton.addEventListener('click',async()=>{
+ const status=document.getElementById('cloudDraftCreateStatus');
+ const title=document.getElementById('cloudDraftTitle').value.trim();
+ const caption=document.getElementById('cloudDraftCaption').value.trim();
+ if(!reviewCloudReady()){status.textContent='Supabase is not configured on this page.';return;}
+ if(!title&&!caption){status.textContent='Enter a title or caption first.';return;}
+ status.textContent='Saving draft…';saveCloudDraftButton.disabled=true;
+ try{
+  const {data,error}=await reviewSupabase.auth.getSession();if(error)throw error;
+  const token=data.session&&data.session.access_token;if(!token)throw new Error('Sign in on NextGen first.');
+  const cfg=window.NEXTGEN_SUPABASE_CONFIG;
+  const response=await fetch(cfg.url+'/functions/v1/draft-idea-queue',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token,'apikey':cfg.anonKey},body:JSON.stringify({platform:document.getElementById('cloudDraftPlatform').value,title,caption})});
+  const result=await response.json();
+  if(!response.ok||!result.ok)throw new Error(result.error||'Draft save failed.');
+  status.textContent='Saved as a draft. It is not published or scheduled.';
+  document.getElementById('cloudDraftTitle').value='';document.getElementById('cloudDraftCaption').value='';
+  await loadSavedCloudDrafts();
+ }catch(e){status.textContent='Save failed: '+(e.message||'Please sign in and try again.').slice(0,180);}
+ finally{saveCloudDraftButton.disabled=false;}
+});
+
 connectReviewCloud();
 /* Allow a saved draft plan to open the matching item directly in the review page. */
 (function selectDraftFromLink(){
