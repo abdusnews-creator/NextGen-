@@ -657,7 +657,10 @@ async function verifyChannelProfileName(){
     const nameField=document.getElementById('newChannelName');
     nameField.value=data.display_name;
     nameField.dataset.nameSource='platform-verified';
-    status.textContent='Verified by '+platform+'. Actual profile name filled in: '+data.display_name;
+    const verifiedHandle=String(data.handle||data.username||'').trim().replace(/^@/,'');
+    const handleField=document.getElementById('newChannelHandle');
+    if(handleField&&verifiedHandle)handleField.value='@'+verifiedHandle;
+    status.textContent='Auto-detected and platform-verified: '+data.display_name+(verifiedHandle?' · @'+verifiedHandle:'')+'.';
   }catch(error){
     const message=error&&error.message?error.message:'Profile verification failed.';
     if(/functionsfetch|failed to fetch|404|not found/i.test(message)){
@@ -721,7 +724,7 @@ function autofillChannelFromUrl(){
   if(status){
     if(hint)status.textContent=platform+' detected. '+hint;
     else if(!handle)status.textContent=platform+' detected, but a username could not be read from this URL. Paste the profile page link.';
-    else status.textContent=platform+' detected; handle @'+handle+' filled in. Tap “Verify actual profile name” to fetch the real name from the platform API.';
+    else status.textContent=platform+' detected; username @'+handle+' filled in. The real profile name will be checked automatically when you leave the link field; you can also tap Verify.';
   }
 }
 function openAddChannelModal(){
@@ -984,7 +987,7 @@ body > footer { position:relative!important; }
     if(pf)pf.value=platform;
     if(hf)hf.value=handle?'@'+handle.replace(/^@/,''):'';
     if(nf&&nf.dataset.nameSource!=='platform-verified'){nf.value='';delete nf.dataset.nameSource;}
-    if(status)status.textContent=handle?(platform+' detected. Handle filled: @'+handle.replace(/^@/,'')+'. Tap “Verify actual profile name” to fetch the real name from the platform API.'):(platform+' detected, but this link does not expose a profile username. Paste the actual profile page URL.');
+    if(status)status.textContent=handle?(platform+' detected. Username filled: @'+handle.replace(/^@/,'')+'. The real profile name will be checked automatically when you leave the link field; tap Verify if needed.'):(platform+' detected, but this link does not expose a profile username. Paste the actual profile page URL.');
   }
   window.autofillChannelFromUrl=detect;
   document.addEventListener('DOMContentLoaded',function(){
