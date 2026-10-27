@@ -823,5 +823,44 @@ restoreAddedDemoChannels();
 <a href="settings.html#schedule" data-page="schedule"><span>▦</span><small>Schedule</small></a>
 </nav>
 
+
+<script id="nextgen-add-channel-button-repair">
+(function(){
+  function showAddChannel(){
+    var modal=document.getElementById('addChannelModal');
+    if(!modal){alert('Add Channel form could not load. Please refresh this page.');return;}
+    modal.hidden=false;
+    modal.removeAttribute('hidden');
+    modal.style.setProperty('display','flex','important');
+    modal.style.setProperty('position','fixed','important');
+    modal.style.setProperty('z-index','99999','important');
+    modal.style.setProperty('overflow-y','auto','important');
+    modal.style.setProperty('align-items','center','important');
+    modal.style.setProperty('justify-content','center','important');
+    document.body.style.overflow='hidden';
+    var status=document.getElementById('addChannelStatus');
+    if(status)status.textContent='Enter the channel/page name and optional profile link, then tap Add channel.';
+  }
+  function hideAddChannel(){
+    var modal=document.getElementById('addChannelModal');
+    if(modal){modal.hidden=true;modal.style.setProperty('display','none','important');}
+    document.body.style.overflow='';
+  }
+  document.addEventListener('click',function(event){
+    var target=event.target;
+    if(!target)return;
+    var opener=target.closest('[onclick*="openAddChannelModal"],[aria-label="Add channel or content"]');
+    if(opener){event.preventDefault();event.stopImmediatePropagation();showAddChannel();return;}
+    if(target.id==='addChannelModal'){hideAddChannel();}
+  },true);
+  document.addEventListener('keydown',function(event){if(event.key==='Escape')hideAddChannel();});
+  window.openAddChannelModal=showAddChannel;
+  window.closeAddChannelModal=hideAddChannel;
+  document.addEventListener('DOMContentLoaded',function(){
+    var modal=document.getElementById('addChannelModal');
+    if(modal){modal.hidden=true;modal.style.setProperty('display','none','important');}
+  });
+})();
+</script>
 </body>
 </html>
