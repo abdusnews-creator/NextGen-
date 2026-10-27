@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b1020">
-<title>NextGen — Privacy Settings Copy | NextGen — Privacy Settings</title>
+<title>NextGen — Privacy Settings</title>
 <style>
 :root{--bg:#0b1020;--panel:#151d31;--panel2:#10182a;--line:#29344c;--text:#f5f7ff;--muted:#a8b3ca;--accent:#91aaff;--danger:#ffb3b3;--good:#a9f0ca}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
@@ -75,6 +75,16 @@ body>footer .credit,footer .credit{color:#d4e2ff;text-align:right}
 body:has(.ng-bottom-nav){padding-bottom:76px!important}
 @media(max-width:480px){body>footer{padding-left:14px;padding-right:14px}.ng-bottom-nav a small{font-size:9px}}
 
+
+/* New duplicate-page header redesign */
+body>header.studio-top{box-sizing:border-box;width:100%;min-height:66px;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:nowrap;position:sticky;top:0;z-index:1200;background:linear-gradient(110deg,#07172b,#0b3154 60%,#105083);color:#f4f8ff;border-bottom:1px solid #1689d4;box-shadow:0 5px 22px #0004}
+body>header.studio-top .studio-brand{flex:0 0 auto;min-width:140px;color:#f4f8ff}
+body>header.studio-top .studio-brand-name{font-size:23px!important;color:#f4f8ff}
+body>header.studio-top .studio-tagline{font-size:8px!important;color:#c5dfff!important;white-space:nowrap}
+body>header.studio-top .studio-search{flex:1 1 160px;min-width:0;max-width:420px;width:auto;box-sizing:border-box}
+body>header.studio-top .studio-top-right{flex:0 0 auto;margin-left:auto;display:flex;align-items:center;gap:6px}
+body>header.studio-top .studio-menu,body>header.studio-top .top-icon-btn{flex:0 0 38px;min-width:38px;min-height:38px;color:#f4f8ff}
+@media(max-width:520px){body>header.studio-top{flex-wrap:wrap;gap:8px;padding:9px 12px}body>header.studio-top .studio-brand{min-width:110px}body>header.studio-top .studio-brand-name{font-size:20px!important}body>header.studio-top .studio-tagline{font-size:7px!important}body>header.studio-top .studio-search{order:3;flex:1 0 100%;max-width:none;width:100%}body>header.studio-top .studio-top-right{margin-left:auto}}
 </style>
 <style>
 .studio-top{position:sticky;top:0;z-index:1200;display:flex;align-items:center;gap:12px;padding:10px 16px;background:#101a2d;border-bottom:1px solid #293752;color:#eef3ff}
@@ -117,9 +127,9 @@ body{padding-bottom:90px!important}.layout{display:block;max-width:900px;margin:
     <button type="button" onclick="toggleTopMenu('profileMenu');var p=document.querySelector('.settings-list');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});"><span>⚙</span> Settings</button>
     <button type="button" onclick="alert('Send feedback: feedback form is not connected yet.')"><span>▤</span> Send feedback</button>
     <div class="pop-divider"></div>
-    <button type="button" onclick="window.location.href='privacy-settings.html'"><span>◎</span> Account status</button>
+    <button type="button" onclick="window.location.href='privacy-settings-new.html'"><span>◎</span> Account status</button>
     <button type="button" onclick="window.location.href='help-centre.html'"><span>?</span> Help Centre</button>
-    <button type="button" onclick="window.location.href='privacy-settings.html#terms'"><span>▤</span> Terms of Service</button>
+    <button type="button" onclick="window.location.href='privacy-settings-new.html#terms'"><span>▤</span> Terms of Service</button>
   </div>
   <div id="profileMenu" class="top-popover profile-menu" hidden>
     <div class="top-popover-head"><b>NextGen account</b><small>Account and preferences</small></div>
@@ -135,7 +145,7 @@ body{padding-bottom:90px!important}.layout{display:block;max-width:900px;margin:
 </header>
 
 <div class="layout">
-<nav aria-label="Settings navigation"><a href="settings.html">General Settings</a><a class="active" href="privacy-settings.html">Privacy Settings</a><a href="#channel-management">↳ Channel Management</a></nav>
+<nav aria-label="Settings navigation"><a href="settings.html">General Settings</a><a class="active" href="privacy-settings-new.html">Privacy Settings</a><a href="#channel-management">↳ Channel Management</a></nav>
 <main>
 <h1>Privacy Settings</h1>
 <p>Settings → Privacy Settings. Manage your channel list and availability here.</p>
