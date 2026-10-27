@@ -390,6 +390,14 @@ main.studio-main #channelCards .channel-review-button,main.studio-main #channelC
 </div>
 </main>
 <script>
+function toggleTopMenu(menuId){
+ const ids=['addMenu','notificationMenu','profileMenu'];
+ ids.forEach(id=>{const el=document.getElementById(id);if(el)el.hidden=(id!==menuId)||!el.hidden;});
+}
+function studioNavTo(page){
+ const routes={dashboard:'index.html#dashboard',content:'index.html#content',approvals:'review.html',schedule:'settings.html#schedule',settings:'settings.html',channels:'channels.html',analytics:'index.html#channelAnalytics'};
+ window.location.href=routes[page]||'index.html';
+}
 function filterChannelCards(){
   const q=(document.getElementById('channelSearch').value||'').trim().toLowerCase();
   const cards=document.querySelectorAll('[data-channel-card]');
