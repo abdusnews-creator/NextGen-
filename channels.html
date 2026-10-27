@@ -348,6 +348,7 @@ main.studio-main #channelCards .channel-review-button,main.studio-main #channelC
     <input id="channelSearch" type="search" aria-label="Search channels" placeholder="⌕  Search channels..." oninput="filterChannelCards()" style="flex:1;min-width:0;padding:13px 15px;border-radius:10px;border:1px solid #1b4e80;background:#0d2340;color:#eef3ff;font-size:14px">
     <button type="button" class="action" onclick="document.getElementById('channelSearch').value='';var topSearch=document.querySelector('.studio-search');if(topSearch)topSearch.value='';filterChannelCards()" style="padding:13px 18px">Show all</button>
     <button type="button" class="action active" onclick="openAddChannelModal()" style="padding:13px 18px">＋ Add Channel</button>
+    <button type="button" class="action" onclick="restoreAddedDemoChannels()" style="padding:13px 18px">↻ Refresh Channels</button>
   </div>
   <div id="channelSearchEmpty" class="muted" style="display:none;margin-top:16px">No matching channels found.</div>
   <div class="channels" id="channelCards" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:14px;margin-top:18px">
