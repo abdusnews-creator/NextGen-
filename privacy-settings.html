@@ -82,13 +82,20 @@ body{padding-bottom:84px;background:radial-gradient(ellipse at 55% -12%,#123a67 
 </head>
 <body>
 <header class="studio-top">
-  <a class="studio-menu" href="index.html" aria-label="Back to Dashboard" title="Dashboard">☰</a>
+  <button class="studio-menu" type="button" aria-label="Menu" title="Menu" onclick="const menu=document.getElementById('privacyMenu');menu.hidden=!menu.hidden">☰</button>
   <div class="studio-brand" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;line-height:1"><span class="studio-brand-name" style="font-size:20px;font-weight:800;letter-spacing:.75px;line-height:1.05"><span style="color:#00BFFF">N</span>extGen</span><span class="studio-tagline" style="display:block;font-size:6px;font-weight:700;letter-spacing:.1px;color:#aabbd0;white-space:nowrap;line-height:1.05">Smart Automation. Smarter Growth.</span></div>
   <input class="studio-search" type="search" aria-label="Search this page" placeholder="⌕  Search across your workspace" oninput="const q=this.value.toLowerCase();document.querySelectorAll('.item').forEach(el=>el.style.display=el.innerText.toLowerCase().includes(q)?'':'none')">
   <div class="studio-top-right">
     <a class="top-icon-btn top-add-btn" href="channels.html" aria-label="Add channel" title="Add channel">+</a>
     <button class="top-icon-btn top-notifications" type="button" aria-label="Notifications" title="Notifications" onclick="document.getElementById('notificationMenu').hidden=!document.getElementById('notificationMenu').hidden"><svg class="notification-bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></button>
     <button class="top-icon-btn top-profile-btn" type="button" aria-label="Profile and settings" title="Profile and settings" onclick="window.location.href='settings.html'">A</button>
+  </div>
+  <div id="privacyMenu" class="top-popover" hidden style="left:12px;right:auto">
+    <div class="top-popover-head"><b>NextGen Menu</b><small>Quick navigation</small></div>
+    <button type="button" onclick="window.location.href='index.html'">⌂ &nbsp; Dashboard</button>
+    <button type="button" onclick="window.location.href='channels.html'">▶ &nbsp; Channels</button>
+    <button type="button" onclick="window.location.href='settings.html'">⚙ &nbsp; Settings</button>
+    <button type="button" onclick="document.getElementById('privacyMenu').hidden=true">Close</button>
   </div>
   <div id="notificationMenu" class="top-popover" hidden><div class="top-popover-head"><b>Notifications</b><small>No new notifications</small></div><button type="button" onclick="document.getElementById('notificationMenu').hidden=true">Close</button></div>
 </header>
