@@ -78,6 +78,7 @@ body:has(.ng-bottom-nav){padding-bottom:76px!important}
 
 /* Slightly larger, bold footer/corner text */
 body>footer, footer.ng-shared-footer, body>footer .credit, footer .credit { font-size: 15px !important; font-weight: 800 !important; }
+.notification-bell-3d{font-size:25px;line-height:1;display:block;filter:drop-shadow(0 2px 1px #0008) drop-shadow(0 0 3px #f5b94255)}
 </style>
 <style>
 /* NextGen Studio-inspired dashboard */
@@ -263,7 +264,7 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
   <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" onkeydown="if(event.key==='Enter'){window.location.href='index.html#content'}">
   <div class="studio-top-right">
     <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="toggleTopMenu('addMenu')">+</button>
-    <button class="top-icon-btn" type="button" aria-label="Notifications" title="Notifications" onclick="toggleTopMenu('notificationMenu')"><svg class="notification-bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></button>
+    <button class="top-icon-btn" type="button" aria-label="Notifications" title="Notifications" onclick="toggleTopMenu('notificationMenu')"><span class="notification-bell-3d" aria-hidden="true">🔔</span></button>
     <button class="top-icon-btn top-profile-btn" type="button" aria-label="Profile menu" onclick="toggleTopMenu('profileMenu')">A</button>
   </div>
   <div id="addMenu" class="top-popover" hidden>
