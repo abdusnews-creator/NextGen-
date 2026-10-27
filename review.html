@@ -158,6 +158,8 @@ async function saveCloudReview(value){
     });
     if(eventError)throw eventError;
     window.nextgenCloudDrafts=window.nextgenCloudDrafts||{};
+    window.nextgenLocalReviewOverrides=window.nextgenLocalReviewOverrides||{};
+    delete window.nextgenLocalReviewOverrides[select.value];
     window.nextgenCloudDrafts[select.value]={
       ...(window.nextgenCloudDrafts[select.value]||{}),
       id:itemId,title,caption,platform,status:targetStatus,safety_checks,
@@ -166,7 +168,10 @@ async function saveCloudReview(value){
     el.textContent='Cloud saved: '+targetStatus.replace('_',' ')+'. Approval event recorded. Nothing was published or scheduled.';
     renderQueue();
   }catch(e){
+    window.nextgenLocalReviewOverrides=window.nextgenLocalReviewOverrides||{};
+    window.nextgenLocalReviewOverrides[select.value]=value;
     el.textContent='Cloud save failed: '+(e.message||'check sign-in and table permissions').slice(0,180)+'. Local status remains on this device.';
+    renderQueue();
   }
 }
 
@@ -186,7 +191,7 @@ function renderQueue(){
   let pending=0,approved=0,rejected=0;
   queue.replaceChildren();
   items.forEach(item=>{
-    const cloud=(window.nextgenCloudDrafts||{})[item.id];const cloudStatus=cloud?(cloud.status==='approved'?'Approved for review only':cloud.status==='rejected'?'Rejected — revision needed':'Pending review'):null;const value=cloudStatus||shared[draftIds[item.id]]||states[item.id]||'Pending review';
+    const cloud=(window.nextgenCloudDrafts||{})[item.id];const cloudStatus=cloud?(cloud.status==='approved'?'Approved for review only':cloud.status==='rejected'?'Rejected — revision needed':'Pending review'):null;const localOverride=(window.nextgenLocalReviewOverrides||{})[item.id];const value=localOverride||cloudStatus||shared[draftIds[item.id]]||states[item.id]||'Pending review';
     if(/^Approved/.test(value))approved++;else if(/^Rejected/.test(value))rejected++;else pending++;
     const card=document.createElement('div');card.className='queueItem';
     const h=document.createElement('h4');h.textContent=item.name;
