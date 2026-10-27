@@ -442,7 +442,8 @@ document.addEventListener('click',function(event){
   function currentValues(){
     const manual=document.getElementById('manualApprovalSwitch')?.getAttribute('aria-checked')==='true';
     const auto=document.getElementById('autoApprovalSwitch')?.getAttribute('aria-checked')==='true';
-    return {approval_mode:auto?'auto':'manual',auto_approval_enabled:auto};
+    const background=document.getElementById('backgroundPreferenceSwitch')?.getAttribute('aria-checked')==='true';
+    return {approval_mode:auto?'auto':'manual',auto_approval_enabled:auto,background_mode_enabled:background};
   }
   async function saveCloud(){
     if(saving||!userId)return;
@@ -452,7 +453,8 @@ document.addEventListener('click',function(event){
       const {error}=await c.from('automation_settings').upsert({
         owner_id:userId,
         approval_mode:values.approval_mode,
-        auto_approval_enabled:values.auto_approval_enabled
+        auto_approval_enabled:values.auto_approval_enabled,
+        background_mode_enabled:values.background_mode_enabled
       },{onConflict:'owner_id'});
       if(error)throw error;
       if(statusLine)statusLine.title='Approval preference saved to your NextGen account.';
@@ -470,11 +472,12 @@ document.addEventListener('click',function(event){
       if(error)throw error;
       userId=data.session?.user?.id||null;
       if(!userId)return;
-      const result=await c.from('automation_settings').select('approval_mode,auto_approval_enabled').eq('owner_id',userId).maybeSingle();
+      const result=await c.from('automation_settings').select('approval_mode,auto_approval_enabled,background_mode_enabled').eq('owner_id',userId).maybeSingle();
       if(result.error)throw result.error;
       const row=result.data;
       if(row){
         const autoOn=row.auto_approval_enabled===true&&row.approval_mode==='auto';
+        alignSwitch('backgroundPreferenceSwitch',row.background_mode_enabled===true);
         // Disable the current mode first; the UI prevents both modes being ON.
         if(autoOn){
           alignSwitch('manualApprovalSwitch',false);
@@ -494,7 +497,7 @@ document.addEventListener('click',function(event){
       if(statusLine)statusLine.title='Cloud approval settings not loaded: '+(e?.message||'Please sign in to sync settings.');
     }
   }
-  ['manualApprovalSwitch','autoApprovalSwitch'].forEach(id=>{
+  ['manualApprovalSwitch','autoApprovalSwitch','backgroundPreferenceSwitch'].forEach(id=>{
     const el=document.getElementById(id);
     if(el)el.addEventListener('click',()=>setTimeout(saveCloud,0));
   });
