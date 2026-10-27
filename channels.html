@@ -424,8 +424,9 @@ function filterChannelCards(){
 \n<script>
 const addedChannelsKey='nextgen-demo-added-channels-v1';
 function prettifyChannelLabel(value){
-  return (value||'').replace(/^@/,'').replace(/[._-]+/g,' ').replace(/\s+/g,' ').trim()
-    .replace(/\b\w/g,letter=>letter.toUpperCase());
+  return (value||'').replace(/^@/,'').replace(/([a-z0-9])([A-Z])/g,'$1 $2')
+    .replace(/[._-]+/g,' ').replace(/\s+/g,' ').trim()
+    .toLowerCase().replace(/\b\w/g,letter=>letter.toUpperCase());
 }
 function autofillChannelFromUrl(){
   const field=document.getElementById('newChannelUrl');
@@ -464,8 +465,8 @@ function autofillChannelFromUrl(){
     const handleField=document.getElementById('newChannelHandle');
     handleField.value='@'+handle;
     const nameField=document.getElementById('newChannelName');
-    if(!nameField.value.trim())nameField.value=prettifyChannelLabel(handle);
-    status.textContent='Platform and username detected. The display name is a suggested label; official profile-name lookup needs platform API access.';
+    nameField.value=prettifyChannelLabel(handle);
+    status.textContent='Platform and username detected. The channel/profile name is formatted separately from the @username. Official profile-name lookup needs platform API access.';
   }else{
     status.textContent='Platform detected. This link does not contain a readable username, so enter the channel/page name manually.';
   }
