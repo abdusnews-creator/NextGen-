@@ -862,5 +862,82 @@ restoreAddedDemoChannels();
   });
 })();
 </script>
+
+<style id="nextgen-final-document-scroll-fix">
+/* Force the Channels page to use one normal document scroll on Android. */
+html, body {
+  width:100%!important;
+  height:auto!important;
+  min-height:100%!important;
+  max-height:none!important;
+  overflow:visible!important;
+  overflow-x:hidden!important;
+  overflow-y:visible!important;
+  position:static!important;
+}
+html { overflow-y:scroll!important; }
+body {
+  display:block!important;
+  contain:none!important;
+  transform:none!important;
+  touch-action:pan-y!important;
+  overscroll-behavior-y:auto!important;
+}
+body > header.studio-top {
+  position:fixed!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+}
+body > main.studio-main,
+main.studio-main,
+main.studio-main > *,
+main.studio-main section,
+main.studio-main .channels,
+main.studio-main #channelCards {
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+  overflow-y:visible!important;
+  contain:none!important;
+  transform:none!important;
+}
+body > main.studio-main {
+  display:block!important;
+  min-height:100vh!important;
+  margin-top:0!important;
+  padding-top:84px!important;
+  padding-bottom:150px!important;
+}
+body > footer { position:relative!important; }
+.ng-bottom-nav { position:fixed!important; bottom:0!important; }
+</style>
+<script id="nextgen-final-document-scroll-script">
+(function(){
+ function unlockDocumentScroll(){
+   var html=document.documentElement, body=document.body;
+   [html,body].forEach(function(el){
+     if(!el)return;
+     el.style.setProperty('height','auto','important');
+     el.style.setProperty('max-height','none','important');
+     el.style.setProperty('overflow-x','hidden','important');
+     el.style.setProperty('touch-action','pan-y','important');
+     el.style.setProperty('overscroll-behavior-y','auto','important');
+   });
+   html.style.setProperty('overflow-y','scroll','important');
+   body.style.setProperty('overflow-y','visible','important');
+   var main=document.querySelector('main.studio-main');
+   if(main){
+     main.style.setProperty('height','auto','important');
+     main.style.setProperty('max-height','none','important');
+     main.style.setProperty('overflow','visible','important');
+     main.style.setProperty('padding-bottom','150px','important');
+   }
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',unlockDocumentScroll);
+ else unlockDocumentScroll();
+ window.addEventListener('load',unlockDocumentScroll,{once:true});
+})();
+</script>
 </body>
 </html>
