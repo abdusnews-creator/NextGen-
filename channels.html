@@ -605,14 +605,18 @@ async function restoreAddedDemoChannels(){
       return;
     }
     if(status)status.textContent='Signed in — loading channels from your NextGen account…';
+    const previewCards=Array.from(cards.querySelectorAll('[data-channel-card]')).map(card=>card.cloneNode(true));
     const result=await client.from('channels').select('id,owner_id,platform,display_name,handle,profile_url,connection_status,is_paused,created_at').order('created_at',{ascending:true});
     if(result.error)throw result.error;
-    // Once cloud data is available, remove sample cards so they cannot be mistaken for saved accounts.
+    // Prefer real saved records when present; retain starter cards if the account has no saved rows yet.
     cards.querySelectorAll('[data-channel-card]').forEach(card=>card.remove());
-    (result.data||[]).forEach(item=>cards.appendChild(buildDemoChannel(item)));
-    if(status)status.textContent=(result.data||[]).length
-      ? 'Cloud sync active — '+result.data.length+' saved channel(s) loaded from your NextGen account. Platform authorization is separate.'
-      : 'Cloud sync active — no channels saved yet. Tap + Add Channel to save your first channel.';
+    if((result.data||[]).length){
+      (result.data||[]).forEach(item=>cards.appendChild(buildDemoChannel(item)));
+      if(status)status.textContent='Cloud sync active — '+result.data.length+' saved channel(s) loaded from your NextGen account. Platform authorization is separate.';
+    }else{
+      previewCards.forEach(card=>cards.appendChild(card));
+      if(status)status.textContent='No saved channel records found yet. Starter channel cards are shown below; platform authorization is not verified. Use + Add Channel to save records to your account.';
+    }
     filterChannelCards();
   }catch(error){
     if(status)status.textContent='Cloud channel loading unavailable: '+(error&&error.message?error.message:'Please refresh and sign in again.');
