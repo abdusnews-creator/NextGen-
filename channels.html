@@ -415,13 +415,70 @@ function filterChannelCards(){
     <label for="newChannelHandle" style="display:block;margin:12px 0 6px">Handle (optional)</label>
     <input id="newChannelHandle" maxlength="100" placeholder="@yourhandle" style="width:100%;box-sizing:border-box;padding:12px;border-radius:9px;background:#0d2340;color:#fff;border:1px solid #28547c">
     <p id="addChannelStatus" class="muted" aria-live="polite"></p>
+    <button type="button" class="action" id="verifyChannelProfileButton" onclick="verifyChannelProfileName()">Verify actual profile name</button>
+    <p class="muted">Verification requires a signed-in NextGen account and a deployed channel-profile-lookup Edge Function. The app will only fill the name when the platform confirms it.</p>
     <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:16px">
       <button type="button" class="action" onclick="closeAddChannelModal()">Cancel</button>
       <button type="submit" class="action active">Add channel</button>
     </div>
   </form>
 </div>
-\n<script>
+\n<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+let nextgenSupabaseClient = null;
+function getNextgenSupabaseClient(){
+  if(nextgenSupabaseClient)return nextgenSupabaseClient;
+  const config=window.NEXTGEN_SUPABASE_CONFIG;
+  if(!config||!config.url||!config.anonKey||!window.supabase||!window.supabase.createClient){
+    throw new Error('Supabase web configuration is missing. Refresh after the latest NextGen site deployment.');
+  }
+  nextgenSupabaseClient=window.supabase.createClient(config.url,config.anonKey);
+  return nextgenSupabaseClient;
+}
+async function verifyChannelProfileName(){
+  const button=document.getElementById('verifyChannelProfileButton');
+  const status=document.getElementById('addChannelStatus');
+  const rawUrl=(document.getElementById('newChannelUrl').value||'').trim();
+  const platform=(document.getElementById('newChannelPlatform').value||'').toLowerCase();
+  if(!rawUrl){status.textContent='Paste the profile/channel URL first.';return;}
+  let url;
+  try{url=new URL(rawUrl);}catch(error){status.textContent='Enter a valid profile/channel URL.';return;}
+  if(url.protocol!=='https:'){status.textContent='Use a profile/channel link beginning with https://';return;}
+  button.disabled=true;button.textContent='Verifying…';status.textContent='Checking the platform for the actual profile name…';
+  try{
+    const client=getNextgenSupabaseClient();
+    const sessionResult=await client.auth.getSession();
+    if(sessionResult.error)throw sessionResult.error;
+    if(!sessionResult.data.session){status.textContent='Please sign in to NextGen first, then try verification again.';return;}
+    const result=await client.functions.invoke('channel-profile-lookup',{body:{platform,url:rawUrl}});
+    if(result.error){
+      const context=result.error.context;
+      let detail='';
+      if(context&&typeof context.json==='function'){
+        try{const body=await context.json();detail=body.error||body.message||'';}catch(error){}
+      }
+      throw new Error(detail||result.error.message||'Profile lookup request failed.');
+    }
+    const data=result.data||{};
+    if(data.verified_by_platform!==true||!data.display_name){
+      throw new Error(data.error||'The platform did not verify an actual profile name.');
+    }
+    const nameField=document.getElementById('newChannelName');
+    nameField.value=data.display_name;
+    nameField.dataset.nameSource='platform-verified';
+    status.textContent='Verified by '+platform+'. Actual profile name filled in: '+data.display_name;
+  }catch(error){
+    const message=error&&error.message?error.message:'Profile verification failed.';
+    if(/functionsfetch|failed to fetch|404|not found/i.test(message)){
+      status.textContent='Lookup service is not reachable yet. The Edge Function must be deployed and the latest NextGen site published before verification can work.';
+    }else{
+      status.textContent='Could not verify profile: '+message;
+    }
+  }finally{
+    button.disabled=false;button.textContent='Verify actual profile name';
+  }
+}
 const addedChannelsKey='nextgen-demo-added-channels-v1';
 function autofillChannelFromUrl(){
   const field=document.getElementById('newChannelUrl');
