@@ -1047,9 +1047,7 @@ function studioScroll(id){
     var footer=document.createElement('footer');
     footer.className='ng-shared-footer';
     footer.innerHTML='<span class="ng-copyright">© 2026 NextGen. All Rights Reserved.</span><span class="ng-credit">Powered by ABDUS SATTAR</span>';
-    var bottomNav=document.querySelector('.ng-bottom-nav');
-    if(bottomNav && bottomNav.parentNode){bottomNav.parentNode.insertBefore(footer,bottomNav);}
-    else{document.body.appendChild(footer);}
+    document.body.appendChild(footer);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',applyNextGenSharedBranding);else applyNextGenSharedBranding();
 })();
