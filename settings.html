@@ -517,7 +517,7 @@ document.addEventListener('click',function(event){
   function readIdeaTimes(){
     return ['ideaTime1','ideaTime2','ideaTime3'].map((id,i)=>{
       const input=document.getElementById(id);
-      return input&&/^([01]\\d|2[0-3]):[0-5]\\d$/.test(input.value)?input.value:['08:00','14:00','18:00'][i];
+      return input&&/^([01]\d|2[0-3]):[0-5]\d$/.test(input.value)?input.value:['08:00','14:00','18:00'][i];
     });
   }
   const saveScheduleButton=document.getElementById('saveIdeaSchedule');
