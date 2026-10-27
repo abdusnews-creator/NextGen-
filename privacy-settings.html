@@ -3,40 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b1020">
+<meta name="theme-color" content="#0b2442">
 <title>NextGen — Privacy Settings</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#0b1020;color:#eef3ff;font-family:Arial,sans-serif}
-header{padding:20px 18px;background:#141e32;border-bottom:1px solid #293752}
-.brand{font-size:22px;font-weight:800;color:#00bfff}
-.tagline{font-size:11px;color:#aabbd0;margin-top:4px}
-main{width:min(850px,100%);margin:24px auto;padding:0 16px 40px}
-h1{font-size:27px;margin:0 0 8px}
-.intro{color:#b8c9e8;line-height:1.5;margin:0 0 22px}
-.item{display:flex;align-items:center;gap:14px;padding:18px 16px;border:1px solid #293752;border-radius:14px;background:#141e32;color:#eef3ff;text-decoration:none;margin:12px 0;min-height:86px}
-.item-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:11px;background:#1b3150;font-size:23px;flex-shrink:0}
+:root{--bg:#0f141b;--panel:#141d27;--line:#293847;--text:#f1f5f9;--muted:#9aabbe;--blue:#0b2442;--accent:#00bfff}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;padding-bottom:84px}
+.studio-top{height:72px;padding:0 26px;background:linear-gradient(110deg,#07182c 0%,#0b2442 65%,#103b65 100%);border-bottom:1px solid #1675bd;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:20;box-shadow:0 5px 22px #0004}
+.studio-menu{width:38px;height:38px;border:0;background:transparent;color:#dbe6f5;font-size:24px;display:grid;place-items:center;cursor:pointer}
+.studio-brand{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-width:150px;line-height:1}
+.studio-brand-name{font-size:20px;font-weight:800;letter-spacing:.75px;color:#f8fafc;line-height:1.1}
+.studio-brand-name span{color:var(--accent)}
+.studio-tagline{font-size:8px;font-weight:700;letter-spacing:.1px;color:#aabbd0;white-space:nowrap;line-height:1.3;margin-top:2px}
+.studio-search{height:42px;max-width:720px;flex:1;border-radius:28px;background:#202a36;border:1px solid #2d3948;color:#eef2f7;padding:0 18px;font-size:15px;outline:none;min-width:0}
+.studio-search:focus{border-color:#6686b8}
+.studio-top-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.top-icon-btn{width:40px;height:40px;border:0;border-radius:50%;display:grid;place-items:center;background:transparent;color:#dbe6f5;position:relative;text-decoration:none;cursor:pointer}
+.top-icon-btn:hover{background:#253446}
+.top-icon-btn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.top-add-btn{background:#172b43;border:1px solid #2e4968;font-size:25px}
+.top-profile-btn{width:34px;height:34px;font-size:15px;background:#2449bc;color:white;font-weight:700}
+.top-notifications:after{content:"";position:absolute;top:5px;right:6px;width:8px;height:8px;border-radius:50%;background:#ff304f;border:2px solid #0b2442}
+main{width:min(850px,100%);margin:28px auto;padding:0 18px 32px}
+.page-heading{margin-bottom:22px}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:#7eb8ff;font-weight:700;margin:0 0 8px}
+h1{font-size:28px;line-height:1.2;margin:0 0 9px;color:#f8fafc}
+.intro{color:#aebdd0;line-height:1.6;margin:0;max-width:680px;font-size:14px}
+.item{display:flex;align-items:center;gap:15px;padding:18px 17px;border:1px solid #293847;border-radius:14px;background:linear-gradient(135deg,#172333,#131d29);color:var(--text);text-decoration:none;margin:12px 0;min-height:92px;transition:border-color .15s,transform .15s}
+.item:hover{border-color:#3d79b5;transform:translateY(-1px)}
+.item-icon{width:46px;height:46px;display:grid;place-items:center;border-radius:12px;background:#173654;color:#7fd5ff;flex-shrink:0}
+.item-icon svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .item-copy{flex:1;min-width:0}
-.item-copy strong{display:block;font-size:17px;margin-bottom:5px}
-.item-copy small{display:block;color:#aabbd0;line-height:1.4}
-.arrow{font-size:26px;color:#91aaff}
-.back{display:inline-block;margin-top:18px;padding:12px 16px;border:1px solid #3c5277;border-radius:10px;color:#dce7ff;text-decoration:none}
-.credit{text-align:right;font-size:11px;color:#8fa0bd;margin-top:30px}
-@media(max-width:480px){main{margin-top:20px}h1{font-size:24px}.item{padding:15px 12px;gap:11px}.item-copy strong{font-size:16px}}
+.item-copy strong{display:block;font-size:16px;margin-bottom:6px}
+.item-copy small{display:block;color:#9aabbe;line-height:1.5;font-size:12px}
+.arrow{font-size:25px;color:#83bfff;line-height:1}
+.back{display:inline-flex;align-items:center;gap:8px;margin-top:17px;padding:11px 15px;border:1px solid #344b67;border-radius:10px;color:#dce7f7;text-decoration:none;font-size:13px}
+.back:hover{background:#17283b}
+.page-credit{width:min(850px,100%);margin:0 auto;padding:18px 18px 24px;display:flex;justify-content:flex-end;color:#8fa5bf;font-size:11px;letter-spacing:.2px}
+.ng-bottom-nav{position:fixed;z-index:1000;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;padding:7px 8px calc(7px + env(safe-area-inset-bottom));background:rgba(9,20,39,.98);border-top:1px solid #35547e;backdrop-filter:blur(12px)}
+.ng-bottom-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0;min-height:48px;padding:5px 2px;border-radius:10px;color:#b8c9e8;text-decoration:none;font-size:10px}
+.ng-bottom-nav a svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ng-bottom-nav a small{font-size:10px;white-space:nowrap}
+.ng-bottom-nav a.active{color:#fff;background:#203e6b}
+@media(max-width:680px){.studio-top{height:62px;padding:0 10px;gap:7px}.studio-menu{width:30px;min-width:30px;font-size:22px}.studio-brand{min-width:0}.studio-brand-name{font-size:18px}.studio-tagline{font-size:6.5px}.studio-search{display:none}.studio-top-right{gap:3px}.top-icon-btn{width:34px;height:36px}.top-profile-btn{width:30px;height:30px}main{margin:22px auto;padding:0 13px 24px}.page-heading{margin-bottom:18px}h1{font-size:25px}.item{padding:15px 12px;gap:11px;min-height:84px}.item-icon{width:41px;height:41px}.item-copy strong{font-size:15px}.item-copy small{font-size:11px}.ng-bottom-nav{padding-left:5px;padding-right:5px}.ng-bottom-nav a{gap:3px}.ng-bottom-nav a svg{width:20px;height:20px}.ng-bottom-nav a small{font-size:9px}.page-credit{padding-right:14px}}
 </style>
 </head>
 <body>
-<header><div class="brand">NextGen</div><div class="tagline">Smart Automation. Smarter Growth.</div></header>
+<header class="studio-top">
+  <a class="studio-menu" href="settings.html" aria-label="Back to Settings" title="Back to Settings" style="text-decoration:none">‹</a>
+  <div class="studio-brand"><span class="studio-brand-name"><span>N</span>extGen</span><span class="studio-tagline">Smart Automation. Smarter Growth.</span></div>
+  <input class="studio-search" type="search" aria-label="Search" placeholder="⌕  Search across your workspace" onkeydown="if(event.key==='Enter'){const q=this.value.toLowerCase();document.querySelectorAll('.item').forEach(el=>el.style.display=el.innerText.toLowerCase().includes(q)?'':'none')}">
+  <div class="studio-top-right">
+    <a class="top-icon-btn top-add-btn" href="channels.html" aria-label="Add channel" title="Add channel">+</a>
+    <a class="top-icon-btn top-notifications" href="settings.html" aria-label="Notifications" title="Notifications"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></a>
+    <a class="top-icon-btn top-profile-btn" href="settings.html" aria-label="Profile and settings" title="Profile and settings">A</a>
+  </div>
+</header>
 <main>
-<h1>Privacy Settings</h1>
-<p class="intro">Privacy-related settings and management tools are grouped here. Select the option below to manage your channels.</p>
-<a class="item" href="channel-preferences.html" id="channel-management">
-<span class="item-icon">▶</span>
-<span class="item-copy"><strong>Channel Management</strong><small>Manage your YouTube, Facebook, Instagram and Threads channel preferences.</small></span>
-<span class="arrow">›</span>
-</a>
-<a class="back" href="settings.html">‹ Back to Settings</a>
-<div class="credit">Powered by ABDUS SATTAR</div>
+  <section class="page-heading">
+    <p class="eyebrow">Account preferences</p>
+    <h1>Privacy Settings</h1>
+    <p class="intro">Manage privacy-related options for your NextGen workspace. Choose an item below to continue.</p>
+  </section>
+  <a class="item" href="channel-preferences.html" id="channel-management">
+    <span class="item-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3z"/></svg></span>
+    <span class="item-copy"><strong>Channel Management</strong><small>Manage your YouTube, Facebook, Instagram and Threads channel preferences.</small></span>
+    <span class="arrow" aria-hidden="true">›</span>
+  </a>
+  <a class="back" href="settings.html"><span aria-hidden="true">←</span> Back to Settings</a>
 </main>
+<div class="page-credit">Powered by ABDUS SATTAR</div>
+<nav class="ng-bottom-nav" aria-label="Main navigation">
+  <a href="index.html" aria-label="Dashboard"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg><small>Dashboard</small></a>
+  <a href="channels.html" class="active" aria-label="Channels"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3z"/></svg><small>Channels</small></a>
+  <a href="index.html#content" aria-label="Content"><svg viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v5h4M10 12h6M10 16h6"/></svg><small>Content</small></a>
+  <a href="index.html#approvals" aria-label="Approvals"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/><circle cx="12" cy="12" r="9"/></svg><small>Approvals</small></a>
+  <a href="index.html#schedule" aria-label="Schedule"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h3M8 17h6"/></svg><small>Schedule</small></a>
+</nav>
 </body>
 </html>
