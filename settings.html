@@ -475,10 +475,18 @@ document.addEventListener('click',function(event){
       const row=result.data;
       if(row){
         const autoOn=row.auto_approval_enabled===true&&row.approval_mode==='auto';
-        // Apply in a safe order so the UI's mutual-exclusion rules remain intact.
-        alignSwitch('manualApprovalSwitch',!autoOn);
-        alignSwitch('autoApprovalSwitch',autoOn);
+        // Disable the current mode first; the UI prevents both modes being ON.
+        if(autoOn){
+          alignSwitch('manualApprovalSwitch',false);
+          alignSwitch('autoApprovalSwitch',true);
+        }else{
+          alignSwitch('autoApprovalSwitch',false);
+          alignSwitch('manualApprovalSwitch',true);
+        }
       }else{
+        // A new account always starts safely in manual mode, regardless of device-local state.
+        alignSwitch('autoApprovalSwitch',false);
+        alignSwitch('manualApprovalSwitch',true);
         await saveCloud(); // persist safe defaults: manual ON, auto OFF
       }
       c.auth.onAuthStateChange((_event,session)=>{userId=session?.user?.id||null;});
