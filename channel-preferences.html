@@ -336,8 +336,8 @@ main.studio-main #channelCards .channel-review-button,main.studio-main #channelC
 <main class="studio-main" style="max-width:1200px;margin:0 auto">
 <div class="top" style="display:block;width:100%">
   <div>
-    <h2 class="channel-page-title">Channels</h2>
-    <p class="channel-page-subtitle">Manage your connected social media channels</p>
+    <h2 class="channel-page-title">Channel Preferences</h2>
+    <p class="channel-page-subtitle">Manage channel settings. No previous channel data is saved here.</p>
     <p class="note" id="cloudStatus" style="display:block">DEMO CONTROLS — browser-only test settings, not connected to real social accounts.</p>
   <div class="notice" style="display:block;margin-top:14px">
     <strong>Demo controls are below.</strong> Channel controls only save demo state in this browser; they do not pause or publish on YouTube, Facebook, Instagram, or Threads.
@@ -349,31 +349,13 @@ main.studio-main #channelCards .channel-review-button,main.studio-main #channelC
     <button type="button" class="action active" onclick="window.location.href='channels.html'" style="padding:13px 18px">＋ Add Channel</button>
   </div>
   <div id="channelSearchEmpty" class="muted" style="display:none;margin-top:16px">No matching channels found.</div>
-  <div class="channels" id="channelCards" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:14px;margin-top:18px">
-    <article class="card channel-review-card" data-channel-card>
-      <div class="channel-review-head"><div class="channel-review-icon">▶️</div><div class="channel-review-platform">YouTube</div></div><h3 class="channel-review-name">Royal Furniture House</h3>
-      <p class="channel-review-handle">@RoyalFurnitureHouse</p><div class="channel-review-status"><span class="channel-review-dot"></span><span>App connection: Not verified</span></div>
-      <div style="margin-top:16px;display:block"><button class="action active" type="button" onclick="window.location.href='review.html'" style="display:inline-block;min-width:100px;padding:11px 18px;background:#00a8e8;color:#071526;border:1px solid #00a8e8;border-radius:9px;font-weight:800">Review</button></div>
-      
-    </article>
-    <article class="card channel-review-card" data-channel-card>
-      <div class="channel-review-head"><div class="channel-review-icon">📘</div><div class="channel-review-platform">Facebook</div></div><h3 class="channel-review-name">Royal Furniture Zone</h3>
-      <p class="channel-review-handle">@RoyalFurnitureZone</p><div class="channel-review-status"><span class="channel-review-dot"></span><span>App connection: Not verified</span></div>
-      <div style="margin-top:14px"><button class="action active channel-review-button" type="button" onclick="window.location.href='review.html'">Review</button></div>
-      
-    </article>
-    <article class="card channel-review-card" data-channel-card>
-      <div class="channel-review-head"><div class="channel-review-icon">📸</div><div class="channel-review-platform">Instagram</div></div><h3 class="channel-review-name">Royal Furniture Zone</h3>
-      <p class="channel-review-handle">@royalfurniturezone</p><div class="channel-review-status"><span class="channel-review-dot"></span><span>App connection: Not verified</span></div>
-      <div style="margin-top:14px"><button class="action active channel-review-button" type="button" onclick="window.location.href='review.html'">Review</button></div>
-      
-    </article>
-    <article class="card channel-review-card" data-channel-card>
-      <div class="channel-review-head"><div class="channel-review-icon">🧵</div><div class="channel-review-platform">Threads</div></div><h3 class="channel-review-name">Royal Furniture Zone</h3>
-      <p class="channel-review-handle">@royalfurniturezone</p><div class="channel-review-status"><span class="channel-review-dot"></span><span>App connection: Not verified</span></div>
-      <div style="margin-top:14px"><button class="action active channel-review-button" type="button" onclick="window.location.href='review.html'">Review</button></div>
-      
-    </article>
+  <div id="channelCards" class="channels" style="display:block;width:100%;margin-top:26px">
+    <section class="card" style="text-align:center;padding:30px 18px;border-radius:18px">
+      <div style="font-size:34px;margin-bottom:12px">⚙️</div>
+      <h3 style="margin:0 0 10px">No channel data</h3>
+      <p class="muted" style="margin:0">Previous sample channel entries have been cleared. Add or connect a channel when channel setup is ready.</p>
+      <button type="button" class="action active" onclick="window.location.href='channels.html'" style="margin-top:18px">＋ Add Channel</button>
+    </section>
   </div>
 </div>
 <section class="card" style="width:100%;box-sizing:border-box;margin-top:22px;padding:24px;border-radius:18px">
