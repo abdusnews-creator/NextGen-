@@ -300,14 +300,14 @@ main.studio-main #channelCards .channel-review-button,main.studio-main #channelC
 <header class="studio-top">
   <button class="studio-menu" type="button" aria-label="Menu" onclick="document.querySelector('.studio-nav').classList.toggle('nav-expanded')">☰</button>
   <div class="studio-brand" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;line-height:1"><span class="studio-brand-name" style="font-size:20px;font-weight:800;letter-spacing:.2px;line-height:1.05"><span style="color:#00BFFF">N</span>extGen</span><span class="studio-tagline" style="display:block;font-size:6px;font-weight:700;letter-spacing:.1px;color:#aabbd0;white-space:nowrap;line-height:1.05">Smart Automation. Smarter Growth.</span></div>
-  <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" onkeydown="if(event.key==='Enter'){event.preventDefault();var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards();q.scrollIntoView({behavior:'smooth',block:'center'})}}">
+  <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" oninput="var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards()}" onkeydown="if(event.key==='Enter'){event.preventDefault();var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards();q.scrollIntoView({behavior:'smooth',block:'center'})}}">
   <div class="studio-top-right">
     <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="toggleTopMenu('addMenu')">+</button>
     <button class="top-icon-btn" type="button" aria-label="Notifications" title="Notifications" onclick="toggleTopMenu('notificationMenu')"><span class="notification-bell-3d" aria-hidden="true">🔔</span></button>
     <button class="top-icon-btn top-profile-btn" type="button" aria-label="Profile menu" onclick="toggleTopMenu('profileMenu')">A</button>
   </div>
   <div id="addMenu" class="top-popover" hidden>
-    <button type="button" onclick="window.location.href='channels.html'"><span>＋</span> Add channel</button>
+    <button type="button" onclick="toggleTopMenu('addMenu');openAddChannelModal()"><span>＋</span> Add channel</button>
     <button type="button" onclick="studioNavTo('content')"><span>▣</span> Add content</button>
   </div>
   <div id="notificationMenu" class="top-popover" hidden style="right:42px">
@@ -347,7 +347,7 @@ main.studio-main #channelCards .channel-review-button,main.studio-main #channelC
   <div style="display:flex;width:100%;box-sizing:border-box;gap:10px;align-items:center;flex-wrap:wrap;margin-top:20px">
     <input id="channelSearch" type="search" aria-label="Search channels" placeholder="⌕  Search channels..." oninput="filterChannelCards()" style="flex:1;min-width:0;padding:13px 15px;border-radius:10px;border:1px solid #1b4e80;background:#0d2340;color:#eef3ff;font-size:14px">
     <button type="button" class="action" onclick="document.getElementById('channelSearch').value='';filterChannelCards()" style="padding:13px 18px">Show all</button>
-    <button type="button" class="action active" onclick="window.location.href='channels.html'" style="padding:13px 18px">＋ Add Channel</button>
+    <button type="button" class="action active" onclick="openAddChannelModal()" style="padding:13px 18px">＋ Add Channel</button>
   </div>
   <div id="channelSearchEmpty" class="muted" style="display:none;margin-top:16px">No matching channels found.</div>
   <div class="channels" id="channelCards" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:14px;margin-top:18px">
@@ -398,7 +398,27 @@ function filterChannelCards(){
   document.getElementById('channelSearchEmpty').style.display=(q && visible===0)?'block':'none';
 }
 </script>
-<footer>NextGen Prototype • Dashboard preview • Real publishing is not connected</footer>
+
+<div id="addChannelModal" role="dialog" aria-modal="true" aria-labelledby="addChannelTitle" hidden style="position:fixed;inset:0;z-index:10000;background:#020817cc;padding:18px;display:none;align-items:center;justify-content:center">
+  <form id="addChannelForm" onsubmit="addDemoChannel(event)" style="width:min(100%,480px);background:#081f3a;border:1px solid #28547c;border-radius:16px;padding:22px;box-sizing:border-box;box-shadow:0 20px 60px #0009">
+    <h2 id="addChannelTitle" style="margin:0 0 8px;color:#fff">Add a channel</h2>
+    <p class="muted" style="margin:0 0 16px">Add a channel to this device's NextGen demo workspace. This does not connect or authorize the real platform account.</p>
+    <label for="newChannelPlatform" style="display:block;margin:12px 0 6px">Platform</label>
+    <select id="newChannelPlatform" required style="width:100%;padding:12px;border-radius:9px;background:#0d2340;color:#fff;border:1px solid #28547c">
+      <option value="YouTube">YouTube</option><option value="Facebook">Facebook</option><option value="Instagram">Instagram</option><option value="Threads">Threads</option>
+    </select>
+    <label for="newChannelName" style="display:block;margin:12px 0 6px">Channel / Page name</label>
+    <input id="newChannelName" required maxlength="80" placeholder="e.g. My Channel" style="width:100%;box-sizing:border-box;padding:12px;border-radius:9px;background:#0d2340;color:#fff;border:1px solid #28547c">
+    <label for="newChannelHandle" style="display:block;margin:12px 0 6px">Handle (optional)</label>
+    <input id="newChannelHandle" maxlength="100" placeholder="@yourhandle" style="width:100%;box-sizing:border-box;padding:12px;border-radius:9px;background:#0d2340;color:#fff;border:1px solid #28547c">
+    <p id="addChannelStatus" class="muted" aria-live="polite"></p>
+    <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:16px">
+      <button type="button" class="action" onclick="closeAddChannelModal()">Cancel</button>
+      <button type="submit" class="action active">Add channel</button>
+    </div>
+  </form>
+</div>
+\n<footer>NextGen Prototype • Dashboard preview • Real publishing is not connected</footer>
 <nav class="ng-bottom-nav" aria-label="Main navigation">
 <a href="index.html#dashboard" data-page="dashboard"><span>⌂</span><small>Dashboard</small></a>
 <a href="channels.html" data-page="channels"><span>▶</span><small>Channels</small></a>
