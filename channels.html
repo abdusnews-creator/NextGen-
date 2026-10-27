@@ -464,9 +464,7 @@ function autofillChannelFromUrl(){
   if(handle){
     const handleField=document.getElementById('newChannelHandle');
     handleField.value='@'+handle;
-    const nameField=document.getElementById('newChannelName');
-    nameField.value=prettifyChannelLabel(handle);
-    status.textContent='Platform and username detected. The channel/profile name is formatted separately from the @username. Official profile-name lookup needs platform API access.';
+    status.textContent='Platform and username detected. The Page/Profile Name is not filled from the username. Enter the exact name shown on the social profile; automatic lookup needs authorized platform API access.';
   }else{
     status.textContent='Platform detected. This link does not contain a readable username, so enter the channel/page name manually.';
   }
