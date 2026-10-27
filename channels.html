@@ -423,11 +423,6 @@ function filterChannelCards(){
 </div>
 \n<script>
 const addedChannelsKey='nextgen-demo-added-channels-v1';
-function prettifyChannelLabel(value){
-  return (value||'').replace(/^@/,'').replace(/([a-z0-9])([A-Z])/g,'$1 $2')
-    .replace(/[._-]+/g,' ').replace(/\s+/g,' ').trim()
-    .toLowerCase().replace(/\b\w/g,letter=>letter.toUpperCase());
-}
 function autofillChannelFromUrl(){
   const field=document.getElementById('newChannelUrl');
   const status=document.getElementById('addChannelStatus');
@@ -461,12 +456,14 @@ function autofillChannelFromUrl(){
   }
   if(!platform){status.textContent='Could not identify platform. Paste a YouTube, Facebook, Instagram, or Threads profile link.';return;}
   document.getElementById('newChannelPlatform').value=platform;
+  const handleField=document.getElementById('newChannelHandle');
+  const nameField=document.getElementById('newChannelName');
   if(handle){
-    const handleField=document.getElementById('newChannelHandle');
     handleField.value='@'+handle;
-    status.textContent='Platform and username detected. The Page/Profile Name is not filled from the username. Enter the exact name shown on the social profile; automatic lookup needs authorized platform API access.';
+    if(nameField.dataset.nameSource==='username-derived'){nameField.value='';delete nameField.dataset.nameSource;}
+    status.textContent=platform+' and username detected. The actual Profile/Page Name must be retrieved from the platform using authorized API access; it will not be guessed from the username. API lookup is not connected yet, so enter the exact name shown on the platform.';
   }else{
-    status.textContent='Platform detected. This link does not contain a readable username, so enter the channel/page name manually.';
+    status.textContent=platform+' detected. Username could not be reliably read from this link. The actual Profile/Page Name must come from authorized platform API access; API lookup is not connected yet.';
   }
 }
 function openAddChannelModal(){
