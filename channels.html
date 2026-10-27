@@ -493,6 +493,43 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="NextGen">
+
+<style id="nextgen-final-polish-20261028">
+:root{--ng-final-bg:#07111f;--ng-final-panel:#0d1c30;--ng-final-line:#25415f;--ng-final-blue:#268bff;--ng-final-cyan:#42d9ed;--ng-final-text:#eef6ff;--ng-final-muted:#a9bdd3}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{background:radial-gradient(ellipse at 50% -18%,#123b68 0%,#071426 46%,#040b16 100%)!important;color:var(--ng-final-text);overflow-x:hidden}
+button,a,input,select,textarea{touch-action:manipulation}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--ng-final-cyan)!important;outline-offset:3px}
+.card,.studio-panel,.studio-metric,.draft,.draft-card,.channel-card,.settings-card{border-color:var(--ng-final-line)!important;box-shadow:0 10px 30px #0002}
+.card,.studio-panel{background:linear-gradient(145deg,#10233b,#0a182a)!important;border-radius:15px}
+button,.action,nav button,.studio-navbtn{transition:background-color .15s ease,border-color .15s ease,transform .15s ease}
+button:active,.action:active{transform:translateY(1px)}
+input,select,textarea{min-height:42px;border-radius:10px}
+textarea{min-height:100px}
+nav button,.studio-navbtn{border-radius:10px!important}
+nav button.active,.studio-navbtn.active{background:linear-gradient(100deg,#0755a7,#0b3970)!important;color:#fff!important;border:1px solid #2879ba!important}
+.action{border:1px solid #31577d!important;background:#102d4a!important;color:#f2f8ff!important;border-radius:10px!important;padding:11px 15px!important;font-weight:650}
+.action.active,.action.primary{background:linear-gradient(110deg,#138fff,#1766e8)!important;color:white!important}
+.warning,.notice{border-radius:12px!important;line-height:1.55}
+.ng-shared-footer{width:100%;box-sizing:border-box;gap:10px!important;border-radius:12px!important;background:linear-gradient(110deg,#07182d,#102e50 65%,#101a3b)!important;border:1px solid #214e78!important;margin-top:22px!important;padding:15px 18px!important;color:#c9dcf4!important}
+.ng-shared-footer .ng-credit{color:#d7eaff!important;font-weight:750!important}
+.ng-bottom-nav{padding-bottom:calc(8px + env(safe-area-inset-bottom))!important;background:rgba(4,14,28,.97)!important;border-top:1px solid #214b72!important}
+.ng-bottom-nav a{min-height:45px}
+.ng-bottom-nav a.active{background:#0b4a82!important;color:#fff!important}
+@media(max-width:680px){
+ body{padding-bottom:calc(78px + env(safe-area-inset-bottom))!important}
+ main,.studio-main{padding-left:12px!important;padding-right:12px!important}
+ .layout{display:block!important;min-height:unset!important}
+ .layout>nav{width:100%!important;max-width:100%;display:flex!important;overflow-x:auto!important;overscroll-behavior-x:contain;padding:9px!important;gap:6px!important}
+ .layout>nav button{flex:0 0 auto;width:auto!important;min-width:max-content!important;margin:0!important;padding:11px 13px!important}
+ .stats,.drafts,.channels{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+ .card{padding:14px!important}
+ .ng-shared-footer{margin-bottom:8px!important;padding:13px 12px!important;font-size:11px!important;flex-direction:column;align-items:flex-start!important}
+ .ng-shared-footer .ng-copyright,.ng-shared-footer .ng-credit{text-align:left!important;white-space:normal!important}
+}
+@media(max-width:390px){.stats,.drafts,.channels{grid-template-columns:minmax(0,1fr)!important}.ng-bottom-nav a small{font-size:9px!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+</style>
 </head>
 
 <body>
