@@ -545,9 +545,23 @@ body > footer {
 </main>
 <script>
 function toggleStudioNav(){
- const nav=document.querySelector('.studio-nav');
  const button=document.querySelector('.studio-menu');
- if(!nav||!button)return;
+ if(!button)return;
+ let nav=document.querySelector('.studio-nav');
+ if(!nav){
+   nav=document.createElement('nav');
+   nav.className='studio-nav';
+   nav.setAttribute('aria-label','Main navigation');
+   nav.innerHTML='<div class="studio-channel"><div class="studio-channel-logo">♛</div><div><strong>NextGen</strong><small>Smart Automation. Smarter Growth.</small></div></div>'+
+    '<button class="studio-navbtn" type="button" onclick="studioNavTo(\'dashboard\')"><span class="studio-nav-icon">▦</span>Dashboard</button>'+
+    '<button class="studio-navbtn" type="button" onclick="studioNavTo(\'content\')"><span class="studio-nav-icon">▶</span>Content</button>'+
+    '<button class="studio-navbtn" type="button" onclick="studioNavTo(\'approvals\')"><span class="studio-nav-icon">✓</span>Content Review</button>'+
+    '<button class="studio-navbtn active" type="button" aria-current="page" onclick="studioNavTo(\'channels\')"><span class="studio-nav-icon">▤</span>Channel Management</button>'+
+    '<button class="studio-navbtn" type="button" onclick="studioNavTo(\'schedule\')"><span class="studio-nav-icon">◷</span>Schedule</button>'+
+    '<button class="studio-navbtn" type="button" onclick="studioNavTo(\'analytics\')"><span class="studio-nav-icon">▥</span>Analytics</button>'+
+    '<button class="studio-navbtn" type="button" onclick="studioNavTo(\'settings\')"><span class="studio-nav-icon">⚙</span>Settings</button>';
+   document.body.insertBefore(nav,document.querySelector('main.studio-main')||null);
+ }
  const expanded=nav.classList.toggle('nav-expanded');
  button.setAttribute('aria-expanded',String(expanded));
  button.setAttribute('aria-label',expanded?'Close navigation menu':'Open navigation menu');
