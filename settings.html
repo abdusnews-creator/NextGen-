@@ -294,6 +294,7 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
   <a class="settings-item" href="settings.html#device-requests"><span class="settings-icon">⌂</span><span>Device Requests</span><span class="settings-arrow">›</span></a>
   <a class="settings-item" href="help-centre.html"><span class="settings-icon">ⓘ</span><span>Help &amp; Support</span><span class="settings-arrow">›</span></a>
   <a class="settings-item" href="settings.html#link-history"><span class="settings-icon">🔗</span><span>Link History</span><span class="settings-arrow">›</span></a>
+  <a class="settings-item" href="#ml-settings" id="mlSettingsItem"><span class="settings-icon">✧</span><span>ML Settings</span><span class="settings-arrow">›</span></a>
   <button class="settings-item settings-dark" id="darkModeToggle" type="button" aria-pressed="true"><span class="settings-icon">☾</span><span>Dark Mode</span><span class="settings-toggle"><span id="darkModeState">ON</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></button>
 </main>
 <section id="generalSettingsPanel" class="general-settings-panel" hidden aria-label="General Settings">
@@ -311,6 +312,13 @@ body>footer{background:#071b32!important;border-top-color:#17436c!important}
 <div class="approval-warning">This is a front-end prototype. Channel pause settings and approval mode are saved only in this browser on this device. Real account connections, secure login, shared database, automated checks, scheduling, and 24/7 background monitoring are not implemented yet. No publishing or scheduling is performed by this prototype.</div>
 </section>
 <button type="button" class="general-back-button" id="backToSettings">‹ Back to Settings</button>
+</section>
+<section id="mlSettingsPanel" class="general-settings-panel" hidden aria-label="ML Settings">
+<h1 class="settings-title">ML Settings</h1>
+<div class="general-setting-card"><div class="general-setting-copy"><h2>Machine Learning features</h2><p>Configure future ML-assisted content recommendations and performance insights. These features are not connected to a live ML service yet.</p></div><span class="status">Not connected</span></div>
+<div class="general-setting-card"><div class="general-setting-copy"><h2>AI content suggestions</h2><p>Preference for suggested ideas and captions. This prototype setting does not generate or publish content.</p></div><span class="status">Preview only</span></div>
+<div class="approval-warning">ML Settings are a UI preview only. No model training, account data processing, or automated publishing is active.</div>
+<button type="button" class="general-back-button" id="backFromMLSettings">‹ Back to Settings</button>
 </section>
 
 <style>
@@ -383,6 +391,11 @@ document.addEventListener('click',function(event){
  function showGeneral(){if(settingsList)settingsList.hidden=true;if(general)general.hidden=false;window.scrollTo(0,0)}
  function showSettings(){if(general)general.hidden=true;if(settingsList)settingsList.hidden=false;window.scrollTo(0,0)}
  document.querySelectorAll('.settings-item[href="settings.html"]').forEach(function(el){el.addEventListener('click',function(e){e.preventDefault();showGeneral()})});
+ var mlPanel=document.getElementById('mlSettingsPanel');
+ function showML(){if(settingsList)settingsList.hidden=true;if(general)general.hidden=true;if(mlPanel)mlPanel.hidden=false;window.scrollTo(0,0)}
+ function showSettings(){if(general)general.hidden=true;if(mlPanel)mlPanel.hidden=true;if(settingsList)settingsList.hidden=false;window.scrollTo(0,0)}
+ var mlItem=document.getElementById('mlSettingsItem');if(mlItem)mlItem.addEventListener('click',function(e){e.preventDefault();showML()});
+ var mlBack=document.getElementById('backFromMLSettings');if(mlBack)mlBack.addEventListener('click',showSettings);
  var back=document.getElementById('backToSettings');if(back)back.addEventListener('click',showSettings);
  function bindSwitch(id,key,defaultOn,onChange){var b=document.getElementById(id);if(!b)return;var value=defaultOn;try{var saved=localStorage.getItem('nextgen-copy-'+key);if(saved!==null)value=saved==='on'}catch(e){}function render(){b.classList.toggle('is-on',value);b.setAttribute('aria-checked',String(value))}b.addEventListener('click',function(){var next=!value;if(id==='autoApprovalSwitch'&&next){var manual=document.getElementById('manualApprovalSwitch');if(manual&&manual.getAttribute('aria-checked')==='true'){alert('Turn Manual Approval Mode OFF before enabling Auto Approval Mode.');return}}if(id==='manualApprovalSwitch'&& !next){var auto=document.getElementById('autoApprovalSwitch');if(auto&&auto.getAttribute('aria-checked')==='true'){alert('Turn Auto Approval Mode OFF first.');return}}value=next;try{localStorage.setItem('nextgen-copy-'+key,value?'on':'off')}catch(e){}render();if(onChange)onChange(value)});render()}
  bindSwitch('manualApprovalSwitch','manual-approval',true);
