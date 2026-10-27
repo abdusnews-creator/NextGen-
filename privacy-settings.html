@@ -46,18 +46,51 @@ h1{font-size:28px;line-height:1.2;margin:0 0 9px;color:#f8fafc}
 .ng-bottom-nav a small{font-size:10px;white-space:nowrap}
 .ng-bottom-nav a.active{color:#fff;background:#203e6b}
 @media(max-width:680px){.studio-top{height:62px;padding:0 10px;gap:7px}.studio-menu{width:30px;min-width:30px;font-size:22px}.studio-brand{min-width:0}.studio-brand-name{font-size:18px}.studio-tagline{font-size:6.5px}.studio-search{display:none}.studio-top-right{gap:3px}.top-icon-btn{width:34px;height:36px}.top-profile-btn{width:30px;height:30px}main{margin:22px auto;padding:0 13px 24px}.page-heading{margin-bottom:18px}h1{font-size:25px}.item{padding:15px 12px;gap:11px;min-height:84px}.item-icon{width:41px;height:41px}.item-copy strong{font-size:15px}.item-copy small{font-size:11px}.ng-bottom-nav{padding-left:5px;padding-right:5px}.ng-bottom-nav a{gap:3px}.ng-bottom-nav a svg{width:20px;height:20px}.ng-bottom-nav a small{font-size:9px}.page-credit{padding-right:14px}}
+
+/* Match the dashboard's shared NextGen header and bottom navigation */
+.studio-top{height:72px;padding:0 26px;background:linear-gradient(110deg,#07182c 0%,#0b2442 65%,#103b65 100%);border-bottom:1px solid #1675bd;display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:20;box-shadow:0 5px 22px #0004}
+.studio-menu{font-size:25px;color:#cbd5e1;background:transparent;border:0;padding:6px;min-width:38px;min-height:38px;display:grid;place-items:center;border-radius:8px;text-decoration:none}
+.studio-menu:hover{background:#263442}
+.studio-brand{display:flex;align-items:flex-start;justify-content:center;min-width:150px;line-height:1;flex-direction:column;gap:0}
+.studio-brand-name{font-size:20px;font-weight:800;letter-spacing:.75px;color:#f8fafc;line-height:1.05}
+.studio-brand-name span{color:#00bfff}
+.studio-tagline{display:block;font-size:6px;font-weight:700;letter-spacing:.1px;color:#aabbd0;white-space:nowrap;line-height:1.05}
+.studio-search{height:42px;max-width:720px;flex:1;border-radius:28px;background:#202a36;border:1px solid #2d3948;color:#eef2f7;padding:0 18px;font-size:15px;outline:none;min-width:0}
+.studio-search:focus{border-color:#6686b8}
+.studio-top-right{display:flex;align-items:center;gap:16px;margin-left:auto;color:#bdc8d6}
+.top-icon-btn{width:40px;height:40px;border:0;border-radius:50%;display:grid;place-items:center;background:transparent;color:#dbe6f5;font-size:23px;position:relative;text-decoration:none;cursor:pointer}
+.top-icon-btn:hover{background:#253446}
+.top-icon-btn svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}
+.top-add-btn{background:#172b43;border:1px solid #2e4968;color:#e8f2ff;font-size:25px}
+.top-profile-btn{width:34px;height:34px;font-size:15px;background:#2449bc;color:white;font-weight:700}
+.top-notifications:after{content:"";position:absolute;top:5px;right:6px;width:8px;height:8px;border-radius:50%;background:#ff304f;border:2px solid #0b2442;box-sizing:content-box}
+.top-popover{position:absolute;top:62px;right:42px;width:270px;max-width:calc(100vw - 24px);background:#111d2a;border:1px solid #2c3b4c;border-radius:15px;box-shadow:0 14px 40px #0008;padding:10px;z-index:100}
+.top-popover[hidden]{display:none}
+.top-popover-head{padding:12px;border-bottom:1px solid #2a3948;margin-bottom:6px;color:#edf4ff}
+.top-popover-head small{display:block;color:#93a7bd;margin-top:4px}
+.top-popover button{display:flex;align-items:center;gap:12px;width:100%;padding:11px 12px;border:0;border-radius:8px;background:transparent;color:#e0eaf6;text-align:left;font-size:14px}
+.top-popover button:hover{background:#223144}
+.ng-bottom-nav{position:fixed;z-index:1000;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2px;padding:7px 6px calc(7px + env(safe-area-inset-bottom));background:rgba(3,14,29,.97);border-top:1px solid #1a4d76;backdrop-filter:blur(12px)}
+.ng-bottom-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;min-height:48px;padding:5px 2px;border-radius:9px;color:#b8c9e8;text-decoration:none;font-size:11px}
+.ng-bottom-nav a svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ng-bottom-nav a small{font-size:10px;white-space:nowrap}
+.ng-bottom-nav a:hover{background:#142d49;color:#fff}
+body{padding-bottom:84px;background:radial-gradient(ellipse at 55% -12%,#123a67 0%,#07172c 42%,#050d1b 100%)!important;color:#edf5ff}
+@media(max-width:680px){.studio-top{height:62px;padding:0 12px;gap:8px}.studio-menu{font-size:22px;min-width:32px;min-height:34px;padding:3px}.studio-brand{min-width:0}.studio-brand-name{font-size:18px}.studio-tagline{font-size:6px}.studio-search{display:none}.studio-top-right{gap:5px}.top-icon-btn{width:34px;height:36px}.top-profile-btn{width:32px;height:32px}.top-popover{top:56px;right:8px}.ng-bottom-nav{padding-bottom:calc(8px + env(safe-area-inset-bottom))}.ng-bottom-nav a small{font-size:9px}}
+
 </style>
 </head>
 <body>
 <header class="studio-top">
-  <a class="studio-menu" href="settings.html" aria-label="Back to Settings" title="Back to Settings" style="text-decoration:none">‹</a>
-  <div class="studio-brand"><span class="studio-brand-name"><span>N</span>extGen</span><span class="studio-tagline">Smart Automation. Smarter Growth.</span></div>
-  <input class="studio-search" type="search" aria-label="Search" placeholder="⌕  Search across your workspace" onkeydown="if(event.key==='Enter'){const q=this.value.toLowerCase();document.querySelectorAll('.item').forEach(el=>el.style.display=el.innerText.toLowerCase().includes(q)?'':'none')}">
+  <a class="studio-menu" href="index.html" aria-label="Back to Dashboard" title="Dashboard">☰</a>
+  <div class="studio-brand" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;line-height:1"><span class="studio-brand-name" style="font-size:20px;font-weight:800;letter-spacing:.75px;line-height:1.05"><span style="color:#00BFFF">N</span>extGen</span><span class="studio-tagline" style="display:block;font-size:6px;font-weight:700;letter-spacing:.1px;color:#aabbd0;white-space:nowrap;line-height:1.05">Smart Automation. Smarter Growth.</span></div>
+  <input class="studio-search" type="search" aria-label="Search this page" placeholder="⌕  Search across your workspace" oninput="const q=this.value.toLowerCase();document.querySelectorAll('.item').forEach(el=>el.style.display=el.innerText.toLowerCase().includes(q)?'':'none')">
   <div class="studio-top-right">
     <a class="top-icon-btn top-add-btn" href="channels.html" aria-label="Add channel" title="Add channel">+</a>
-    <a class="top-icon-btn top-notifications" href="settings.html" aria-label="Notifications" title="Notifications"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></a>
-    <a class="top-icon-btn top-profile-btn" href="settings.html" aria-label="Profile and settings" title="Profile and settings">A</a>
+    <button class="top-icon-btn top-notifications" type="button" aria-label="Notifications" title="Notifications" onclick="document.getElementById('notificationMenu').hidden=!document.getElementById('notificationMenu').hidden"><svg class="notification-bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></button>
+    <button class="top-icon-btn top-profile-btn" type="button" aria-label="Profile and settings" title="Profile and settings" onclick="window.location.href='settings.html'">A</button>
   </div>
+  <div id="notificationMenu" class="top-popover" hidden><div class="top-popover-head"><b>Notifications</b><small>No new notifications</small></div><button type="button" onclick="document.getElementById('notificationMenu').hidden=true">Close</button></div>
 </header>
 <main>
   <section class="page-heading">
@@ -74,8 +107,8 @@ h1{font-size:28px;line-height:1.2;margin:0 0 9px;color:#f8fafc}
 </main>
 <div class="page-credit">Powered by ABDUS SATTAR</div>
 <nav class="ng-bottom-nav" aria-label="Main navigation">
-  <a href="index.html" aria-label="Dashboard"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg><small>Dashboard</small></a>
-  <a href="channels.html" class="active" aria-label="Channels"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3z"/></svg><small>Channels</small></a>
+  <a href="index.html#dashboard" aria-label="Dashboard"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg><small>Dashboard</small></a>
+  <a href="channels.html" aria-label="Channels"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3z"/></svg><small>Channels</small></a>
   <a href="index.html#content" aria-label="Content"><svg viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v5h4M10 12h6M10 16h6"/></svg><small>Content</small></a>
   <a href="index.html#approvals" aria-label="Approvals"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/><circle cx="12" cy="12" r="9"/></svg><small>Approvals</small></a>
   <a href="index.html#schedule" aria-label="Schedule"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h3M8 17h6"/></svg><small>Schedule</small></a>
