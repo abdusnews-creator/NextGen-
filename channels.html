@@ -620,13 +620,13 @@ function getNextgenSupabaseClient(){
   nextgenSupabaseClient=window.supabase.createClient(config.url,config.anonKey);
   return nextgenSupabaseClient;
 }
-async function autoVerifyChannelProfileName(){
+async async function autoVerifyChannelProfileName(){
   const url=(document.getElementById('newChannelUrl').value||'').trim();
   const name=document.getElementById('newChannelName');
   if(!url||!name||name.value.trim()||name.dataset.nameSource==='platform-verified')return;
   await verifyChannelProfileName();
 }
-async function verifyChannelProfileName(){
+async async function verifyChannelProfileName(){
   const button=document.getElementById('verifyChannelProfileButton');
   const status=document.getElementById('addChannelStatus');
   const rawUrl=(document.getElementById('newChannelUrl').value||'').trim();
