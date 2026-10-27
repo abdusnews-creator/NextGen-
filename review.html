@@ -85,22 +85,29 @@ function reviewCloudReady(){
 }
 async function connectReviewCloud(){
   const el=document.getElementById('cloudReviewStatus');
-  if(!reviewCloudReady()){el.textContent='Cloud sync not configured yet. The review queue currently saves on this device only.';return}
+  if(!reviewCloudReady()){el.textContent='Cloud sync needs Supabase configuration. This page will not publish anything.';return}
   const {data,error}=await reviewSupabase.auth.getUser();
-  if(error||!data.user){el.textContent='Sign in on the NextGen Login page to enable account-specific review sync.';return}
+  if(error||!data.user){el.textContent='Sign in on the NextGen Login page to enable account-specific cloud review.';return}
   reviewUser=data.user;
   try{
-    const {data:rows,error:loadError}=await reviewSupabase.from('content_drafts').select('id,title,caption,content,metadata,status,approval_mode,updated_at').eq('user_id',reviewUser.id).order('updated_at',{ascending:false}).limit(30);
+    const {data:rows,error:loadError}=await reviewSupabase.from('content_items')
+      .select('id,title,caption,platform,status,safety_checks,updated_at')
+      .eq('owner_id',reviewUser.id).order('updated_at',{ascending:false}).limit(30);
     if(loadError)throw loadError;
-    const ids=reviewCloudIds();
-    const cloudByKey={};
-    (rows||[]).forEach(row=>{const k=row.metadata&&row.metadata.draft_key;if(k&&['bed','sofa','table'].includes(k)){ids[reviewUser.id+':'+k]=row.id;if(!cloudByKey[k])cloudByKey[k]=row;}});
+    const ids=reviewCloudIds(), cloudByKey={};
+    (rows||[]).forEach(row=>{
+      const meta=row.safety_checks||{}, k=meta.draft_key;
+      if(k&&['bed','sofa','table'].includes(k)){
+        ids[reviewUser.id+':'+k]=row.id;
+        if(!cloudByKey[k])cloudByKey[k]=row;
+      }
+    });
     localStorage.setItem(cloudDraftKey,JSON.stringify(ids));
     window.nextgenCloudDrafts=cloudByKey;
-    el.textContent='Signed in: loaded '+(rows||[]).length+' private cloud draft(s). Changes save to this account; nothing is published or scheduled.';
+    el.textContent='Signed in: loaded '+(rows||[]).length+' saved cloud content item(s). Approval changes sync to this account; nothing is published or scheduled.';
     renderQueue();
   }catch(e){
-    el.textContent='Signed in, but cloud drafts could not load. Apply the latest database schema, then retry. '+(e.message||'').slice(0,120);
+    el.textContent='Cloud content could not load: '+(e.message||'check the database schema and sign-in').slice(0,150);
   }
 }
 async function saveCloudReview(value){
@@ -108,47 +115,51 @@ async function saveCloudReview(value){
   const el=document.getElementById('cloudReviewStatus');
   try{
     const ids=reviewCloudIds(), key=reviewUser.id+':'+select.value;
-    let draftId=ids[key];
+    let itemId=ids[key];
     const isApproved=value.indexOf('Approved')===0;
     const isRejected=value.indexOf('Rejected')===0;
     const targetStatus=isApproved?'approved':isRejected?'rejected':'pending_approval';
     const title=(postTitleInput.value||drafts[select.value].title||select.value).trim().slice(0,140);
     const caption=document.getElementById('caption').textContent.trim();
     const content=document.getElementById('content').textContent.trim();
-    const metadata={
-      draft_key:select.value,platform:platformSelect.value,topic:topicInput.value.trim(),
-      hashtags:document.getElementById('hashtags').textContent,
-      tags:document.getElementById('tags').textContent,
-      keywords:document.getElementById('keywords').textContent,
+    const platformMap={YouTube:'youtube',Facebook:'facebook',Instagram:'instagram',Threads:'threads'};
+    const platform=platformMap[platformSelect.value]||'youtube';
+    const hashtags=document.getElementById('hashtags').textContent.trim().split(/\\s+/).filter(x=>x.startsWith('#'));
+    const safety_checks={
+      draft_key:select.value,topic:topicInput.value.trim(),generated_content:content,
+      tags:document.getElementById('tags').textContent,keywords:document.getElementById('keywords').textContent,
       thumbnail_prompt:document.getElementById('thumbnailPrompt').textContent,
       primary_keyword:document.getElementById('primaryKeyword').textContent,
       secondary_keywords:document.getElementById('secondaryKeywords').textContent,
       seo_description:document.getElementById('seoDescription').textContent,
-      review_checklist:checks.map(c=>c.checked),
-      seo_checklist:seoChecks.map(c=>c.checked)
+      review_checklist:checks.map(c=>c.checked),seo_checklist:seoChecks.map(c=>c.checked),
+      manual_review_only:true,published:false,scheduled:false
     };
-    if(draftId){
-      const {data,error}=await reviewSupabase.from('content_drafts').select('id').eq('id',draftId).eq('user_id',reviewUser.id).maybeSingle();
+    if(itemId){
+      const {data,error}=await reviewSupabase.from('content_items').select('id').eq('id',itemId).eq('owner_id',reviewUser.id).maybeSingle();
       if(error)throw error;
-      if(!data)draftId=null;
+      if(!data)itemId=null;
     }
-    if(!draftId){
-      const {data,error}=await reviewSupabase.from('content_drafts').insert({user_id:reviewUser.id,title,caption,content,metadata,status:'pending_approval',approval_mode:'manual'}).select('id').single();
+    if(!itemId){
+      const {data,error}=await reviewSupabase.from('content_items').insert({
+        owner_id:reviewUser.id,platform,title,caption,hashtags,status:'pending_approval',safety_checks
+      }).select('id').single();
       if(error)throw error;
-      draftId=data.id;ids[key]=draftId;localStorage.setItem(cloudDraftKey,JSON.stringify(ids));
+      itemId=data.id;ids[key]=itemId;localStorage.setItem(cloudDraftKey,JSON.stringify(ids));
     }
-    const {error:reviewError}=await reviewSupabase.from('draft_reviews').upsert({
-      user_id:reviewUser.id,draft_id:draftId,
-      spelling_checked:checks[0].checked,facts_checked:checks[1].checked,
-      copyright_checked:checks[2].checked,duplicate_checked:checks[3].checked,
-      platform_safety_checked:checks[4].checked,reviewed_at:new Date().toISOString()
-    },{onConflict:'draft_id'});
-    if(reviewError)throw reviewError;
-    const {error:updateError}=await reviewSupabase.from('content_drafts').update({title,caption,content,metadata,status:targetStatus,approval_mode:'manual'}).eq('id',draftId).eq('user_id',reviewUser.id);
+    const {error:updateError}=await reviewSupabase.from('content_items')
+      .update({platform,title,caption,hashtags,status:targetStatus,safety_checks})
+      .eq('id',itemId).eq('owner_id',reviewUser.id);
     if(updateError)throw updateError;
-    el.textContent='Full draft and review checks saved to your private account: '+targetStatus.replace('_',' ')+'. Nothing was published or scheduled.';
+    const {error:eventError}=await reviewSupabase.from('approval_events').insert({
+      owner_id:reviewUser.id,content_id:itemId,
+      action:isApproved?'approved':isRejected?'rejected':'submitted',
+      note:'Checklist: '+checks.map((c,i)=>(i+1)+'. '+(c.checked?'checked':'not checked')).join(', ')+'. Manual approval workflow; no publishing or scheduling.'
+    });
+    if(eventError)throw eventError;
+    el.textContent='Cloud saved: '+targetStatus.replace('_',' ')+'. Approval event recorded. Nothing was published or scheduled.';
   }catch(e){
-    el.textContent='Cloud save failed: '+(e.message||'apply the latest schema and check sign-in').slice(0,180)+'. Local status is still saved on this device.';
+    el.textContent='Cloud save failed: '+(e.message||'check sign-in and table permissions').slice(0,180)+'. Local status remains on this device.';
   }
 }
 
