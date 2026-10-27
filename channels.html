@@ -421,7 +421,7 @@ function filterChannelCards(){
     <h2 id="addChannelTitle" style="margin:0 0 8px;color:#fff">Add a channel</h2>
     <p class="muted" style="margin:0 0 16px">Save a channel to your NextGen account. This does not connect or authorize the real platform account.</p>
     <label for="newChannelUrl" style="display:block;margin:12px 0 6px">Profile / Channel link (paste URL)</label>
-    <input id="newChannelUrl" type="url" inputmode="url" placeholder="https://www.youtube.com/@yourchannel" oninput="autofillChannelFromUrl()" style="width:100%;box-sizing:border-box;padding:12px;border-radius:9px;background:#0d2340;color:#fff;border:1px solid #28547c">
+    <input id="newChannelUrl" type="url" inputmode="url" placeholder="https://www.youtube.com/@yourchannel" oninput="autofillChannelFromUrl()" onblur="autoVerifyChannelProfileName()" style="width:100%;box-sizing:border-box;padding:12px;border-radius:9px;background:#0d2340;color:#fff;border:1px solid #28547c">
     <p class="muted" style="margin:6px 0 12px">Paste a YouTube, Facebook, Instagram, or Threads profile link to fill the platform and username automatically.</p>
     <label for="newChannelPlatform" style="display:block;margin:12px 0 6px">Platform</label>
     <select id="newChannelPlatform" required style="width:100%;padding:12px;border-radius:9px;background:#0d2340;color:#fff;border:1px solid #28547c">
@@ -452,6 +452,12 @@ function getNextgenSupabaseClient(){
   }
   nextgenSupabaseClient=window.supabase.createClient(config.url,config.anonKey);
   return nextgenSupabaseClient;
+}
+async function autoVerifyChannelProfileName(){
+  const url=(document.getElementById('newChannelUrl').value||'').trim();
+  const name=document.getElementById('newChannelName');
+  if(!url||!name||name.value.trim()||name.dataset.nameSource==='platform-verified')return;
+  await verifyChannelProfileName();
 }
 async function verifyChannelProfileName(){
   const button=document.getElementById('verifyChannelProfileButton');
