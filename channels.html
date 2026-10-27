@@ -538,6 +538,20 @@ function autofillChannelFromUrl(){
   document.getElementById('newChannelPlatform').value=platform;
   const handleField=document.getElementById('newChannelHandle');
   const nameField=document.getElementById('newChannelName');
+  // Fill the known display names for the user's configured NextGen target accounts.
+  const normalizedHandle=handle.replace(/^@/,'').toLowerCase();
+  const knownAccounts={
+    'youtube:royalfurniturehouse':'Royal Furniture House',
+    'facebook:royalfurniturezone':'Royal Furniture Zone',
+    'instagram:royalfurniturezone':'Royal Furniture Zone',
+    'threads:royalfurniturezone':'Royal Furniture Zone'
+  };
+  const knownName=knownAccounts[platform.toLowerCase()+':'+normalizedHandle];
+  if(knownName&&!nameField.value.trim()){
+    nameField.value=knownName;
+    nameField.dataset.nameSource='configured-account';
+    status.textContent='Known NextGen account name filled in: '+knownName+'. Confirm the profile link is correct; live platform verification is separate.';
+  }
   if(handle){
     handleField.value='@'+handle;
     if(nameField.dataset.nameSource==='username-derived'){nameField.value='';delete nameField.dataset.nameSource;}
