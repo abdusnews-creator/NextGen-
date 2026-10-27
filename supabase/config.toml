@@ -1,0 +1,4 @@
+# Keep JWT verification enabled. The function checks the signed-in user's
+# Bearer token before looking up a channel profile.
+[functions.channel-profile-lookup]
+verify_jwt = true
