@@ -353,25 +353,41 @@ main.studio-main #channelCards .channel-review-button,main.studio-main #channelC
     <article class="card channel-review-card" data-channel-card>
       <div class="channel-review-head"><div class="channel-review-icon">▶️</div><div class="channel-review-platform">YouTube</div></div><h3 class="channel-review-name">Royal Furniture House</h3>
       <p class="channel-review-handle">@RoyalFurnitureHouse</p><div class="channel-review-status"><span class="channel-review-dot"></span><span>App connection: Not verified</span></div>
-      <div style="margin-top:16px;display:block"><button class="action active" type="button" onclick="window.location.href='review.html'" style="display:inline-block;min-width:100px;padding:11px 18px;background:#00a8e8;color:#071526;border:1px solid #00a8e8;border-radius:9px;font-weight:800">Review</button></div>
+      <div class="channel-preference-actions" style="grid-column:3;grid-row:1/4;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;align-items:center">
+        <button type="button" class="action active" onclick="openChannelManagement('edit')" style="min-width:76px">Edit</button>
+        <button type="button" class="action active" onclick="openChannelManagement('disable')" style="min-width:86px">Disable</button>
+        <button type="button" class="action active" onclick="openChannelManagement('remove')" style="min-width:86px">Remove</button>
+      </div>
       
     </article>
     <article class="card channel-review-card" data-channel-card>
       <div class="channel-review-head"><div class="channel-review-icon">📘</div><div class="channel-review-platform">Facebook</div></div><h3 class="channel-review-name">Royal Furniture Zone</h3>
       <p class="channel-review-handle">@RoyalFurnitureZone</p><div class="channel-review-status"><span class="channel-review-dot"></span><span>App connection: Not verified</span></div>
-      <div style="margin-top:14px"><button class="action active channel-review-button" type="button" onclick="window.location.href='review.html'">Review</button></div>
+      <div class="channel-preference-actions" style="grid-column:3;grid-row:1/4;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;align-items:center">
+        <button type="button" class="action active" onclick="openChannelManagement('edit')" style="min-width:76px">Edit</button>
+        <button type="button" class="action active" onclick="openChannelManagement('disable')" style="min-width:86px">Disable</button>
+        <button type="button" class="action active" onclick="openChannelManagement('remove')" style="min-width:86px">Remove</button>
+      </div>
       
     </article>
     <article class="card channel-review-card" data-channel-card>
       <div class="channel-review-head"><div class="channel-review-icon">📸</div><div class="channel-review-platform">Instagram</div></div><h3 class="channel-review-name">Royal Furniture Zone</h3>
       <p class="channel-review-handle">@royalfurniturezone</p><div class="channel-review-status"><span class="channel-review-dot"></span><span>App connection: Not verified</span></div>
-      <div style="margin-top:14px"><button class="action active channel-review-button" type="button" onclick="window.location.href='review.html'">Review</button></div>
+      <div class="channel-preference-actions" style="grid-column:3;grid-row:1/4;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;align-items:center">
+        <button type="button" class="action active" onclick="openChannelManagement('edit')" style="min-width:76px">Edit</button>
+        <button type="button" class="action active" onclick="openChannelManagement('disable')" style="min-width:86px">Disable</button>
+        <button type="button" class="action active" onclick="openChannelManagement('remove')" style="min-width:86px">Remove</button>
+      </div>
       
     </article>
     <article class="card channel-review-card" data-channel-card>
       <div class="channel-review-head"><div class="channel-review-icon">🧵</div><div class="channel-review-platform">Threads</div></div><h3 class="channel-review-name">Royal Furniture Zone</h3>
       <p class="channel-review-handle">@royalfurniturezone</p><div class="channel-review-status"><span class="channel-review-dot"></span><span>App connection: Not verified</span></div>
-      <div style="margin-top:14px"><button class="action active channel-review-button" type="button" onclick="window.location.href='review.html'">Review</button></div>
+      <div class="channel-preference-actions" style="grid-column:3;grid-row:1/4;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;align-items:center">
+        <button type="button" class="action active" onclick="openChannelManagement('edit')" style="min-width:76px">Edit</button>
+        <button type="button" class="action active" onclick="openChannelManagement('disable')" style="min-width:86px">Disable</button>
+        <button type="button" class="action active" onclick="openChannelManagement('remove')" style="min-width:86px">Remove</button>
+      </div>
       
     </article>
   </div>
@@ -395,6 +411,10 @@ function filterChannelCards(){
   let visible=0;
   cards.forEach(card=>{const match=card.textContent.toLowerCase().includes(q);card.style.display=match?'':'none';if(match)visible++;});
   document.getElementById('channelSearchEmpty').style.display=(q && visible===0)?'block':'none';
+}
+function openChannelManagement(action){
+  try{sessionStorage.setItem('nextgen-channel-preference-action',action);}catch(e){}
+  window.location.href='privacy-settings.html#channel-management';
 }
 </script>
 <footer>NextGen Prototype • Dashboard preview • Real publishing is not connected</footer>
