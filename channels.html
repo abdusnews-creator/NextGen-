@@ -712,36 +712,16 @@ function autofillChannelFromUrl(){
   const handleField=document.getElementById('newChannelHandle');
   const nameField=document.getElementById('newChannelName');
   if(platformField)platformField.value=platform;
-  const normalized=handle.toLowerCase();
-  const known={
-    'youtube:royalfurniturehouse':'Royal Furniture House',
-    'facebook:royalfurniturezone':'Royal Furniture Zone',
-    'instagram:royalfurniturezone':'Royal Furniture Zone',
-    'threads:royalfurniturezone':'Royal Furniture Zone'
-  };
-  const knownName=known[platform.toLowerCase()+':'+normalized];
-  // For ordinary profile URLs, provide a readable provisional name when the
-  // exact platform display name is not available. The verification button can
-  // replace it with the platform-confirmed display name.
-  const provisionalName=handle
-    ? handle.replace(/[._-]+/g,' ').replace(/\b\w/g,letter=>letter.toUpperCase()).trim()
-    : '';
   if(handleField&&handle)handleField.value='@'+handle;
   else if(handleField)handleField.value='';
-  if(nameField&&knownName){
-    nameField.value=knownName;
-    nameField.dataset.nameSource='configured-account';
-  }else if(nameField&&provisionalName){
-    nameField.value=provisionalName;
-    nameField.dataset.nameSource='url-estimate';
-  }else if(nameField&&(nameField.dataset.nameSource==='configured-account'||nameField.dataset.nameSource==='url-estimate')){
-    nameField.value='';delete nameField.dataset.nameSource;
+  if(nameField&&nameField.dataset.nameSource!=='platform-verified'){
+    nameField.value='';
+    delete nameField.dataset.nameSource;
   }
   if(status){
     if(hint)status.textContent=platform+' detected. '+hint;
     else if(!handle)status.textContent=platform+' detected, but a username could not be read from this URL. Paste the profile page link.';
-    else if(knownName)status.textContent=platform+' detected; username @'+handle+' and your configured account name were filled in. This does not verify live platform access.';
-    else status.textContent=platform+' detected; username @'+handle+' filled in. Name shown is estimated from the URL; tap “Verify actual profile name” to confirm it with the platform.';
+    else status.textContent=platform+' detected; handle @'+handle+' filled in. Tap “Verify actual profile name” to fetch the real name from the platform API.';
   }
 }
 function openAddChannelModal(){
@@ -1003,10 +983,8 @@ body > footer { position:relative!important; }
     var nf=document.getElementById('newChannelName');
     if(pf)pf.value=platform;
     if(hf)hf.value=handle?'@'+handle.replace(/^@/,''):'';
-    var key=platform.toLowerCase()+':'+handle.replace(/^@/,'').toLowerCase();
-    var names={'youtube:royalfurniturehouse':'Royal Furniture House','facebook:royalfurniturezone':'Royal Furniture Zone','instagram:royalfurniturezone':'Royal Furniture Zone','threads:royalfurniturezone':'Royal Furniture Zone'};
-    if(nf&&names[key]){nf.value=names[key];nf.dataset.nameSource='configured-account';}
-    if(status)status.textContent=handle?(platform+' detected. Handle filled: @'+handle.replace(/^@/,'')+'. '+(names[key]?'Configured name filled in.':'Enter or verify the actual profile name.')):(platform+' detected, but this link does not expose a profile username. Paste the actual profile page URL.');
+    if(nf&&nf.dataset.nameSource!=='platform-verified'){nf.value='';delete nf.dataset.nameSource;}
+    if(status)status.textContent=handle?(platform+' detected. Handle filled: @'+handle.replace(/^@/,'')+'. Tap “Verify actual profile name” to fetch the real name from the platform API.'):(platform+' detected, but this link does not expose a profile username. Paste the actual profile page URL.');
   }
   window.autofillChannelFromUrl=detect;
   document.addEventListener('DOMContentLoaded',function(){
