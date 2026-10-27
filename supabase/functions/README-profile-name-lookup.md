@@ -4,11 +4,21 @@ This is a secure backend starting point for looking up the **actual** profile/pa
 
 ## Important status
 
-- The Edge Function source has been added at `supabase/functions/channel-profile-lookup/index.ts`.
-- It is **not deployed yet** and the Channels page does not call it yet.
+- The Edge Function source is at `supabase/functions/channel-profile-lookup/index.ts`.
+- The Channels page now calls `channel-profile-lookup` through the Supabase client after the user signs in.
+- Deployment is still pending until the repository's `SUPABASE_ACCESS_TOKEN` secret is configured and the manual GitHub Actions workflow succeeds.
 - YouTube lookup is implemented in the function when a YouTube Data API key is configured.
 - Facebook, Instagram and Threads lookup requires the user to authorize the relevant account and provide a short-lived/current provider access token to the function. The function does not store tokens.
 - Do not call this production-ready until the OAuth consent flows, permissions and error cases are tested for each platform.
+
+## Deploy using the repository's GitHub Actions workflow (recommended)
+
+1. In Supabase, create a personal access token from the account settings. Do not share it in chat or commit it to the repository.
+2. In the GitHub repository `nextgen-i/NextGen`, open **Settings → Secrets and variables → Actions → New repository secret**.
+3. Add a secret named `SUPABASE_ACCESS_TOKEN` with that token as its value.
+4. Open **Actions → Deploy NextGen profile lookup → Run workflow** and run it on `main`.
+5. Check the workflow run. A green success status confirms deployment; a failed run must be fixed before testing the page.
+6. For YouTube verification, also add the Google YouTube Data API v3 key as a Supabase Function secret named `YOUTUBE_DATA_API_KEY`. The deployment workflow does not configure this API key for you.
 
 ## Deploy from a computer with Supabase CLI
 
