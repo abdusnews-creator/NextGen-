@@ -673,63 +673,66 @@ const addedChannelsKey='nextgen-demo-added-channels-v1';
 function autofillChannelFromUrl(){
   const field=document.getElementById('newChannelUrl');
   const status=document.getElementById('addChannelStatus');
-  const raw=(field.value||'').trim();
-  if(!raw)return;
+  const raw=(field?.value||'').trim();
+  if(!raw){if(status)status.textContent='Paste a profile/channel URL to detect its platform.';return;}
   let url;
-  try{url=new URL(raw.includes('://')?raw:'https://'+raw);}catch(error){return;}
-  const host=url.hostname.toLowerCase().replace(/^www\./,'');
-  const parts=url.pathname.split('/').filter(Boolean).map(part=>decodeURIComponent(part));
-  let platform='',handle='';
-  // Normalize common share/profile URL formats before filling the username field.
-  const cleanHandle=value=>(value||'').replace(/^@/,'').replace(/[?#].*$/,'').trim();
-  if(host==='youtube.com'||host==='m.youtube.com'||host==='youtube-nocookie.com'){
+  try{url=new URL(/^https?:\/\//i.test(raw)?raw:'https://'+raw);}
+  catch(error){if(status)status.textContent='Enter a valid profile/channel link.';return;}
+  const host=url.hostname.toLowerCase().replace(/^www\./,'').replace(/^m\./,'');
+  const parts=url.pathname.split('/').filter(Boolean).map(part=>{try{return decodeURIComponent(part)}catch(e){return part}});
+  const clean=value=>(value||'').replace(/^@/,'').replace(/[?#].*$/,'').trim();
+  let platform='',handle='',hint='';
+  if(['youtube.com','youtube-nocookie.com'].includes(host)){
     platform='YouTube';
-    const atPart=parts.find(part=>part.startsWith('@'));
-    const channelPart=parts.findIndex(part=>['channel','c','user'].includes(part.toLowerCase()));
-    if(atPart)handle=cleanHandle(atPart);
-    else if(channelPart>=0&&parts[channelPart+1])handle=cleanHandle(parts[channelPart+1]);
+    const at=parts.find(part=>part.startsWith('@'));
+    const idx=parts.findIndex(part=>['channel','c','user'].includes(part.toLowerCase()));
+    if(at)handle=clean(at);
+    else if(idx>=0&&parts[idx+1])handle=clean(parts[idx+1]);
+    else if(parts[0]?.toLowerCase()==='shorts')hint='YouTube Shorts link detected; paste the channel page URL to detect its handle.';
   }else if(host==='youtu.be'){
     platform='YouTube';
-  }else if(host==='facebook.com'||host==='m.facebook.com'||host==='fb.com'){
-    platform='Facebook';
-    handle=cleanHandle(parts[0]||'');
-    if(['profile.php','watch.php','share','reel','reels','groups','events','marketplace','photo.php','story.php'].includes(handle.toLowerCase()))handle='';
-    if(handle.toLowerCase()==='pages'&&parts[1])handle=cleanHandle(parts[1]);
-    if(handle.toLowerCase()==='people'&&parts[1])handle=cleanHandle(parts[1]);
+    hint='YouTube video link detected. For the channel handle, paste the channel page URL (youtube.com/@...).';
+  }else if(['facebook.com','fb.com'].includes(host)){
+    platform='Facebook';handle=clean(parts[0]||'');
+    if(['profile.php','watch.php','share','sharer.php','reel','reels','groups','events','marketplace','photo.php','story.php','videos','posts'].includes(handle.toLowerCase()))handle='';
+    if(['pages','people'].includes(handle.toLowerCase())&&parts[1])handle=clean(parts[handle.toLowerCase()==='pages'?2:1]||'');
+    if(url.searchParams.has('id')&&handle.toLowerCase()==='profile.php')handle=clean(url.searchParams.get('id'));
+    if(!handle&&parts[0]?.toLowerCase()==='share')hint='Facebook share link detected. Paste the actual Page profile URL instead.';
   }else if(host==='instagram.com'){
-    platform='Instagram';handle=cleanHandle(parts[0]||'');
-    if(['p','reel','reels','stories','explore','accounts','direct'].includes(handle.toLowerCase()))handle='';
-  }else if(host==='threads.net'||host==='threads.com'){
-    platform='Threads';handle=cleanHandle(parts[0]||'');
-    if(['share','t'].includes(handle.toLowerCase()))handle=cleanHandle(parts[1]||'');
+    platform='Instagram';handle=clean(parts[0]||'');
+    if(['p','reel','reels','stories','explore','accounts','direct','about'].includes(handle.toLowerCase()))handle='';
+  }else if(['threads.net','threads.com'].includes(host)){
+    platform='Threads';handle=clean(parts[0]||'');
+    if(['share','t','activity','search'].includes(handle.toLowerCase()))handle=clean(parts[1]||'');
+  }else{
+    if(status)status.textContent='Platform not recognized. Use a YouTube, Facebook, Instagram, or Threads profile URL.';
+    return;
   }
-  if(!platform){status.textContent='Could not identify platform. Paste a YouTube, Facebook, Instagram, or Threads profile link.';return;}
-  document.getElementById('newChannelPlatform').value=platform;
+  const platformField=document.getElementById('newChannelPlatform');
   const handleField=document.getElementById('newChannelHandle');
   const nameField=document.getElementById('newChannelName');
-  // Fill the known display names for the user's configured NextGen target accounts.
-  const normalizedHandle=handle.replace(/^@/,'').toLowerCase();
-  const knownAccounts={
+  if(platformField)platformField.value=platform;
+  const normalized=handle.toLowerCase();
+  const known={
     'youtube:royalfurniturehouse':'Royal Furniture House',
     'facebook:royalfurniturezone':'Royal Furniture Zone',
     'instagram:royalfurniturezone':'Royal Furniture Zone',
     'threads:royalfurniturezone':'Royal Furniture Zone'
   };
-  const knownName=knownAccounts[platform.toLowerCase()+':'+normalizedHandle];
-  if(knownName&&!nameField.value.trim()){
+  const knownName=known[platform.toLowerCase()+':'+normalized];
+  if(handleField&&handle)handleField.value='@'+handle;
+  else if(handleField)handleField.value='';
+  if(nameField&&knownName){
     nameField.value=knownName;
     nameField.dataset.nameSource='configured-account';
-    status.textContent='Known NextGen account name filled in: '+knownName+'. Confirm the profile link is correct; live platform verification is separate.';
+  }else if(nameField&&nameField.dataset.nameSource==='configured-account'){
+    nameField.value='';delete nameField.dataset.nameSource;
   }
-  if(handle){
-    handleField.value='@'+handle;
-    if(nameField.dataset.nameSource==='username-derived'){nameField.value='';delete nameField.dataset.nameSource;}
-    status.textContent=platform+' and username detected. The actual Profile/Page Name must be retrieved from the platform using authorized API access; it will not be guessed from the username. Profile lookup is deployed. Verification needs sign-in and platform API authorization; YouTube also needs its API key configured.';
-  }else{
-    const isFacebookShare = platform==='Facebook' && parts.some(part=>['share','sharer.php'].includes(part.toLowerCase()));
-    status.textContent = isFacebookShare
-      ? 'Facebook share link detected, but this short link does not contain the Page username. Open the link in Facebook, go to the actual Page profile, then copy its profile URL (for example https://www.facebook.com/RoyalFurnitureZone/) and paste that URL here. NextGen cannot safely guess the Page name from a share code.'
-      : platform+' detected. Username could not be reliably read from this link. The actual Profile/Page Name must come from authorized platform API access; verification needs sign-in and platform API authorization; YouTube also needs its API key configured.';
+  if(status){
+    if(hint)status.textContent=platform+' detected. '+hint;
+    else if(!handle)status.textContent=platform+' detected, but a username could not be read from this URL. Paste the profile page link.';
+    else if(knownName)status.textContent=platform+' detected; username @'+handle+' and your configured account name were filled in. This does not verify live platform access.';
+    else status.textContent=platform+' detected; username @'+handle+' filled in. The actual page/channel name requires authorized platform verification.';
   }
 }
 function openAddChannelModal(){
