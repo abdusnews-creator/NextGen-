@@ -3,35 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b1020">
+<meta name="theme-color" content="#071326">
 <title>NextGen Dashboard Copy</title>
 <style>
+:root{color-scheme:dark;--bg:#071326;--panel:#0d1d35;--line:#203b5e;--cyan:#22c7f2;--muted:#9bb0cb;--white:#eef6ff}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 55% -12%,#123a67 0%,#07172c 42%,#050d1b 100%);color:#edf5ff;font-family:Arial,Helvetica,sans-serif;display:flex;flex-direction:column}
-header{min-height:72px;padding:14px 22px;background:linear-gradient(110deg,#07182c 0%,#0b2442 65%,#103b65 100%);border-bottom:1px solid #1675bd;display:flex;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 5px 22px #0004}
-.brand{display:flex;flex-direction:column;gap:3px}
-.brand-name{font-size:22px;font-weight:800;letter-spacing:.75px}
-.brand-name span{color:#00BFFF}
-.tagline{font-size:10px;font-weight:700;color:#aabbd0}
-.credit{font-size:11px;color:#d4e2ff;text-align:right}
-main{flex:1;min-height:35vh}
-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:14px 18px calc(14px + env(safe-area-inset-bottom));margin-top:24px;color:#c5d9ff;background:linear-gradient(110deg,#10213f,#173b70 58%,#102544);border-top:1px solid #35547e;font-size:12px}
-footer .credit{font-size:11px}
-@media(max-width:480px){header{padding:14px} .brand-name{font-size:20px} footer{padding-left:14px;padding-right:14px}}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -20%,#123a67 0%,var(--bg) 55%,#050b16 100%);color:var(--white);font-family:Arial,Helvetica,sans-serif;display:flex;flex-direction:column}
+header{padding:16px 24px;border-bottom:1px solid #1b5c89;background:#07172cdd;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.brand{min-width:190px}.brand-name{font-size:25px;font-weight:800;letter-spacing:.6px}.brand-name span{color:var(--cyan)}.tagline{margin-top:4px;font-size:11px;color:#b3c5db;font-weight:600}
+.header-right{display:flex;align-items:center;gap:15px}.status{display:inline-flex;align-items:center;gap:7px;border:1px solid #176b61;background:#0c302f;color:#8ef0d2;border-radius:20px;padding:8px 12px;font-size:11px;font-weight:700}.dot{width:7px;height:7px;border-radius:50%;background:#35e0ae;box-shadow:0 0 9px #35e0ae}
+.credit{font-size:11px;color:#c9d9ed;text-align:right}.profile{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:#174c79;border:1px solid #3d8ab9;font-size:12px;font-weight:800}
+nav{display:flex;align-items:center;gap:6px;padding:12px 24px;border-bottom:1px solid #1b3150;background:#09172a;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:#aebfd5;padding:10px 13px;border-radius:8px;font-size:12px;font-weight:700}
+nav a.active{background:#123d61;color:#55d8ff;border:1px solid #1b638e}
+main{width:100%;max-width:1180px;margin:0 auto;padding:25px 24px 40px;flex:1}
+.page-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+h1{font-size:22px;margin:0 0 6px} .subtitle{font-size:12px;color:var(--muted);margin:0}
+.preview-label{border:1px solid #2b486a;background:#0c1c32;color:#a9c4e5;border-radius:8px;padding:9px 12px;font-size:11px}
+.workspace{min-height:270px;border:1px solid #1c3656;border-radius:14px;background:linear-gradient(145deg,#0d1d34dd,#09172add);box-shadow:0 15px 40px #0002;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px}
+.workspace-inner{max-width:440px}.orb{width:54px;height:54px;margin:0 auto 16px;border-radius:16px;border:1px solid #1d7ea7;background:linear-gradient(145deg,#103d61,#0a213b);display:grid;place-items:center;color:#42d7ff;font-size:25px}.workspace h2{font-size:17px;margin:0 0 8px}.workspace p{font-size:12px;line-height:1.7;color:var(--muted);margin:0}
+footer{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:15px 24px calc(15px + env(safe-area-inset-bottom));color:#b8cce5;background:#09172b;border-top:1px solid #1b3150;font-size:11px}
+@media(max-width:600px){header{padding:14px 16px}.brand-name{font-size:22px}.header-right{gap:8px}.credit{font-size:10px}nav{padding:10px 12px}nav a{padding:9px 10px;font-size:11px}main{padding:20px 14px 28px}h1{font-size:20px}.workspace{min-height:240px}footer{padding-left:14px;padding-right:14px}}
 </style>
 </head>
 <body>
 <header>
-  <div class="brand">
-    <div class="brand-name"><span>N</span>extGen</div>
-    <div class="tagline">Smart Automation. Smarter Growth.</div>
-  </div>
-  <div class="credit">Powered by ABDUS SATTAR</div>
+  <div class="brand"><div class="brand-name"><span>N</span>extGen</div><div class="tagline">Smart Automation. Smarter Growth.</div></div>
+  <div class="header-right"><span class="status"><span class="dot"></span>System Online</span><span class="credit">Powered by ABDUS SATTAR</span><span class="profile" aria-label="Admin profile">AD</span></div>
 </header>
-<main></main>
-<footer>
-  <span>NextGen Prototype • Dashboard preview</span>
-  <span class="credit">Powered by ABDUS SATTAR</span>
-</footer>
+<nav aria-label="Main navigation">
+  <a class="active" href="dashboard-copy.html" aria-current="page">Dashboard</a>
+  <a href="channels.html">Channels</a>
+  <a href="content-queue.html">Content Queue</a>
+  <a href="analytics.html">Analytics</a>
+  <a href="settings.html">Settings</a>
+</nav>
+<main>
+  <div class="page-heading"><div><h1>Dashboard</h1><p class="subtitle">Your NextGen workspace at a glance.</p></div><span class="preview-label">Dashboard Preview</span></div>
+  <section class="workspace" aria-label="Dashboard workspace preview"><div class="workspace-inner"><div class="orb" aria-hidden="true">✦</div><h2>Your workspace is ready</h2><p>This is the dashboard layout preview. Channel controls and automation features will appear here as they are built and connected.</p></div></section>
+</main>
+<footer><span>NextGen Prototype • Dashboard preview</span><span>Powered by ABDUS SATTAR</span></footer>
 </body>
 </html>
