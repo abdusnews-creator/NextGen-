@@ -35,6 +35,18 @@ body>footer .credit,footer .credit{color:#d4e2ff;text-align:right}
 body:has(.ng-bottom-nav){padding-bottom:76px!important}
 @media(max-width:480px){body>footer{padding-left:14px;padding-right:14px}.ng-bottom-nav a small{font-size:9px}}
 
+
+/* NextGen shared visual system */
+:root{--ng-bg:#041126;--ng-panel:#071b36;--ng-line:#075ca8;--ng-cyan:#10c8ff;--ng-purple:#b52cff;--ng-muted:#b9d4fa}
+body{background:radial-gradient(ellipse at 50% -15%,#0b2d65 0%,#041126 58%,#020918 100%)!important;color:#eef5ff}
+header,.studio-top{background:linear-gradient(110deg,#041126 0%,#071d40 58%,#10194a 100%)!important;border-bottom:1px solid #087be4!important;box-shadow:0 4px 24px rgba(0,132,255,.15)}
+header h1,header .brand,.studio-top strong{color:#f4f8ff}
+header p,header small{color:#12caff}
+.ng-shared-footer{box-sizing:border-box;width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:28px 0 96px;padding:18px 22px;border:1px solid #087be4;border-radius:14px;background:linear-gradient(110deg,#041126,#071b3b 60%,#11133b);box-shadow:0 0 20px rgba(0,150,255,.16);color:#b9d4fa;font-size:12px;line-height:1.5}
+.ng-shared-footer .ng-copyright{color:#c7dcfa;text-align:left}
+.ng-shared-footer .ng-credit{color:#18c9ff;text-align:right;font-weight:650;white-space:nowrap}
+@media(max-width:560px){.ng-shared-footer{gap:8px;padding:14px 12px;font-size:10px}.ng-shared-footer .ng-copyright,.ng-shared-footer .ng-credit{max-width:100%;text-align:left}}
+
 </style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./supabase-config.js"></script>
 </head>
 <body>
@@ -350,4 +362,20 @@ document.getElementById('reject').addEventListener('click',()=>writeStatus('Reje
 <a href="index.html#approvals" data-page="approvals"><span>✓</span><small>Approvals</small></a>
 <a href="index.html#schedule" data-page="schedule"><span>▦</span><small>Schedule</small></a>
 </nav>
+
+<script>
+(function(){
+  function applyNextGenSharedBranding(){
+    document.querySelectorAll('footer').forEach(function(f){if(!f.classList.contains('ng-bottom-nav'))f.remove();});
+    var footer=document.createElement('footer');
+    footer.className='ng-shared-footer';
+    footer.innerHTML='<span class="ng-copyright">© 2026 NextGen. All Rights Reserved.</span><span class="ng-credit">Powered by ABDUS SATTAR</span>';
+    var bottomNav=document.querySelector('.ng-bottom-nav');
+    if(bottomNav && bottomNav.parentNode){bottomNav.parentNode.insertBefore(footer,bottomNav);}
+    else{document.body.appendChild(footer);}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',applyNextGenSharedBranding);else applyNextGenSharedBranding();
+})();
+</script>
+
 </body></html>
