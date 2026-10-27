@@ -471,7 +471,7 @@ async function verifyChannelProfileName(){
   }catch(error){
     const message=error&&error.message?error.message:'Profile verification failed.';
     if(/functionsfetch|failed to fetch|404|not found/i.test(message)){
-      status.textContent='Lookup service is not reachable yet. The Edge Function must be deployed and the latest NextGen site published before verification can work.';
+      status.textContent='The lookup service is deployed. Sign in again if needed; profile verification also requires the relevant platform API access and configured secrets.';
     }else{
       status.textContent='Could not verify profile: '+message;
     }
@@ -518,9 +518,9 @@ function autofillChannelFromUrl(){
   if(handle){
     handleField.value='@'+handle;
     if(nameField.dataset.nameSource==='username-derived'){nameField.value='';delete nameField.dataset.nameSource;}
-    status.textContent=platform+' and username detected. The actual Profile/Page Name must be retrieved from the platform using authorized API access; it will not be guessed from the username. API lookup is not connected yet, so enter the exact name shown on the platform.';
+    status.textContent=platform+' and username detected. The actual Profile/Page Name must be retrieved from the platform using authorized API access; it will not be guessed from the username. Profile lookup is deployed. Verification needs sign-in and platform API authorization; YouTube also needs its API key configured.';
   }else{
-    status.textContent=platform+' detected. Username could not be reliably read from this link. The actual Profile/Page Name must come from authorized platform API access; API lookup is not connected yet.';
+    status.textContent=platform+' detected. Username could not be reliably read from this link. The actual Profile/Page Name must come from authorized platform API access; Profile lookup is deployed, but verification needs sign-in and platform API authorization; YouTube also needs its API key configured.';
   }
 }
 function openAddChannelModal(){
