@@ -338,6 +338,14 @@ nav button.active,.studio-navbtn.active{background:linear-gradient(100deg,#0755a
 @media(max-width:390px){.stats,.drafts,.channels{grid-template-columns:minmax(0,1fr)!important}.ng-bottom-nav a small{font-size:9px!important}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 </style>
+
+<link rel="stylesheet" href="./nextgen-shared.css">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#0b1020">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NextGen">
 </head>
 
 <body>
@@ -633,5 +641,6 @@ document.addEventListener('click',function(event){
 })();
 </script>
 
+<script id="ng-register-sw">if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
 </body>
 </html>
