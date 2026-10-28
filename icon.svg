@@ -1,16 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="NextGen">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="NextGen logo">
 <defs>
- <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#020817"/><stop offset=".55" stop-color="#071c46"/><stop offset="1" stop-color="#160b38"/></linearGradient>
- <linearGradient id="ring" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#d12cff"/><stop offset=".45" stop-color="#167bff"/><stop offset=".72" stop-color="#00e5ee"/><stop offset="1" stop-color="#bd39ff"/></linearGradient>
- <linearGradient id="mark" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#087cff"/><stop offset=".48" stop-color="#04dbe8"/><stop offset="1" stop-color="#df2dff"/></linearGradient>
- <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="7"/></filter>
+ <radialGradient id="bg"><stop stop-color="#061b4c"/><stop offset=".72" stop-color="#020817"/><stop offset="1" stop-color="#00030a"/></radialGradient>
+ <linearGradient id="ring" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#e12cff"/><stop offset=".34" stop-color="#276bff"/><stop offset=".65" stop-color="#00e8f0"/><stop offset="1" stop-color="#d62cff"/></linearGradient>
+ <linearGradient id="ng" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#05e4f0"/><stop offset=".48" stop-color="#147cff"/><stop offset="1" stop-color="#e52cff"/></linearGradient>
+ <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="9"/></filter>
 </defs>
-<circle cx="256" cy="256" r="235" fill="#087bff" opacity=".22" filter="url(#glow)"/>
-<circle cx="256" cy="256" r="228" fill="url(#bg)" stroke="url(#ring)" stroke-width="12"/>
-<path d="M116 250 L188 184 L235 230 L323 141 L303 138 L366 104 L353 172 L337 153 L235 257 L188 211 L116 278 Z" fill="url(#mark)"/>
-<path d="M187 282 L187 236 L235 283 L235 310 L210 310 Z" fill="#187bff"/>
-<path d="M251 240 L286 205 Q307 186 332 200 L356 216 L335 238 L320 226 Q308 217 297 229 L277 249 L346 249 L346 273 L251 273 L251 240 Z" fill="url(#mark)"/>
-<text x="256" y="351" font-family="Arial,Helvetica,sans-serif" font-size="67" font-weight="800" text-anchor="middle" fill="#f7fbff" letter-spacing="-3">Next<tspan fill="#10c9f4">Gen</tspan></text>
-<text x="256" y="383" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="#d8e8ff" letter-spacing="1.4">SMART AUTOMATION</text>
-<text x="256" y="401" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="#d8e8ff" letter-spacing="1.4">SMARTER GROWTH</text>
+<circle cx="256" cy="256" r="242" fill="#087bff" opacity=".24" filter="url(#glow)"/>
+<circle cx="256" cy="256" r="229" fill="url(#bg)" stroke="url(#ring)" stroke-width="11"/>
+<circle cx="256" cy="256" r="218" fill="none" stroke="#0a3d9d" stroke-opacity=".45" stroke-width="2"/>
+<g transform="translate(0 2)">
+ <path d="M126 236 L126 156 L203 230 L267 176 L267 258 L211 311 L158 260 L158 310 L126 310 Z" fill="url(#ng)"/>
+ <path d="M126 310 L348 117 L330 116 L383 86 L371 145 L357 128 L126 310 Z" fill="#00e3f0"/>
+ <path d="M286 199 L319 165 Q346 141 374 161 L396 179 L370 203 L355 192 Q346 185 337 194 L316 215 L389 215 L389 247 L286 247 L286 199 Z" fill="url(#ng)"/>
+ <rect x="386" y="67" width="17" height="17" fill="#00e5f0"/><rect x="407" y="83" width="15" height="15" fill="#05caff"/><rect x="393" y="105" width="14" height="14" fill="#1b8dff"/>
+</g>
+<text x="256" y="342" font-family="Arial,Helvetica,sans-serif" font-size="67" font-weight="900" text-anchor="middle" letter-spacing="-3" fill="#f9fbff">Next<tspan fill="url(#ng)">Gen</tspan></text>
+<text x="256" y="373" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="800" text-anchor="middle" fill="#f5f8ff" letter-spacing="2">AI  •  TOOLS  •  TUTORIALS  •  GROWTH</text>
+<g transform="translate(185 390)"><rect x="0" y="0" width="57" height="35" rx="9" fill="#ff1728"/><path d="M22 8 L22 27 L39 17.5 Z" fill="#fff"/><path d="M69 2V33" stroke="#168aff" stroke-width="3"/><circle cx="106" cy="17" r="20" fill="#1877f2"/><path d="M110 7H103V14H97V21H103V37H112V21H119L121 14H112V12Q112 9 116 9H120V2H114Q110 2 110 7Z" fill="#fff" transform="translate(-2 -2) scale(.9)"/></g>
 </svg>
