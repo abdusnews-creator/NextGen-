@@ -54,6 +54,12 @@ nav a.on::after{content:none!important;display:none!important}nav a:not(.on) .da
 svg{display:block}
 </style>
 
+<style id="ng-hamburger-single-fix">
+/* Keep only the dedicated menu control; hide any legacy header burger that may duplicate it. */
+.app>header .burger,.app>header [data-legacy-hamburger="true"]{display:none!important}
+.app>header .ng-hamburger{appearance:none;-webkit-appearance:none;background:#0a1650!important;}
+</style>
+
 <style id="ng-hamburger-fix">
 header .ng-hamburger{flex:0 0 36px;width:36px;height:36px;min-height:36px;padding:7px 6px;margin:0 8px 0 0;border:1px solid #2857a4;border-radius:9px;background:#0a1650;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;position:relative;z-index:30;touch-action:manipulation}
 header .ng-hamburger span{display:block;width:20px;height:2px;flex:none;border-radius:2px;background:#fff;pointer-events:none}
@@ -354,6 +360,8 @@ body.ng-menu-open{overflow:hidden}
 
 <script id="ng-hamburger-fix-script">
 (function(){
+ // Remove legacy/duplicate menu controls so only one hamburger remains in the header.
+ document.querySelectorAll('.app>header .burger, .app>header .ng-hamburger:not(#ng-hamburger)').forEach(function(el){el.remove();});
  var trigger=document.getElementById('ng-hamburger');
  var drawer=document.getElementById('ng-menu-drawer');
  var backdrop=document.getElementById('ng-menu-backdrop');
