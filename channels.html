@@ -538,12 +538,23 @@ nav button.active,.studio-navbtn.active{background:linear-gradient(100deg,#0755a
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="NextGen">
+
+<style id="ng-logo-reference-polish">
+/* Apply the user's NG growth-arrow logo reference to the Channels header. */
+.studio-brand.ng-logo-brand{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;gap:9px!important;min-width:0!important;white-space:nowrap}
+.ng-brand-mark{display:block;width:40px;height:40px;flex:0 0 40px;filter:drop-shadow(0 0 8px #087be455)}
+.ng-brand-copy{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
+.ng-logo-brand .studio-brand-name{display:block;font-size:21px!important;font-weight:900!important;letter-spacing:.1px;line-height:1;background:linear-gradient(100deg,#fff 0%,#12d8f4 48%,#b52cff 100%);-webkit-background-clip:text;background-clip:text;color:transparent!important}
+.ng-logo-brand .studio-tagline{display:block!important;font-size:8px!important;font-weight:700!important;letter-spacing:.05px;color:#b9d4fa!important;white-space:nowrap;line-height:1.15}
+@media(max-width:680px){.studio-brand.ng-logo-brand{gap:7px!important}.ng-brand-mark{width:34px;height:34px;flex-basis:34px}.ng-logo-brand .studio-brand-name{font-size:18px!important}.ng-logo-brand .studio-tagline{font-size:7px!important}}
+</style>
+
 </head>
 
 <body>
 <header class="studio-top">
   <button class="studio-menu" type="button" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleStudioNav()">☰</button>
-  <div class="studio-brand" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;line-height:1"><span class="studio-brand-name" style="font-size:20px;font-weight:800;letter-spacing:.2px;line-height:1.05"><span style="color:#00BFFF">N</span>extGen</span><span class="studio-tagline" style="display:block;font-size:6px;font-weight:700;letter-spacing:.1px;color:#aabbd0;white-space:nowrap;line-height:1.05">Smart Automation. Smarter Growth.</span></div>
+  <div class="studio-brand ng-logo-brand"><svg class="ng-brand-mark" viewBox="0 0 64 64" role="img" aria-label="NextGen logo"><defs><linearGradient id="ngLogoGradient" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#147cff"/><stop offset=".52" stop-color="#08d9f3"/><stop offset="1" stop-color="#d52bff"/></linearGradient></defs><circle cx="32" cy="32" r="29" fill="#06152d" stroke="url(#ngLogoGradient)" stroke-width="3"/><path d="M13 43V22l15 16 8-8" fill="none" stroke="url(#ngLogoGradient)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 47 49 15M38 16l12-2-1 12" fill="none" stroke="#10d7f4" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="49" cy="15" r="3" fill="#e23cff"/></svg><span class="ng-brand-copy"><span class="studio-brand-name">NextGen</span><span class="studio-tagline">Smart Automation. Smarter Growth.</span></span></div>
   <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" oninput="var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards()}" onkeydown="if(event.key==='Enter'){event.preventDefault();var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards();q.scrollIntoView({behavior:'smooth',block:'center'})}}">
   <div class="studio-top-right">
     <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="openAddChannelModal()">+</button>
