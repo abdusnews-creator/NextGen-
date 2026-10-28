@@ -1515,5 +1515,51 @@ body main.studio-main .channel-search-toolbar button.action.active{
 }
 </style>
 
+
+<style id="nextgen-reference-compare-final">
+/* Mobile header dimensions scaled from reference screenshot (1536px reference to 709px phone width) */
+@media(max-width:760px){
+ body .studio-top{
+  height:clamp(112px,16.9vw,128px)!important;
+  min-height:clamp(112px,16.9vw,128px)!important;
+  max-height:128px!important;
+  padding:7px 7px!important;
+  gap:5px!important;
+  border-radius:18px!important;
+  overflow:hidden!important;
+ }
+ body .studio-menu{
+  flex:0 0 42px!important;width:42px!important;min-width:42px!important;
+ }
+ body .studio-menu:before{font-size:39px!important}
+ body .studio-brand.ng-logo-brand{
+  flex:1 1 auto!important;min-width:0!important;overflow:hidden!important;
+ }
+ body .ng-full-brand-logo{
+  width:52vw!important;max-width:100%!important;
+  height:auto!important;max-height:104px!important;
+  object-fit:contain!important;object-position:left center!important;
+  mix-blend-mode:normal!important;filter:none!important;
+ }
+ body .studio-top-right{gap:5px!important;flex:0 0 auto!important}
+ body .studio-top-right .top-icon-btn{
+  width:clamp(48px,7.8vw,58px)!important;
+  height:clamp(48px,7.8vw,58px)!important;
+  min-width:clamp(48px,7.8vw,58px)!important;
+  flex:0 0 clamp(48px,7.8vw,58px)!important;
+ }
+ body .studio-top-right .top-add-btn{font-size:31px!important}
+ body .studio-top-right .notification-bell-3d{font-size:26px!important}
+}
+@media(max-width:390px){
+ body .studio-top{gap:3px!important;padding-left:5px!important;padding-right:5px!important}
+ body .studio-menu{flex-basis:31px!important;width:31px!important;min-width:31px!important}
+ body .studio-menu:before{font-size:29px!important}
+ body .ng-full-brand-logo{width:49vw!important;max-height:82px!important}
+ body .studio-top-right{gap:3px!important}
+ body .studio-top-right .top-icon-btn{width:31px!important;height:31px!important;min-width:31px!important;flex-basis:31px!important}
+}
+</style>
+
 </body>
 </html>
