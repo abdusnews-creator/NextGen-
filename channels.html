@@ -1395,5 +1395,72 @@ body .ng-full-brand-logo{
 
 
 
+
+<style id="nextgen-header-measured-reference">
+/* Proportions measured from the supplied 1536×864 reference; scale with viewport width */
+body .studio-top{
+  box-sizing:border-box!important;display:flex!important;align-items:center!important;
+  gap:clamp(5px,0.8vw,14px)!important;width:100%!important;
+  height:clamp(72px,17vw,262px)!important;min-height:clamp(72px,17vw,262px)!important;max-height:262px!important;
+  padding:clamp(6px,1.1vw,18px) clamp(7px,1.2vw,20px)!important;
+  overflow:hidden!important;position:sticky!important;top:0!important;z-index:1000!important;
+  border-radius:clamp(14px,2vw,32px)!important;border:1px solid #087be4!important;
+  background:linear-gradient(105deg,#041126 0%,#071d40 55%,#10133c 100%)!important;
+  box-shadow:0 0 0 1px #087be4,0 0 14px #087be455,inset 0 0 16px #06152d!important
+}
+body .studio-menu{
+  display:grid!important;place-items:center!important;flex:0 0 clamp(25px,5.8vw,90px)!important;
+  width:clamp(25px,5.8vw,90px)!important;min-width:0!important;height:100%!important;
+  padding:0!important;font-size:0!important
+}
+body .studio-menu:before{content:"☰";font-size:clamp(23px,4.2vw,64px)!important;line-height:1;color:#eef6ff}
+body .studio-brand.ng-logo-brand{
+  display:flex!important;align-items:center!important;justify-content:flex-start!important;
+  flex:1 1 auto!important;min-width:0!important;width:auto!important;overflow:hidden!important
+}
+body .ng-full-brand-logo{
+  display:block!important;width:clamp(145px,52vw,800px)!important;max-width:100%!important;
+  height:auto!important;max-height:calc(100% - 4px)!important;object-fit:contain!important;
+  object-position:left center!important;flex:0 1 auto!important;
+  mix-blend-mode:normal!important;filter:none!important;background:transparent!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important
+}
+body .studio-top-right{
+  display:flex!important;align-items:center!important;justify-content:flex-end!important;
+  gap:clamp(4px,.8vw,12px)!important;flex:0 0 auto!important;margin:0 0 0 auto!important
+}
+body .studio-top-right .top-icon-btn{
+  display:grid!important;place-items:center!important;
+  width:clamp(28px,7.8vw,120px)!important;height:clamp(28px,7.8vw,120px)!important;
+  min-width:clamp(28px,7.8vw,120px)!important;flex:0 0 clamp(28px,7.8vw,120px)!important;
+  padding:0!important;border-radius:50%!important;color:#f4f8ff!important;
+  border:1px solid #13bfff!important;background:linear-gradient(145deg,#071a38,#101747)!important;
+  box-shadow:0 0 8px #087be433!important
+}
+body .studio-top-right .top-add-btn{font-size:clamp(22px,4vw,60px)!important}
+body .studio-top-right .notification-bell-3d{font-size:clamp(17px,3vw,45px)!important}
+body .studio-top-right .top-profile-btn{overflow:hidden!important}
+body .studio-top-right .ng-profile-logo{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;border-radius:50%!important}
+body .studio-top .studio-search{display:none!important}
+@media(max-width:520px){
+ body .studio-top{height:76px!important;min-height:76px!important;max-height:76px!important;padding:6px 7px!important;gap:4px!important;border-radius:14px!important}
+ body .studio-menu{flex-basis:25px!important;width:25px!important}
+ body .studio-menu:before{font-size:23px!important}
+ body .ng-full-brand-logo{width:clamp(145px,45vw,230px)!important;max-height:58px!important}
+ body .studio-top-right{gap:4px!important}
+ body .studio-top-right .top-icon-btn{width:30px!important;height:30px!important;min-width:30px!important;flex-basis:30px!important}
+ body .studio-top-right .top-add-btn{font-size:22px!important}
+ body .studio-top-right .notification-bell-3d{font-size:17px!important}
+}
+@media(max-width:390px){
+ body .studio-top{gap:3px!important;padding-left:5px!important;padding-right:5px!important}
+ body .studio-menu{flex-basis:22px!important;width:22px!important}
+ body .studio-menu:before{font-size:21px!important}
+ body .ng-full-brand-logo{width:clamp(128px,43vw,165px)!important;max-height:50px!important}
+ body .studio-top-right{gap:3px!important}
+ body .studio-top-right .top-icon-btn{width:27px!important;height:27px!important;min-width:27px!important;flex-basis:27px!important}
+}
+</style>
+
 </body>
 </html>
