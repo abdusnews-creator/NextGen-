@@ -19,7 +19,7 @@ header::after{content:"";position:absolute;right:0;top:0;bottom:0;width:30px;bor
 .hr{display:flex;align-items:center;gap:13px;z-index:1}
 .circ{width:29px;height:29px;border-radius:50%;display:grid;place-items:center}
 .plus{border:2px solid #2a5bff;background:#0a1650;box-shadow:0 0 8px #2a5bff}
-.bell{position:relative;width:29px;height:29px;display:grid;place-items:center}
+.bell{position:relative;width:29px;height:29px;display:grid;place-items:center}.bell svg{transform-origin:50% 12%;animation:bellSwing 1.8s ease-in-out infinite}@keyframes bellSwing{0%,72%,100%{transform:rotate(0deg)}76%{transform:rotate(12deg)}80%{transform:rotate(-10deg)}84%{transform:rotate(7deg)}88%{transform:rotate(-5deg)}92%{transform:rotate(2deg)}}@media(prefers-reduced-motion:reduce){.bell svg{animation:none}}
 .bell u{position:absolute;top:0;right:2px;width:9px;height:9px;border-radius:50%;background:#ff2d3d}
 .av{background:linear-gradient(135deg,#2a6bff,#3b3cff);font-weight:700;font-size:15px;box-shadow:0 0 8px #2a5bff88}
 .hd{display:flex;gap:11px;align-items:center;padding:14px 10px 10px}
