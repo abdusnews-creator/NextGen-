@@ -63,6 +63,7 @@ svg{display:block}
 <style id="ng-hamburger-fix">
 header .ng-hamburger{flex:0 0 36px;width:36px;height:36px;min-height:36px;padding:7px 6px;margin:0 8px 0 0;border:1px solid #2857a4;border-radius:9px;background:#0a1650;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;position:relative;z-index:30;touch-action:manipulation}
 header .ng-hamburger span{display:block;width:20px;height:2px;flex:none;border-radius:2px;background:#fff;pointer-events:none}
+header .ng-hamburger::before,header .ng-hamburger::after{content:none!important;display:none!important}header .ng-hamburger{background-image:none!important}
 .ng-menu-backdrop[hidden]{display:none!important}
 .ng-menu-backdrop{position:fixed;inset:0;z-index:90;background:#020718b8}
 .ng-menu-drawer{position:fixed;z-index:91;left:0;top:0;bottom:0;width:min(290px,82vw);padding:calc(18px + env(safe-area-inset-top,0px)) 14px calc(20px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,#071a3e,#030b24);border-right:1px solid #2a6bff;box-shadow:12px 0 32px #0008;transform:translateX(-105%);visibility:hidden;transition:transform .2s ease,visibility .2s ease;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
@@ -360,9 +361,12 @@ body.ng-menu-open{overflow:hidden}
 
 <script id="ng-hamburger-fix-script">
 (function(){
- // Remove legacy/duplicate menu controls so only one hamburger remains in the header.
- document.querySelectorAll('.app>header .burger, .app>header .ng-hamburger:not(#ng-hamburger)').forEach(function(el){el.remove();});
+ // Keep exactly one header menu control, even if old scripts inject a duplicate.
+ var header=document.querySelector('.app>header');
  var trigger=document.getElementById('ng-hamburger');
+ if(header){header.querySelectorAll('button,[role="button"],.burger,[aria-label*="menu" i]').forEach(function(el){if(el!==trigger)el.remove();});}
+ if(trigger){trigger.querySelectorAll('span').forEach(function(line,i){if(i>2)line.remove();});}
+
  var drawer=document.getElementById('ng-menu-drawer');
  var backdrop=document.getElementById('ng-menu-backdrop');
  var close=document.getElementById('ng-menu-close');
