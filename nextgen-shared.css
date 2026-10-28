@@ -57,3 +57,8 @@ header .studio-tagline,header .studio-tagline,header .studio-tagline,header smal
 @media(max-width:600px){.ng-shared-footer{font-size:9px!important;gap:3px!important;padding:5px 5px calc(5px + env(safe-area-inset-bottom,0px))!important}.ng-shared-footer .ng-copyright{font-size:9px!important}.ng-shared-footer .ng-credit{font-size:8px!important}}
 
 .ng-auth-master-header{width:100%;min-height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:8px 14px!important;background:linear-gradient(180deg,#050c2a,#07123a)!important;border-bottom:2px solid #2a5bff!important;box-shadow:0 0 14px #3a2cff55!important;color:#fff!important;text-align:center}.ng-auth-master-header .ng-auth-brand{font-size:21px;font-weight:800;letter-spacing:.6px;line-height:1.1;color:#fff}.ng-auth-master-header .ng-auth-tagline{font-size:11px;color:#8fa6d6;line-height:1.2}
+
+/* Footer is document-end content, never fixed to the viewport */
+.ng-shared-footer{position:static!important;inset:auto!important;bottom:auto!important;transform:none!important;flex:none!important}
+body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+@media(min-width:900px){body{padding-bottom:0}}
