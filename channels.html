@@ -200,13 +200,18 @@ svg{display:block}
     <select id="channel-platform" name="platform" required>
       <option value="">Choose platform</option><option>YouTube</option><option>Facebook</option><option>Instagram</option><option>Threads</option>
     </select>
-    <label for="channel-name">Display name</label>
-    <input id="channel-name" name="name" type="text" placeholder="Enter profile display name" required maxlength="80">
+    <label for="channel-username">Username / Handle</label>
+    <input id="channel-username" name="username" type="text" placeholder="Auto-detected from link" readonly>
+    <label for="channel-name">Page / Profile / Channel Name</label>
+    <input id="channel-name" name="name" type="text" placeholder="Verified name will appear here" required maxlength="80">
+    <p id="detect-status" class="dialog-note" role="status">Paste a profile link to detect the username. The actual display name requires the platform API and authorization.</p>
     <p class="dialog-note">This saves a draft on this device only. It does not connect or authorize the social account.</p>
     <div class="dialog-actions"><button type="button" id="cancel-channel">Cancel</button><button class="primary" type="submit">Save draft</button></div>
     <p id="channel-message" class="dialog-note" role="status"></p>
   </form>
 </dialog>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js?v=20261029-profilelookup"></script>
 <script id="channels-interactions">
 (function(){
   var search=document.getElementById('channel-search');
@@ -216,6 +221,8 @@ svg{display:block}
   var platform=document.getElementById('channel-platform');
   var urlInput=document.getElementById('channel-url');
   var nameInput=document.getElementById('channel-name');
+  var usernameInput=document.getElementById('channel-username');
+  var detectStatus=document.getElementById('detect-status');
   var msg=document.getElementById('channel-message');
   var list=document.querySelector('.app main .list');
   if(search&&list)search.addEventListener('input',function(){
@@ -223,13 +230,50 @@ svg{display:block}
     list.querySelectorAll('.card').forEach(function(card){card.hidden=!card.textContent.toLowerCase().includes(q);});
     var blur=document.querySelector('.blur');if(blur)blur.hidden=!!q&&!blur.textContent.toLowerCase().includes(q);
   });
-  if(urlInput&&platform)urlInput.addEventListener('input',function(){
-    var u=urlInput.value.toLowerCase();
-    if(u.includes('youtube.com')||u.includes('youtu.be'))platform.value='YouTube';
-    else if(u.includes('facebook.com')||u.includes('fb.com'))platform.value='Facebook';
-    else if(u.includes('instagram.com'))platform.value='Instagram';
-    else if(u.includes('threads.net'))platform.value='Threads';
+  function parseProfile(raw){
+    try{
+      var u=new URL(raw);if(u.protocol!=='https:')return null;
+      var host=u.hostname.toLowerCase().replace(/^www\\./,'').replace(/^m\\./,'');
+      var parts=u.pathname.split('/').filter(Boolean);
+      var p='',handle='';
+      if(host==='youtube.com'||host==='youtu.be'){
+        p='YouTube';if(host==='youtu.be')handle=parts[0]||'';else handle=parts.find(function(x){return x[0]==='@';})||parts[0]||'';
+      }else if(host==='facebook.com'||host==='fb.com'){
+        p='Facebook';handle=parts[0]||'';
+      }else if(host==='instagram.com'){
+        p='Instagram';handle=parts[0]||'';
+      }else if(host==='threads.net'||host==='threads.com'){
+        p='Threads';handle=parts[0]||'';
+      }else return null;
+      if(['watch','reel','reels','p','posts','stories','share','about','settings'].includes(handle.toLowerCase()))handle='';
+      return {platform:p,handle:handle.replace(/^@/,'')};
+    }catch(e){return null;}
+  }
+  if(urlInput)urlInput.addEventListener('input',function(){
+    var parsed=parseProfile(urlInput.value.trim());
+    if(!parsed){if(usernameInput)usernameInput.value='';if(detectStatus)detectStatus.textContent='Enter a valid YouTube, Facebook, Instagram or Threads profile link.';return;}
+    platform.value=parsed.platform;
+    if(usernameInput)usernameInput.value=parsed.handle?'@'+parsed.handle:'';
+    if(detectStatus)detectStatus.textContent=parsed.handle?'Platform and username detected. Looking up the verified profile name…':'Platform detected, but this link does not contain a recognizable username.';
+    if(parsed.handle)lookupVerifiedName(parsed.platform,parsed.handle);
   });
+  var lookupSeq=0;
+  async function lookupVerifiedName(p,handle){
+    var seq=++lookupSeq;
+    try{
+      if(!window.supabase||!window.NEXTGEN_SUPABASE_CONFIG)throw new Error('Profile-name lookup service is not available.');
+      var client=window.supabase.createClient(window.NEXTGEN_SUPABASE_CONFIG.url,window.NEXTGEN_SUPABASE_CONFIG.anonKey);
+      var sessionResult=await client.auth.getSession();
+      var session=sessionResult.data&&sessionResult.data.session;
+      if(!session)throw new Error('Sign in to NextGen to look up the verified profile name.');
+      var response=await client.functions.invoke('channel-profile-lookup',{body:{platform:p.toLowerCase(),url:urlInput.value.trim()}});
+      if(seq!==lookupSeq)return;
+      if(response.error||!response.data||!response.data.display_name)throw new Error(response.data&&response.data.error||'The platform did not return a verified profile name. Check API setup and account authorization.');
+      nameInput.value=response.data.display_name;
+      if(usernameInput)usernameInput.value=response.data.handle?'@'+response.data.handle:'@'+handle;
+      if(detectStatus)detectStatus.textContent='Verified profile name detected from '+p+'.';
+    }catch(e){if(seq!==lookupSeq)return;if(detectStatus)detectStatus.textContent='Username detected; profile name not verified: '+(e.message||'API authorization is required.');}
+  }
   if(add&&dialog)add.addEventListener('click',function(){if(dialog.showModal)dialog.showModal();else alert('Please open this page in an updated browser to add a channel.');});
   var cancel=document.getElementById('cancel-channel');
   if(cancel&&dialog)cancel.addEventListener('click',function(){dialog.close();});
@@ -239,12 +283,12 @@ svg{display:block}
     alert((title?title.textContent:'Channel')+'\n'+(handle?handle.textContent:'')+'\nConnection: Not verified. Connect the platform API before publishing.');
   });});
   if(form)form.addEventListener('submit',function(e){
-    e.preventDefault();var u=urlInput.value.trim(),p=platform.value,n=nameInput.value.trim();
+    e.preventDefault();var u=urlInput.value.trim(),p=platform.value,n=nameInput.value.trim(),handle=(usernameInput&&usernameInput.value||'').trim();
     if(!u||!p||!n)return;
     try{
       var records=JSON.parse(localStorage.getItem('nextgen-channel-drafts')||'[]');
       if(records.some(function(x){return x.url.toLowerCase()===u.toLowerCase();})){msg.textContent='This link is already saved on this device.';return;}
-      records.push({url:u,platform:p,name:n,createdAt:new Date().toISOString(),status:'draft'});
+      records.push({url:u,platform:p,name:n,username:handle,createdAt:new Date().toISOString(),status:'draft'});
       localStorage.setItem('nextgen-channel-drafts',JSON.stringify(records));
       msg.textContent='Draft saved on this device. API connection is not completed.';
       form.reset();
