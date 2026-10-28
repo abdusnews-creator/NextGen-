@@ -29,3 +29,29 @@ button:disabled{opacity:.55;cursor:not-allowed}
 @media(max-width:600px){header,.studio-top{padding-left:14px!important;padding-right:14px!important}.layout{display:block!important;min-height:unset!important}nav:not(.ng-bottom-nav){width:100%!important;max-width:100%;padding:10px!important}main{padding:15px!important}.card,.panel,.intro,.settings-card,.section-card{border-radius:13px;padding:15px}.ng-shared-footer{font-size:11px;gap:6px}.ng-shared-footer .ng-credit{font-size:10px}.ng-bottom-nav a small{font-size:9px}}
 @media(max-width:360px){.ng-bottom-nav a span{font-size:18px}.ng-bottom-nav a small{font-size:8px}.ng-shared-footer{padding-left:12px!important;padding-right:12px!important}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+
+
+/* NEXTGEN MASTER DESIGN — fixed shared system */
+header,.studio-top{
+  min-height:56px!important;
+  box-sizing:border-box!important;
+  background:linear-gradient(180deg,#050c2a,#07123a)!important;
+  color:#fff!important;
+  border-bottom:2px solid #2a5bff!important;
+  box-shadow:0 0 14px #3a2cff55!important;
+}
+header a,.studio-top a{color:#fff}
+header .studio-brand,.studio-top .studio-brand,header .brand{color:#fff!important}
+header .studio-tagline,header .studio-tagline,header .studio-tagline,header small{color:#8fa6d6}
+.ng-shared-footer{
+  width:100%!important;max-width:none!important;min-height:28px!important;
+  margin:8px 0 0!important;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))!important;
+  display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;
+  justify-content:space-between!important;align-items:center!important;gap:5px!important;
+  background:#050b28!important;border-top:1px solid #1e4fb5!important;
+  color:#8fa6d6!important;font-size:10px!important;line-height:1.25!important;
+  white-space:nowrap!important;box-sizing:border-box!important
+}
+.ng-shared-footer .ng-copyright{flex:1 1 auto;min-width:0;text-align:left;font-size:10px!important;font-weight:400!important;white-space:nowrap!important}
+.ng-shared-footer .ng-credit{flex:0 0 auto;margin-left:auto;text-align:right;font-size:9px!important;font-weight:600!important;white-space:nowrap!important;color:#fff!important}
+@media(max-width:600px){.ng-shared-footer{font-size:9px!important;gap:3px!important;padding:5px 5px calc(5px + env(safe-area-inset-bottom,0px))!important}.ng-shared-footer .ng-copyright{font-size:9px!important}.ng-shared-footer .ng-credit{font-size:8px!important}}
