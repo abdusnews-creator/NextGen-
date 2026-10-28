@@ -750,7 +750,7 @@ footer.ng-shared-footer,.ng-shared-footer,body>footer.ng-shared-footer{
 <body>
 <header class="studio-top">
   <button class="studio-menu" type="button" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleStudioNav()">☰</button>
-  <div class="studio-brand ng-logo-brand"><img class="ng-brand-mark" src="./ng-symbol.jpg?v=20261028" alt="NG"><span class="ng-brand-copy"><span class="studio-brand-name"><span class="ng-next-word">Next</span><span class="ng-gen-word">Gen</span></span><span class="studio-tagline">Smart Automation. Smarter Growth.</span></span></div>
+  <div class="studio-brand ng-logo-brand"><img class="ng-full-brand-logo" src="./brand-logo.jpg?v=20261028" alt="NextGen — Smart Automation. Smarter Growth."></div>
   <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" oninput="var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards()}" onkeydown="if(event.key==='Enter'){event.preventDefault();var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards();q.scrollIntoView({behavior:'smooth',block:'center'})}}">
   <div class="studio-top-right">
     <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="openAddChannelModal()">+</button>
@@ -1357,6 +1357,18 @@ body .studio-top .studio-search{display:none!important}
  body .ng-logo-brand .studio-tagline{font-size:6px!important}
  body .studio-top-right{gap:3px!important}
  body .studio-top-right .top-icon-btn{width:27px!important;height:27px!important;min-width:27px!important;flex-basis:27px!important}
+}
+</style>
+
+
+<style id="nextgen-use-complete-reference-logo">
+body .studio-brand.ng-logo-brand{flex:1 1 auto!important;min-width:0!important;width:auto!important;display:flex!important;align-items:center!important;justify-content:flex-start!important}
+body .ng-full-brand-logo{display:block!important;width:clamp(165px,42vw,420px)!important;max-width:100%!important;height:auto!important;max-height:70px!important;object-fit:contain!important;object-position:left center!important;flex:0 1 auto!important}
+@media(max-width:680px){
+ body .ng-full-brand-logo{width:clamp(145px,43vw,260px)!important;max-height:54px!important}
+}
+@media(max-width:390px){
+ body .ng-full-brand-logo{width:clamp(125px,42vw,165px)!important;max-height:42px!important}
 }
 </style>
 
