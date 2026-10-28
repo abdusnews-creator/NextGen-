@@ -8,9 +8,9 @@
 <style>
 :root{color-scheme:dark;box-sizing:border-box;--bg:#030b24;--txt:#fff;--mut:#8fa6d6;--green:#16e08a;padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:auto;min-height:100%;background:var(--bg);color:var(--txt);font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;overflow-x:hidden}
-.app{max-width:430px;margin:0 auto;min-height:100vh;height:auto;position:relative;display:flex;flex-direction:column;overflow:visible}
-main{flex:1 0 auto;min-height:0;overflow:visible;-webkit-overflow-scrolling:touch;padding-bottom:16px}
+html,body{height:100%;min-height:100%;background:var(--bg);color:var(--txt);font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;overflow:hidden}
+.app{max-width:430px;margin:0 auto;height:100vh;height:100dvh;position:relative;display:flex;flex-direction:column;overflow:hidden}
+main{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:16px}
 main::-webkit-scrollbar{display:none}
 header{flex:none;z-index:5;height:50px;display:flex;align-items:center;justify-content:space-between;padding:0 10px 0 12px;background:linear-gradient(180deg,#050c2a,#07123a);border-bottom:2px solid #2a5bff;border-radius:0 0 18px 18px;box-shadow:0 0 14px #3a2cff88;position:relative}
 header::after{content:"";position:absolute;right:0;top:0;bottom:0;width:30px;border-right:3px solid #9b3cff;border-radius:0 0 22px 22px}
@@ -103,6 +103,7 @@ svg{display:block}
     <div class="card th" style="margin-top:26px"><div class="info"><b>Threads</b><span>@royalfurniturezone</span></div><div class="st"><i></i>App connection: Not verified</div><div class="rv">Review</div></div>
   </div>
 </div>
+<footer class="ng-shared-footer"><span class="ng-copyright">NextGen · Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
 </main>
 
 <nav>
