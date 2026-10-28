@@ -549,6 +549,31 @@ nav button.active,.studio-navbtn.active{background:linear-gradient(100deg,#0755a
 @media(max-width:680px){.studio-brand.ng-logo-brand{gap:7px!important}.ng-brand-mark{width:34px;height:34px;flex-basis:34px}.ng-logo-brand .studio-brand-name{font-size:18px!important}.ng-logo-brand .studio-tagline{font-size:7px!important}}
 </style>
 
+
+<style id="ng-compact-single-line-footer">
+/* Keep copyright left and creator credit right on one compact line. */
+footer.ng-shared-footer, .ng-shared-footer, body>footer.ng-shared-footer{
+  display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;
+  align-items:center!important;justify-content:space-between!important;
+  gap:6px!important;padding:6px 9px!important;margin-top:12px!important;
+  font-size:8px!important;line-height:1.2!important;font-weight:500!important;
+  min-width:0!important;white-space:nowrap!important;box-sizing:border-box!important;
+}
+.ng-shared-footer .ng-copyright, footer.ng-shared-footer .ng-copyright{
+  flex:1 1 auto!important;min-width:0!important;text-align:left!important;
+  font-size:8px!important;font-weight:500!important;white-space:nowrap!important;
+}
+.ng-shared-footer .ng-credit, footer.ng-shared-footer .ng-credit{
+  flex:0 0 auto!important;min-width:0!important;text-align:right!important;
+  font-size:7px!important;font-weight:500!important;white-space:nowrap!important;
+}
+@media(max-width:380px){
+  footer.ng-shared-footer,.ng-shared-footer,body>footer.ng-shared-footer{padding:5px 6px!important;gap:4px!important}
+  .ng-shared-footer .ng-copyright,footer.ng-shared-footer .ng-copyright{font-size:7px!important}
+  .ng-shared-footer .ng-credit,footer.ng-shared-footer .ng-credit{font-size:6px!important}
+}
+</style>
+
 </head>
 
 <body>
