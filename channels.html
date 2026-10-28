@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>NextGen – Channels</title>
-<link rel="stylesheet" href="./nextgen-shared.css?v=20261029-scrollfix2">
+<link rel="stylesheet" href="./nextgen-shared.css?v=20261029-refreshfix3">
 <style>
 :root{color-scheme:dark;box-sizing:border-box;--bg:#030b24;--txt:#fff;--mut:#8fa6d6;--green:#16e08a;padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -125,28 +125,29 @@ svg{display:block}
 
 <script id="channels-pull-to-refresh">
 (function(){
- var main=document.querySelector('.app main'), startY=0, active=false, done=false;
+ var main=document.querySelector('.app main'), startY=0, tracking=false, startAtTop=false, refreshed=false;
  if(!main)return;
- main.addEventListener('touchstart',function(e){
+ function yOf(e){return e.touches&&e.touches.length?e.touches[0].clientY:0;}
+ document.addEventListener('touchstart',function(e){
    if(!e.touches||e.touches.length!==1)return;
-   startY=e.touches[0].clientY;
-   active=main.scrollTop<=2;
-   done=false;
- },{passive:true});
- main.addEventListener('touchmove',function(e){
-   if(!active||done||!e.touches||e.touches.length!==1)return;
-   var delta=e.touches[0].clientY-startY;
-   if(main.scrollTop>2||delta<0){active=false;return;}
-   if(delta>=90){
-     done=true;
-     active=false;
+   startY=yOf(e);
+   startAtTop=main.scrollTop<=2;
+   tracking=startAtTop && startY<180;
+   refreshed=false;
+ },{passive:true,capture:true});
+ document.addEventListener('touchend',function(e){
+   if(!tracking||refreshed)return;
+   var changed=e.changedTouches&&e.changedTouches.length?e.changedTouches[0].clientY:startY;
+   var delta=changed-startY;
+   tracking=false;
+   if(startAtTop&&main.scrollTop<=2&&delta>=85){
+     refreshed=true;
      var url=new URL(window.location.href);
      url.searchParams.set('ng_refresh',String(Date.now()));
-     window.location.assign(url.toString());
+     window.location.replace(url.toString());
    }
- },{passive:true});
- main.addEventListener('touchend',function(){active=false;},{passive:true});
- main.addEventListener('touchcancel',function(){active=false;},{passive:true});
+ },{passive:true,capture:true});
+ document.addEventListener('touchcancel',function(){tracking=false;},{passive:true,capture:true});
 })();
 </script>
 </body>
