@@ -750,7 +750,7 @@ footer.ng-shared-footer,.ng-shared-footer,body>footer.ng-shared-footer{
 <body>
 <header class="studio-top">
   <button class="studio-menu" type="button" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleStudioNav()">☰</button>
-  <div class="studio-brand ng-logo-brand"><img class="ng-full-brand-logo" src="./brand-logo.jpg?v=20261028" alt="NextGen — Smart Automation. Smarter Growth."></div>
+  <div class="studio-brand ng-logo-brand"><img class="ng-full-brand-logo" src="./brand-logo.jpg?v=20261028c" alt="NextGen — Smart Automation. Smarter Growth."></div>
   <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" oninput="var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards()}" onkeydown="if(event.key==='Enter'){event.preventDefault();var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards();q.scrollIntoView({behavior:'smooth',block:'center'})}}">
   <div class="studio-top-right">
     <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="openAddChannelModal()">+</button>
@@ -1408,12 +1408,12 @@ body .ng-full-brand-logo{
         var frame=ctx.getImageData(0,0,w,h),p=frame.data;
         for(var i=0;i<p.length;i+=4){
           var r=p[i],g=p[i+1],b=p[i+2],mx=Math.max(r,g,b);
-          var a=Math.max(0,Math.min(1,(mx-24)/58));
-          if(r<48&&g<66&&b<130){
-            var navyA=Math.max(0,Math.min(1,((r+g)-28)/62));
-            a=Math.min(a,navyA);
-          }
-          if(mx<27)a=0;
+          var a=1;
+          /* Remove dark navy/blue backing while keeping bright logo colors and white lettering. */
+          if(mx<48)a=0;
+          if(r<58&&g<92&&b<190&&b>r*1.18&&g<b*0.78)a=0;
+          if(r<38&&g<58&&b<145)a=0;
+          if(mx>=48&&mx<88&&r<38&&g<54&&b<160)a=Math.min(a,(mx-48)/40);
           p[i+3]=Math.round(p[i+3]*a);
         }
         ctx.putImageData(frame,0,0);
