@@ -202,6 +202,8 @@ body>header.studio-top .top-popover[hidden]{display:none!important}
 @media(max-width:680px){body>header.studio-top{height:62px!important;min-height:62px!important;padding:0 12px!important;gap:9px!important}body>header.studio-top .studio-brand{min-width:0!important;font-size:18px!important}body>header.studio-top .studio-search{display:none!important}body>header.studio-top .studio-top-right{gap:5px!important}body>header.studio-top .top-icon-btn{width:34px!important;height:36px!important}body>header.studio-top .top-popover{top:56px!important;right:8px!important}}
 </style>
 
+
+<link rel="stylesheet" href="./nextgen-shared.css"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="manifest" href="./manifest.webmanifest"><meta name="theme-color" content="#0b1020"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="NextGen">
 </head>
 <body>
 <header class="studio-top">
@@ -867,5 +869,6 @@ var current=path==='channels.html'?'channels':(path==='settings.html'||path==='p
 document.querySelectorAll('.ng-bottom-nav a').forEach(function(a){if(a.dataset.page===current)a.classList.add('active')});
 })();
 </script>
+<script id="ng-register-sw">if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
 </body>
 </html>
