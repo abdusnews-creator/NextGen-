@@ -697,12 +697,60 @@ footer.ng-shared-footer,.ng-shared-footer,body>footer.ng-shared-footer{
 }
 </style>
 
+
+<style id="nextgen-header-reference-fix">
+/* Header only: align the brand, controls, and neon frame to the supplied reference */
+.studio-top{
+  position:sticky!important;top:0!important;z-index:100!important;
+  box-sizing:border-box!important;width:100%!important;height:auto!important;min-height:82px!important;
+  padding:10px 18px!important;display:flex!important;align-items:center!important;gap:14px!important;
+  background:linear-gradient(105deg,#041126 0%,#071d40 55%,#10133c 100%)!important;
+  border:1px solid transparent!important;border-radius:22px!important;
+  box-shadow:0 0 0 1px #087be4,0 0 14px #087be455,inset 0 0 16px #06152d!important;
+}
+.studio-menu{flex:0 0 auto!important;font-size:0!important;width:38px!important;height:42px!important;padding:0!important;position:relative!important}
+.studio-menu:before{content:"☰";font-size:30px!important;line-height:1;color:#eef6ff}
+.studio-brand.ng-logo-brand{display:flex!important;flex:1 1 auto!important;min-width:0!important;gap:12px!important;align-items:center!important;white-space:normal!important}
+.ng-brand-mark{display:block!important;width:54px!important;height:54px!important;flex:0 0 54px!important;object-fit:contain!important;filter:drop-shadow(0 0 7px #08cfff66)!important}
+.ng-brand-copy{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:4px!important;min-width:0!important}
+.ng-logo-brand .studio-brand-name{font-size:clamp(21px,4.6vw,34px)!important;line-height:1.02!important;font-weight:900!important;letter-spacing:-.6px!important;background:none!important;color:#f7f9ff!important;-webkit-text-fill-color:initial!important;white-space:nowrap!important}
+.ng-logo-brand .ng-gen-word{color:#14c9ff!important}
+.ng-logo-brand .studio-tagline{display:block!important;font-size:clamp(8px,1.8vw,14px)!important;font-weight:700!important;color:#c4e5ff!important;white-space:nowrap!important;line-height:1.15!important;letter-spacing:0!important}
+.studio-top-right{display:flex!important;flex:0 0 auto!important;align-items:center!important;gap:12px!important;margin-left:0!important}
+.studio-top-right .top-icon-btn{width:42px!important;height:42px!important;flex:0 0 42px!important;border-radius:50%!important;color:#f4f8ff!important;border:1px solid #0c9fe9!important;background:linear-gradient(145deg,#0a2043,#101747)!important;box-shadow:0 0 10px #087be455!important}
+.studio-top-right .top-add-btn{font-size:30px!important;border-color:#13c9ff!important}
+.studio-top-right .notification-bell-3d{font-size:25px!important}
+.studio-top-right .top-profile-btn{width:42px!important;height:42px!important;flex-basis:42px!important;border:1px solid #18c9ff!important;background:linear-gradient(145deg,#087cf0,#572cff)!important}
+.studio-search{display:none!important}
+@media(max-width:560px){
+ .studio-top{min-height:78px!important;padding:8px 10px!important;gap:8px!important;border-radius:18px!important}
+ .studio-menu{width:30px!important;height:38px!important;flex-basis:30px!important}
+ .studio-menu:before{font-size:27px!important}
+ .studio-brand.ng-logo-brand{gap:7px!important}
+ .ng-brand-mark{width:40px!important;height:40px!important;flex-basis:40px!important}
+ .ng-logo-brand .studio-brand-name{font-size:clamp(19px,5.5vw,27px)!important;letter-spacing:-.7px!important}
+ .ng-logo-brand .studio-tagline{font-size:clamp(7px,1.9vw,10px)!important;letter-spacing:-.15px!important}
+ .studio-top-right{gap:6px!important}
+ .studio-top-right .top-icon-btn{width:34px!important;height:34px!important;flex-basis:34px!important}
+ .studio-top-right .top-add-btn{font-size:25px!important}
+ .studio-top-right .notification-bell-3d{font-size:20px!important}
+}
+@media(max-width:390px){
+ .studio-top{gap:5px!important;padding-left:7px!important;padding-right:7px!important}
+ .ng-brand-mark{width:32px!important;height:32px!important;flex-basis:32px!important}
+ .ng-logo-brand .studio-brand-name{font-size:18px!important}
+ .ng-logo-brand .studio-tagline{font-size:6.5px!important}
+ .studio-top-right{gap:4px!important}
+ .studio-top-right .top-icon-btn{width:30px!important;height:30px!important;flex-basis:30px!important}
+}
+</style>
+
 </head>
 
 <body>
 <header class="studio-top">
   <button class="studio-menu" type="button" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleStudioNav()">☰</button>
-  <div class="studio-brand ng-logo-brand"><span class="ng-brand-copy"><span class="studio-brand-name"><span class="ng-next-word">Next</span><span class="ng-gen-word">Gen</span></span><span class="studio-tagline">Smart Automation. Smarter Growth.</span></span></div>
+  <div class="studio-brand ng-logo-brand"><img class="ng-brand-mark" src="./ng-symbol.jpg?v=20261028" alt="NG"><span class="ng-brand-copy"><span class="studio-brand-name"><span class="ng-next-word">Next</span><span class="ng-gen-word">Gen</span></span><span class="studio-tagline">Smart Automation. Smarter Growth.</span></span></div>
   <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" oninput="var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards()}" onkeydown="if(event.key==='Enter'){event.preventDefault();var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards();q.scrollIntoView({behavior:'smooth',block:'center'})}}">
   <div class="studio-top-right">
     <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="openAddChannelModal()">+</button>
