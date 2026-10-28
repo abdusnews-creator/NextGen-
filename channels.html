@@ -52,6 +52,36 @@ nav a{flex:1;min-width:0;height:100%;padding:2px 0!important;margin:0!important;
 .app nav.ng-bottom-nav{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;z-index:5!important;width:100%!important;height:calc(43px + env(safe-area-inset-bottom,0px))!important;padding:0 4px env(safe-area-inset-bottom,0px)!important;display:flex!important;justify-content:space-around!important;align-items:stretch!important;gap:2px!important;border-radius:18px 18px 0 0!important}.app nav.ng-bottom-nav a{flex:1!important;min-width:0!important;height:100%!important;min-height:0!important;margin:0!important;padding:2px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:2px!important;border:1px solid transparent!important;border-radius:9px!important;background:transparent!important;box-shadow:none!important;color:#cfd8f5!important;font-size:9px!important}.app nav.ng-bottom-nav a.active{background:#0b4a82!important;border:1px solid rgba(77,184,255,.28)!important;border-radius:9px!important;color:#fff!important}.app nav.ng-bottom-nav a.active::before,.app nav.ng-bottom-nav a.active::after{content:none!important;display:none!important}.app nav.ng-bottom-nav a small{display:block!important;font-size:9px!important;line-height:1.2!important;text-align:center!important}.app nav.ng-bottom-nav a .channel-master-icon{width:23px!important;height:23px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}nav a .schedule-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .schedule-master-icon svg{width:23px;height:23px}nav a .approval-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .approval-master-icon svg{width:23px;height:23px}nav a .content-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .content-master-icon svg{width:23px;height:23px}nav a .channel-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .channel-master-icon svg{width:23px;height:23px}nav a .dashboard-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .dashboard-master-icon svg{width:23px;height:23px;overflow:visible}nav a .channel-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .channel-master-icon svg{width:23px;height:23px;overflow:visible}
 nav a.on::after{content:none!important;display:none!important}nav a:not(.on) .dashboard-master-icon,nav a:not(.on) .channel-master-icon,nav a:not(.on) .content-master-icon,nav a:not(.on) .approval-master-icon,nav a:not(.on) .schedule-master-icon{background:transparent;border:0;box-shadow:none;border-radius:0}
 svg{display:block}
+
+/* Channels reference design refresh */
+.hd{gap:11px;padding:6px 11px 8px}
+.hd h1{font-size:24px}
+.hd p{font-size:12px}
+.bar{gap:9px;padding:0 11px;margin-bottom:13px}
+.bar .search{height:36px;border-radius:12px;padding:0 14px;font-size:13px}
+.bar .search svg{flex:none}
+.bar .add{flex:0 0 120px;width:120px;height:36px;border-radius:10px;font-size:13px}
+.bar .refresh-page{height:34px;min-height:34px}
+.list{padding:0 10px;gap:8px}
+.card{height:80px;border-radius:12px;padding:0 8px 0 18px}
+.card::before{width:10px;border-left-width:4px}
+.ico{left:19px;top:10px;width:44px;height:42px;border-radius:10px}
+.yt .ico{width:44px;height:42px}
+.info{left:80px;top:10px}
+.info b{font-size:18px}
+.info span{font-size:13px;margin-top:4px}
+.st{left:19px;top:54px;font-size:12px}
+.st i{width:8px;height:8px;flex:none}
+.rv{right:10px;top:20px;width:92px;height:31px;border-radius:10px;font-size:12.5px}
+.safety{margin:17px 12px 18px;padding:19px 15px 22px;border:1px solid #1d2f50;border-radius:16px;background:linear-gradient(180deg,#0f1d3a,#0b1630)}
+.safety h2{font-size:27px;font-weight:700;color:#8f9bff;line-height:1.2}
+.safety p{font-size:15.5px;color:#fff;margin-top:22px;line-height:1.3}
+.safety p+p{margin-top:21px}
+.safety b{font-weight:700}
+.safety .b1,.safety .b2{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#fff;font-family:inherit;cursor:pointer}
+.safety .b1{width:100%;min-height:48px;margin-top:31px;border-radius:14px;background:linear-gradient(90deg,#1a8cff,#1a63e8);box-shadow:0 0 12px #1a63e855;border:0}
+.safety .b2{width:190px;min-height:48px;margin-top:13px;border-radius:14px;background:#12294a;border:1px solid #1f3d6b}
+@media(max-width:360px){.bar .add{flex-basis:105px;width:105px}.info b{font-size:16px}.info span{font-size:12px}.rv{width:78px}.st{font-size:11px}}
 </style>
 
 <style id="ng-header-logo-crop-fix">
@@ -128,7 +158,7 @@ body.ng-menu-open{overflow:hidden}
     <div class="ico"><svg width="32" height="24" viewBox="0 0 32 24"><rect width="32" height="24" rx="7" fill="#fff"/><path d="M13 6.5v11l9-5.5z" fill="#ff1f1f"/></svg></div>
     <div class="info"><b>YouTube</b><span>@RoyalFurnitureHouse</span></div>
     <div class="st"><i></i>App connection: Not verified</div>
-    <button type="button" class="rv" data-review>Review <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h10M7 2l4 4-4 4"/></svg></div>
+    <button type="button" class="rv" data-review>Review <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h10M7 2l4 4-4 4"/></svg></button>
   </div>
   <div class="card fb">
     <div class="ico"><svg width="26" height="32" viewBox="0 0 26 32"><path d="M17 32V18h5l1-6h-6V8.5C17 7 17.8 6 19.6 6H23V.5C22 .3 20.6 0 18.8 0 14.2 0 11 2.8 11 7.8V12H6v6h5v14z" fill="#fff"/></svg></div>
@@ -149,6 +179,14 @@ body.ng-menu-open{overflow:hidden}
     <button type="button" class="rv" data-review>Review <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h10M7 2l4 4-4 4"/></svg></button>
   </div>
 </div>
+<section class="safety" aria-labelledby="approval-safety-title">
+  <h2 id="approval-safety-title">Approval Safety</h2>
+  <p>Publishing mode: <b id="publishing-mode-label">Manual Approval Mode — ON</b></p>
+  <p>Auto Approval Mode: <b id="auto-approval-label">OFF</b></p>
+  <button type="button" class="b1" id="manual-approval-mode">Manual Approval (Recommended)</button>
+  <button type="button" class="b2" id="auto-approval-mode">Enable Auto Approval</button>
+  <p id="approval-mode-note" class="dialog-note" role="status">Publishing automation is not connected yet. These controls only change the displayed preference.</p>
+</section>
 <div class="blur" aria-hidden="true">
   <div class="list">
     <div class="card ig"><div class="info"><b>Instagram</b><span>@royalfurniturezone</span></div><div class="st"><i></i>App connection: Not verified</div><button type="button" class="rv" data-review>Review</button></div>
@@ -261,6 +299,26 @@ body.ng-menu-open{overflow:hidden}
 </dialog>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="./supabase-config.js?v=20261029-profilelookup"></script>
+<script id="approval-safety-display-controls">
+(function(){
+ var manual=document.getElementById('manual-approval-mode');
+ var auto=document.getElementById('auto-approval-mode');
+ var publishing=document.getElementById('publishing-mode-label');
+ var autoLabel=document.getElementById('auto-approval-label');
+ var note=document.getElementById('approval-mode-note');
+ if(!manual||!auto||!publishing||!autoLabel)return;
+ function setMode(isAuto){
+   publishing.textContent=isAuto?'Auto Approval Mode — ON':'Manual Approval Mode — ON';
+   autoLabel.textContent=isAuto?'ON':'OFF';
+   manual.setAttribute('aria-pressed',String(!isAuto));
+   auto.setAttribute('aria-pressed',String(isAuto));
+   note.textContent=isAuto?'Display preference changed only. Publishing automation is not connected yet.':'Manual approval is selected. Publishing automation is not connected yet.';
+ }
+ manual.addEventListener('click',function(){setMode(false);});
+ auto.addEventListener('click',function(){setMode(true);});
+ setMode(false);
+})();
+</script>
 <script id="channels-interactions">
 (function(){
   var search=document.getElementById('channel-search');
