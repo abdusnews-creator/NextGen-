@@ -750,7 +750,7 @@ footer.ng-shared-footer,.ng-shared-footer,body>footer.ng-shared-footer{
 <body>
 <header class="studio-top">
   <button class="studio-menu" type="button" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleStudioNav()">☰</button>
-  <div class="studio-brand ng-logo-brand"><img class="ng-brand-mark" src="./ng-symbol.jpg?v=20261028" alt="NG"><span class="ng-brand-copy"><span class="studio-brand-name"><span class="ng-next-word">Next</span><span class="ng-gen-word">Gen</span></span><span class="studio-tagline"><span class="tag-dot">•</span> SMART AUTOMATION. <span class="tag-dot">•</span> SMARTER GROWTH. <span class="tag-dot">•</span></span></span></div>
+  <div class="studio-brand ng-logo-brand ng-reference-brand"><img class="ng-reference-header-image" src="./header-reference.webp?v=20261028" alt="NextGen — Smart Automation. Smarter Growth."></div>
   <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" oninput="var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards()}" onkeydown="if(event.key==='Enter'){event.preventDefault();var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards();q.scrollIntoView({behavior:'smooth',block:'center'})}}">
   <div class="studio-top-right">
     <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="openAddChannelModal()">+</button>
@@ -1645,6 +1645,36 @@ body .ng-logo-brand .tag-dot{color:#14d7ff!important;padding:0 .08em!important}
  body .studio-top-right .top-icon-btn{width:29px!important;height:29px!important;min-width:29px!important;flex-basis:29px!important}
  body .studio-top-right .top-add-btn{font-size:20px!important}
  body .studio-top-right .notification-bell-3d{font-size:16px!important}
+}
+</style>
+
+
+<style id="nextgen-use-uploaded-header-image">
+@media(max-width:760px){
+ body .studio-top{position:sticky!important;isolation:isolate!important}
+ body .studio-menu{
+  position:absolute!important;left:0!important;top:0!important;z-index:5!important;
+  height:100%!important;width:clamp(30px,8vw,58px)!important;min-width:0!important;
+  padding:0!important;background:transparent!important;border:0!important;
+  color:transparent!important;font-size:0!important;box-shadow:none!important
+ }
+ body .studio-menu:before{content:none!important}
+ body .studio-brand.ng-logo-brand.ng-reference-brand{
+  flex:1 1 auto!important;width:auto!important;min-width:0!important;
+  height:100%!important;overflow:hidden!important;display:flex!important;
+  align-items:center!important;justify-content:flex-start!important;margin:0!important;padding:0!important
+ }
+ body .ng-reference-header-image{
+  display:block!important;width:min(62vw,440px)!important;max-width:100%!important;
+  height:auto!important;max-height:calc(100% - 6px)!important;object-fit:contain!important;
+  object-position:left center!important;flex:0 1 auto!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;
+  background:transparent!important;filter:none!important;mix-blend-mode:normal!important
+ }
+ body .studio-top-right{position:relative!important;z-index:6!important;flex:0 0 auto!important;margin-left:auto!important}
+}
+@media(max-width:390px){
+ body .ng-reference-header-image{width:min(62vw,242px)!important;max-height:68px!important}
 }
 </style>
 
