@@ -71,7 +71,7 @@ svg{display:block}
 </div>
 <div class="bar">
   <div class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><circle cx="10" cy="10" r="7"/><path d="M15 15l6 6"/></svg>Search channels...</div>
-  <button class="refresh-page" type="button" aria-label="Refresh page" title="Refresh page"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M4 17v-5h5"/><path d="M5.6 9A7 7 0 0 1 18 6.2L20 12M4 12l2 5.8A7 7 0 0 0 18.4 15"/></svg></button>
+  <button class="refresh-page" type="button" aria-label="Refresh page" title="Refresh page" onclick="window.location.href=window.location.pathname+'?ng_refresh='+Date.now()"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M4 17v-5h5"/><path d="M5.6 9A7 7 0 0 1 18 6.2L20 12M4 12l2 5.8A7 7 0 0 0 18.4 15"/></svg></button>
   <div class="add"><svg width="14" height="14" viewBox="0 0 16 16" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M8 1v14M1 8h14"/></svg>Add Channel</div>
 </div>
 <div class="list">
@@ -131,13 +131,22 @@ svg{display:block}
   var main=document.querySelector('.app main');
   if(!main)return;
   var refreshButton=document.querySelector('.refresh-page');
-  if(refreshButton)refreshButton.addEventListener('click',function(){
-    refreshButton.disabled=true;
-    refreshButton.setAttribute('aria-label','Refreshing page');
+  function forceRefresh(){
     var url=new URL(window.location.href);
     url.searchParams.set('ng_refresh',String(Date.now()));
-    window.location.replace(url.toString());
-  });
+    url.searchParams.set('ng_v','29');
+    window.location.href=url.toString();
+  }
+  if(refreshButton){
+    refreshButton.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      refreshButton.disabled=true;
+      refreshButton.setAttribute('aria-label','Refreshing page');
+      refreshButton.title='Refreshing…';
+      forceRefresh();
+    });
+  }
   var startY=0,startX=0,tracking=false,dragging=false,refreshed=false;
   var threshold=80, indicator=document.createElement('div');
   indicator.setAttribute('role','status');
@@ -180,9 +189,7 @@ svg{display:block}
     if(dragging&&dy>=threshold&&Math.abs(dx)<Math.abs(dy)*0.8&&main.scrollTop<=2){
       refreshed=true;
       show('Refreshing…');
-      var url=new URL(window.location.href);
-      url.searchParams.set('ng_refresh',String(Date.now()));
-      window.location.replace(url.toString());
+      forceRefresh();
       return;
     }
     hide();dragging=false;
