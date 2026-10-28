@@ -1,1 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#10213f"/><stop offset="1" stop-color="#1762a6"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#g)"/><path d="M112 134h288v54H224v66h144v52H224v72h176v54H112z" fill="#eaf5ff"/><path d="M112 134h54v298h-54z" fill="#54e5ff"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="NextGen">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#020817"/><stop offset=".55" stop-color="#071c46"/><stop offset="1" stop-color="#160b38"/></linearGradient>
+ <linearGradient id="ring" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#d12cff"/><stop offset=".45" stop-color="#167bff"/><stop offset=".72" stop-color="#00e5ee"/><stop offset="1" stop-color="#bd39ff"/></linearGradient>
+ <linearGradient id="mark" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#087cff"/><stop offset=".48" stop-color="#04dbe8"/><stop offset="1" stop-color="#df2dff"/></linearGradient>
+ <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="7"/></filter>
+</defs>
+<circle cx="256" cy="256" r="235" fill="#087bff" opacity=".22" filter="url(#glow)"/>
+<circle cx="256" cy="256" r="228" fill="url(#bg)" stroke="url(#ring)" stroke-width="12"/>
+<path d="M116 250 L188 184 L235 230 L323 141 L303 138 L366 104 L353 172 L337 153 L235 257 L188 211 L116 278 Z" fill="url(#mark)"/>
+<path d="M187 282 L187 236 L235 283 L235 310 L210 310 Z" fill="#187bff"/>
+<path d="M251 240 L286 205 Q307 186 332 200 L356 216 L335 238 L320 226 Q308 217 297 229 L277 249 L346 249 L346 273 L251 273 L251 240 Z" fill="url(#mark)"/>
+<text x="256" y="351" font-family="Arial,Helvetica,sans-serif" font-size="67" font-weight="800" text-anchor="middle" fill="#f7fbff" letter-spacing="-3">Next<tspan fill="#10c9f4">Gen</tspan></text>
+<text x="256" y="383" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="#d8e8ff" letter-spacing="1.4">SMART AUTOMATION</text>
+<text x="256" y="401" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="#d8e8ff" letter-spacing="1.4">SMARTER GROWTH</text>
+</svg>
