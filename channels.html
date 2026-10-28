@@ -123,28 +123,28 @@ svg{display:block}
 
 <script id="channels-pull-to-refresh">
 (function(){
-  var scroller=document.querySelector('.app main');
-  if(!scroller) return;
-  var startY=0, tracking=false, refreshing=false;
-  scroller.addEventListener('touchstart',function(e){
-    if(refreshing || scroller.scrollTop>0 || !e.touches || e.touches.length!==1) return;
+  var startY=0, tracking=false, refreshing=false, startedAtTop=false;
+  function topOfContent(){
+    var main=document.querySelector('.app main');
+    return !main || main.scrollTop<=0;
+  }
+  document.addEventListener('touchstart',function(e){
+    if(refreshing || !e.touches || e.touches.length!==1) return;
+    startedAtTop=topOfContent();
     startY=e.touches[0].clientY;
-    tracking=true;
-  },{passive:true});
-  scroller.addEventListener('touchmove',function(e){
-    if(!tracking || !e.touches || e.touches.length!==1) return;
-    if(scroller.scrollTop>0){tracking=false;return;}
-    if(e.touches[0].clientY-startY < -8) tracking=false;
-  },{passive:true});
-  scroller.addEventListener('touchend',function(e){
+    tracking=startedAtTop;
+  },{passive:true,capture:true});
+  document.addEventListener('touchend',function(e){
     if(!tracking || refreshing) return;
     tracking=false;
-    var endY=e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].clientY : startY;
-    if(endY-startY>=85 && scroller.scrollTop<=0){
+    var touch=e.changedTouches && e.changedTouches[0];
+    if(!touch || !startedAtTop || !topOfContent()) return;
+    var distance=touch.clientY-startY;
+    if(distance>=70){
       refreshing=true;
-      window.location.reload();
+      window.location.href='./channels.html?refresh='+Date.now();
     }
-  },{passive:true});
+  },{passive:true,capture:true});
 })();
 </script>
 
