@@ -1372,5 +1372,18 @@ body .ng-full-brand-logo{display:block!important;width:clamp(165px,42vw,420px)!i
 }
 </style>
 
+
+<style id="nextgen-logo-background-blend-fix">
+/* Blend the logo's dark backing into the header without filtering the header itself */
+body .ng-full-brand-logo{
+  mix-blend-mode:screen!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+  filter:none!important;
+}
+</style>
+
 </body>
 </html>
