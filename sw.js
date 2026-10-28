@@ -16,7 +16,6 @@ const APP_SHELL = [
   "./manifest.webmanifest",
   "./icon.svg",
   "./ng-symbol.jpg",
-  "./brand-logo.jpg",
   "./profile-icon.jpg"
 ];
 
