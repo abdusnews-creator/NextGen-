@@ -53,10 +53,27 @@ nav a{flex:1;min-width:0;height:100%;padding:2px 0!important;margin:0!important;
 nav a.on::after{content:none!important;display:none!important}nav a:not(.on) .dashboard-master-icon,nav a:not(.on) .channel-master-icon,nav a:not(.on) .content-master-icon,nav a:not(.on) .approval-master-icon,nav a:not(.on) .schedule-master-icon{background:transparent;border:0;box-shadow:none;border-radius:0}
 svg{display:block}
 </style>
+
+<style id="ng-hamburger-fix">
+header .ng-hamburger{flex:0 0 36px;width:36px;height:36px;min-height:36px;padding:7px 6px;margin:0 8px 0 0;border:1px solid #2857a4;border-radius:9px;background:#0a1650;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;position:relative;z-index:30;touch-action:manipulation}
+header .ng-hamburger span{display:block;width:20px;height:2px;flex:none;border-radius:2px;background:#fff;pointer-events:none}
+.ng-menu-backdrop[hidden]{display:none!important}
+.ng-menu-backdrop{position:fixed;inset:0;z-index:90;background:#020718b8}
+.ng-menu-drawer{position:fixed;z-index:91;left:0;top:0;bottom:0;width:min(290px,82vw);padding:calc(18px + env(safe-area-inset-top,0px)) 14px calc(20px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,#071a3e,#030b24);border-right:1px solid #2a6bff;box-shadow:12px 0 32px #0008;transform:translateX(-105%);visibility:hidden;transition:transform .2s ease,visibility .2s ease;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
+.ng-menu-drawer.is-open{transform:translateX(0);visibility:visible}
+.ng-menu-title{display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:20px;font-weight:800;padding:8px 6px 16px;border-bottom:1px solid #24509a;margin-bottom:8px}
+.ng-menu-title button{width:36px;height:36px;min-height:36px;border:1px solid #2857a4;border-radius:9px;background:#10245b;color:#fff;font-size:25px;line-height:1}
+.ng-menu-drawer>a{display:flex;align-items:center;min-height:46px;padding:10px 12px;border:1px solid transparent;border-radius:9px;color:#eaf3ff;text-decoration:none;font-size:15px;font-weight:650;touch-action:manipulation}
+.ng-menu-drawer>a:active,.ng-menu-drawer>a[aria-current="page"]{background:#0b3970;border-color:#1c78c8;color:#fff}
+body.ng-menu-open{overflow:hidden}
+@media(prefers-reduced-motion:reduce){.ng-menu-drawer{transition:none}}
+</style>
+
 </head>
 <body>
 <div class="app">
 <header>
+  <button type="button" class="ng-hamburger" id="ng-hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="ng-menu-drawer"><span></span><span></span><span></span></button>
   <img class="logo" alt="NextGen" src="./header-reference.webp?v=20261028">
   <div class="hr">
     <div class="circ plus"><svg width="16" height="16" viewBox="0 0 16 16" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M8 1v14M1 8h14"/></svg></div>
@@ -64,6 +81,16 @@ svg{display:block}
     <div class="circ av">A</div>
   </div>
 </header>
+<div class="ng-menu-backdrop" id="ng-menu-backdrop" hidden></div>
+<aside class="ng-menu-drawer" id="ng-menu-drawer" aria-label="Navigation menu" aria-hidden="true">
+  <div class="ng-menu-title">NextGen <button type="button" id="ng-menu-close" aria-label="Close navigation menu">×</button></div>
+  <a href="./index.html">Dashboard</a>
+  <a href="./channels.html" aria-current="page">Channels</a>
+  <a href="./content.html">Content</a>
+  <a href="./approvals.html">Approvals</a>
+  <a href="./schedule.html">Schedule</a>
+  <a href="./settings.html">Settings</a>
+</aside>
 <main>
 <div class="hd">
   <div class="hico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.5l6.8-4M8.6 13.5l6.8 4"/></svg></div>
@@ -321,6 +348,35 @@ svg{display:block}
     url.searchParams.set('test','cache-cleanup-failed');
     window.location.replace(url.toString());
   });
+})();
+</script>
+
+
+<script id="ng-hamburger-fix-script">
+(function(){
+ var trigger=document.getElementById('ng-hamburger');
+ var drawer=document.getElementById('ng-menu-drawer');
+ var backdrop=document.getElementById('ng-menu-backdrop');
+ var close=document.getElementById('ng-menu-close');
+ if(!trigger||!drawer||!backdrop||!close||trigger.dataset.ready==='1')return;
+ trigger.dataset.ready='1';
+ function openMenu(){
+   drawer.classList.add('is-open');drawer.setAttribute('aria-hidden','false');
+   backdrop.hidden=false;trigger.setAttribute('aria-expanded','true');
+   trigger.setAttribute('aria-label','Close navigation menu');
+   document.body.classList.add('ng-menu-open');
+ }
+ function closeMenu(){
+   drawer.classList.remove('is-open');drawer.setAttribute('aria-hidden','true');
+   backdrop.hidden=true;trigger.setAttribute('aria-expanded','false');
+   trigger.setAttribute('aria-label','Open navigation menu');
+   document.body.classList.remove('ng-menu-open');
+ }
+ trigger.addEventListener('click',function(){if(drawer.classList.contains('is-open'))closeMenu();else openMenu();});
+ close.addEventListener('click',closeMenu);
+ backdrop.addEventListener('click',closeMenu);
+ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
+ drawer.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu);});
 })();
 </script>
 
