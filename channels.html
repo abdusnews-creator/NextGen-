@@ -120,5 +120,33 @@ svg{display:block}
 
 
 <footer class="ng-shared-footer"><span class="ng-copyright">NextGen · Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
+
+<script id="channels-pull-to-refresh">
+(function(){
+  var scroller=document.querySelector('.app main');
+  if(!scroller) return;
+  var startY=0, tracking=false, refreshing=false;
+  scroller.addEventListener('touchstart',function(e){
+    if(refreshing || scroller.scrollTop>0 || !e.touches || e.touches.length!==1) return;
+    startY=e.touches[0].clientY;
+    tracking=true;
+  },{passive:true});
+  scroller.addEventListener('touchmove',function(e){
+    if(!tracking || !e.touches || e.touches.length!==1) return;
+    if(scroller.scrollTop>0){tracking=false;return;}
+    if(e.touches[0].clientY-startY < -8) tracking=false;
+  },{passive:true});
+  scroller.addEventListener('touchend',function(e){
+    if(!tracking || refreshing) return;
+    tracking=false;
+    var endY=e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].clientY : startY;
+    if(endY-startY>=85 && scroller.scrollTop<=0){
+      refreshing=true;
+      window.location.reload();
+    }
+  },{passive:true});
+})();
+</script>
+
 </body>
 </html>
