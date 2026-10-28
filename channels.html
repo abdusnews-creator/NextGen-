@@ -633,6 +633,70 @@ footer.ng-shared-footer,.ng-shared-footer,body>footer.ng-shared-footer{
 .studio-channel-logo{display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;background:#020817!important;padding:0!important}
 .studio-channel-logo img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important}
 </style>
+
+<style id="nextgen-channels-mobile-hotfix">
+/* Correct mobile layout for the existing Channels page */
+@media(max-width:650px){
+  main.studio-main{padding:22px 18px 100px!important}
+  main.studio-main .channel-search-toolbar{
+    display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    width:100%!important;gap:10px!important;align-items:stretch!important;margin-top:22px!important
+  }
+  main.studio-main .channel-search-toolbar #channelSearch{
+    grid-column:1/-1!important;width:100%!important;min-width:0!important;max-width:100%!important;
+    height:56px!important;flex:none!important;font-size:16px!important
+  }
+  main.studio-main .channel-search-toolbar button{
+    width:100%!important;min-width:0!important;max-width:100%!important;height:52px!important;
+    padding:10px 8px!important;margin:0!important;white-space:normal!important;overflow-wrap:normal!important;
+    font-size:15px!important;line-height:1.2!important;border-radius:13px!important
+  }
+  main.studio-main #channelCards .channel-review-card{
+    display:grid!important;grid-template-columns:76px minmax(0,1fr) auto!important;
+    grid-template-rows:auto auto auto auto!important;column-gap:14px!important;row-gap:7px!important;
+    padding:22px 18px!important;align-items:center!important
+  }
+  main.studio-main #channelCards .channel-review-head{display:contents!important}
+  main.studio-main #channelCards .channel-review-icon{
+    grid-column:1!important;grid-row:1/4!important;width:68px!important;height:68px!important;
+    align-self:center!important
+  }
+  main.studio-main #channelCards .channel-review-platform{
+    grid-column:2!important;grid-row:1!important;min-width:0!important;font-size:25px!important;
+    line-height:1.2!important;overflow-wrap:normal!important;word-break:normal!important
+  }
+  main.studio-main #channelCards .channel-review-name{
+    grid-column:2!important;grid-row:2!important;min-width:0!important;font-size:17px!important;
+    line-height:1.25!important;margin:0!important;overflow-wrap:anywhere!important
+  }
+  main.studio-main #channelCards .channel-review-handle{
+    grid-column:2!important;grid-row:3!important;min-width:0!important;font-size:15px!important;
+    line-height:1.35!important;margin:0!important;overflow-wrap:anywhere!important;word-break:normal!important
+  }
+  main.studio-main #channelCards .channel-review-card>div[style*="margin-top"]{
+    grid-column:3!important;grid-row:1/4!important;margin:0!important;align-self:center!important
+  }
+  main.studio-main #channelCards .channel-review-button,
+  main.studio-main #channelCards .channel-review-card button{
+    min-width:0!important;width:auto!important;padding:13px 18px!important;font-size:17px!important;
+    border-radius:18px!important;white-space:nowrap!important
+  }
+  main.studio-main #channelCards .channel-review-status{
+    grid-column:1/-1!important;grid-row:4!important;margin:12px 0 0!important;
+    font-size:15px!important;line-height:1.35!important;overflow-wrap:anywhere!important
+  }
+}
+@media(max-width:390px){
+  main.studio-main{padding-left:12px!important;padding-right:12px!important}
+  main.studio-main #channelCards .channel-review-card{grid-template-columns:58px minmax(0,1fr) auto!important;column-gap:10px!important;padding:18px 12px!important}
+  main.studio-main #channelCards .channel-review-icon{width:54px!important;height:54px!important}
+  main.studio-main #channelCards .channel-review-platform{font-size:21px!important}
+  main.studio-main #channelCards .channel-review-name{font-size:15px!important}
+  main.studio-main #channelCards .channel-review-handle{font-size:13px!important}
+  main.studio-main #channelCards .channel-review-card button{padding:11px 12px!important;font-size:15px!important}
+}
+</style>
+
 </head>
 
 <body>
