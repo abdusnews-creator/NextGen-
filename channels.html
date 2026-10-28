@@ -1364,7 +1364,7 @@ body .studio-top .studio-search{display:none!important}
 <style id="nextgen-use-complete-reference-logo">
 body .studio-brand.ng-logo-brand{flex:1 1 auto!important;min-width:0!important;width:auto!important;display:flex!important;align-items:center!important;justify-content:flex-start!important}
 body .ng-full-brand-logo{
-  mix-blend-mode:darken!important;
+  mix-blend-mode:normal!important;
   background:transparent!important;
   border:0!important;
   box-shadow:none!important;
@@ -1383,7 +1383,7 @@ body .ng-full-brand-logo{
 <style id="nextgen-logo-background-blend-fix">
 /* Blend the logo's dark backing into the header without filtering the header itself */
 body .ng-full-brand-logo{
-  mix-blend-mode:lighten!important;
+  mix-blend-mode:normal!important;
   background:transparent!important;
   border:0!important;
   box-shadow:none!important;
@@ -1393,43 +1393,7 @@ body .ng-full-brand-logo{
 </style>
 
 
-<script id="nextgen-transparent-logo-processing">
-(function(){
-  function removeLogoBacking(){
-    var img=document.querySelector('.ng-full-brand-logo');
-    if(!img||img.dataset.bgProcessed==='1')return;
-    function process(){
-      try{
-        var w=img.naturalWidth,h=img.naturalHeight;
-        if(!w||!h)return;
-        var c=document.createElement('canvas');c.width=w;c.height=h;
-        var ctx=c.getContext('2d',{willReadFrequently:true});
-        ctx.drawImage(img,0,0,w,h);
-        var frame=ctx.getImageData(0,0,w,h),p=frame.data;
-        for(var i=0;i<p.length;i+=4){
-          var r=p[i],g=p[i+1],b=p[i+2],mx=Math.max(r,g,b);
-          var a=1;
-          /* Remove dark navy/blue backing while keeping bright logo colors and white lettering. */
-          if(mx<48)a=0;
-          if(r<58&&g<92&&b<190&&b>r*1.18&&g<b*0.78)a=0;
-          if(r<38&&g<58&&b<145)a=0;
-          if(mx>=48&&mx<88&&r<38&&g<54&&b<160)a=Math.min(a,(mx-48)/40);
-          p[i+3]=Math.round(p[i+3]*a);
-        }
-        ctx.putImageData(frame,0,0);
-        img.dataset.originalSrc=img.src;
-        img.src=c.toDataURL('image/png');
-        img.dataset.bgProcessed='1';
-        img.style.mixBlendMode='normal';
-      }catch(e){/* retain original logo if browser blocks canvas processing */}
-    }
-    if(img.complete)process();else img.addEventListener('load',process,{once:true});
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',removeLogoBacking,{once:true});
-  else removeLogoBacking();
-  window.addEventListener('pageshow',removeLogoBacking);
-})();
-</script>
+
 
 </body>
 </html>
