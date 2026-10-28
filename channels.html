@@ -750,7 +750,7 @@ footer.ng-shared-footer,.ng-shared-footer,body>footer.ng-shared-footer{
 <body>
 <header class="studio-top">
   <button class="studio-menu" type="button" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleStudioNav()">☰</button>
-  <div class="studio-brand ng-logo-brand"><img class="ng-full-brand-logo" src="./brand-logo.jpg?v=20261028c" alt="NextGen — Smart Automation. Smarter Growth."></div>
+  <div class="studio-brand ng-logo-brand"><img class="ng-brand-mark" src="./ng-symbol.jpg?v=20261028" alt="NG"><span class="ng-brand-copy"><span class="studio-brand-name"><span class="ng-next-word">Next</span><span class="ng-gen-word">Gen</span></span><span class="studio-tagline"><span class="tag-dot">•</span> SMART AUTOMATION. <span class="tag-dot">•</span> SMARTER GROWTH. <span class="tag-dot">•</span></span></span></div>
   <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" oninput="var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards()}" onkeydown="if(event.key==='Enter'){event.preventDefault();var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards();q.scrollIntoView({behavior:'smooth',block:'center'})}}">
   <div class="studio-top-right">
     <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="openAddChannelModal()">+</button>
@@ -1558,6 +1558,45 @@ body main.studio-main .channel-search-toolbar button.action.active{
  body .ng-full-brand-logo{width:49vw!important;max-height:82px!important}
  body .studio-top-right{gap:3px!important}
  body .studio-top-right .top-icon-btn{width:31px!important;height:31px!important;min-width:31px!important;flex-basis:31px!important}
+}
+</style>
+
+
+<style id="nextgen-reference-brand-layout">
+/* Rebuild brand as separate NG mark, wordmark, and tagline to match reference layout */
+body .studio-brand.ng-logo-brand{
+ display:flex!important;align-items:center!important;justify-content:flex-start!important;
+ flex:1 1 auto!important;min-width:0!important;gap:clamp(6px,1vw,16px)!important;
+ overflow:hidden!important;white-space:normal!important
+}
+body .ng-brand-mark{
+ display:block!important;object-fit:contain!important;flex:0 0 auto!important;
+ width:clamp(42px,7.8vw,120px)!important;height:clamp(42px,7.8vw,120px)!important;
+ max-width:none!important;max-height:none!important;background:transparent!important;
+ border:0!important;box-shadow:none!important;border-radius:0!important;filter:none!important
+}
+body .ng-brand-copy{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:clamp(2px,.45vw,7px)!important;min-width:0!important}
+body .ng-logo-brand .studio-brand-name{
+ display:block!important;font-size:clamp(23px,5.4vw,82px)!important;line-height:.98!important;
+ font-weight:900!important;letter-spacing:-.04em!important;white-space:nowrap!important;
+ background:none!important;color:#f7f9ff!important;-webkit-text-fill-color:initial!important
+}
+body .ng-logo-brand .ng-next-word{color:#f7f9ff!important}
+body .ng-logo-brand .ng-gen-word{color:#12caff!important}
+body .ng-logo-brand .studio-tagline{
+ display:block!important;font-size:clamp(7px,1.65vw,25px)!important;line-height:1.05!important;
+ font-weight:800!important;letter-spacing:.025em!important;color:#eef5ff!important;white-space:nowrap!important
+}
+body .ng-logo-brand .tag-dot{color:#14d7ff!important;padding:0 .08em!important}
+@media(max-width:760px){
+ body .ng-brand-mark{width:clamp(42px,9vw,64px)!important;height:clamp(42px,9vw,64px)!important}
+ body .ng-logo-brand .studio-brand-name{font-size:clamp(20px,4.4vw,32px)!important;letter-spacing:-.04em!important}
+ body .ng-logo-brand .studio-tagline{font-size:clamp(6px,1.45vw,11px)!important;letter-spacing:0!important}
+}
+@media(max-width:390px){
+ body .ng-brand-mark{width:32px!important;height:32px!important}
+ body .ng-logo-brand .studio-brand-name{font-size:17px!important}
+ body .ng-logo-brand .studio-tagline{font-size:5.8px!important}
 }
 </style>
 
