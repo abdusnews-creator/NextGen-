@@ -1363,7 +1363,14 @@ body .studio-top .studio-search{display:none!important}
 
 <style id="nextgen-use-complete-reference-logo">
 body .studio-brand.ng-logo-brand{flex:1 1 auto!important;min-width:0!important;width:auto!important;display:flex!important;align-items:center!important;justify-content:flex-start!important}
-body .ng-full-brand-logo{display:block!important;width:clamp(165px,42vw,420px)!important;max-width:100%!important;height:auto!important;max-height:70px!important;object-fit:contain!important;object-position:left center!important;flex:0 1 auto!important}
+body .ng-full-brand-logo{
+  mix-blend-mode:lighten!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+  filter:none!important;
+}
 @media(max-width:680px){
  body .ng-full-brand-logo{width:clamp(145px,43vw,260px)!important;max-height:54px!important}
 }
