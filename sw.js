@@ -1,4 +1,4 @@
-const CACHE_NAME = "nextgen-shell-v11";
+const CACHE_NAME = "nextgen-shell-v13";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -16,6 +16,7 @@ const APP_SHELL = [
   "./manifest.webmanifest",
   "./icon.svg",
   "./ng-symbol.jpg",
+  "./header-reference.webp",
   "./profile-icon.jpg"
 ];
 
