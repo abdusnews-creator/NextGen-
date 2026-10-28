@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>NextGen – Channels</title>
-<link rel="stylesheet" href="./nextgen-shared.css?v=20261029-refreshfix3">
+<link rel="stylesheet" href="./nextgen-shared.css?v=20261029-refreshfix4">
 <style>
 :root{color-scheme:dark;box-sizing:border-box;--bg:#030b24;--txt:#fff;--mut:#8fa6d6;--green:#16e08a;padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -125,29 +125,58 @@ svg{display:block}
 
 <script id="channels-pull-to-refresh">
 (function(){
- var main=document.querySelector('.app main'), startY=0, tracking=false, startAtTop=false, refreshed=false;
- if(!main)return;
- function yOf(e){return e.touches&&e.touches.length?e.touches[0].clientY:0;}
- document.addEventListener('touchstart',function(e){
-   if(!e.touches||e.touches.length!==1)return;
-   startY=yOf(e);
-   startAtTop=main.scrollTop<=2;
-   tracking=startAtTop && startY<180;
-   refreshed=false;
- },{passive:true,capture:true});
- document.addEventListener('touchend',function(e){
-   if(!tracking||refreshed)return;
-   var changed=e.changedTouches&&e.changedTouches.length?e.changedTouches[0].clientY:startY;
-   var delta=changed-startY;
-   tracking=false;
-   if(startAtTop&&main.scrollTop<=2&&delta>=85){
-     refreshed=true;
-     var url=new URL(window.location.href);
-     url.searchParams.set('ng_refresh',String(Date.now()));
-     window.location.replace(url.toString());
-   }
- },{passive:true,capture:true});
- document.addEventListener('touchcancel',function(){tracking=false;},{passive:true,capture:true});
+  var main=document.querySelector('.app main');
+  if(!main)return;
+  var startY=0,startX=0,tracking=false,dragging=false,refreshed=false;
+  var threshold=80, indicator=document.createElement('div');
+  indicator.setAttribute('role','status');
+  indicator.setAttribute('aria-live','polite');
+  indicator.textContent='Pull to refresh';
+  indicator.style.cssText='position:fixed;z-index:9999;top:58px;left:50%;transform:translateX(-50%);padding:8px 14px;border:1px solid #1e4fb5;border-radius:20px;background:#07123a;color:#fff;font:600 12px/1.2 system-ui,sans-serif;box-shadow:0 4px 16px #0006;opacity:0;transition:opacity .12s;pointer-events:none;white-space:nowrap';
+  document.body.appendChild(indicator);
+  function show(text){indicator.textContent=text;indicator.style.opacity='1';}
+  function hide(){indicator.style.opacity='0';}
+  function getTouch(list){return list&&list.length?list[0]:null;}
+  main.addEventListener('touchstart',function(e){
+    var t=getTouch(e.touches);
+    if(!t||e.touches.length!==1)return;
+    if(e.target&&e.target.closest&&e.target.closest('button,a,input,textarea,select'))return;
+    startY=t.clientY;startX=t.clientX;
+    tracking=main.scrollTop<=2;
+    dragging=false;refreshed=false;
+    if(tracking){indicator.textContent='Pull to refresh';}
+  },{passive:true});
+  main.addEventListener('touchmove',function(e){
+    if(!tracking||refreshed)return;
+    var t=getTouch(e.touches);
+    if(!t){tracking=false;hide();return;}
+    var dy=t.clientY-startY,dx=t.clientX-startX;
+    if(Math.abs(dx)>Math.abs(dy)*0.8){tracking=false;hide();return;}
+    if(dy>8&&main.scrollTop<=2){
+      dragging=true;
+      if(dy>=threshold)show('Release to refresh');
+      else show('Pull to refresh');
+      if(e.cancelable)e.preventDefault();
+    }else if(dy<0){
+      tracking=false;dragging=false;hide();
+    }
+  },{passive:false});
+  main.addEventListener('touchend',function(e){
+    if(!tracking||refreshed){hide();tracking=false;return;}
+    var t=getTouch(e.changedTouches);
+    var dy=t?t.clientY-startY:0,dx=t?t.clientX-startX:0;
+    tracking=false;
+    if(dragging&&dy>=threshold&&Math.abs(dx)<Math.abs(dy)*0.8&&main.scrollTop<=2){
+      refreshed=true;
+      show('Refreshing…');
+      var url=new URL(window.location.href);
+      url.searchParams.set('ng_refresh',String(Date.now()));
+      window.location.replace(url.toString());
+      return;
+    }
+    hide();dragging=false;
+  },{passive:true});
+  main.addEventListener('touchcancel',function(){tracking=false;dragging=false;hide();},{passive:true});
 })();
 </script>
 </body>
