@@ -189,5 +189,33 @@ svg{display:block}
   document.addEventListener('touchcancel',function(){tracking=false;dragging=false;hide();},{passive:true});
 })();
 </script>
+
+<script id="ng-one-time-cache-diagnostic">
+(function(){
+  if(new URLSearchParams(window.location.search).get('test')!=='3')return;
+  var work=[];
+  if('serviceWorker' in navigator){
+    work.push(navigator.serviceWorker.getRegistrations().then(function(registrations){
+      return Promise.all(registrations.map(function(registration){return registration.unregister();}));
+    }));
+  }
+  if(window.caches){
+    work.push(caches.keys().then(function(keys){
+      return Promise.all(keys.map(function(key){return caches.delete(key);}));
+    }));
+  }
+  Promise.all(work).then(function(){
+    var url=new URL(window.location.href);
+    url.searchParams.set('test','cache-cleared');
+    url.searchParams.set('ng_refresh',String(Date.now()));
+    window.location.replace(url.toString());
+  }).catch(function(){
+    var url=new URL(window.location.href);
+    url.searchParams.set('test','cache-cleanup-failed');
+    window.location.replace(url.toString());
+  });
+})();
+</script>
+
 </body>
 </html>
