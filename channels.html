@@ -125,20 +125,26 @@ svg{display:block}
 
 <script id="channels-pull-to-refresh">
 (function(){
- var main=document.querySelector('.app main'), startY=0, active=false, startTop=0;
+ var main=document.querySelector('.app main'), startY=0, active=false, done=false;
  if(!main)return;
  main.addEventListener('touchstart',function(e){
    if(!e.touches||e.touches.length!==1)return;
-   startTop=main.scrollTop; startY=e.touches[0].clientY;
-   active=startTop<=0;
+   startY=e.touches[0].clientY;
+   active=main.scrollTop<=1;
+   done=false;
  },{passive:true});
- main.addEventListener('touchend',function(e){
-   if(!active)return; active=false;
-   var t=e.changedTouches&&e.changedTouches[0]; if(!t)return;
-   if(startTop<=0 && main.scrollTop<=0 && t.clientY-startY>85){
-     window.location.replace('./channels.html?refresh='+Date.now());
+ main.addEventListener('touchmove',function(e){
+   if(!active||done||!e.touches||e.touches.length!==1)return;
+   var delta=e.touches[0].clientY-startY;
+   if(main.scrollTop>1||delta<0){active=false;return;}
+   if(delta>=75){
+     done=true;
+     e.preventDefault();
+     window.location.reload();
    }
- },{passive:true});
+ },{passive:false});
+ main.addEventListener('touchend',function(){active=false;},{passive:true});
+ main.addEventListener('touchcancel',function(){active=false;},{passive:true});
 })();
 </script>
 </body>
