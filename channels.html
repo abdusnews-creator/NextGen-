@@ -29,8 +29,8 @@ header::after{content:"";position:absolute;right:0;top:0;bottom:0;width:30px;bor
 .hd p{font-size:12px;color:var(--mut);margin-top:2px}
 .bar{display:flex;gap:9px;padding:0 10px;margin-bottom:16px}
 .search{flex:1;display:flex;align-items:center;gap:12px;height:31px;border:1.5px solid #1e4fb5;border-radius:11px;background:#07123a;padding:0 10px;color:var(--mut);font-size:13px}
-.add{width:108px;height:32px;border-radius:9px;background:linear-gradient(90deg,#1a3cff,#1f9bff);display:flex;align-items:center;justify-content:center;gap:6px;font-weight:700;font-size:12.5px;box-shadow:0 0 10px #1f7bff88}
-.bar .search{min-width:0;overflow:hidden;white-space:nowrap}
+.add{border:0;color:#fff;width:108px;height:32px;border-radius:9px;background:linear-gradient(90deg,#1a3cff,#1f9bff);display:flex;align-items:center;justify-content:center;gap:6px;font-weight:700;font-size:12.5px;box-shadow:0 0 10px #1f7bff88}
+.bar .search{min-width:0;overflow:hidden;white-space:nowrap}.bar .search input::placeholder{color:var(--mut);opacity:1}.card .rv{border:0;color:#fff;cursor:pointer}.channel-dialog{width:min(92vw,390px);border:1px solid #2459bd;border-radius:16px;padding:18px;background:#07123a;color:#fff;margin:auto;box-shadow:0 16px 48px #0009}.channel-dialog::backdrop{background:#020718bb}.channel-dialog h2{font-size:20px;margin-bottom:12px}.channel-dialog label{display:block;font-size:13px;color:#b9c9ed;margin:12px 0 5px}.channel-dialog input,.channel-dialog select{width:100%;height:42px;border-radius:9px;border:1px solid #2857a4;background:#030b24;color:#fff;padding:0 10px;font:inherit}.dialog-actions{display:flex;gap:8px;margin-top:16px}.dialog-actions button{flex:1;min-height:40px;border-radius:9px;border:1px solid #2857a4;background:#10245b;color:#fff}.dialog-actions .primary{background:#1b63e8;border:0}.dialog-note{font-size:12px;color:#9eb1d8;line-height:1.45;margin-top:10px}
 .bar .refresh-page{position:relative;z-index:2;flex:0 0 34px;width:34px;min-width:34px;min-height:32px;height:32px;padding:0;border:1px solid #2a6bff;border-radius:9px;background:#0a1650;color:#fff;display:grid;place-items:center;box-shadow:0 0 8px #1f7bff55;cursor:pointer;touch-action:manipulation}.refresh-page:active{transform:scale(.96);background:#12316f}
 .list{padding:0 9px;display:grid;gap:8px}
 .card{--ac:#ff3b4e;position:relative;height:71px;border:1px solid #17407f;border-left:0;border-radius:11px;background:linear-gradient(180deg,#081a45,#061237);display:flex;align-items:center;padding:0 8px 0 18px}
@@ -70,16 +70,16 @@ svg{display:block}
   <div><h1>Channels</h1><p>Manage your connected social media channels</p></div>
 </div>
 <div class="bar">
-  <div class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><circle cx="10" cy="10" r="7"/><path d="M15 15l6 6"/></svg>Search channels...</div>
+  <label class="search" aria-label="Search channels"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><circle cx="10" cy="10" r="7"/><path d="M15 15l6 6"/></svg><input id="channel-search" type="search" placeholder="Search channels..." autocomplete="off" style="min-width:0;width:100%;background:transparent;border:0;outline:0;color:#fff;font:inherit"></label>
   <a class="refresh-page" href="./channels.html?ng_refresh=29" aria-label="Refresh page" title="Refresh page" role="button"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M4 17v-5h5"/><path d="M5.6 9A7 7 0 0 1 18 6.2L20 12M4 12l2 5.8A7 7 0 0 0 18.4 15"/></svg></a>
-  <div class="add"><svg width="14" height="14" viewBox="0 0 16 16" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M8 1v14M1 8h14"/></svg>Add Channel</div>
+  <button type="button" class="add" id="add-channel"><svg width="14" height="14" viewBox="0 0 16 16" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M8 1v14M1 8h14"/></svg>Add Channel</button>
 </div>
 <div class="list">
   <div class="card yt">
     <div class="ico"><svg width="32" height="24" viewBox="0 0 32 24"><rect width="32" height="24" rx="7" fill="#fff"/><path d="M13 6.5v11l9-5.5z" fill="#ff1f1f"/></svg></div>
     <div class="info"><b>YouTube</b><span>@RoyalFurnitureHouse</span></div>
     <div class="st"><i></i>App connection: Not verified</div>
-    <div class="rv">Review <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h10M7 2l4 4-4 4"/></svg></div>
+    <button type="button" class="rv" data-review>Review <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h10M7 2l4 4-4 4"/></svg></div>
   </div>
   <div class="card fb">
     <div class="ico"><svg width="26" height="32" viewBox="0 0 26 32"><path d="M17 32V18h5l1-6h-6V8.5C17 7 17.8 6 19.6 6H23V.5C22 .3 20.6 0 18.8 0 14.2 0 11 2.8 11 7.8V12H6v6h5v14z" fill="#fff"/></svg></div>
@@ -187,6 +187,69 @@ svg{display:block}
     hide();dragging=false;
   },{passive:true,capture:true});
   document.addEventListener('touchcancel',function(){tracking=false;dragging=false;hide();},{passive:true});
+})();
+</script>
+
+
+<dialog class="channel-dialog" id="channel-dialog" aria-labelledby="channel-dialog-title">
+  <form id="channel-form">
+    <h2 id="channel-dialog-title">Add Channel</h2>
+    <label for="channel-url">Channel or profile link</label>
+    <input id="channel-url" name="url" type="url" placeholder="https://..." required>
+    <label for="channel-platform">Platform</label>
+    <select id="channel-platform" name="platform" required>
+      <option value="">Choose platform</option><option>YouTube</option><option>Facebook</option><option>Instagram</option><option>Threads</option>
+    </select>
+    <label for="channel-name">Display name</label>
+    <input id="channel-name" name="name" type="text" placeholder="Enter profile display name" required maxlength="80">
+    <p class="dialog-note">This saves a draft on this device only. It does not connect or authorize the social account.</p>
+    <div class="dialog-actions"><button type="button" id="cancel-channel">Cancel</button><button class="primary" type="submit">Save draft</button></div>
+    <p id="channel-message" class="dialog-note" role="status"></p>
+  </form>
+</dialog>
+<script id="channels-interactions">
+(function(){
+  var search=document.getElementById('channel-search');
+  var add=document.getElementById('add-channel');
+  var dialog=document.getElementById('channel-dialog');
+  var form=document.getElementById('channel-form');
+  var platform=document.getElementById('channel-platform');
+  var urlInput=document.getElementById('channel-url');
+  var nameInput=document.getElementById('channel-name');
+  var msg=document.getElementById('channel-message');
+  var list=document.querySelector('.app main .list');
+  if(search&&list)search.addEventListener('input',function(){
+    var q=search.value.trim().toLowerCase();
+    list.querySelectorAll('.card').forEach(function(card){card.hidden=!card.textContent.toLowerCase().includes(q);});
+    var blur=document.querySelector('.blur');if(blur)blur.hidden=!!q&&!blur.textContent.toLowerCase().includes(q);
+  });
+  if(urlInput&&platform)urlInput.addEventListener('input',function(){
+    var u=urlInput.value.toLowerCase();
+    if(u.includes('youtube.com')||u.includes('youtu.be'))platform.value='YouTube';
+    else if(u.includes('facebook.com')||u.includes('fb.com'))platform.value='Facebook';
+    else if(u.includes('instagram.com'))platform.value='Instagram';
+    else if(u.includes('threads.net'))platform.value='Threads';
+  });
+  if(add&&dialog)add.addEventListener('click',function(){if(dialog.showModal)dialog.showModal();else alert('Please open this page in an updated browser to add a channel.');});
+  var cancel=document.getElementById('cancel-channel');
+  if(cancel&&dialog)cancel.addEventListener('click',function(){dialog.close();});
+  document.querySelectorAll('[data-review]').forEach(function(btn){btn.addEventListener('click',function(){
+    var card=btn.closest('.card');if(!card)return;
+    var title=card.querySelector('.info b');var handle=card.querySelector('.info span');
+    alert((title?title.textContent:'Channel')+'\n'+(handle?handle.textContent:'')+'\nConnection: Not verified. Connect the platform API before publishing.');
+  });});
+  if(form)form.addEventListener('submit',function(e){
+    e.preventDefault();var u=urlInput.value.trim(),p=platform.value,n=nameInput.value.trim();
+    if(!u||!p||!n)return;
+    try{
+      var records=JSON.parse(localStorage.getItem('nextgen-channel-drafts')||'[]');
+      if(records.some(function(x){return x.url.toLowerCase()===u.toLowerCase();})){msg.textContent='This link is already saved on this device.';return;}
+      records.push({url:u,platform:p,name:n,createdAt:new Date().toISOString(),status:'draft'});
+      localStorage.setItem('nextgen-channel-drafts',JSON.stringify(records));
+      msg.textContent='Draft saved on this device. API connection is not completed.';
+      form.reset();
+    }catch(err){msg.textContent='Could not save on this device. Please check browser storage settings.';}
+  });
 })();
 </script>
 
