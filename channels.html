@@ -54,6 +54,12 @@ nav a.on::after{content:none!important;display:none!important}nav a:not(.on) .da
 svg{display:block}
 </style>
 
+<style id="ng-hamburger-final-fix">
+/* The screenshot shows a second standalone hamburger between the square menu button and logo. Keep only the square menu button, logo and right-side actions. */
+.app>header>:not(#ng-hamburger):not(.logo):not(.hr){display:none!important}
+.app>header #ng-hamburger{display:flex!important}
+</style>
+
 <style id="ng-hamburger-single-fix">
 /* Keep only the dedicated menu control; hide any legacy header burger that may duplicate it. */
 .app>header .burger,.app>header [data-legacy-hamburger="true"]{display:none!important}
@@ -361,10 +367,12 @@ body.ng-menu-open{overflow:hidden}
 
 <script id="ng-hamburger-fix-script">
 (function(){
- // Keep exactly one header menu control, even if old scripts inject a duplicate.
+ // Keep only the intended square menu button, logo and right-side actions in the header.
  var header=document.querySelector('.app>header');
  var trigger=document.getElementById('ng-hamburger');
- if(header){header.querySelectorAll('button,[role="button"],.burger,[aria-label*="menu" i]').forEach(function(el){if(el!==trigger)el.remove();});}
+ function cleanHeader(){if(!header)return;Array.prototype.slice.call(header.children).forEach(function(el){if(el!==trigger&&!el.classList.contains('logo')&&!el.classList.contains('hr'))el.remove();});}
+ cleanHeader();
+ if(header&&window.MutationObserver){new MutationObserver(cleanHeader).observe(header,{childList:true});}
  if(trigger){trigger.querySelectorAll('span').forEach(function(line,i){if(i>2)line.remove();});}
 
  var drawer=document.getElementById('ng-menu-drawer');
