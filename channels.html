@@ -10,7 +10,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;min-height:100%;margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;overflow:hidden}
 .app{max-width:430px;margin:0 auto;width:100%;height:100vh;height:100dvh;position:relative;display:flex;flex-direction:column;overflow:hidden}
-main{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;padding-bottom:16px;touch-action:pan-y}
+main{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:auto;padding-bottom:16px;touch-action:pan-y}
 main::-webkit-scrollbar{display:none}
 header{flex:none;z-index:5;height:50px;display:flex;align-items:center;justify-content:space-between;padding:0 10px 0 12px;background:linear-gradient(180deg,#050c2a,#07123a);border-bottom:2px solid #2a5bff;border-radius:0 0 18px 18px;box-shadow:0 0 14px #3a2cff88;position:relative}
 header::after{content:"";position:absolute;right:0;top:0;bottom:0;width:30px;border-right:3px solid #9b3cff;border-radius:0 0 22px 22px}
@@ -130,19 +130,21 @@ svg{display:block}
  main.addEventListener('touchstart',function(e){
    if(!e.touches||e.touches.length!==1)return;
    startY=e.touches[0].clientY;
-   active=main.scrollTop<=1;
+   active=main.scrollTop<=2;
    done=false;
  },{passive:true});
  main.addEventListener('touchmove',function(e){
    if(!active||done||!e.touches||e.touches.length!==1)return;
    var delta=e.touches[0].clientY-startY;
-   if(main.scrollTop>1||delta<0){active=false;return;}
-   if(delta>=75){
+   if(main.scrollTop>2||delta<0){active=false;return;}
+   if(delta>=90){
      done=true;
-     e.preventDefault();
-     window.location.reload();
+     active=false;
+     var url=new URL(window.location.href);
+     url.searchParams.set('ng_refresh',String(Date.now()));
+     window.location.assign(url.toString());
    }
- },{passive:false});
+ },{passive:true});
  main.addEventListener('touchend',function(){active=false;},{passive:true});
  main.addEventListener('touchcancel',function(){active=false;},{passive:true});
 })();
