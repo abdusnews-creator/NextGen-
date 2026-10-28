@@ -233,7 +233,7 @@ svg{display:block}
   function parseProfile(raw){
     try{
       var u=new URL(raw);if(u.protocol!=='https:')return null;
-      var host=u.hostname.toLowerCase().replace(/^www\\./,'').replace(/^m\\./,'');
+      var host=u.hostname.toLowerCase().replace(/^www\./,'').replace(/^m\./,'');
       var parts=u.pathname.split('/').filter(Boolean);
       var p='',handle='';
       if(host==='youtube.com'||host==='youtu.be'){
