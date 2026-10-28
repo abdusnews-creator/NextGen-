@@ -1,4 +1,4 @@
-const CACHE_NAME = "nextgen-shell-v18";
+const CACHE_NAME = "nextgen-shell-v19";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -41,7 +41,7 @@ self.addEventListener("fetch", event => {
   if (request.method !== "GET" || new URL(request.url).origin !== self.location.origin) return;
 
   // HTML navigations use network-first so users receive fixes promptly, with an offline fallback.
-  if (request.mode === "navigate") {
+  if (request.mode === "navigate" || /\.css(?:\?|$)/i.test(new URL(request.url).pathname + new URL(request.url).search)) {
     event.respondWith(
       fetch(request)
         .then(response => {
