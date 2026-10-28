@@ -14,7 +14,8 @@ const APP_SHELL = [
   "./review.html",
   "./settings.html",
   "./manifest.webmanifest",
-  "./icon.svg"
+  "./icon.svg",
+  "./ng-symbol.jpg"
 ];
 
 self.addEventListener("install", event => {
