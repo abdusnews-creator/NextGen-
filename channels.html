@@ -8,9 +8,9 @@
 <style>
 :root{color-scheme:dark;box-sizing:border-box;--bg:#030b24;--txt:#fff;--mut:#8fa6d6;--green:#16e08a;padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;min-height:100%;background:var(--bg);color:var(--txt);font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;overflow:hidden}
-.app{max-width:430px;margin:0 auto;height:100vh;height:100dvh;position:relative;display:flex;flex-direction:column;overflow:hidden}
-main{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:16px}
+html,body{height:auto;min-height:100%;background:var(--bg);color:var(--txt);font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;overflow-x:hidden;overflow-y:auto}
+.app{max-width:430px;margin:0 auto;min-height:100vh;height:auto;position:relative;display:flex;flex-direction:column;overflow:visible}
+main{flex:1 0 auto;min-height:0;overflow:visible;padding-bottom:16px;touch-action:pan-y}
 main::-webkit-scrollbar{display:none}
 header{flex:none;z-index:5;height:50px;display:flex;align-items:center;justify-content:space-between;padding:0 10px 0 12px;background:linear-gradient(180deg,#050c2a,#07123a);border-bottom:2px solid #2a5bff;border-radius:0 0 18px 18px;box-shadow:0 0 14px #3a2cff88;position:relative}
 header::after{content:"";position:absolute;right:0;top:0;bottom:0;width:30px;border-right:3px solid #9b3cff;border-radius:0 0 22px 22px}
@@ -121,32 +121,7 @@ svg{display:block}
 
 <footer class="ng-shared-footer"><span class="ng-copyright">NextGen · Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
 
-<script id="channels-pull-to-refresh">
-(function(){
-  var startY=0, tracking=false, refreshing=false, startedAtTop=false;
-  function topOfContent(){
-    var main=document.querySelector('.app main');
-    return !main || main.scrollTop<=0;
-  }
-  document.addEventListener('touchstart',function(e){
-    if(refreshing || !e.touches || e.touches.length!==1) return;
-    startedAtTop=topOfContent();
-    startY=e.touches[0].clientY;
-    tracking=startedAtTop;
-  },{passive:true,capture:true});
-  document.addEventListener('touchend',function(e){
-    if(!tracking || refreshing) return;
-    tracking=false;
-    var touch=e.changedTouches && e.changedTouches[0];
-    if(!touch || !startedAtTop || !topOfContent()) return;
-    var distance=touch.clientY-startY;
-    if(distance>=70){
-      refreshing=true;
-      window.location.href='./channels.html?refresh='+Date.now();
-    }
-  },{passive:true,capture:true});
-})();
-</script>
+
 
 </body>
 </html>
