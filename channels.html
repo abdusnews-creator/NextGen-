@@ -1392,5 +1392,44 @@ body .ng-full-brand-logo{
 }
 </style>
 
+
+<script id="nextgen-transparent-logo-processing">
+(function(){
+  function removeLogoBacking(){
+    var img=document.querySelector('.ng-full-brand-logo');
+    if(!img||img.dataset.bgProcessed==='1')return;
+    function process(){
+      try{
+        var w=img.naturalWidth,h=img.naturalHeight;
+        if(!w||!h)return;
+        var c=document.createElement('canvas');c.width=w;c.height=h;
+        var ctx=c.getContext('2d',{willReadFrequently:true});
+        ctx.drawImage(img,0,0,w,h);
+        var frame=ctx.getImageData(0,0,w,h),p=frame.data;
+        for(var i=0;i<p.length;i+=4){
+          var r=p[i],g=p[i+1],b=p[i+2],mx=Math.max(r,g,b);
+          var a=Math.max(0,Math.min(1,(mx-24)/58));
+          if(r<48&&g<66&&b<130){
+            var navyA=Math.max(0,Math.min(1,((r+g)-28)/62));
+            a=Math.min(a,navyA);
+          }
+          if(mx<27)a=0;
+          p[i+3]=Math.round(p[i+3]*a);
+        }
+        ctx.putImageData(frame,0,0);
+        img.dataset.originalSrc=img.src;
+        img.src=c.toDataURL('image/png');
+        img.dataset.bgProcessed='1';
+        img.style.mixBlendMode='normal';
+      }catch(e){/* retain original logo if browser blocks canvas processing */}
+    }
+    if(img.complete)process();else img.addEventListener('load',process,{once:true});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',removeLogoBacking,{once:true});
+  else removeLogoBacking();
+  window.addEventListener('pageshow',removeLogoBacking);
+})();
+</script>
+
 </body>
 </html>
