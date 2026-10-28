@@ -306,6 +306,63 @@ nav button.active,.studio-navbtn.active{background:linear-gradient(100deg,#0755a
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="NextGen">
+
+<style id="nextgen-new-live-redesign">
+/* NextGen NEW cyan-glow redesign */
+:root{color-scheme:dark;--ng-cyan:#11d5ff;--ng-blue:#167dff;--ng-bg:#030b19;--ng-panel:#091a31;--ng-border:#123e69}
+html{background:var(--ng-bg)}
+body{background:radial-gradient(ellipse at 50% -20%,#0b3a70 0%,#041326 48%,#020712 100%)!important;color:#eff8ff!important;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif!important}
+.studio-top{background:rgba(3,13,29,.96)!important;border-bottom:1px solid #087dc4!important;box-shadow:0 5px 30px #007bff22!important;backdrop-filter:blur(14px)}
+.studio-brand{color:#fff!important;font-size:25px!important;letter-spacing:.3px}
+.studio-brand:before{content:"NG";display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#05c9ff,#246bff);color:#001328;font-size:14px;font-weight:900;box-shadow:0 0 22px #00bfff55}
+.studio-brand:after{content:"";display:none}
+.studio-menu{color:var(--ng-cyan)!important}
+.studio-shell{background:transparent!important}
+.studio-nav{background:rgba(4,16,34,.92)!important;border-right:1px solid #12375b!important}
+.studio-nav .studio-navbtn{color:#b9cde7!important;transition:background .18s,border-color .18s}
+.studio-nav .studio-navbtn:hover,.studio-nav .studio-navbtn.active{background:linear-gradient(90deg,#063b60,#0a2545)!important;color:#fff!important;box-shadow:inset 3px 0 var(--ng-cyan)!important}
+.studio-nav .studio-navbtn.active{border:1px solid #087db4!important}
+.studio-channel-logo{background:linear-gradient(135deg,#0ccfff,#245fff)!important;color:#001226!important}
+.studio-main{background:transparent!important}
+.studio-pagehead h2{color:#f3fbff!important;letter-spacing:-.4px}
+.studio-subtitle{color:#9fc2e7!important}
+.studio-period{background:#071b34!important;border-color:#15507c!important;color:#dff7ff!important}
+.studio-note{background:#2a210c!important;border-color:#80652b!important}
+.studio-metric,.studio-panel{background:linear-gradient(145deg,rgba(9,29,54,.97),rgba(5,17,34,.97))!important;border:1px solid #12436c!important;box-shadow:0 10px 30px #0003, inset 0 1px #ffffff08!important}
+.studio-metric{transition:transform .18s,border-color .18s}
+.studio-metric:hover,.studio-panel:hover{border-color:#087fc1!important}
+.studio-metric-label{color:#b7d5f3!important}
+.studio-metric-value,.studio-big-number{color:#f5fbff!important}
+.studio-metric-icon{background:linear-gradient(135deg,#087eb8,#344dff)!important;box-shadow:0 0 20px #00bfff24}
+.studio-video{border-bottom-color:#12304b!important}
+.studio-video-title{color:#eff8ff!important}
+.studio-video-meta,.studio-metric-foot{color:#8eafd0!important}
+.studio-thumb{box-shadow:inset 0 0 24px #0005}
+.studio-main .action{background:#082744!important;border:1px solid #14679a!important;color:#dff8ff!important;border-radius:10px!important}
+.studio-main .action:hover,.studio-main .action.active{background:linear-gradient(135deg,#08c7ef,#246fff)!important;border-color:#18d9ff!important;color:#001326!important}
+.studio-main button,.studio-nav button,.top-icon-btn{transition:filter .15s,transform .15s}
+.studio-main button:active,.studio-nav button:active,.top-icon-btn:active{transform:scale(.98)}
+.studio-link{color:#21d5ff!important}
+.studio-divider{background:#123754!important}
+.studio-comment{border-bottom-color:#12304b!important}
+.studio-comment p{color:#dceeff!important}
+.studio-news-icon{background:linear-gradient(135deg,#05c9ff,#245fff)!important;color:#001226!important}
+.top-icon-btn{color:#d7efff!important}
+.top-add-btn{background:#082744!important;border-color:#14679a!important}
+.top-popover{background:#071a30!important;border-color:#15507c!important}
+.top-popover button,.top-popover a{color:#e4f4ff!important}
+.ng-shared-footer,body>footer{background:linear-gradient(110deg,#031126,#08284b 60%,#101947)!important;border:1px solid #124d7c!important;color:#b8d7f4!important}
+.ng-shared-footer .ng-credit,body>footer .credit{color:#18d5ff!important}
+@media(max-width:680px){
+ .studio-top{padding:0 10px!important}
+ .studio-brand{font-size:21px!important}
+ .studio-nav{background:#041226!important;border-bottom:1px solid #12436c!important}
+ .studio-nav .studio-navbtn{border:1px solid transparent!important}
+ .studio-nav .studio-navbtn.active{border-color:#0a82bd!important}
+ .studio-main{padding:17px 12px 28px!important}
+ .studio-metric,.studio-panel{border-radius:13px!important}
+}
+</style>
 </head>
 
 <body>
