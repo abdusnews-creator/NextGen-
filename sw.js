@@ -1,4 +1,4 @@
-const CACHE_NAME = "nextgen-shell-v27";
+const CACHE_NAME = "nextgen-shell-v28";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -43,7 +43,7 @@ self.addEventListener("fetch", event => {
   // HTML navigations use network-first so users receive fixes promptly, with an offline fallback.
   if (request.mode === "navigate" || /\.css(?:\?|$)/i.test(new URL(request.url).pathname + new URL(request.url).search)) {
     event.respondWith(
-      fetch(request)
+      fetch(request.url, { cache: "no-store" })
         .then(response => {
           if (response.ok) {
             const copy = response.clone();
