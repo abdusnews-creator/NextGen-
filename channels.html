@@ -609,12 +609,17 @@ footer.ng-shared-footer,.ng-shared-footer,body>footer.ng-shared-footer{
 }
 </style>
 
+<style id="ng-logo-image-reference-update-20261028">
+.ng-brand-mark{filter:drop-shadow(0 0 5px #00d9ff55) drop-shadow(0 0 8px #b52cff44)!important}
+.ng-logo-brand .studio-brand-name{background:linear-gradient(100deg,#fff 0%,#08dff2 42%,#267cff 68%,#e52cff 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;text-shadow:0 0 14px #087bff18}
+.studio-top{background:linear-gradient(110deg,#020817 0%,#061b42 58%,#120b37 100%)!important;border-bottom:1px solid #087be4!important}
+</style>
 </head>
 
 <body>
 <header class="studio-top">
   <button class="studio-menu" type="button" aria-label="Open navigation menu" aria-expanded="false" onclick="toggleStudioNav()">☰</button>
-  <div class="studio-brand ng-logo-brand"><svg class="ng-brand-mark" viewBox="0 0 64 64" role="img" aria-label="NextGen logo"><defs><linearGradient id="ngLogoGradient" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#147cff"/><stop offset=".52" stop-color="#08d9f3"/><stop offset="1" stop-color="#d52bff"/></linearGradient></defs><circle cx="32" cy="32" r="29" fill="#06152d" stroke="url(#ngLogoGradient)" stroke-width="3"/><path d="M13 43V22l15 16 8-8" fill="none" stroke="url(#ngLogoGradient)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 47 49 15M38 16l12-2-1 12" fill="none" stroke="#10d7f4" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="49" cy="15" r="3" fill="#e23cff"/></svg><span class="ng-brand-copy"><span class="studio-brand-name">NextGen</span><span class="studio-tagline">Smart Automation. Smarter Growth.</span></span></div>
+  <div class="studio-brand ng-logo-brand"><svg class="ng-brand-mark" viewBox="0 0 64 64" role="img" aria-label="NextGen growth logo"><defs><linearGradient id="ngLogoGradient" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#087cff"/><stop offset=".48" stop-color="#00e5f0"/><stop offset="1" stop-color="#e52cff"/></linearGradient><filter id="ngLogoGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4"/></filter></defs><circle cx="32" cy="32" r="29" fill="#020817" stroke="url(#ngLogoGradient)" stroke-width="3.5"/><circle cx="32" cy="32" r="25" fill="#06132c" opacity=".9"/><path d="M10 45V19L25 35 33 27" fill="none" stroke="url(#ngLogoGradient)" stroke-width="6.5" stroke-linecap="square" stroke-linejoin="round"/><path d="M20 47 50 13M38 15 51 11 48 25" fill="none" stroke="#08dff2" stroke-width="5" stroke-linecap="square" stroke-linejoin="miter"/><path d="M35 28Q43 20 49 27V42H36L42 35H34" fill="url(#ngLogoGradient)" stroke="url(#ngLogoGradient)" stroke-width="1.5"/><rect x="46" y="5" width="5" height="5" fill="#00e5f0"/><rect x="53" y="10" width="4" height="4" fill="#16bfff"/><rect x="48" y="15" width="4" height="4" fill="#df2cff"/></svg><span class="ng-brand-copy"><span class="studio-brand-name">NextGen</span><span class="studio-tagline">Smart Automation. Smarter Growth.</span></span></div>
   <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" oninput="var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards()}" onkeydown="if(event.key==='Enter'){event.preventDefault();var q=document.getElementById('channelSearch');if(q){q.value=this.value;filterChannelCards();q.scrollIntoView({behavior:'smooth',block:'center'})}}">
   <div class="studio-top-right">
     <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="openAddChannelModal()">+</button>
