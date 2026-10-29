@@ -117,3 +117,5 @@ header .ng-hamburger::before,header .ng-hamburger::after{display:none!important;
 
 /* Master header lock: stronger selector overrides page-level clip-path:none and hides the three menu lines baked into the header image. */
 html body .app>header>img.logo{clip-path:none!important}
+/* Master hamburger background removal: keep only the three lines, no button background or border. */
+html body .app>header #ng-hamburger{background:transparent!important;background-color:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;}
