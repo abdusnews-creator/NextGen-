@@ -284,7 +284,8 @@ body.ng-menu-open{overflow:hidden}
 
 <style id="ng-logo-shift-left">
 /* Shift the header logo image left so it sits closer to the square menu button. */
-.app>header>img.logo{position:relative;left:-30px;top:-3px;}
+/* Master logo adjustment: remove legacy offset and fit the clean logo inside the locked header. */
+.app>header>img.logo{position:static!important;left:auto!important;top:auto!important;width:180px!important;min-width:0!important;max-width:180px!important;height:42px!important;object-fit:fill!important;object-position:center!important;margin:0!important;clip-path:none!important;}
 </style>
 
 <style id="ng-master-final-v32">
@@ -944,3 +945,4 @@ html body .app main > footer.ng-shared-footer > .ng-credit{font-size:10px!import
 
 </body>
 </html>
+<style id="master-logo-adjustment-final">.app>header>img.logo{position:static!important;left:auto!important;top:auto!important;flex:0 1 180px!important;width:180px!important;min-width:0!important;max-width:180px!important;height:42px!important;object-fit:fill!important;object-position:center!important;margin:0!important;clip-path:none!important}</style>
