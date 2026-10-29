@@ -406,6 +406,48 @@ main > .ng-shared-footer,
 }
 </style>
 
+
+<style id="dashboard-footer-center-final">
+/* Final override: center both footer lines relative to the viewport. */
+html body .app main > footer.ng-shared-footer{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:stretch!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  padding-left:0!important;
+  padding-right:0!important;
+  box-sizing:border-box!important;
+  text-align:center!important;
+  transform:none!important;
+}
+html body .app main > footer.ng-shared-footer > .ng-copyright,
+html body .app main > footer.ng-shared-footer > .ng-credit{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+}
+html body .app main > footer.ng-shared-footer > .ng-copyright{
+  font-size:12px!important;
+  transform:none!important;
+}
+html body .app main > footer.ng-shared-footer > .ng-credit{font-size:10px!important}
+@media(max-width:600px){
+  html body .app main > footer.ng-shared-footer > .ng-copyright{font-size:12px!important;transform:scaleX(.78)!important;transform-origin:center center!important}
+  html body .app main > footer.ng-shared-footer > .ng-credit{font-size:10px!important}
+}
+</style>
+
 </head>
 <body>
 <div class="app">
