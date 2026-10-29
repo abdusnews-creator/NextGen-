@@ -414,6 +414,11 @@ header .ng-hamburger:before,header .ng-hamburger:after{display:none!important;co
 @media(max-width:600px){.ng-shared-footer{font-size:9px!important;gap:3px!important;padding:5px 5px calc(5px + env(safe-area-inset-bottom,0px))!important}.ng-shared-footer .ng-copyright{font-size:9px!important}.ng-shared-footer .ng-credit{font-size:8px!important}}
 </style>
 
+
+<style id="ng-prevent-pull-to-refresh">
+/* Prevent accidental browser pull-to-refresh while vertically scrolling the Home page on Android. */
+html, body { overscroll-behavior-y: none; }
+</style>
 </head>
 
 <body>
