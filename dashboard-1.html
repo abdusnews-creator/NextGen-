@@ -218,54 +218,21 @@ svg{display:block}
 @media(min-width:390px){.dash1-comments-card,.dash1-channel-overview{margin-left:12px;margin-right:12px;padding:20px 16px}.dash1-section-heading h2{font-size:23px}.dash1-section-heading a{font-size:18px}.dash1-comments-status{font-size:16px}.dash1-comment-row{grid-template-columns:48px minmax(0,1fr) 86px;gap:13px;padding:14px 0 18px}.dash1-comment-avatar{width:48px;height:48px;font-size:23px}.dash1-comment-thumb{width:86px;height:68px}.dash1-comment-body p{font-size:15px}.dash1-comment-body blockquote{font-size:16px}.dash1-comments-note,.dash1-overview-note{font-size:16px}.dash1-overview-row{font-size:18px}}
 
 
-/* Dashboard 1: reduce left/right outer spacing by exactly 0.5px. */
-@media(min-width:0px){
-  .dash1-analytics,.dash1-recent,.dash1-whats-new,.safety.dash1-approval,
-  .dash1-publishing-card,.dash1-whatsnew,.dash1-analytics-summary,
-  .dash1-comments-card,.dash1-channel-overview{margin-left:9.5px!important;margin-right:9.5px!important}
-}
-@media(min-width:390px){
-  .dash1-analytics{padding-left:11.5px!important;padding-right:11.5px!important}
-  .dash1-recent,.dash1-whats-new,.safety.dash1-approval,.dash1-publishing-card,
-  .dash1-whatsnew,.dash1-analytics-summary,.dash1-comments-card,.dash1-channel-overview{
-    margin-left:11.5px!important;margin-right:11.5px!important
-  }
-}
-
-
-/* Correct Dashboard 1 side sizing: slightly narrower cards, not wider. */
+/* Dashboard 1: final override — keep side margins at 0.5px on all screen sizes. */
 .dash1-analytics,.dash1-recent,.dash1-whats-new,.safety.dash1-approval,
 .dash1-publishing-card,.dash1-whatsnew,.dash1-analytics-summary,
 .dash1-comments-card,.dash1-channel-overview{
-  margin-left:10.5px!important;margin-right:10.5px!important
+  margin-left:0.5px!important;
+  margin-right:0.5px!important;
 }
-.dash1-analytics{padding-left:10px!important;padding-right:10px!important}
 @media(min-width:390px){
   .dash1-analytics,.dash1-recent,.dash1-whats-new,.safety.dash1-approval,
   .dash1-publishing-card,.dash1-whatsnew,.dash1-analytics-summary,
   .dash1-comments-card,.dash1-channel-overview{
-    margin-left:12.5px!important;margin-right:12.5px!important
+    margin-left:0.5px!important;
+    margin-right:0.5px!important;
   }
-  .dash1-analytics{padding-left:12px!important;padding-right:12px!important}
 }
-
-
-/* Fine-tune Dashboard 1 side spacing: only 0.5px narrower than the original layout. */
-.dash1-analytics,.dash1-recent,.dash1-whats-new,.safety.dash1-approval,
-.dash1-publishing-card,.dash1-whatsnew,.dash1-analytics-summary,
-.dash1-comments-card,.dash1-channel-overview{
-  margin-left:10.5px!important;margin-right:10.5px!important
-}
-.dash1-analytics{padding-left:10px!important;padding-right:10px!important}
-@media(min-width:390px){
-  .dash1-analytics,.dash1-recent,.dash1-whats-new,.safety.dash1-approval,
-  .dash1-publishing-card,.dash1-whatsnew,.dash1-analytics-summary,
-  .dash1-comments-card,.dash1-channel-overview{
-    margin-left:12.5px!important;margin-right:12.5px!important
-  }
-  .dash1-analytics{padding-left:12px!important;padding-right:12px!important}
-}
-
 </style>
 
 <style id="ng-header-logo-crop-fix">
