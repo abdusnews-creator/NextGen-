@@ -114,3 +114,6 @@ header.studio-top .studio-menu::before{content:""!important;display:block!import
 header .ng-hamburger{flex:0 0 34px!important;width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;margin:0 8px 0 0!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
 header .ng-hamburger span{display:block!important;width:20px!important;height:2.5px!important;min-height:2.5px!important;flex:0 0 2.5px!important;transform:none!important;border-radius:2px!important;background:#fff!important}
 header .ng-hamburger::before,header .ng-hamburger::after{display:none!important;content:none!important}
+
+/* Master header lock: hide the extra hamburger baked into the header reference image. */
+.app>header>img.logo{clip-path:inset(0 0 0 12%)!important}
