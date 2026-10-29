@@ -341,6 +341,43 @@ main > .dash1-channel-overview,
   }
 }
 </style>
+
+<style id="dashboard-footer-size-fix">
+/* Keep Dashboard footer aligned and sized consistently on mobile and desktop. */
+.ng-shared-footer{
+  display:flex!important;
+  flex-direction:column!important;
+  flex-wrap:nowrap!important;
+  justify-content:center!important;
+  align-items:center!important;
+  gap:2px!important;
+  text-align:center!important;
+}
+.ng-shared-footer .ng-copyright{
+  display:block!important;
+  flex:0 0 auto!important;
+  width:auto!important;
+  max-width:100%!important;
+  min-width:0!important;
+  font-size:15px!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  transform:none!important;
+}
+.ng-shared-footer .ng-credit{
+  display:block!important;
+  flex:0 0 auto!important;
+  margin:0!important;
+  font-size:10px!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+}
+@media(max-width:600px){
+  .ng-shared-footer .ng-copyright{font-size:15px!important;transform:scaleX(.78)!important;transform-origin:center center!important}
+  .ng-shared-footer .ng-credit{font-size:10px!important}
+}
+</style>
+
 </head>
 <body>
 <div class="app">
