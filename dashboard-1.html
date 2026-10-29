@@ -684,5 +684,49 @@ main > .dash1-channel-overview,
 })();
 </script>
 
+
+<script id="channels-pull-to-refresh">
+(function(){
+  var main=document.querySelector('.app main');
+  if(!main)return;
+  var refreshButton=document.querySelector('.refresh-page');
+  var startY=0;
+  var distance=0;
+  var tracking=false;
+  var threshold=60;
+  var indicator=document.createElement('div');
+  indicator.textContent='Pull to refresh';
+  indicator.setAttribute('aria-live','polite');
+  indicator.style.cssText='position:fixed;top:0;left:0;right:0;z-index:9999;text-align:center;padding:10px;background:#07152b;color:#d8e8ff;font-size:12px;letter-spacing:.3px;transform:translateY(-100%);transition:transform .15s ease;pointer-events:none;border-bottom:1px solid #1c5fff;';
+  document.body.appendChild(indicator);
+  function forceRefresh(){
+    var url=new URL(window.location.href);
+    url.searchParams.set('ng_refresh',String(Date.now()));
+    url.searchParams.set('ng_v','30');
+    window.location.replace(url.toString());
+  }
+  if(refreshButton)refreshButton.addEventListener('click',forceRefresh);
+  main.addEventListener('touchstart',function(e){
+    if(main.scrollTop>0||window.scrollY>2||!e.touches||e.touches.length!==1){tracking=false;return;}
+    startY=e.touches[0].clientY;distance=0;tracking=true;
+  },{passive:true});
+  main.addEventListener('touchmove',function(e){
+    if(!tracking||!e.touches||!e.touches.length)return;
+    distance=Math.max(0,e.touches[0].clientY-startY);
+    if(distance>0)indicator.style.transform='translateY('+Math.min(distance-60,0)+'px)';
+    if(distance>=threshold)indicator.textContent='Release to refresh';
+    else indicator.textContent='Pull to refresh';
+  },{passive:true});
+  main.addEventListener('touchend',function(){
+    if(!tracking)return;
+    tracking=false;
+    indicator.style.transform='translateY(-100%)';
+    if(distance>=threshold)forceRefresh();
+    distance=0;
+  },{passive:true});
+  main.addEventListener('touchcancel',function(){tracking=false;distance=0;indicator.style.transform='translateY(-100%)';},{passive:true});
+})();
+</script>
+
 </body>
 </html>
