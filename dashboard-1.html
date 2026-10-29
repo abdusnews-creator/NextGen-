@@ -293,18 +293,37 @@ header .ng-hamburger:before,header .ng-hamburger:after{display:none!important;co
 </style>
 
 <style id="dash1-side-width-correction">
-
-/* Dashboard 1: set side margins to 0.5px on mobile and larger screens. */
+/* Apply the same 0.5px side spacing consistently to every Dashboard-1 content panel. */
+main > .hd,
+main > .bar,
+main > .list,
+main > .safety,
+main > .dash1-analytics,
+main > .dash1-recent,
+main > .dash1-whats-new,
+main > .dash1-publishing-card,
+main > .dash1-whatsnew,
+main > .dash1-analytics-summary,
+main > .dash1-comments-card,
+main > .dash1-channel-overview,
+main > .ng-shared-footer,
 .dash1-analytics,.dash1-recent,.dash1-whats-new,.safety.dash1-approval,
 .dash1-publishing-card,.dash1-whatsnew,.dash1-analytics-summary,
-.dash1-comments-card,.dash1-channel-overview{
-  margin-left:0.5px!important;margin-right:0.5px!important
+.dash1-comments-card,.dash1-channel-overview {
+  margin-left:0.5px!important;
+  margin-right:0.5px!important;
 }
-@media(min-width:390px){
+@media (min-width:390px) {
+  main > .hd, main > .bar, main > .list, main > .safety,
+  main > .dash1-analytics, main > .dash1-recent, main > .dash1-whats-new,
+  main > .dash1-publishing-card, main > .dash1-whatsnew,
+  main > .dash1-analytics-summary, main > .dash1-comments-card,
+  main > .dash1-channel-overview,
   .dash1-analytics,.dash1-recent,.dash1-whats-new,.safety.dash1-approval,
   .dash1-publishing-card,.dash1-whatsnew,.dash1-analytics-summary,
-  .dash1-comments-card,.dash1-channel-overview{
-    margin-left:0.5px!important;margin-right:0.5px!important
+  .dash1-comments-card,.dash1-channel-overview {
+    margin-left:0.5px!important;
+    margin-right:0.5px!important;
   }
 }
 </style>
