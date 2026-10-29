@@ -415,6 +415,13 @@ header .ng-hamburger:before,header .ng-hamburger:after{display:none!important;co
 </style>
 
 
+
+<style id="ng-enable-dashboard-pull-to-refresh">
+  /* Keep native pull-to-refresh enabled on the Dashboard. */
+  html, body, #dashboard {
+    overscroll-behavior-y: auto;
+  }
+</style>
 </head>
 
 <body>
