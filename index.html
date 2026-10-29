@@ -1202,5 +1202,30 @@ function studioScroll(id){
 
 
 <footer class="ng-shared-footer"><span class="ng-copyright">NextGen · Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
+
+<script id="ng-dashboard-pull-refresh-handler">
+(() => {
+  let startY = 0;
+  let tracking = false;
+  const threshold = 90;
+  document.addEventListener("touchstart", (event) => {
+    const dashboard = document.getElementById("dashboard");
+    if (!dashboard || !dashboard.classList.contains("show") || window.scrollY > 2 || !event.touches || event.touches.length !== 1) {
+      tracking = false;
+      return;
+    }
+    startY = event.touches[0].clientY;
+    tracking = true;
+  }, { passive: true });
+  document.addEventListener("touchend", (event) => {
+    if (!tracking || !event.changedTouches || !event.changedTouches.length) return;
+    const distance = event.changedTouches[0].clientY - startY;
+    tracking = false;
+    if (distance >= threshold && window.scrollY <= 2) window.location.reload();
+  }, { passive: true });
+  document.addEventListener("touchcancel", () => { tracking = false; }, { passive: true });
+})();
+</script>
+
 </body>
 </html>
