@@ -192,6 +192,31 @@ svg{display:block}
 .dash1-view-analytics span{padding-left:5px}
 @media(min-width:390px){.dash1-analytics-summary{margin-left:12px;margin-right:12px;padding:20px 16px 23px}.dash1-summary-heading h2{font-size:23px}.dash1-summary-heading>span{font-size:16px}.dash1-current-subs p{font-size:18px}.dash1-current-subs>span{font-size:16px}.dash1-analytics-summary>h3{font-size:20px}.dash1-top-row{grid-template-columns:96px minmax(0,1fr) 16px;gap:13px}.dash1-top-thumb{width:96px;height:72px}.dash1-top-row>span{font-size:17px}.dash1-view-analytics{font-size:20px}}
 
+
+/* Dashboard 1 Latest comments and Channel overview sections from reference. */
+.dash1-comments-card,.dash1-channel-overview{margin:0 10px 18px;padding:18px 14px;border:1px solid #204c72;border-radius:20px;background:linear-gradient(145deg,#071a31,#061329);box-shadow:inset 0 0 12px #0d315022;color:#eef5ff}
+.dash1-section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:24px}
+.dash1-section-heading h2{font-size:21px;line-height:1.25;font-weight:800;color:#f4f7ff}
+.dash1-section-heading a{font-size:16px;font-weight:800;color:#32c7f4;text-decoration:none;white-space:nowrap}
+.dash1-comments-status{font-size:15px;line-height:1.5;color:#a8c4e7;margin-bottom:16px}
+.dash1-comment-row{display:grid;grid-template-columns:42px minmax(0,1fr) 74px;align-items:center;gap:12px;padding:12px 0 16px;border-bottom:1px solid #183b59}
+.dash1-comment-avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:21px;font-weight:700}
+.dash1-avatar-purple{background:#6950cb}.dash1-avatar-green{background:#23834e}
+.dash1-comment-body{min-width:0}
+.dash1-comment-body p{font-size:13px;line-height:1.4;color:#98adca;margin:0 0 7px}
+.dash1-comment-body blockquote{font-size:14px;line-height:1.45;color:#e3edfc;margin:0}
+.dash1-comment-thumb{width:74px;height:58px;border-radius:9px;display:grid;place-items:center;color:#fff;font-size:25px;text-shadow:0 1px 3px #0008}
+.dash1-comment-gold{background:linear-gradient(135deg,#8a6b3d,#d9bb80 48%,#5c4527)}
+.dash1-comment-brown{background:linear-gradient(135deg,#8e7146,#c3a16a 55%,#6a4d2f)}
+.dash1-comments-note{font-size:14px;line-height:1.5;color:#9bb7d8;margin-top:15px}
+.dash1-channel-overview .dash1-section-heading{margin-bottom:22px}
+.dash1-overview-row{display:grid;grid-template-columns:20px minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 0;font-size:16px;color:#eef5ff}
+.dash1-platform-icon{font-size:19px;color:#d9e7f9}
+.dash1-planned{color:#c2d0e6}
+.dash1-overview-divider{height:1px;background:#183b59;margin:14px 0 18px}
+.dash1-overview-note{font-size:14px;line-height:1.55;color:#9bb7d8}
+@media(min-width:390px){.dash1-comments-card,.dash1-channel-overview{margin-left:12px;margin-right:12px;padding:20px 16px}.dash1-section-heading h2{font-size:23px}.dash1-section-heading a{font-size:18px}.dash1-comments-status{font-size:16px}.dash1-comment-row{grid-template-columns:48px minmax(0,1fr) 86px;gap:13px;padding:14px 0 18px}.dash1-comment-avatar{width:48px;height:48px;font-size:23px}.dash1-comment-thumb{width:86px;height:68px}.dash1-comment-body p{font-size:15px}.dash1-comment-body blockquote{font-size:16px}.dash1-comments-note,.dash1-overview-note{font-size:16px}.dash1-overview-row{font-size:18px}}
+
 </style>
 
 <style id="ng-header-logo-crop-fix">
@@ -334,6 +359,22 @@ header .ng-hamburger:before,header .ng-hamburger:after{display:none!important;co
     <div class="dash1-top-row"><div class="dash1-top-thumb dash1-top-stone">▬</div><span>Modern Sofa Set</span><b>—</b></div>
   </div>
   <a class="dash1-view-analytics" href="./index.html#channelAnalytics">View analytics <span>→</span></a>
+</section>
+<section class="dash1-comments-card" aria-labelledby="dash1-comments-title">
+  <div class="dash1-section-heading"><h2 id="dash1-comments-title">Latest comments</h2><a href="./content.html">View all</a></div>
+  <p class="dash1-comments-status">Comment management is not connected yet.</p>
+  <div class="dash1-comment-row"><div class="dash1-comment-avatar dash1-avatar-purple">R</div><div class="dash1-comment-body"><p>Example comment · demo</p><blockquote>“Beautiful furniture design!”</blockquote></div><div class="dash1-comment-thumb dash1-comment-gold">♛</div></div>
+  <div class="dash1-comment-row"><div class="dash1-comment-avatar dash1-avatar-green">S</div><div class="dash1-comment-body"><p>Example comment · demo</p><blockquote>“How can I get more details?”</blockquote></div><div class="dash1-comment-thumb dash1-comment-brown">♜</div></div>
+  <p class="dash1-comments-note">These are examples, not live viewer comments.</p>
+</section>
+<section class="dash1-channel-overview" aria-labelledby="dash1-overview-title">
+  <div class="dash1-section-heading"><h2 id="dash1-overview-title">Channel overview</h2><a href="./channels.html">Manage</a></div>
+  <div class="dash1-overview-row"><span class="dash1-platform-icon">▶</span><span>YouTube</span><span class="dash1-planned">Planned</span></div>
+  <div class="dash1-overview-row"><span class="dash1-platform-icon">f</span><span>Facebook</span><span class="dash1-planned">Planned</span></div>
+  <div class="dash1-overview-row"><span class="dash1-platform-icon">◎</span><span>Instagram</span><span class="dash1-planned">Planned</span></div>
+  <div class="dash1-overview-row"><span class="dash1-platform-icon">◎</span><span>Threads</span><span class="dash1-planned">Planned</span></div>
+  <div class="dash1-overview-divider"></div>
+  <p class="dash1-overview-note">Platform connections and background publishing are not yet verified.</p>
 </section>
 <div class="hd">
   <div class="hico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.5l6.8-4M8.6 13.5l6.8 4"/></svg></div>
