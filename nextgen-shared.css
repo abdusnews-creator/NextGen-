@@ -33,7 +33,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
 
 /* NEXTGEN MASTER DESIGN — fixed shared system */
 header,.studio-top{
-  min-height:56px!important;
+  min-height:45px!important;
   box-sizing:border-box!important;
   background:linear-gradient(180deg,#050c2a,#07123a)!important;
   color:#fff!important;
@@ -65,7 +65,7 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
 
 
 /* Channel master header and responsive controls */
-.studio-top{display:flex;align-items:center;gap:10px;min-height:56px!important;padding:5px 10px!important}
+.studio-top{display:flex;align-items:center;gap:10px;min-height:45px!important;height:45px!important;padding:4px 10px!important}
 .studio-menu{flex:0 0 34px!important;width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;position:relative!important;display:inline-grid!important;place-items:center!important;font-size:0!important;line-height:0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:transparent!important}
 .studio-menu::before{content:"";display:block;width:21px;height:2.5px;border-radius:2px;background:#fff;box-shadow:0 6px 0 #fff,0 -6px 0 #fff}
 .studio-brand{flex:0 0 auto!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:1px!important;line-height:1.05!important;font-size:20px!important;font-weight:800!important;letter-spacing:.4px!important;color:#fff!important;white-space:nowrap}
