@@ -149,6 +149,26 @@ svg{display:block}
 .dash1-whats-new>a+a{border-top:1px solid #18314e}
 @media(min-width:390px){.safety.dash1-approval,.dash1-whats-new{margin-left:12px;margin-right:12px;padding-left:17px;padding-right:17px}.dash1-approval-head h2{font-size:22px}.dash1-whats-new-head h2{font-size:23px}.dash1-whats-new>a{font-size:15px}}
 
+
+/* Dashboard 1 publishing approval and What's new sections from the supplied reference. */
+.dash1-publishing-card,.dash1-whatsnew{margin:0 10px 18px;padding:18px 14px;border:1px solid #204c72;border-radius:19px;background:linear-gradient(145deg,#071a31,#061329);box-shadow:inset 0 0 12px #0d315022}
+.dash1-publishing-head,.dash1-whatsnew-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:22px}
+.dash1-publishing-head h2,.dash1-whatsnew-head h2{font-size:21px;line-height:1.25;font-weight:800;color:#f3f6ff}
+.dash1-publishing-head a{color:#32c7f4;font-weight:700;text-decoration:none;font-size:16px}
+.dash1-publishing-status{font-size:17px;line-height:1.4;margin:0 0 20px;color:#f1f5ff}
+.dash1-publishing-buttons{display:flex;gap:12px;margin-bottom:20px}
+.dash1-publishing-buttons button{flex:1;min-height:54px;padding:8px;border:1px solid #245d83;border-radius:13px;background:#092641;color:#d9efff;font:700 15px/1.2 inherit;cursor:pointer}
+.dash1-publishing-buttons button.is-selected{background:linear-gradient(110deg,#08c3e7,#2476ff);border-color:#20c6f2;color:#06152e}
+.dash1-publishing-help{font-size:15px;line-height:1.5;color:#a8bad7;margin:0 0 16px}
+.dash1-publishing-warning{padding:14px;border:1px solid #84672c;border-radius:15px;background:#2c2413;color:#f2d995;font-size:14px;line-height:1.55}
+.dash1-whatsnew{padding-top:18px}
+.dash1-whatsnew-head{margin-bottom:22px}
+.dash1-whatsnew-head span{width:44px;height:44px;flex:0 0 44px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,#09bde9,#2566ff);color:#07162f;font-size:20px}
+.dash1-whatsnew-item{display:grid;grid-template-columns:24px minmax(0,1fr) 12px;align-items:center;gap:10px;padding:14px 0;color:#bdcde5;text-decoration:none;font-size:14px;line-height:1.5}
+.dash1-whatsnew-item>span:first-child{font-size:20px;color:#bdcde5}
+.dash1-whatsnew-item b{font-size:24px;font-weight:400;color:#bdcde5}
+@media(min-width:390px){.dash1-publishing-card,.dash1-whatsnew{margin-left:12px;margin-right:12px;padding:20px 16px}.dash1-publishing-head h2,.dash1-whatsnew-head h2{font-size:23px}.dash1-publishing-buttons button{font-size:17px}.dash1-publishing-status{font-size:18px}.dash1-publishing-help{font-size:16px}.dash1-publishing-warning{font-size:15px}.dash1-whatsnew-item{font-size:16px}}
+
 </style>
 
 <style id="ng-header-logo-crop-fix">
@@ -267,6 +287,18 @@ header .ng-hamburger:before,header .ng-hamburger:after{display:none!important;co
       <button class="dash1-content-more" type="button" aria-label="More options for Dining Table Collection" onclick="window.location.href='./content.html'">⋮</button>
     </article>
   </div>
+</section>
+<section class="dash1-publishing-card" aria-labelledby="dash1-publishing-title">
+  <div class="dash1-publishing-head"><h2 id="dash1-publishing-title">Publishing approval control</h2><a href="./settings.html">Settings</a></div>
+  <p class="dash1-publishing-status" id="dash1-publishing-status">Manual Approval Mode — ON</p>
+  <div class="dash1-publishing-buttons"><button type="button" class="is-selected" id="dash1-manual-approval">Manual Approval</button><button type="button" id="dash1-auto-approval">Auto Approval</button></div>
+  <p class="dash1-publishing-help" id="dash1-publishing-help">Content requires your approval before publishing.</p>
+  <div class="dash1-publishing-warning">Auto Approval is OFF by default. This prototype does not publish or schedule posts.</div>
+</section>
+<section class="dash1-whatsnew" aria-labelledby="dash1-whatsnew-title">
+  <div class="dash1-whatsnew-head"><h2 id="dash1-whatsnew-title">What's new in NextGen</h2><span aria-hidden="true">▶</span></div>
+  <a class="dash1-whatsnew-item" href="./index.html"><span>↗</span><span>Dashboard design updated to a Studio-style layout</span><b>›</b></a>
+  <a class="dash1-whatsnew-item" href="./settings.html"><span>✓</span><span>Manual approval remains the safe default</span><b>›</b></a>
 </section>
 <div class="hd">
   <div class="hico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.5l6.8-4M8.6 13.5l6.8 4"/></svg></div>
@@ -606,6 +638,24 @@ header .ng-hamburger:before,header .ng-hamburger:after{display:none!important;co
  backdrop.addEventListener('click',closeMenu);
  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
  drawer.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu);});
+})();
+</script>
+
+
+<script id="dash1-approval-preview">
+(function(){
+ var manual=document.getElementById('dash1-manual-approval'),auto=document.getElementById('dash1-auto-approval');
+ var status=document.getElementById('dash1-publishing-status'),help=document.getElementById('dash1-publishing-help');
+ if(!manual||!auto||!status||!help)return;
+ function setMode(isAuto){
+   manual.classList.toggle('is-selected',!isAuto);auto.classList.toggle('is-selected',isAuto);
+   manual.setAttribute('aria-pressed',String(!isAuto));auto.setAttribute('aria-pressed',String(isAuto));
+   status.textContent=isAuto?'Auto Approval Mode — ON':'Manual Approval Mode — ON';
+   help.textContent=isAuto?'Auto approval is a preview preference only. This prototype does not publish or schedule posts.':'Content requires your approval before publishing.';
+ }
+ manual.addEventListener('click',function(){setMode(false);});
+ auto.addEventListener('click',function(){setMode(true);});
+ setMode(false);
 })();
 </script>
 
