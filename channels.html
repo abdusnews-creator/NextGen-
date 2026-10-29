@@ -405,12 +405,12 @@ body.ng-menu-open{overflow:hidden}
     try{
       var records=JSON.parse(localStorage.getItem('nextgen-channel-drafts')||'[]');
       var canonicalUrl;
-      try{var parsedUrl=new URL(u);parsedUrl.hash='';parsedUrl.search='';canonicalUrl=(parsedUrl.origin+parsedUrl.pathname).replace(/\\/$/,'').toLowerCase();}catch(ignore){canonicalUrl=u.toLowerCase();}
+      try{var parsedUrl=new URL(u);parsedUrl.hash='';parsedUrl.search='';canonicalUrl=(parsedUrl.origin+parsedUrl.pathname).replace(/\/$/,'').toLowerCase();}catch(ignore){canonicalUrl=u.toLowerCase();}
       var canonicalHandle=handle.replace(/^@/,'').toLowerCase();
       if(records.some(function(x){
         var oldUrl=String(x.url||'').toLowerCase();
         var oldHandle=String(x.username||'').replace(/^@/,'').toLowerCase();
-        return oldUrl===u.toLowerCase() || oldUrl.replace(/[?#].*$/,'').replace(/\\/$/,'')===canonicalUrl || (String(x.platform||'').toLowerCase()===p.toLowerCase()&&canonicalHandle&&oldHandle===canonicalHandle);
+        return oldUrl===u.toLowerCase() || oldUrl.replace(/[?#].*$/,'').replace(/\/$/,'')===canonicalUrl || (String(x.platform||'').toLowerCase()===p.toLowerCase()&&canonicalHandle&&oldHandle===canonicalHandle);
       })){msg.textContent='This channel/profile is already saved on this device.';return;}
       records.push({url:u,canonical_url:canonicalUrl,platform:p,name:n,username:handle,createdAt:new Date().toISOString(),status:'draft',verified_by_platform:true});
       localStorage.setItem('nextgen-channel-drafts',JSON.stringify(records));
