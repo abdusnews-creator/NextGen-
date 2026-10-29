@@ -448,6 +448,55 @@ html body .app main > footer.ng-shared-footer > .ng-credit{font-size:10px!import
 }
 </style>
 
+
+<style id="dashboard-footer-viewport-center-fix">
+@media(max-width:600px){
+  html body .app main > footer.ng-shared-footer{
+    position:relative!important;
+    left:50%!important;
+    right:auto!important;
+    width:100vw!important;
+    max-width:100vw!important;
+    min-width:100vw!important;
+    margin-left:-50vw!important;
+    margin-right:0!important;
+    padding-left:4px!important;
+    padding-right:4px!important;
+    box-sizing:border-box!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:center!important;
+    align-items:center!important;
+    text-align:center!important;
+    transform:none!important;
+    overflow:hidden!important;
+  }
+  html body .app main > footer.ng-shared-footer > .ng-copyright{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    box-sizing:border-box!important;
+    text-align:center!important;
+    font-size:12px!important;
+    white-space:nowrap!important;
+    transform:none!important;
+  }
+  html body .app main > footer.ng-shared-footer > .ng-credit{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    box-sizing:border-box!important;
+    text-align:center!important;
+    font-size:10px!important;
+    white-space:nowrap!important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="app">
