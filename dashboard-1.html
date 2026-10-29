@@ -252,6 +252,20 @@ svg{display:block}
 .app>header .ng-hamburger{appearance:none;-webkit-appearance:none;background:#0a1650!important;}
 </style>
 
+<style id="ng-header-right-edge-fix">
+/* Keep the complete NextGen header inside the mobile viewport. */
+.app>header{width:100%;max-width:100%;min-width:0;overflow:hidden;gap:6px;padding-left:10px;padding-right:10px;justify-content:flex-start}
+.app>header::after{display:none!important}
+.app>header .ng-hamburger{flex:0 0 34px!important;width:34px!important;min-width:34px!important;margin-right:2px!important}
+.app>header>img.logo{position:static!important;left:auto!important;top:auto!important;flex:1 1 auto!important;width:0!important;min-width:0!important;max-width:180px!important;height:42px!important;object-fit:contain;object-position:left center;clip-path:none!important;margin:0!important}
+.app>header .hr{flex:0 0 auto;gap:9px;margin-left:auto;min-width:0}
+.app>header .hr .circ,.app>header .hr .bell{flex:0 0 29px}
+@media(max-width:380px){
+ .app>header{gap:4px;padding-left:6px;padding-right:6px}
+ .app>header>img.logo{max-width:calc(100vw - 168px)!important;height:38px!important}
+ .app>header .hr{gap:6px}
+}
+</style>
 <style id="ng-hamburger-fix">
 header .ng-hamburger{flex:0 0 36px;width:36px;height:36px;min-height:36px;padding:7px 6px;margin:-3px 8px 0 0;border:0!important;border-radius:0!important;box-shadow:none!important;border:1px solid #2857a4;border-radius:9px;background:#0a1650;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;position:relative;z-index:30;touch-action:manipulation}
 .app>header .ng-hamburger span{display:block!important;width:20px!important;height:2.5px!important;flex:none;border-radius:2px;background:#fff;pointer-events:none;transform:translateY(3px)}
