@@ -343,8 +343,19 @@ main > .dash1-channel-overview,
 </style>
 
 <style id="dashboard-footer-size-fix">
-/* Keep Dashboard footer aligned and sized consistently on mobile and desktop. */
+/* Dashboard footer: centered, two lines, with no horizontal offset. */
+main > .ng-shared-footer,
 .ng-shared-footer{
+  position:static!important;
+  inset:auto!important;
+  left:auto!important;
+  right:auto!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+  margin-left:0!important;
+  margin-right:0!important;
   display:flex!important;
   flex-direction:column!important;
   flex-wrap:nowrap!important;
@@ -352,28 +363,45 @@ main > .dash1-channel-overview,
   align-items:center!important;
   gap:2px!important;
   text-align:center!important;
+  transform:none!important;
 }
 .ng-shared-footer .ng-copyright{
   display:block!important;
-  flex:0 0 auto!important;
-  width:auto!important;
+  flex:0 1 auto!important;
+  width:100%!important;
   max-width:100%!important;
   min-width:0!important;
+  margin:0 auto!important;
+  padding:0!important;
+  box-sizing:border-box!important;
   font-size:15px!important;
+  letter-spacing:-.2px!important;
+  line-height:1.2!important;
   text-align:center!important;
   white-space:nowrap!important;
   transform:none!important;
+  transform-origin:center center!important;
 }
 .ng-shared-footer .ng-credit{
   display:block!important;
   flex:0 0 auto!important;
-  margin:0!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:0 auto!important;
+  padding:0!important;
+  box-sizing:border-box!important;
   font-size:10px!important;
+  letter-spacing:-.15px!important;
+  line-height:1.2!important;
   text-align:center!important;
   white-space:nowrap!important;
 }
 @media(max-width:600px){
-  .ng-shared-footer .ng-copyright{font-size:15px!important;transform:scaleX(.78)!important;transform-origin:center center!important}
+  .ng-shared-footer .ng-copyright{
+    font-size:15px!important;
+    transform:scaleX(.78)!important;
+    transform-origin:center center!important;
+  }
   .ng-shared-footer .ng-credit{font-size:10px!important}
 }
 </style>
