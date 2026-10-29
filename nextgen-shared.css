@@ -84,3 +84,33 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
   box-shadow:0 6px 0 #fff,0 -6px 0 #fff!important;
   border-radius:2px!important;
 }
+
+
+/* MASTER DESIGN v31 — explicit cross-page header and menu alignment */
+:root{--ng-master-design-version:"2026-10-29-v31"}
+body>header:not(.ng-auth-master-header),
+body>main>header:not(.ng-auth-master-header),
+body>.app>header:not(.ng-auth-master-header),
+header.studio-top{
+  box-sizing:border-box!important;
+  background:linear-gradient(180deg,#050c2a 0%,#07123a 100%)!important;
+  color:#fff!important;
+  border-bottom:2px solid #2a5bff!important;
+  border-radius:0 0 12px 12px!important;
+  box-shadow:0 0 14px #3a2cff55!important;
+}
+body>header:not(.ng-auth-master-header) a,
+body>header:not(.ng-auth-master-header) strong,
+body>header:not(.ng-auth-master-header) h1,
+body>header:not(.ng-auth-master-header) h2,
+header.studio-top .studio-brand,
+header.studio-top .studio-brand-name{color:#fff!important}
+body>header:not(.ng-auth-master-header) p,
+body>header:not(.ng-auth-master-header) small,
+header.studio-top .studio-tagline{color:#8fa6d6!important}
+header.studio-top{height:46px!important;min-height:46px!important;padding:4px 10px!important;gap:10px!important}
+header.studio-top .studio-menu{flex:0 0 34px!important;width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;padding:0!important}
+header.studio-top .studio-menu::before{content:""!important;display:block!important;width:20px!important;height:2.5px!important;background:#fff!important;box-shadow:0 6px 0 #fff,0 -6px 0 #fff!important;border-radius:2px!important}
+header .ng-hamburger{flex:0 0 34px!important;width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;margin:0 8px 0 0!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+header .ng-hamburger span{display:block!important;width:20px!important;height:2.5px!important;min-height:2.5px!important;flex:0 0 2.5px!important;transform:none!important;border-radius:2px!important;background:#fff!important}
+header .ng-hamburger::before,header .ng-hamburger::after{display:none!important;content:none!important}
