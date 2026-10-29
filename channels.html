@@ -295,7 +295,7 @@ body.ng-menu-open{overflow:hidden}
     <label for="channel-username">Username / Handle</label>
     <input id="channel-username" name="username" type="text" placeholder="Auto-detected from link" readonly>
     <label for="channel-name">Page / Profile / Channel Name</label>
-    <input id="channel-name" name="name" type="text" placeholder="Verified name will appear here" required maxlength="80">
+    <input id="channel-name" name="name" type="text" placeholder="Verified name will appear here" readonly required maxlength="80" aria-describedby="detect-status">
     <p id="detect-status" class="dialog-note" role="status">Paste a profile link to detect the username. The actual display name requires the platform API and authorization.</p>
     <p class="dialog-note">This saves a draft on this device only. It does not connect or authorize the social account.</p>
     <div class="dialog-actions"><button type="button" id="cancel-channel">Cancel</button><button class="primary" type="submit">Save draft</button></div>
@@ -370,8 +370,11 @@ body.ng-menu-open{overflow:hidden}
     if(parsed.handle)lookupVerifiedName(parsed.platform,parsed.handle);
   });
   var lookupSeq=0;
+  var verifiedProfileName=false;
   async function lookupVerifiedName(p,handle){
     var seq=++lookupSeq;
+    verifiedProfileName=false;
+    if(nameInput)nameInput.value='';
     try{
       if(!window.supabase||!window.NEXTGEN_SUPABASE_CONFIG)throw new Error('Profile-name lookup service is not available.');
       var client=window.supabase.createClient(window.NEXTGEN_SUPABASE_CONFIG.url,window.NEXTGEN_SUPABASE_CONFIG.anonKey);
@@ -380,11 +383,12 @@ body.ng-menu-open{overflow:hidden}
       if(!session)throw new Error('Sign in to NextGen to look up the verified profile name.');
       var response=await client.functions.invoke('channel-profile-lookup',{body:{platform:p.toLowerCase(),url:urlInput.value.trim()}});
       if(seq!==lookupSeq)return;
-      if(response.error||!response.data||!response.data.display_name)throw new Error(response.data&&response.data.error||'The platform did not return a verified profile name. Check API setup and account authorization.');
+      if(response.error||!response.data||!response.data.display_name||response.data.verified_by_platform!==true)throw new Error(response.data&&response.data.error||'The platform did not return a verified profile name. Check API setup and account authorization.');
       nameInput.value=response.data.display_name;
+      verifiedProfileName=true;
       if(usernameInput)usernameInput.value=response.data.handle?'@'+response.data.handle:'@'+handle;
       if(detectStatus)detectStatus.textContent='Verified profile name detected from '+p+'.';
-    }catch(e){if(seq!==lookupSeq)return;if(detectStatus)detectStatus.textContent='Username detected; profile name not verified: '+(e.message||'API authorization is required.');}
+    }catch(e){if(seq!==lookupSeq)return;verifiedProfileName=false;if(nameInput)nameInput.value='';if(detectStatus)detectStatus.textContent='Profile name not verified: '+(e.message||'API authorization is required.');}
   }
   if(add&&dialog)add.addEventListener('click',function(){if(dialog.showModal)dialog.showModal();else alert('Please open this page in an updated browser to add a channel.');});
   var cancel=document.getElementById('cancel-channel');
@@ -396,11 +400,19 @@ body.ng-menu-open{overflow:hidden}
   });});
   if(form)form.addEventListener('submit',function(e){
     e.preventDefault();var u=urlInput.value.trim(),p=platform.value,n=nameInput.value.trim(),handle=(usernameInput&&usernameInput.value||'').trim();
-    if(!u||!p||!n)return;
+    if(!u||!p){msg.textContent='Add a valid profile link first.';return;}
+    if(!verifiedProfileName||!n){msg.textContent='The real profile name must be verified by the platform API before saving.';return;}
     try{
       var records=JSON.parse(localStorage.getItem('nextgen-channel-drafts')||'[]');
-      if(records.some(function(x){return x.url.toLowerCase()===u.toLowerCase();})){msg.textContent='This link is already saved on this device.';return;}
-      records.push({url:u,platform:p,name:n,username:handle,createdAt:new Date().toISOString(),status:'draft'});
+      var canonicalUrl;
+      try{var parsedUrl=new URL(u);parsedUrl.hash='';parsedUrl.search='';canonicalUrl=(parsedUrl.origin+parsedUrl.pathname).replace(/\\/$/,'').toLowerCase();}catch(ignore){canonicalUrl=u.toLowerCase();}
+      var canonicalHandle=handle.replace(/^@/,'').toLowerCase();
+      if(records.some(function(x){
+        var oldUrl=String(x.url||'').toLowerCase();
+        var oldHandle=String(x.username||'').replace(/^@/,'').toLowerCase();
+        return oldUrl===u.toLowerCase() || oldUrl.replace(/[?#].*$/,'').replace(/\\/$/,'')===canonicalUrl || (String(x.platform||'').toLowerCase()===p.toLowerCase()&&canonicalHandle&&oldHandle===canonicalHandle);
+      })){msg.textContent='This channel/profile is already saved on this device.';return;}
+      records.push({url:u,canonical_url:canonicalUrl,platform:p,name:n,username:handle,createdAt:new Date().toISOString(),status:'draft',verified_by_platform:true});
       localStorage.setItem('nextgen-channel-drafts',JSON.stringify(records));
       msg.textContent='Draft saved on this device. API connection is not completed.';
       form.reset();
