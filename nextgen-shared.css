@@ -115,5 +115,5 @@ header .ng-hamburger{flex:0 0 34px!important;width:34px!important;min-width:34px
 header .ng-hamburger span{display:block!important;width:20px!important;height:2.5px!important;min-height:2.5px!important;flex:0 0 2.5px!important;transform:none!important;border-radius:2px!important;background:#fff!important}
 header .ng-hamburger::before,header .ng-hamburger::after{display:none!important;content:none!important}
 
-/* Master header lock: hide the extra hamburger baked into the header reference image. */
-.app>header>img.logo{clip-path:inset(0 0 0 12%)!important}
+/* Master header lock: crop out all three menu lines baked into the header reference image. */
+.app>header>img.logo{clip-path:inset(0 0 0 24%)!important}
