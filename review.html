@@ -109,6 +109,22 @@ textarea{min-height:100px}
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="NextGen">
+
+<style id="nextgen-channel-master-overrides">
+/* Match Channels master design across NextGen pages without replacing page-specific controls. */
+:root{color-scheme:dark;--ng-bg:#030b24;--ng-panel:#081a45;--ng-panel-2:#061237;--ng-line:#17407f;--ng-text:#fff;--ng-muted:#8fa6d6;--ng-blue:#4DB8FF}
+html{background:#030b24}
+body{background:radial-gradient(ellipse at top right,#0b2457 0%,#030b24 55%)!important;color:#fff!important;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important}
+header,.studio-top{background:linear-gradient(180deg,#050c2a,#07123a)!important;color:#fff!important;border-bottom:2px solid #2a5bff!important;border-radius:0 0 18px 18px!important;box-shadow:0 0 14px #3a2cff55!important}
+header h1,header h2,header strong,.studio-brand,.brand{color:#fff}
+header p,header small{color:#8fa6d6}
+button,.btn,.button,input[type=submit]{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #27c4ff;outline-offset:3px}
+.card,.panel,.intro,.settings-card,.section-card,.plan,.faq-item{background:linear-gradient(180deg,#081a45,#061237);border-color:#17407f}
+.ng-shared-footer{background:#050b28!important;border-top:1px solid #1e4fb5!important;color:#8fa6d6!important}
+.ng-shared-footer .ng-credit{color:#fff!important}
+@media(max-width:600px){header,.studio-top{padding-left:10px!important;padding-right:10px!important}}
+</style>
 </head>
 <body>
 <header><div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><div><h1 style="letter-spacing:.75px"><span style="color:#00BFFF">N</span>extGen</h1><p>Smart Automation. Smarter Growth.</p></div><div class="credit">Powered by<br><b>ABDUS SATTAR</b></div></div></header>
