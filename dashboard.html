@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NextGen – Dashboard 1</title>
+<link rel="stylesheet" href="./nextgen-shared.css?v=master-design-v32-20261029">
+<style>
+:root{color-scheme:dark;box-sizing:border-box;--bg:#030b24;--txt:#fff;--mut:#8fa6d6;--green:#16e08a;padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;min-height:100%;margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;overflow:hidden}
+.app{max-width:430px;margin:0 auto;width:100%;height:100vh;height:100dvh;position:relative;display:flex;flex-direction:column;overflow:hidden}
+main{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:auto;padding-bottom:16px;touch-action:pan-y}
+main::-webkit-scrollbar{display:none}
+header{flex:none;z-index:5;height:46px;min-height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 10px 0 12px;background:linear-gradient(180deg,#050c2a,#07123a);border-bottom:2px solid #2a5bff;border-radius:0 0 18px 18px;box-shadow:0 0 14px #3a2cff88;position:relative}
+header::after{content:"";position:absolute;right:0;top:0;bottom:0;width:30px;border-right:3px solid #9b3cff;border-radius:0 0 22px 22px}
+.burger{width:20px;display:grid;gap:4px;margin-right:6px}
+.burger i{height:2.5px;background:#fff;border-radius:2px}
+.logo{height:46px;width:auto;max-width:180px;object-fit:contain;margin-right:auto;border-radius:6px;display:block}
+.hr{display:flex;align-items:center;gap:13px;z-index:1}
+.circ{width:29px;height:29px;border-radius:50%;display:grid;place-items:center}
+.plus{border:2px solid #2a5bff;background:#0a1650;box-shadow:0 0 8px #2a5bff}
+.bell{position:relative;width:29px;height:29px;display:grid;place-items:center}.bell svg{transform-origin:50% 12%;animation:bellSwing 1.8s ease-in-out infinite}@keyframes bellSwing{0%,72%,100%{transform:rotate(0deg)}76%{transform:rotate(12deg)}80%{transform:rotate(-10deg)}84%{transform:rotate(7deg)}88%{transform:rotate(-5deg)}92%{transform:rotate(2deg)}}@media(prefers-reduced-motion:reduce){.bell svg{animation:none}}
+.bell u{position:absolute;top:0;right:2px;width:9px;height:9px;border-radius:50%;background:#ff2d3d}
+.av{background:linear-gradient(135deg,#2a6bff,#3b3cff);font-weight:700;font-size:15px;box-shadow:0 0 8px #2a5bff88}
+.hd{display:flex;gap:11px;align-items:center;padding:14px 10px 10px}
+.hico{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#2a8bff,#4a4cff);display:grid;place-items:center;box-shadow:0 0 10px #2a6bff77}
+.hd h1{font-size:23px;font-weight:800;line-height:1.1}
+.hd p{font-size:12px;color:var(--mut);margin-top:2px}
+.bar{display:flex;gap:9px;padding:0 10px;margin-bottom:16px}
+.search{flex:1;display:flex;align-items:center;gap:12px;height:31px;border:1.5px solid #1e4fb5;border-radius:11px;background:#07123a;padding:0 10px;color:var(--mut);font-size:13px}
+.add{border:0;color:#fff;width:108px;height:32px;border-radius:9px;background:linear-gradient(90deg,#1a3cff,#1f9bff);display:flex;align-items:center;justify-content:center;gap:6px;font-weight:700;font-size:12.5px;box-shadow:0 0 10px #1f7bff88}
+.bar .search{min-width:0;overflow:hidden;white-space:nowrap}.bar .search input::placeholder{color:var(--mut);opacity:1}.card .rv{border:0;color:#fff;cursor:pointer}.channel-dialog{width:min(92vw,390px);border:1px solid #2459bd;border-radius:16px;padding:18px;background:#07123a;color:#fff;margin:auto;box-shadow:0 16px 48px #0009}.channel-dialog::backdrop{background:#020718bb}.channel-dialog h2{font-size:20px;margin-bottom:12px}.channel-dialog label{display:block;font-size:13px;color:#b9c9ed;margin:12px 0 5px}.channel-dialog input,.channel-dialog select{width:100%;height:42px;border-radius:9px;border:1px solid #2857a4;background:#030b24;color:#fff;padding:0 10px;font:inherit}.dialog-actions{display:flex;gap:8px;margin-top:16px}.dialog-actions button{flex:1;min-height:40px;border-radius:9px;border:1px solid #2857a4;background:#10245b;color:#fff}.dialog-actions .primary{background:#1b63e8;border:0}.dialog-note{font-size:12px;color:#9eb1d8;line-height:1.45;margin-top:10px}
+.bar .refresh-page{position:relative;z-index:2;flex:0 0 34px;width:34px;min-width:34px;min-height:32px;height:32px;padding:0;border:1px solid #2a6bff;border-radius:9px;background:#0a1650;color:#fff;display:grid;place-items:center;box-shadow:0 0 8px #1f7bff55;cursor:pointer;touch-action:manipulation}.refresh-page:active{transform:scale(.96);background:#12316f}
+.list{padding:0 9px;display:grid;gap:8px}
+.card{--ac:#ff3b4e;position:relative;height:71px;border:1px solid #17407f;border-left:0;border-radius:11px;background:linear-gradient(180deg,#081a45,#061237);display:flex;align-items:center;padding:0 8px 0 18px}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:9px;border-left:3px solid var(--ac);border-radius:11px 0 0 11px}
+.ico{position:absolute;left:18px;top:9px;width:41px;height:41px;border-radius:10px;display:grid;place-items:center}
+.info{position:absolute;left:72px;top:10px}
+.info b{display:block;font-size:20px;font-weight:700;line-height:1.1}
+.info span{font-size:15px;color:#4DB8FF;display:block;margin-top:3px}
+.st{position:absolute;left:72px;top:52px;bottom:auto;font-size:12px;color:#c9d6f5;display:flex;align-items:center;gap:6px}
+.st i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green)}
+.rv{position:absolute;right:9px;top:18px;width:83px;height:28px;border-radius:9px;display:flex;align-items:center;justify-content:center;gap:4px;font-weight:700;font-size:12.5px}
+.yt{--ac:#ff3b4e}.yt .ico{background:#ff1f1f}.yt .rv{background:linear-gradient(90deg,#ff3355,#ff4a5a)}
+.fb{--ac:#1e8bff}.fb .ico{background:#1d6bff}.fb .rv{background:linear-gradient(90deg,#1a63ff,#1e8bff)}
+.ig{--ac:#c026ff}.ig .ico{background:linear-gradient(45deg,#ffb100,#ff2d6f 50%,#8a2be2)}.ig .rv{background:linear-gradient(90deg,#b11cff,#d52cff)}
+.th{--ac:#4f7bd1}.th .ico{background:#000}.th .rv{background:#1c3a74}
+.blur{filter:blur(9px);opacity:.75;margin-top:8px;pointer-events:none;height:500px;overflow:hidden}
+nav{flex:none;position:relative;z-index:5;width:100%;height:calc(43px + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);display:flex;background:linear-gradient(180deg,#07123a,#050b28);border-top:2px solid #1e4fb5;border-radius:18px 18px 0 0;box-shadow:0 -2px 14px #3a2cff66}
+nav a{flex:1;min-width:0;height:100%;padding:2px 0!important;margin:0!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:9px;color:#cfd8f5;font-weight:600;position:relative;text-decoration:none;background:transparent!important;border:0!important;box-shadow:none!important}
+.app nav.ng-bottom-nav{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;z-index:5!important;width:100%!important;height:calc(43px + env(safe-area-inset-bottom,0px))!important;padding:0 4px env(safe-area-inset-bottom,0px)!important;display:flex!important;justify-content:space-around!important;align-items:stretch!important;gap:2px!important;border-radius:18px 18px 0 0!important}.app nav.ng-bottom-nav a{flex:1!important;min-width:0!important;height:100%!important;min-height:0!important;margin:0!important;padding:2px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:2px!important;border:1px solid transparent!important;border-radius:9px!important;background:transparent!important;box-shadow:none!important;color:#cfd8f5!important;font-size:9px!important}.app nav.ng-bottom-nav a.active{background:#0b4a82!important;border:1px solid rgba(77,184,255,.28)!important;border-radius:9px!important;color:#fff!important}.app nav.ng-bottom-nav a.active::before,.app nav.ng-bottom-nav a.active::after{content:none!important;display:none!important}.app nav.ng-bottom-nav a small{display:block!important;font-size:9px!important;line-height:1.2!important;text-align:center!important}.app nav.ng-bottom-nav a .channel-master-icon{width:23px!important;height:23px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}nav a .schedule-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .schedule-master-icon svg{width:23px;height:23px}nav a .approval-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .approval-master-icon svg{width:23px;height:23px}nav a .content-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .content-master-icon svg{width:23px;height:23px}nav a .channel-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .channel-master-icon svg{width:23px;height:23px}nav a .dashboard-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .dashboard-master-icon svg{width:23px;height:23px;overflow:visible}nav a .channel-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .channel-master-icon svg{width:23px;height:23px;overflow:visible}
+nav a.on::after{content:none!important;display:none!important}nav a:not(.on) .dashboard-master-icon,nav a:not(.on) .channel-master-icon,nav a:not(.on) .content-master-icon,nav a:not(.on) .approval-master-icon,nav a:not(.on) .schedule-master-icon{background:transparent;border:0;box-shadow:none;border-radius:0}
+svg{display:block}
+
+/* Channels reference design refresh */
+.hd{gap:11px;padding:6px 11px 8px}
+.hd h1{font-size:24px}
+.hd p{font-size:12px}
+.bar{gap:9px;padding:0 11px;margin-bottom:13px}
+.bar .search{height:36px;border-radius:12px;padding:0 14px;font-size:13px}
+.bar .search svg{flex:none}
+.bar .add{flex:0 0 120px;width:120px;height:36px;border-radius:10px;font-size:13px}
+.bar .refresh-page{height:34px;min-height:34px}
+.list{padding:0 10px;gap:8px}
+.card{height:80px;border-radius:12px;padding:0 8px 0 18px}
+.card::before{width:10px;border-left-width:4px}
+.ico{left:19px;top:10px;width:44px;height:42px;border-radius:10px}
+.yt .ico{width:44px;height:42px}
+.info{left:80px;top:10px}
+.info b{font-size:18px}
+.info span{font-size:13px;margin-top:4px}
+.st{left:19px;top:54px;font-size:12px}
+.st i{width:8px;height:8px;flex:none}
+.rv{right:10px;top:20px;width:92px;height:31px;border-radius:10px;font-size:12.5px}
+.safety{margin:17px 12px 18px;padding:19px 15px 22px;border:1px solid #1d2f50;border-radius:16px;background:linear-gradient(180deg,#0f1d3a,#0b1630)}
+.safety h2{font-size:27px;font-weight:700;color:#8f9bff;line-height:1.2}
+.safety p{font-size:15.5px;color:#fff;margin-top:22px;line-height:1.3}
+.safety p+p{margin-top:21px}
+.safety b{font-weight:700}
+.safety .b1,.safety .b2{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#fff;font-family:inherit;cursor:pointer}
+.safety .b1{width:100%;min-height:48px;margin-top:31px;border-radius:14px;background:linear-gradient(90deg,#1a8cff,#1a63e8);box-shadow:0 0 12px #1a63e855;border:0}
+.safety .b2{width:190px;min-height:48px;margin-top:13px;border-radius:14px;background:#12294a;border:1px solid #1f3d6b}
+@media(max-width:360px){.bar .add{flex-basis:105px;width:105px}.info b{font-size:16px}.info span{font-size:12px}.rv{width:78px}.st{font-size:11px}}
+
+/* Force 0.5px outer spacing on mobile content sections. */
+@media(max-width:430px){
+  .hd,.bar,.list,.safety,.ng-shared-footer{width:calc(100% - 1px)!important;margin-left:.5px!important;margin-right:.5px!important}
+  .hd,.bar,.list,.ng-shared-footer{padding-left:.5px!important;padding-right:.5px!important}
+  .safety{padding-left:15px!important;padding-right:15px!important}
+}
+
+/* Dashboard 1: Channel Analytics block, placed below the header and above Channels. */
+.dash1-analytics{padding:14px 10px 18px;color:#eef5ff}
+.dash1-analytics h2{font-size:23px;line-height:1.2;font-weight:800;margin:0 0 8px}
+.dash1-analytics-subtitle{font-size:13px;line-height:1.45;color:#a8c1e8;margin:0 0 14px}
+.dash1-period{height:38px;width:max-content;max-width:100%;display:flex;align-items:center;gap:10px;padding:0 12px;margin-bottom:16px;border:1px solid #245784;border-radius:13px;background:#071a32;color:#d8efff}
+.dash1-period select{max-width:190px;background:transparent;color:#d8efff;border:0;outline:0;font:inherit}
+.dash1-period option{background:#071a32;color:#fff}
+.dash1-analytics-notice{padding:12px;border:1px solid #816b2c;border-radius:13px;background:#29220e;color:#f1d17a;font-size:12px;line-height:1.55;margin-bottom:14px}
+.dash1-analytics-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.dash1-metric{min-width:0;min-height:132px;padding:12px 10px;border:1px solid #1d4b78;border-radius:16px;background:linear-gradient(145deg,#071b31,#06132b);box-shadow:inset 0 0 12px #0c285022}
+.dash1-metric-heading{display:flex;align-items:center;gap:8px;min-height:35px;font-size:12px;line-height:1.25;color:#c7ddf8}
+.dash1-metric-icon{flex:0 0 30px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#168be8,#284dff);color:#fff;font-size:17px;font-weight:700}
+.dash1-metric>strong{display:block;font-size:26px;line-height:1.3;margin:12px 0 7px;color:#fff}
+.dash1-metric p{font-size:11px;line-height:1.45;color:#9cb7d9}
+@media(min-width:390px){.dash1-analytics{padding-left:12px;padding-right:12px}.dash1-metric{padding:13px}.dash1-metric-heading{font-size:13px}}
+
+
+/* Dashboard 1 Recent Content section, matching the supplied reference. */
+.dash1-recent{margin:0 10px 18px;border:1px solid #1f6693;border-radius:17px;background:linear-gradient(150deg,#071a31,#061329);padding:16px 14px 4px;box-shadow:inset 0 0 12px #0d315022}
+.dash1-recent-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.dash1-recent-head h2{font-size:21px;line-height:1.2;font-weight:800;color:#f4f7ff}
+.dash1-recent-head a{font-size:15px;font-weight:700;color:#32c7f4;text-decoration:none;white-space:nowrap}
+.dash1-content-row{position:relative;display:grid;grid-template-columns:92px minmax(0,1fr) 15px;gap:12px;align-items:center;padding:15px 0;border-bottom:1px solid #18314e}
+.dash1-content-row:last-child{border-bottom:0}
+.dash1-thumb{position:relative;width:92px;aspect-ratio:1.35;border-radius:10px;display:grid;place-items:center;color:#fff;overflow:hidden;box-shadow:inset 0 0 18px #fff2}
+.dash1-thumb span{font-size:34px;font-weight:700;text-shadow:0 1px 3px #0008}
+.dash1-thumb small{position:absolute;right:5px;bottom:5px;background:#10131c;color:#fff;padding:4px 6px;border-radius:5px;font-size:11px}
+.dash1-thumb-gold{background:linear-gradient(135deg,#8a6b3d,#e1c184 48%,#5c4527)}
+.dash1-thumb-brown{background:linear-gradient(135deg,#4c4036,#9e8871 55%,#352a23)}
+.dash1-thumb-stone{background:linear-gradient(135deg,#8b8379,#c6beb1 55%,#625b53)}
+.dash1-thumb-wood{background:linear-gradient(135deg,#5b4428,#a58a5b 55%,#3f2f1e)}
+.dash1-content-info{min-width:0}
+.dash1-content-info h3{font-size:14px;font-weight:500;line-height:1.4;color:#e7efff;margin:0 0 7px}
+.dash1-content-info p{font-size:12px;line-height:1.45;color:#9bb6d8;margin:0 0 8px}
+.dash1-content-stats{display:flex;flex-wrap:wrap;gap:7px 10px;color:#a9bdd7;font-size:11.5px;line-height:1.4}
+.dash1-content-more{align-self:center;background:transparent;border:0;color:#a9bdd7;font-size:23px;line-height:1;padding:5px 0;cursor:pointer}
+@media(min-width:390px){.dash1-recent{margin-left:12px;margin-right:12px;padding:17px 16px 4px}.dash1-content-row{grid-template-columns:104px minmax(0,1fr) 16px;gap:13px}.dash1-thumb{width:104px}.dash1-content-info h3{font-size:15px}.dash1-content-info p{font-size:13px}.dash1-content-stats{font-size:12px}}
+
+
+/* Dashboard 1 publishing approval and release notes, matching supplied reference. */
+.safety.dash1-approval{margin:18px 10px 20px;padding:20px 14px 17px;border:1px solid #214b71;border-radius:18px;background:linear-gradient(145deg,#071a31,#061329);box-shadow:inset 0 0 12px #0d315022}
+.dash1-approval-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.dash1-approval-head h2{font-size:20px;line-height:1.25;color:#f4f7ff;font-weight:800}
+.dash1-approval-head a{font-size:15px;font-weight:700;color:#32c7f4;text-decoration:none}
+.safety.dash1-approval .dash1-mode-status{margin-top:22px;font-size:16px;color:#f4f7ff}
+.dash1-approval-buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+.safety.dash1-approval .b1,.safety.dash1-approval .b2{width:100%;min-height:58px;margin:0;border-radius:14px;font-size:15px}
+.safety.dash1-approval .b1{background:linear-gradient(110deg,#13c4e8,#2671ff);color:#06142b;border:1px solid #22c5ef;box-shadow:none}
+.safety.dash1-approval .b2{background:#0a233d;color:#e8f5ff;border:1px solid #235e89}
+.safety.dash1-approval .dialog-note{font-size:13px;line-height:1.5;color:#a9bdd7;margin-top:20px}
+.dash1-approval-warning{margin-top:18px;padding:13px 12px;border:1px solid #816b2c;border-radius:13px;background:#29220e;color:#f1d17a;font-size:13px;line-height:1.55}
+.dash1-whats-new{margin:0 10px 20px;padding:18px 14px;border:1px solid #214b71;border-radius:18px;background:linear-gradient(145deg,#071a31,#061329);box-shadow:inset 0 0 12px #0d315022}
+.dash1-whats-new-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.dash1-whats-new-head h2{font-size:21px;line-height:1.25;color:#f4f7ff;font-weight:800}
+.dash1-whats-new-head>span{width:42px;height:42px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(135deg,#13c4e8,#2671ff);color:#06142b;font-size:21px}
+.dash1-whats-new>a{display:grid;grid-template-columns:20px minmax(0,1fr) 12px;align-items:center;gap:10px;padding:13px 0;color:#c4d4eb;text-decoration:none;font-size:14px;line-height:1.45}
+.dash1-whats-new>a+a{border-top:1px solid #18314e}
+@media(min-width:390px){.safety.dash1-approval,.dash1-whats-new{margin-left:12px;margin-right:12px;padding-left:17px;padding-right:17px}.dash1-approval-head h2{font-size:22px}.dash1-whats-new-head h2{font-size:23px}.dash1-whats-new>a{font-size:15px}}
+
+
+/* Dashboard 1 publishing approval and What's new sections from the supplied reference. */
+.dash1-publishing-card,.dash1-whatsnew{margin:0 10px 18px;padding:18px 14px;border:1px solid #204c72;border-radius:19px;background:linear-gradient(145deg,#071a31,#061329);box-shadow:inset 0 0 12px #0d315022}
+.dash1-publishing-head,.dash1-whatsnew-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:22px}
+.dash1-publishing-head h2,.dash1-whatsnew-head h2{font-size:21px;line-height:1.25;font-weight:800;color:#f3f6ff}
+.dash1-publishing-head a{color:#32c7f4;font-weight:700;text-decoration:none;font-size:16px}
+.dash1-publishing-status{font-size:17px;line-height:1.4;margin:0 0 20px;color:#f1f5ff}
+.dash1-publishing-buttons{display:flex;gap:12px;margin-bottom:20px}
+.dash1-publishing-buttons button{flex:1;min-height:54px;padding:8px;border:1px solid #245d83;border-radius:13px;background:#092641;color:#d9efff;font:700 15px/1.2 inherit;cursor:pointer}
+.dash1-publishing-buttons button.is-selected{background:linear-gradient(110deg,#08c3e7,#2476ff);border-color:#20c6f2;color:#06152e}
+.dash1-publishing-help{font-size:15px;line-height:1.5;color:#a8bad7;margin:0 0 16px}
+.dash1-publishing-warning{padding:14px;border:1px solid #84672c;border-radius:15px;background:#2c2413;color:#f2d995;font-size:14px;line-height:1.55}
+.dash1-whatsnew{padding-top:18px}
+.dash1-whatsnew-head{margin-bottom:22px}
+.dash1-whatsnew-head span{width:44px;height:44px;flex:0 0 44px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,#09bde9,#2566ff);color:#07162f;font-size:20px}
+.dash1-whatsnew-item{display:grid;grid-template-columns:24px minmax(0,1fr) 12px;align-items:center;gap:10px;padding:14px 0;color:#bdcde5;text-decoration:none;font-size:14px;line-height:1.5}
+.dash1-whatsnew-item>span:first-child{font-size:20px;color:#bdcde5}
+.dash1-whatsnew-item b{font-size:24px;font-weight:400;color:#bdcde5}
+@media(min-width:390px){.dash1-publishing-card,.dash1-whatsnew{margin-left:12px;margin-right:12px;padding:20px 16px}.dash1-publishing-head h2,.dash1-whatsnew-head h2{font-size:23px}.dash1-publishing-buttons button{font-size:17px}.dash1-publishing-status{font-size:18px}.dash1-publishing-help{font-size:16px}.dash1-publishing-warning{font-size:15px}.dash1-whatsnew-item{font-size:16px}}
+
+
+/* Dashboard 1 compact Channel analytics summary, below What's new. */
+.dash1-analytics-summary{margin:0 10px 18px;padding:18px 14px 20px;border:1px solid #204c72;border-radius:20px;background:linear-gradient(145deg,#071a31,#061329);box-shadow:inset 0 0 12px #0d315022;color:#eff5ff}
+.dash1-summary-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:24px}
+.dash1-summary-heading h2{font-size:21px;line-height:1.25;font-weight:800}
+.dash1-summary-heading>span{font-size:14px;color:#a8c4e7;white-space:nowrap}
+.dash1-current-subs p{font-size:16px;color:#a8c4e7;margin:0 0 20px}
+.dash1-current-subs strong{display:block;font-size:31px;line-height:1.3;margin-bottom:18px}
+.dash1-current-subs>span{display:block;color:#9bb7d8;font-size:14px;line-height:1.5}
+.dash1-summary-divider{height:1px;background:#183b59;margin:24px 0}
+.dash1-analytics-summary>h3{font-size:18px;font-weight:800;margin:0 0 16px}
+.dash1-top-content{display:grid;gap:12px}
+.dash1-top-row{display:grid;grid-template-columns:82px minmax(0,1fr) 14px;align-items:center;gap:12px;min-width:0}
+.dash1-top-thumb{width:82px;height:62px;border-radius:9px;display:grid;place-items:center;color:#fff;font-size:25px;text-shadow:0 1px 3px #0008}
+.dash1-top-gold{background:linear-gradient(135deg,#8a6b3d,#d9bb80 48%,#5c4527)}
+.dash1-top-brown{background:linear-gradient(135deg,#8e7146,#c3a16a 55%,#6a4d2f)}
+.dash1-top-stone{background:linear-gradient(135deg,#8b8379,#c6beb1 55%,#625b53)}
+.dash1-top-row>span{font-size:15px;line-height:1.35;min-width:0;color:#eef4ff}
+.dash1-top-row>b{font-size:18px;font-weight:400;color:#b7c8df}
+.dash1-view-analytics{display:inline-block;margin:22px 0 0 2px;color:#32c7f4;font-size:18px;font-weight:800;text-decoration:none}
+.dash1-view-analytics span{padding-left:5px}
+@media(min-width:390px){.dash1-analytics-summary{margin-left:12px;margin-right:12px;padding:20px 16px 23px}.dash1-summary-heading h2{font-size:23px}.dash1-summary-heading>span{font-size:16px}.dash1-current-subs p{font-size:18px}.dash1-current-subs>span{font-size:16px}.dash1-analytics-summary>h3{font-size:20px}.dash1-top-row{grid-template-columns:96px minmax(0,1fr) 16px;gap:13px}.dash1-top-thumb{width:96px;height:72px}.dash1-top-row>span{font-size:17px}.dash1-view-analytics{font-size:20px}}
+
+
+/* Dashboard 1 Latest comments and Channel overview sections from reference. */
+.dash1-comments-card,.dash1-channel-overview{margin:0 10px 18px;padding:18px 14px;border:1px solid #204c72;border-radius:20px;background:linear-gradient(145deg,#071a31,#061329);box-shadow:inset 0 0 12px #0d315022;color:#eef5ff}
+.dash1-section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:24px}
+.dash1-section-heading h2{font-size:21px;line-height:1.25;font-weight:800;color:#f4f7ff}
+.dash1-section-heading a{font-size:16px;font-weight:800;color:#32c7f4;text-decoration:none;white-space:nowrap}
+.dash1-comments-status{font-size:15px;line-height:1.5;color:#a8c4e7;margin-bottom:16px}
+.dash1-comment-row{display:grid;grid-template-columns:42px minmax(0,1fr) 74px;align-items:center;gap:12px;padding:12px 0 16px;border-bottom:1px solid #183b59}
+.dash1-comment-avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:21px;font-weight:700}
+.dash1-avatar-purple{background:#6950cb}.dash1-avatar-green{background:#23834e}
+.dash1-comment-body{min-width:0}
+.dash1-comment-body p{font-size:13px;line-height:1.4;color:#98adca;margin:0 0 7px}
+.dash1-comment-body blockquote{font-size:14px;line-height:1.45;color:#e3edfc;margin:0}
+.dash1-comment-thumb{width:74px;height:58px;border-radius:9px;display:grid;place-items:center;color:#fff;font-size:25px;text-shadow:0 1px 3px #0008}
+.dash1-comment-gold{background:linear-gradient(135deg,#8a6b3d,#d9bb80 48%,#5c4527)}
+.dash1-comment-brown{background:linear-gradient(135deg,#8e7146,#c3a16a 55%,#6a4d2f)}
+.dash1-comments-note{font-size:14px;line-height:1.5;color:#9bb7d8;margin-top:15px}
+.dash1-channel-overview .dash1-section-heading{margin-bottom:22px}
+.dash1-overview-row{display:grid;grid-template-columns:20px minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 0;font-size:16px;color:#eef5ff}
+.dash1-platform-icon{font-size:19px;color:#d9e7f9}
+.dash1-planned{color:#c2d0e6}
+.dash1-overview-divider{height:1px;background:#183b59;margin:14px 0 18px}
+.dash1-overview-note{font-size:14px;line-height:1.55;color:#9bb7d8}
+@media(min-width:390px){.dash1-comments-card,.dash1-channel-overview{margin-left:12px;margin-right:12px;padding:20px 16px}.dash1-section-heading h2{font-size:23px}.dash1-section-heading a{font-size:18px}.dash1-comments-status{font-size:16px}.dash1-comment-row{grid-template-columns:48px minmax(0,1fr) 86px;gap:13px;padding:14px 0 18px}.dash1-comment-avatar{width:48px;height:48px;font-size:23px}.dash1-comment-thumb{width:86px;height:68px}.dash1-comment-body p{font-size:15px}.dash1-comment-body blockquote{font-size:16px}.dash1-comments-note,.dash1-overview-note{font-size:16px}.dash1-overview-row{font-size:18px}}
+
+
+/* Dashboard 1: final override — keep side margins at 0.5px on all screen sizes. */
+.dash1-analytics,.dash1-recent,.dash1-whats-new,.safety.dash1-approval,
+.dash1-publishing-card,.dash1-whatsnew,.dash1-analytics-summary,
+.dash1-comments-card,.dash1-channel-overview{
+  margin-left:0.5px!important;
+  margin-right:0.5px!important;
+}
+@media(min-width:390px){
+  .dash1-analytics,.dash1-recent,.dash1-whats-new,.safety.dash1-approval,
+  .dash1-publishing-card,.dash1-whatsnew,.dash1-analytics-summary,
+  .dash1-comments-card,.dash1-channel-overview{
+    margin-left:0.5px!important;
+    margin-right:0.5px!important;
+  }
+}
+</style>
+
+<style id="ng-header-logo-crop-fix">
+/* header-reference.webp contains the old small hamburger baked into the left edge; crop that part out of the image itself. */
+.app>header>img.logo{clip-path:inset(0 0 0 12%);}
+</style>
+
+<style id="ng-hamburger-final-fix">
+/* The screenshot shows a second standalone hamburger between the square menu button and logo. Keep only the square menu button, logo and right-side actions. */
+.app>header>:not(#ng-hamburger):not(.logo):not(.hr){display:none!important}
+.app>header #ng-hamburger{display:flex!important}
+</style>
+
+<style id="ng-hamburger-single-fix">
+/* Keep only the dedicated menu control; hide any legacy header burger that may duplicate it. */
+.app>header .burger,.app>header [data-legacy-hamburger="true"]{display:none!important}
+.app>header .ng-hamburger{appearance:none;-webkit-appearance:none;background:#0a1650!important;}
+</style>
+
+<style id="ng-header-right-edge-fix">
+/* Keep the complete NextGen header inside the mobile viewport. */
+.app>header{width:100%;max-width:100%;min-width:0;overflow:hidden;gap:6px;padding-left:10px;padding-right:10px;justify-content:flex-start}
+.app>header::after{display:none!important}
+.app>header .ng-hamburger{flex:0 0 34px!important;width:34px!important;min-width:34px!important;margin-right:2px!important}
+.app>header>img.logo{position:static!important;left:auto!important;top:auto!important;flex:1 1 auto!important;width:0!important;min-width:0!important;max-width:180px!important;height:42px!important;object-fit:contain;object-position:left center;clip-path:none!important;margin:0!important}
+.app>header .hr{flex:0 0 auto;gap:9px;margin-left:auto;min-width:0}
+.app>header .hr .circ,.app>header .hr .bell{flex:0 0 29px}
+@media(max-width:380px){
+ .app>header{gap:4px;padding-left:6px;padding-right:6px}
+ .app>header>img.logo{max-width:calc(100vw - 168px)!important;height:38px!important}
+ .app>header .hr{gap:6px}
+}
+</style>
+<style id="ng-hamburger-fix">
+header .ng-hamburger{flex:0 0 36px;width:36px;height:36px;min-height:36px;padding:7px 6px;margin:-3px 8px 0 0;border:0!important;border-radius:0!important;box-shadow:none!important;border:1px solid #2857a4;border-radius:9px;background:#0a1650;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;position:relative;z-index:30;touch-action:manipulation}
+.app>header .ng-hamburger span{display:block!important;width:20px!important;height:2.5px!important;flex:none;border-radius:2px;background:#fff;pointer-events:none;transform:translateY(3px)}
+header .ng-hamburger::before,header .ng-hamburger::after{content:none!important;display:none!important}header .ng-hamburger{background-image:none!important}
+.ng-menu-backdrop[hidden]{display:none!important}
+.ng-menu-backdrop{position:fixed;inset:0;z-index:90;background:#020718b8}
+.ng-menu-drawer{position:fixed;z-index:91;left:0;top:0;bottom:0;width:min(290px,82vw);padding:calc(18px + env(safe-area-inset-top,0px)) 14px calc(20px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,#071a3e,#030b24);border-right:1px solid #2a6bff;box-shadow:12px 0 32px #0008;transform:translateX(-105%);visibility:hidden;transition:transform .2s ease,visibility .2s ease;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
+.ng-menu-drawer.is-open{transform:translateX(0);visibility:visible}
+.ng-menu-title{display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:20px;font-weight:800;padding:8px 6px 16px;border-bottom:1px solid #24509a;margin-bottom:8px}
+.ng-menu-title button{width:36px;height:36px;min-height:36px;border:1px solid #2857a4;border-radius:9px;background:#10245b;color:#fff;font-size:25px;line-height:1}
+.ng-menu-drawer>a{display:flex;align-items:center;min-height:46px;padding:10px 12px;border:1px solid transparent;border-radius:9px;color:#eaf3ff;text-decoration:none;font-size:15px;font-weight:650;touch-action:manipulation}
+.ng-menu-drawer>a:active,.ng-menu-drawer>a[aria-current="page"]{background:#0b3970;border-color:#1c78c8;color:#fff}
+body.ng-menu-open{overflow:hidden}
+@media(prefers-reduced-motion:reduce){.ng-menu-drawer{transition:none}}
+</style>
+
+<style id="ng-logo-shift-left">
+/* Shift the header logo image left so it sits closer to the square menu button. */
+.app>header>img.logo{position:relative;left:-30px;top:-3px;}
+</style>
+
+<style id="ng-master-final-v32">
+/* Master design v32: loaded after each page's local styles to prevent page CSS overriding it. */
+:root{--ng-master-design-version:"2026-10-29-v32"}
+body>header:not(.ng-auth-master-header),body>main>header:not(.ng-auth-master-header),body>.app>header:not(.ng-auth-master-header),header.studio-top{background:linear-gradient(180deg,#050c2a 0%,#07123a 100%)!important;color:#fff!important;border-bottom:2px solid #2a5bff!important;box-shadow:0 0 14px #3a2cff55!important;box-sizing:border-box!important}
+body>header:not(.ng-auth-master-header) a,body>header:not(.ng-auth-master-header) strong,body>header:not(.ng-auth-master-header) h1,body>header:not(.ng-auth-master-header) h2,header.studio-top .studio-brand,header.studio-top .studio-brand-name{color:#fff!important}
+body>header:not(.ng-auth-master-header) p,body>header:not(.ng-auth-master-header) small,header.studio-top .studio-tagline{color:#8fa6d6!important}
+header.studio-top{height:46px!important;min-height:46px!important;padding:4px 10px!important;gap:10px!important;border-radius:0 0 12px 12px!important}
+header.studio-top .studio-menu{flex:0 0 34px!important;width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;font-size:0!important;display:inline-grid!important;place-items:center!important;background:transparent!important;border:0!important;box-shadow:none!important}
+header.studio-top .studio-menu::before{content:""!important;display:block!important;width:20px!important;height:2.5px!important;background:#fff!important;box-shadow:0 6px 0 #fff,0 -6px 0 #fff!important;border-radius:2px!important}
+header .ng-hamburger{flex:0 0 34px!important;width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;margin:0 8px 0 0!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+header .ng-hamburger span{display:block!important;width:20px!important;height:2.5px!important;min-height:2.5px!important;flex:0 0 2.5px!important;transform:none!important;border-radius:2px!important;background:#fff!important}
+header .ng-hamburger:before,header .ng-hamburger:after{display:none!important;content:none!important}
+.ng-shared-footer{position:static!important;inset:auto!important;bottom:auto!important;transform:none!important;min-height:28px!important;width:100%!important;max-width:none!important;margin:8px 0 0!important;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))!important;display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;justify-content:space-between!important;align-items:center!important;gap:5px!important;background:#050b28!important;border-top:1px solid #1e4fb5!important;color:#8fa6d6!important;font-size:10px!important;line-height:1.25!important;white-space:nowrap!important;box-sizing:border-box!important}
+.ng-shared-footer .ng-copyright{flex:1 1 auto!important;min-width:0!important;text-align:left!important;font-size:10px!important;font-weight:400!important;white-space:nowrap!important}
+.ng-shared-footer .ng-credit{flex:0 0 auto!important;margin-left:auto!important;text-align:right!important;font-size:9px!important;font-weight:600!important;white-space:nowrap!important;color:#fff!important}
+@media(max-width:380px){header.studio-top{gap:6px!important;padding-left:5px!important;padding-right:5px!important}header.studio-top .studio-brand,header.studio-top .studio-brand-name{font-size:18px!important}header.studio-top .studio-tagline{font-size:7px!important}header.studio-top .studio-menu{flex-basis:30px!important;width:30px!important;min-width:30px!important}}
+@media(max-width:600px){.ng-shared-footer{font-size:9px!important;gap:3px!important;padding:5px 5px calc(5px + env(safe-area-inset-bottom,0px))!important}.ng-shared-footer .ng-copyright{font-size:9px!important}.ng-shared-footer .ng-credit{font-size:8px!important}}
+</style>
+
+<style id="dash1-side-width-correction">
+/* Dashboard 1: apply 0.1px left/right margin and inner padding consistently across every panel. */
+main > .hd, main > .bar, main > .list, main > .safety,
+main > .dash1-analytics, main > .dash1-recent, main > .dash1-whats-new,
+main > .dash1-publishing-card, main > .dash1-whatsnew,
+main > .dash1-analytics-summary, main > .dash1-comments-card,
+main > .dash1-channel-overview,
+.dash1-analytics,.dash1-recent,.dash1-whats-new,.safety.dash1-approval,
+.dash1-publishing-card,.dash1-whatsnew,.dash1-analytics-summary,
+.dash1-comments-card,.dash1-channel-overview {
+  margin-left:0.1px!important;
+  margin-right:0.1px!important;
+}
+.dash1-analytics {
+  padding-left:0.1px!important;
+  padding-right:0.1px!important;
+}
+@media (min-width:390px) {
+  main > .hd, main > .bar, main > .list, main > .safety,
+  main > .dash1-analytics, main > .dash1-recent, main > .dash1-whats-new,
+  main > .dash1-publishing-card, main > .dash1-whatsnew,
+  main > .dash1-analytics-summary, main > .dash1-comments-card,
+  main > .dash1-channel-overview,
+  .dash1-analytics,.dash1-recent,.dash1-whats-new,.safety.dash1-approval,
+  .dash1-publishing-card,.dash1-whatsnew,.dash1-analytics-summary,
+  .dash1-comments-card,.dash1-channel-overview {
+    margin-left:0.1px!important;
+    margin-right:0.1px!important;
+  }
+  .dash1-analytics {
+    padding-left:0.1px!important;
+    padding-right:0.1px!important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <button type="button" class="ng-hamburger" id="ng-hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="ng-menu-drawer"><span></span><span></span><span></span></button>
+  <img class="logo" alt="NextGen" src="./header-reference.webp?v=20261029-crop1">
+  <div class="hr">
+    <div class="circ plus"><svg width="16" height="16" viewBox="0 0 16 16" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M8 1v14M1 8h14"/></svg></div>
+    <div class="bell"><svg width="24" height="24" viewBox="0 0 24 24" aria-label="Notifications"><path fill="#fff" d="M12 2.1a2.45 2.45 0 0 0-2.45 2.45v.63C6.18 6.25 4 9.18 4 12.65v4.02l-1.4 1.66c-.45.54-.07 1.36.63 1.36h17.54c.7 0 1.08-.82.63-1.36L20 16.67v-4.02c0-3.47-2.18-6.4-5.55-7.47v-.63A2.45 2.45 0 0 0 12 2.1Z"/><path fill="#fff" d="M8.4 21.1a3.7 3.7 0 0 0 7.2 0Z"/></svg><u></u></div>
+    <div class="circ av">A</div>
+  </div>
+</header>
+<div class="ng-menu-backdrop" id="ng-menu-backdrop" hidden></div>
+<aside class="ng-menu-drawer" id="ng-menu-drawer" aria-label="Navigation menu" aria-hidden="true">
+  <div class="ng-menu-title">NextGen <button type="button" id="ng-menu-close" aria-label="Close navigation menu">×</button></div>
+  <a href="./dashboard.html" aria-current="page">Dashboard</a>
+  <a href="./channels.html" aria-current="page">Channels</a>
+  <a href="./content.html">Content</a>
+  <a href="./approvals.html">Approvals</a>
+  <a href="./schedule.html">Schedule</a>
+  <a href="./settings.html">Settings</a>
+</aside>
+<main>
+<section class="dash1-analytics" aria-labelledby="dash1-analytics-title">
+  <h2 id="dash1-analytics-title">Channel Analytics</h2>
+  <p class="dash1-analytics-subtitle">Welcome back! Your creator workspace is ready.</p>
+  <label class="dash1-period"><span aria-hidden="true">▣</span><select aria-label="Analytics period"><option>Last 28 days</option><option>Last 7 days</option><option>Last 90 days</option></select></label>
+  <div class="dash1-analytics-notice">Preview dashboard — live views, subscribers, watch time and revenue are not connected yet. No analytics figures below are being claimed as real.</div>
+  <div class="dash1-analytics-grid">
+    <article class="dash1-metric"><div class="dash1-metric-heading"><span class="dash1-metric-icon">▶</span><span>Views</span></div><strong>—</strong><p>Connect YouTube to view data</p></article>
+    <article class="dash1-metric"><div class="dash1-metric-heading"><span class="dash1-metric-icon">◎</span><span>Watch time (hours)</span></div><strong>—</strong><p>Analytics not connected</p></article>
+    <article class="dash1-metric"><div class="dash1-metric-heading"><span class="dash1-metric-icon">♟</span><span>Subscribers</span></div><strong>—</strong><p>Channel data unavailable</p></article>
+    <article class="dash1-metric"><div class="dash1-metric-heading"><span class="dash1-metric-icon">$</span><span>Estimated revenue</span></div><strong>—</strong><p>Monetization data unavailable</p></article>
+  </div>
+</section>
+<section class="dash1-recent" aria-labelledby="dash1-recent-title">
+  <div class="dash1-recent-head"><h2 id="dash1-recent-title">Recent content</h2><a href="./content.html">View all</a></div>
+  <div class="dash1-content-list">
+    <article class="dash1-content-row">
+      <div class="dash1-thumb dash1-thumb-gold"><span>♛</span><small>0:10</small></div>
+      <div class="dash1-content-info"><h3>Luxury Wooden Table | Royal Furniture House</h3><p>Demo content idea · Not published by NextGen</p><div class="dash1-content-stats"><span>⊙ Views —</span><span>▤ Comments —</span><span>♡ Likes —</span></div></div>
+      <button class="dash1-content-more" type="button" aria-label="More options for Luxury Wooden Table" onclick="window.location.href='./content.html'">⋮</button>
+    </article>
+    <article class="dash1-content-row">
+      <div class="dash1-thumb dash1-thumb-brown"><span>♜</span><small>0:12</small></div>
+      <div class="dash1-content-info"><h3>Premium Bed Design | Royal Furniture House</h3><p>Demo content idea · Pending review</p><div class="dash1-content-stats"><span>⊙ Views —</span><span>▤ Comments —</span><span>♡ Likes —</span></div></div>
+      <button class="dash1-content-more" type="button" aria-label="More options for Premium Bed Design" onclick="window.location.href='./content.html'">⋮</button>
+    </article>
+    <article class="dash1-content-row">
+      <div class="dash1-thumb dash1-thumb-stone"><span>▬</span><small>0:11</small></div>
+      <div class="dash1-content-info"><h3>Modern Sofa Set | Royal Furniture House</h3><p>Demo content idea · Pending review</p><div class="dash1-content-stats"><span>⊙ Views —</span><span>▤ Comments —</span><span>♡ Likes —</span></div></div>
+      <button class="dash1-content-more" type="button" aria-label="More options for Modern Sofa Set" onclick="window.location.href='./content.html'">⋮</button>
+    </article>
+    <article class="dash1-content-row">
+      <div class="dash1-thumb dash1-thumb-wood"><span>♧</span><small>0:13</small></div>
+      <div class="dash1-content-info"><h3>Dining Table Collection | Royal Furniture House</h3><p>Demo content idea · Not published by NextGen</p><div class="dash1-content-stats"><span>⊙ Views —</span><span>▤ Comments —</span><span>♡ Likes —</span></div></div>
+      <button class="dash1-content-more" type="button" aria-label="More options for Dining Table Collection" onclick="window.location.href='./content.html'">⋮</button>
+    </article>
+  </div>
+</section>
+<section class="dash1-publishing-card" aria-labelledby="dash1-publishing-title">
+  <div class="dash1-publishing-head"><h2 id="dash1-publishing-title">Publishing approval control</h2><a href="./settings.html">Settings</a></div>
+  <p class="dash1-publishing-status" id="dash1-publishing-status">Manual Approval Mode — ON</p>
+  <div class="dash1-publishing-buttons"><button type="button" class="is-selected" id="dash1-manual-approval">Manual Approval</button><button type="button" id="dash1-auto-approval">Auto Approval</button></div>
+  <p class="dash1-publishing-help" id="dash1-publishing-help">Content requires your approval before publishing.</p>
+  <div class="dash1-publishing-warning">Auto Approval is OFF by default. This prototype does not publish or schedule posts.</div>
+</section>
+<section class="dash1-whatsnew" aria-labelledby="dash1-whatsnew-title">
+  <div class="dash1-whatsnew-head"><h2 id="dash1-whatsnew-title">What's new in NextGen</h2><span aria-hidden="true">▶</span></div>
+  <a class="dash1-whatsnew-item" href="./index.html"><span>↗</span><span>Dashboard design updated to a Studio-style layout</span><b>›</b></a>
+  <a class="dash1-whatsnew-item" href="./settings.html"><span>✓</span><span>Manual approval remains the safe default</span><b>›</b></a>
+</section>
+<section class="dash1-analytics-summary" aria-labelledby="dash1-analytics-summary-title">
+  <div class="dash1-summary-heading"><h2 id="dash1-analytics-summary-title">Channel analytics</h2><span>Last 28 days</span></div>
+  <div class="dash1-current-subs"><p>Current subscribers</p><strong>—</strong><span>Connect YouTube to see subscriber totals</span></div>
+  <div class="dash1-summary-divider"></div>
+  <h3>Top content</h3>
+  <div class="dash1-top-content">
+    <div class="dash1-top-row"><div class="dash1-top-thumb dash1-top-gold">♛</div><span>Luxury Wooden Table</span><b>—</b></div>
+    <div class="dash1-top-row"><div class="dash1-top-thumb dash1-top-brown">♜</div><span>Premium Bed Design</span><b>—</b></div>
+    <div class="dash1-top-row"><div class="dash1-top-thumb dash1-top-stone">▬</div><span>Modern Sofa Set</span><b>—</b></div>
+  </div>
+  <a class="dash1-view-analytics" href="./index.html#channelAnalytics">View analytics <span>→</span></a>
+</section>
+<section class="dash1-comments-card" aria-labelledby="dash1-comments-title">
+  <div class="dash1-section-heading"><h2 id="dash1-comments-title">Latest comments</h2><a href="./content.html">View all</a></div>
+  <p class="dash1-comments-status">Comment management is not connected yet.</p>
+  <div class="dash1-comment-row"><div class="dash1-comment-avatar dash1-avatar-purple">R</div><div class="dash1-comment-body"><p>Example comment · demo</p><blockquote>“Beautiful furniture design!”</blockquote></div><div class="dash1-comment-thumb dash1-comment-gold">♛</div></div>
+  <div class="dash1-comment-row"><div class="dash1-comment-avatar dash1-avatar-green">S</div><div class="dash1-comment-body"><p>Example comment · demo</p><blockquote>“How can I get more details?”</blockquote></div><div class="dash1-comment-thumb dash1-comment-brown">♜</div></div>
+  <p class="dash1-comments-note">These are examples, not live viewer comments.</p>
+</section>
+
+<section class="dash1-channel-overview" aria-labelledby="dash1-overview-title">
+  <div class="dash1-section-heading"><h2 id="dash1-overview-title">Channel overview</h2><a href="./channels.html">Manage</a></div>
+  <div class="dash1-overview-row"><span class="dash1-platform-icon">▶</span><span>YouTube</span><span class="dash1-planned">Planned</span></div>
+  <div class="dash1-overview-row"><span class="dash1-platform-icon">f</span><span>Facebook</span><span class="dash1-planned">Planned</span></div>
+  <div class="dash1-overview-row"><span class="dash1-platform-icon">◎</span><span>Instagram</span><span class="dash1-planned">Planned</span></div>
+  <div class="dash1-overview-row"><span class="dash1-platform-icon">◎</span><span>Threads</span><span class="dash1-planned">Planned</span></div>
+  <div class="dash1-overview-divider"></div>
+  <p class="dash1-overview-note">Platform connections and background publishing are not yet verified.</p>
+</section>
+<footer class="ng-shared-footer"><span class="ng-copyright">NextGen · Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
+</main>
+
+<nav class="ng-bottom-nav" aria-label="Main navigation">
+  <a href="dashboard.html" class="active" aria-current="page"><span class="dashboard-master-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M5 7 Q5 4 9 4 H19 Q23 4 23 8 V13 Q23 17 19 17 H9 Q5 17 5 13 Z" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linejoin="round"/><path d="M28 8 Q28 4 32 4 H39 Q43 4 43 8 V17 Q43 21 39 21 H35 M28 15 V12" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 29 V25 Q5 21 9 21 H19 Q23 21 23 25 V39 Q23 43 19 43 H9 Q5 43 5 39 V33" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 29 Q28 25 32 25 H39 Q43 25 43 29 V39 Q43 43 39 43 H32 Q28 43 28 39 Z" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linejoin="round"/><defs><linearGradient id="dg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient></defs></svg></span><small>Dashboard</small></a>
+  <a href="channels.html"><span class="channel-master-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 26 10 34M33 26l5 8M15 39h18"/><path d="M23 8v4"/></g><circle cx="24" cy="5.5" r="3.5" fill="#FF9F2E" stroke="#FFFFFF" stroke-width="1.5"/><rect x="13" y="12" width="22" height="17" rx="5" fill="#21A9E0" stroke="#FFFFFF" stroke-width="2.5"/><circle cx="19" cy="20" r="1.7" fill="#FFFFFF"/><circle cx="29" cy="20" r="1.7" fill="#FFFFFF"/><rect x="4" y="33" width="15" height="12" rx="3.5" fill="#07123A" stroke="#FFFFFF" stroke-width="2.3"/><circle cx="9" cy="39" r="1.2" fill="#FFFFFF"/><circle cx="14" cy="39" r="1.2" fill="#FFFFFF"/><rect x="29" y="33" width="15" height="12" rx="3.5" fill="#07123A" stroke="#FFFFFF" stroke-width="2.3"/><circle cx="34" cy="39" r="1.2" fill="#FFFFFF"/><circle cx="39" cy="39" r="1.2" fill="#FFFFFF"/></svg></span><small>Channels</small></a>
+  <a href="content.html"><span class="content-master-icon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M10.2 22H6.1A3.1 3.1 0 0 1 3 18.9V5.1A3.1 3.1 0 0 1 6.1 2h11.8A3.1 3.1 0 0 1 21 5.1v7.4" stroke="#6524B8" stroke-width="1.9"/><path d="M7 7.2h2.7M7 10.5h10M7 13.8h10M7 17.1h7" stroke="#6524B8" stroke-width="1.9"/><path d="M17.4 14.3c.6 2.1 1.5 3 3.6 3.6-2.1.6-3 1.5-3.6 3.6-.6-2.1-1.5-3-3.6-3.6 2.1-.6 3-1.5 3.6-3.6Z" fill="#FF9418" stroke="#FF9418" stroke-width="1.3"/></svg></span><small>Content</small></a>
+  <a href="approvals.html"><span class="approval-master-icon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#16E08A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v6.2a2.8 2.8 0 0 1-2.8 2.8H5.8A2.8 2.8 0 0 1 3 18.2V5.8A2.8 2.8 0 0 1 5.8 3H14"/><path d="m7.2 12.2 3.4 3.4L21 5.2"/></svg></span><small>Approvals</small></a>
+  <a href="schedule.html"><span class="schedule-master-icon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#08B9D1" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="15.5" height="17" rx="2.3"/><path d="M7 2v4M13.5 2v4M2.5 9h15.5M6 12.5h2M10 12.5h2M6 16h2"/><circle cx="17.5" cy="16.5" r="5.1" fill="#030b24"/><path d="M17.5 13.5v3l2 1.5"/></svg></span><small>Schedule</small></a>
+</nav>
+</div>
+
+
+
+
+
+
+
+
+
+<script id="channels-pull-to-refresh">
+(function(){
+  var main=document.querySelector('.app main');
+  var refreshButton=document.querySelector('.refresh-page');
+  if(!main)return;
+  function forceRefresh(){
+    var url=new URL(window.location.href);
+    url.searchParams.set('ng_refresh',String(Date.now()));
+    url.searchParams.set('ng_v','30');
+    window.location.replace(url.toString());
+  }
+  if(refreshButton){
+    refreshButton.addEventListener('click',function(e){
+      e.preventDefault();
+      forceRefresh();
+    });
+  }
+  var startY=0,startX=0,tracking=false,dragging=false,refreshed=false;
+  var threshold=60,indicator=document.createElement('div');
+  indicator.setAttribute('role','status');
+  indicator.setAttribute('aria-live','polite');
+  indicator.textContent='Pull to refresh';
+  indicator.style.cssText='position:fixed;z-index:9999;top:58px;left:50%;transform:translateX(-50%);padding:8px 14px;border:1px solid #1e4fb5;border-radius:20px;background:#07123a;color:#fff;font:600 12px/1.2 system-ui,sans-serif;box-shadow:0 4px 16px #0006;opacity:0;transition:opacity .12s;pointer-events:none;white-space:nowrap';
+  document.body.appendChild(indicator);
+  function show(label){indicator.textContent=label;indicator.style.opacity='1';}
+  function hide(){indicator.style.opacity='0';}
+  function touchPoint(list){return list&&list.length?list[0]:null;}
+  document.addEventListener('touchstart',function(e){
+    var t=touchPoint(e.touches);
+    if(!t||e.touches.length!==1)return;
+    if(e.target&&e.target.closest&&e.target.closest('button,a,input,textarea,select'))return;
+    startY=t.clientY;startX=t.clientX;
+    tracking=main.scrollTop<=2;
+    dragging=false;refreshed=false;
+    if(tracking)indicator.textContent='Pull to refresh';
+  },{passive:true,capture:true});
+  document.addEventListener('touchmove',function(e){
+    if(!tracking||refreshed)return;
+    var t=touchPoint(e.touches);
+    if(!t){tracking=false;hide();return;}
+    var dy=t.clientY-startY,dx=t.clientX-startX;
+    if(Math.abs(dx)>Math.abs(dy)*0.8){tracking=false;hide();return;}
+    if(dy>6&&main.scrollTop<=2){
+      dragging=true;
+      show(dy>=threshold?'Release to refresh':'Pull to refresh');
+      if(e.cancelable)e.preventDefault();
+    }else if(dy<0){tracking=false;dragging=false;hide();}
+  },{passive:false,capture:true});
+  document.addEventListener('touchend',function(e){
+    if(!tracking||refreshed){hide();tracking=false;return;}
+    var t=touchPoint(e.changedTouches);
+    var dy=t?t.clientY-startY:0,dx=t?t.clientX-startX:0;
+    tracking=false;
+    if(dragging&&dy>=threshold&&Math.abs(dx)<Math.abs(dy)*0.8&&main.scrollTop<=2){
+      refreshed=true;show('Refreshing…');forceRefresh();return;
+    }
+    hide();dragging=false;
+  },{passive:true,capture:true});
+  document.addEventListener('touchcancel',function(){tracking=false;dragging=false;hide();},{passive:true});
+})();
+</script>
+
+
+<dialog class="channel-dialog" id="channel-dialog" aria-labelledby="channel-dialog-title">
+  <form id="channel-form">
+    <h2 id="channel-dialog-title">Add Channel</h2>
+    <label for="channel-url">Channel or profile link</label>
+    <input id="channel-url" name="url" type="url" placeholder="https://..." required>
+    <label for="channel-platform">Platform</label>
+    <select id="channel-platform" name="platform" required>
+      <option value="">Choose platform</option><option>YouTube</option><option>Facebook</option><option>Instagram</option><option>Threads</option>
+    </select>
+    <label for="channel-username">Username / Handle</label>
+    <input id="channel-username" name="username" type="text" placeholder="Auto-detected from link" readonly>
+    <label for="channel-name">Page / Profile / Channel Name</label>
+    <input id="channel-name" name="name" type="text" placeholder="Verified name will appear here" readonly required maxlength="80" aria-describedby="detect-status">
+    <p id="detect-status" class="dialog-note" role="status">Paste a profile link to detect the username. The actual display name requires the platform API and authorization.</p>
+    <p class="dialog-note">This saves a draft on this device only. It does not connect or authorize the social account.</p>
+    <div class="dialog-actions"><button type="button" id="cancel-channel">Cancel</button><button class="primary" type="submit">Save draft</button></div>
+    <p id="channel-message" class="dialog-note" role="status"></p>
+  </form>
+</dialog>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js?v=20261029-profilelookup"></script>
+<script id="approval-safety-display-controls">
+(function(){
+ var manual=document.getElementById('manual-approval-mode');
+ var auto=document.getElementById('auto-approval-mode');
+ var publishing=document.getElementById('publishing-mode-label');
+ var autoLabel=document.getElementById('auto-approval-label');
+ var note=document.getElementById('approval-mode-note');
+ if(!manual||!auto||!publishing||!autoLabel)return;
+ function setMode(isAuto){
+   publishing.textContent=isAuto?'Auto Approval Mode — ON':'Manual Approval Mode — ON';
+   autoLabel.textContent=isAuto?'ON':'OFF';
+   manual.setAttribute('aria-pressed',String(!isAuto));
+   auto.setAttribute('aria-pressed',String(isAuto));
+   note.textContent=isAuto?'Display preference changed only. Publishing automation is not connected yet.':'Manual approval is selected. Publishing automation is not connected yet.';
+ }
+ manual.addEventListener('click',function(){setMode(false);});
+ auto.addEventListener('click',function(){setMode(true);});
+ setMode(false);
+})();
+</script>
+<script id="channels-interactions">
+(function(){
+  var search=document.getElementById('channel-search');
+  var add=document.getElementById('add-channel');
+  var dialog=document.getElementById('channel-dialog');
+  var form=document.getElementById('channel-form');
+  var platform=document.getElementById('channel-platform');
+  var urlInput=document.getElementById('channel-url');
+  var nameInput=document.getElementById('channel-name');
+  var usernameInput=document.getElementById('channel-username');
+  var detectStatus=document.getElementById('detect-status');
+  var msg=document.getElementById('channel-message');
+  var list=document.querySelector('.app main .list');
+  if(search&&list)search.addEventListener('input',function(){
+    var q=search.value.trim().toLowerCase();
+    list.querySelectorAll('.card').forEach(function(card){card.hidden=!card.textContent.toLowerCase().includes(q);});
+    var blur=document.querySelector('.blur');if(blur)blur.hidden=!!q&&!blur.textContent.toLowerCase().includes(q);
+  });
+  function parseProfile(raw){
+    try{
+      var u=new URL(raw);if(u.protocol!=='https:')return null;
+      var host=u.hostname.toLowerCase().replace(/^www\./,'').replace(/^m\./,'');
+      var parts=u.pathname.split('/').filter(Boolean);
+      var p='',handle='';
+      if(host==='youtube.com'||host==='youtu.be'){
+        p='YouTube';if(host==='youtu.be')handle=parts[0]||'';else handle=parts.find(function(x){return x[0]==='@';})||parts[0]||'';
+      }else if(host==='facebook.com'||host==='fb.com'){
+        p='Facebook';handle=parts[0]||'';
+      }else if(host==='instagram.com'){
+        p='Instagram';handle=parts[0]||'';
+      }else if(host==='threads.net'||host==='threads.com'){
+        p='Threads';handle=parts[0]||'';
+      }else return null;
+      if(['watch','reel','reels','p','posts','stories','share','about','settings'].includes(handle.toLowerCase()))handle='';
+      return {platform:p,handle:handle.replace(/^@/,'')};
+    }catch(e){return null;}
+  }
+  if(urlInput)urlInput.addEventListener('input',function(){
+    var parsed=parseProfile(urlInput.value.trim());
+    if(!parsed){if(usernameInput)usernameInput.value='';if(detectStatus)detectStatus.textContent='Enter a valid YouTube, Facebook, Instagram or Threads profile link.';return;}
+    platform.value=parsed.platform;
+    if(usernameInput)usernameInput.value=parsed.handle?'@'+parsed.handle:'';
+    if(detectStatus)detectStatus.textContent=parsed.handle?'Platform and username detected. Looking up the verified profile name…':'Platform detected, but this link does not contain a recognizable username.';
+    if(parsed.handle)lookupVerifiedName(parsed.platform,parsed.handle);
+  });
+  var lookupSeq=0;
+  var verifiedProfileName=false;
+  async function lookupVerifiedName(p,handle){
+    var seq=++lookupSeq;
+    verifiedProfileName=false;
+    if(nameInput)nameInput.value='';
+    try{
+      if(!window.supabase||!window.NEXTGEN_SUPABASE_CONFIG)throw new Error('Profile-name lookup service is not available.');
+      var client=window.supabase.createClient(window.NEXTGEN_SUPABASE_CONFIG.url,window.NEXTGEN_SUPABASE_CONFIG.anonKey);
+      var sessionResult=await client.auth.getSession();
+      var session=sessionResult.data&&sessionResult.data.session;
+      if(!session)throw new Error('Sign in to NextGen to look up the verified profile name.');
+      var response=await client.functions.invoke('channel-profile-lookup',{body:{platform:p.toLowerCase(),url:urlInput.value.trim()}});
+      if(seq!==lookupSeq)return;
+      if(response.error||!response.data||!response.data.display_name||response.data.verified_by_platform!==true)throw new Error(response.data&&response.data.error||'The platform did not return a verified profile name. Check API setup and account authorization.');
+      nameInput.value=response.data.display_name;
+      verifiedProfileName=true;
+      if(usernameInput)usernameInput.value=response.data.handle?'@'+response.data.handle:'@'+handle;
+      if(detectStatus)detectStatus.textContent='Verified profile name detected from '+p+'.';
+    }catch(e){if(seq!==lookupSeq)return;verifiedProfileName=false;if(nameInput)nameInput.value='';if(detectStatus)detectStatus.textContent='Profile name not verified: '+(e.message||'API authorization is required.');}
+  }
+  if(add&&dialog)add.addEventListener('click',function(){if(dialog.showModal)dialog.showModal();else alert('Please open this page in an updated browser to add a channel.');});
+  var cancel=document.getElementById('cancel-channel');
+  if(cancel&&dialog)cancel.addEventListener('click',function(){dialog.close();});
+  document.querySelectorAll('[data-review]').forEach(function(btn){btn.addEventListener('click',function(){
+    var card=btn.closest('.card');if(!card)return;
+    var title=card.querySelector('.info b');var handle=card.querySelector('.info span');
+    alert((title?title.textContent:'Channel')+'\n'+(handle?handle.textContent:'')+'\nConnection: Not verified. Connect the platform API before publishing.');
+  });});
+  if(form)form.addEventListener('submit',function(e){
+    e.preventDefault();var u=urlInput.value.trim(),p=platform.value,n=nameInput.value.trim(),handle=(usernameInput&&usernameInput.value||'').trim();
+    if(!u||!p){msg.textContent='Add a valid profile link first.';return;}
+    if(!verifiedProfileName||!n){msg.textContent='The real profile name must be verified by the platform API before saving.';return;}
+    try{
+      var records=JSON.parse(localStorage.getItem('nextgen-channel-drafts')||'[]');
+      var canonicalUrl;
+      try{var parsedUrl=new URL(u);parsedUrl.hash='';parsedUrl.search='';canonicalUrl=(parsedUrl.origin+parsedUrl.pathname).replace(/\/$/,'').toLowerCase();}catch(ignore){canonicalUrl=u.toLowerCase();}
+      var canonicalHandle=handle.replace(/^@/,'').toLowerCase();
+      if(records.some(function(x){
+        var oldUrl=String(x.url||'').toLowerCase();
+        var oldHandle=String(x.username||'').replace(/^@/,'').toLowerCase();
+        return oldUrl===u.toLowerCase() || oldUrl.replace(/[?#].*$/,'').replace(/\/$/,'')===canonicalUrl || (String(x.platform||'').toLowerCase()===p.toLowerCase()&&canonicalHandle&&oldHandle===canonicalHandle);
+      })){msg.textContent='This channel/profile is already saved on this device.';return;}
+      records.push({url:u,canonical_url:canonicalUrl,platform:p,name:n,username:handle,createdAt:new Date().toISOString(),status:'draft',verified_by_platform:true});
+      localStorage.setItem('nextgen-channel-drafts',JSON.stringify(records));
+      msg.textContent='Draft saved on this device. API connection is not completed.';
+      form.reset();
+    }catch(err){msg.textContent='Could not save on this device. Please check browser storage settings.';}
+  });
+})();
+</script>
+
+<script id="ng-one-time-cache-diagnostic">
+(function(){
+  if(new URLSearchParams(window.location.search).get('test')!=='3')return;
+  var work=[];
+  if('serviceWorker' in navigator){
+    work.push(navigator.serviceWorker.getRegistrations().then(function(registrations){
+      return Promise.all(registrations.map(function(registration){return registration.unregister();}));
+    }));
+  }
+  if(window.caches){
+    work.push(caches.keys().then(function(keys){
+      return Promise.all(keys.map(function(key){return caches.delete(key);}));
+    }));
+  }
+  Promise.all(work).then(function(){
+    var url=new URL(window.location.href);
+    url.searchParams.set('test','cache-cleared');
+    url.searchParams.set('ng_refresh',String(Date.now()));
+    window.location.replace(url.toString());
+  }).catch(function(){
+    var url=new URL(window.location.href);
+    url.searchParams.set('test','cache-cleanup-failed');
+    window.location.replace(url.toString());
+  });
+})();
+</script>
+
+
+<script id="ng-hamburger-fix-script">
+(function(){
+ // Keep only the intended square menu button, logo and right-side actions in the header.
+ var header=document.querySelector('.app>header');
+ var trigger=document.getElementById('ng-hamburger');
+ function cleanHeader(){if(!header)return;Array.prototype.slice.call(header.children).forEach(function(el){if(el!==trigger&&!el.classList.contains('logo')&&!el.classList.contains('hr'))el.remove();});}
+ cleanHeader();
+ if(header&&window.MutationObserver){new MutationObserver(cleanHeader).observe(header,{childList:true});}
+ if(trigger){trigger.querySelectorAll('span').forEach(function(line,i){if(i>2)line.remove();});}
+
+ var drawer=document.getElementById('ng-menu-drawer');
+ var backdrop=document.getElementById('ng-menu-backdrop');
+ var close=document.getElementById('ng-menu-close');
+ if(!trigger||!drawer||!backdrop||!close||trigger.dataset.ready==='1')return;
+ trigger.dataset.ready='1';
+ function openMenu(){
+   drawer.classList.add('is-open');drawer.setAttribute('aria-hidden','false');
+   backdrop.hidden=false;trigger.setAttribute('aria-expanded','true');
+   trigger.setAttribute('aria-label','Close navigation menu');
+   document.body.classList.add('ng-menu-open');
+ }
+ function closeMenu(){
+   drawer.classList.remove('is-open');drawer.setAttribute('aria-hidden','true');
+   backdrop.hidden=true;trigger.setAttribute('aria-expanded','false');
+   trigger.setAttribute('aria-label','Open navigation menu');
+   document.body.classList.remove('ng-menu-open');
+ }
+ trigger.addEventListener('click',function(){if(drawer.classList.contains('is-open'))closeMenu();else openMenu();});
+ close.addEventListener('click',closeMenu);
+ backdrop.addEventListener('click',closeMenu);
+ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
+ drawer.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu);});
+})();
+</script>
+
+
+<script id="dash1-approval-preview">
+(function(){
+ var manual=document.getElementById('dash1-manual-approval'),auto=document.getElementById('dash1-auto-approval');
+ var status=document.getElementById('dash1-publishing-status'),help=document.getElementById('dash1-publishing-help');
+ if(!manual||!auto||!status||!help)return;
+ function setMode(isAuto){
+   manual.classList.toggle('is-selected',!isAuto);auto.classList.toggle('is-selected',isAuto);
+   manual.setAttribute('aria-pressed',String(!isAuto));auto.setAttribute('aria-pressed',String(isAuto));
+   status.textContent=isAuto?'Auto Approval Mode — ON':'Manual Approval Mode — ON';
+   help.textContent=isAuto?'Auto approval is a preview preference only. This prototype does not publish or schedule posts.':'Content requires your approval before publishing.';
+ }
+ manual.addEventListener('click',function(){setMode(false);});
+ auto.addEventListener('click',function(){setMode(true);});
+ setMode(false);
+})();
+</script>
+
+</body>
+</html>
