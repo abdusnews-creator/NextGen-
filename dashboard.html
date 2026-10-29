@@ -949,5 +949,19 @@ html body .app main > footer.ng-shared-footer > .ng-credit{font-size:10px!import
 header .ng-hamburger span{transform:translateY(3.5px)!important;}
 </style>
 
+
+<style id="ng-header-footer-design-lock">
+/* HEADER + FOOTER MASTER LOCK — preserve approved visual styling unless user explicitly requests a change. */
+body>.app>header, body>header:not(.ng-auth-master-header), body>main>header:not(.ng-auth-master-header), body>.app>header:not(.ng-auth-master-header), header.studio-top{
+  background:linear-gradient(180deg,#050c2a 0%,#07123a 100%)!important;
+  color:#fff!important;border-bottom:2px solid #2a5bff!important;
+  box-shadow:0 0 14px #3a2cff55!important;box-sizing:border-box!important;
+}
+.app main > footer.ng-shared-footer{
+  background:#050b28!important;border-top:1px solid #1e4fb5!important;color:#8fa6d6!important;
+}
+.app main > footer.ng-shared-footer .ng-credit{color:#fff!important;}
+</style>
+
 </body>
 </html>
