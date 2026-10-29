@@ -3,7 +3,7 @@
   "name": "NextGen",
   "short_name": "NextGen",
   "description": "Smart Automation. Smarter Growth.",
-  "start_url": "./dashboard-1.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0b1020",
