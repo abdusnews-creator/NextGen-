@@ -1,381 +1,151 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Trigger GitHub Pages redeploy after adding Settings page -->
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b1020">
-<title>NextGen — Settings</title>
-
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#0b1020;color:#eef3ff;font-family:Arial,sans-serif}
-header{padding:22px;background:#141e32;border-bottom:1px solid #293752}
-h1{margin:0;color:#91aaff;font-size:30px}
-header p{margin:6px 0;color:#c1cbe0}
-.credit{font-size:11px;color:#a5b3cc;text-align:right}
-.layout{display:flex;min-height:85vh}
-nav{width:190px;flex-shrink:0;padding:15px;background:#10182a}
-nav button{display:block;width:100%;margin:5px 0;padding:12px;text-align:left;background:#1a2740;color:white;border:0;border-radius:8px}
-main{padding:22px;flex:1;min-width:0}
-.card{background:#141e32;border:1px solid #293752;border-radius:13px;padding:18px;margin-bottom:16px}
-h2,h3{margin-top:0}
-.stats,.channels,.drafts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.channels{grid-template-columns:repeat(2,minmax(0,1fr))}
-.stat strong{font-size:27px;display:block;margin-top:8px}
-.muted{color:#a5b3cc;font-size:13px}
-button{cursor:pointer}
-.action{padding:10px 13px;border-radius:8px;border:1px solid #53688d;background:#233654;color:white;margin:4px 4px 4px 0}
-.action.active{background:#91aaff;color:#0b1020;font-weight:bold}
-.warning{background:#302818;border:1px solid #806633;color:#ffe1a6;padding:12px;border-radius:9px;font-size:13px}
-.draft{background:#1a2740;padding:13px;border-radius:10px}
-.status{color:#ffd27d;font-size:12px}
-.page{display:none}
-.page.show{display:block}
-footer{text-align:center;color:#a5b3cc;padding:18px;font-size:12px}
-.check-row{display:block;margin:15px 0;line-height:1.5}
-.check-row input{margin-right:8px}
-@media(max-width:650px){
- .layout{display:block}
- nav{width:100%;display:flex;overflow-x:auto;gap:5px}
- nav button{min-width:max-content;width:auto}
- main{padding:12px}
- .stats,.drafts,.channels{grid-template-columns:1fr}
-}
-.studio-top-right button[aria-label="Notifications"]{font-size:0!important;position:relative!important;display:grid;place-items:center}
-.studio-top-right button[aria-label="Notifications"] .notification-bell{width:23px;height:23px;fill:none;stroke:#f4f8ff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}
-.studio-top-right button[aria-label="Notifications"]::after{content:"";position:absolute;top:5px;right:6px;width:8px;height:8px;border-radius:50%;background:#ff304f;border:2px solid #0b2442;box-sizing:content-box}
-
-/* NextGen shared brand system: consistent dark-blue header/footer on every page */
-:root{--ng-bg:#0b1020;--ng-panel:#141e32;--ng-line:#293752;--ng-text:#eef3ff;--ng-muted:#a5b3cc;--ng-accent:#91aaff}
-body{background-color:var(--ng-bg);color:var(--ng-text)}
-body>header,body>main>header,body>.card>header{
- background:linear-gradient(110deg,#10213f 0%,#173b70 58%,#102544 100%)!important;
- color:#f4f7ff;border-bottom:1px solid #35547e!important;
-}
-body>header .brand,body>header h1,body>main>header h1{color:#f4f7ff}
-body>header .tag,body>header p,body>main>header p{color:#c5d9ff}
-body>footer,footer.ng-shared-footer{
- display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
- padding:14px 18px calc(14px + env(safe-area-inset-bottom));margin-top:24px;
- color:#c5d9ff;background:linear-gradient(110deg,#10213f,#173b70 58%,#102544);
- border-top:1px solid #35547e;font-size:15px;font-weight:800;}
-body>footer .credit,footer .credit{color:#d4e2ff;text-align:right}
-.ng-bottom-nav{
- position:fixed;z-index:1000;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
- gap:2px;padding:7px 6px calc(7px + env(safe-area-inset-bottom));
- background:rgba(9,20,39,.97);border-top:1px solid #35547e;backdrop-filter:blur(12px)
-}
-.ng-bottom-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;
- padding:5px 2px;border-radius:9px;color:#b8c9e8;text-decoration:none;font-size:11px}
-.ng-bottom-nav a span{font-size:19px;line-height:1.15}
-.ng-bottom-nav a small{font-size:10px;white-space:nowrap}
-.ng-bottom-nav a.active{color:#fff;background:#203e6b}
-body:has(.ng-bottom-nav){padding-bottom:76px!important}
-@media(max-width:480px){body>footer{padding-left:14px;padding-right:14px}.ng-bottom-nav a small{font-size:9px}}
-
-
-/* Slightly larger, bold footer/corner text */
-body>footer, footer.ng-shared-footer, body>footer .credit, footer .credit { font-size: 15px !important; font-weight: 800 !important; }
-.notification-bell-3d{font-size:20px;line-height:1;display:block;filter:drop-shadow(0 2px 1px #0008) drop-shadow(0 0 3px #f5b94255)}
-
-/* NextGen shared visual system */
-:root{--ng-bg:#041126;--ng-panel:#071b36;--ng-line:#075ca8;--ng-cyan:#10c8ff;--ng-purple:#b52cff;--ng-muted:#b9d4fa}
-body{background:radial-gradient(ellipse at 50% -15%,#0b2d65 0%,#041126 58%,#020918 100%)!important;color:#eef5ff}
-header,.studio-top{background:linear-gradient(110deg,#041126 0%,#071d40 58%,#10194a 100%)!important;border-bottom:1px solid #087be4!important;box-shadow:0 4px 24px rgba(0,132,255,.15)}
-header h1,header .brand,.studio-top strong{color:#f4f8ff}
-header p,header small{color:#12caff}
-.ng-shared-footer{box-sizing:border-box;width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:0;padding:18px 22px;border:1px solid #087be4;border-radius:14px;background:linear-gradient(110deg,#041126,#071b3b 60%,#11133b);box-shadow:0 0 20px rgba(0,150,255,.16);color:#b9d4fa;font-size:12px;line-height:1.5}
-.ng-shared-footer .ng-copyright{color:#c7dcfa;text-align:left}
-.ng-shared-footer .ng-credit{color:#18c9ff;text-align:right;font-weight:650;white-space:nowrap}
-@media(max-width:560px){.ng-shared-footer{gap:8px;padding:14px 12px;font-size:10px}.ng-shared-footer .ng-copyright,.ng-shared-footer .ng-credit{max-width:100%;text-align:left}}
-
-</style>
-<style>
-/* NextGen Studio-inspired dashboard */
-:root{color-scheme:dark}
-body{background:#0f141b;color:#f1f5f9;font-family:Arial,Helvetica,sans-serif}
-.studio-top{height:72px;padding:0 26px;background:linear-gradient(110deg,#07182c 0%,#0b2442 65%,#103b65 100%);border-bottom:1px solid #1675bd;display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:20;box-shadow:0 5px 22px #0004}
-.studio-menu{font-size:25px;color:#cbd5e1;background:transparent;border:0;padding:6px}
-.studio-brand{display:flex;align-items:center;gap:10px;min-width:230px;font-size:22px;font-weight:700;color:#f8fafc}
-.studio-mark{width:38px;height:27px;background:#ff0033;border-radius:8px;display:grid;place-items:center;color:white;font-size:16px}
-.studio-search{height:42px;max-width:720px;flex:1;border-radius:28px;background:#202a36;border:1px solid #2d3948;color:#eef2f7;padding:0 18px;font-size:15px;outline:none}
-.studio-search:focus{border-color:#6686b8}
-.studio-top-right{display:flex;align-items:center;gap:20px;margin-left:auto;color:#bdc8d6}
-.studio-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#2563eb;color:#fff;font-weight:700}
-.studio-shell{display:flex;min-height:calc(100vh - 72px)}
-.studio-nav{width:248px;flex-shrink:0;padding:16px 12px;background:#0e151d;border-right:1px solid #202b36}
-.studio-channel{display:flex;gap:12px;align-items:center;padding:8px 10px 22px;margin-bottom:14px;border-bottom:1px solid #25303c}
-.studio-channel-logo{width:54px;height:54px;border-radius:50%;background:#e7dfcb;color:#6e4b19;display:grid;place-items:center;font-size:23px;flex-shrink:0}
-.studio-channel strong{display:block;font-size:13px;line-height:1.4}
-.studio-channel small{display:block;color:#92a1b4;margin-top:4px;font-size:12px}
-.studio-nav .studio-navbtn{display:flex;align-items:center;gap:14px;width:100%;min-width:0;padding:12px 14px;margin:3px 0;border:0;border-radius:9px;background:transparent;color:#c4cfdd;text-align:left;font-size:14px}
-.studio-nav .studio-navbtn:hover{background:#1c2733}
-.studio-nav .studio-navbtn.active{background:#382027;color:#fff;font-weight:700;box-shadow:inset 4px 0 #ff0033}
-.studio-nav-icon{width:22px;text-align:center;font-size:18px}
-.studio-main{padding:28px 26px 44px;flex:1;min-width:0;max-width:1700px;margin:0 auto}
-.studio-pagehead{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:24px}
-.studio-pagehead h2{font-size:28px;margin:0 0 7px;color:#f8fafc}
-.studio-subtitle{margin:0;color:#9aaabd;font-size:14px}
-.studio-period{background:#18222d;border:1px solid #293745;color:#e4ebf4;padding:12px 15px;border-radius:12px}
-.studio-note{color:#e9c875;background:#29251b;border:1px solid #61512b;border-radius:10px;padding:11px 14px;font-size:12px;margin-bottom:18px}
-.studio-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:22px}
-.studio-metric{background:#141d27;border:1px solid #25313e;border-radius:14px;padding:18px;min-width:0}
-.studio-metric-label{display:flex;align-items:center;gap:10px;color:#c0cddd;font-size:14px}
-.studio-metric-icon{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;font-size:20px;color:#fff}
-.studio-metric-value{font-size:28px;font-weight:700;margin:14px 0 7px}
-.studio-metric-foot{font-size:12px;color:#8fa1b6}
-.studio-content-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,1fr);gap:22px;align-items:start}
-.studio-panel{background:#141d27;border:1px solid #25313e;border-radius:14px;padding:20px;margin-bottom:20px;min-width:0}
-.studio-panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
-.studio-panel h3{font-size:19px;margin:0;color:#f3f6fb}
-.studio-link{color:#6ba3ff;background:none;border:0;padding:4px;font-weight:600}
-.studio-video{display:grid;grid-template-columns:144px minmax(0,1fr) 20px;gap:16px;padding:12px 0;border-bottom:1px solid #26323e;align-items:center}
-.studio-video:last-child{border-bottom:0;padding-bottom:0}
-.studio-thumb{height:86px;border-radius:8px;background:linear-gradient(135deg,#745331,#d6b77b 48%,#3b2b1d);display:grid;place-items:center;color:#fff;font-size:32px;position:relative;overflow:hidden}
-.studio-thumb.bed{background:linear-gradient(135deg,#b7a48c,#45362b 50%,#e1d3bc)}
-.studio-thumb.sofa{background:linear-gradient(135deg,#bcb8b1,#6c6258 55%,#e8dfd2)}
-.studio-thumb.dining{background:linear-gradient(135deg,#bda26d,#59432c 55%,#dfd1b1)}
-.studio-thumb span{position:absolute;right:6px;bottom:6px;background:#090d12dd;padding:3px 5px;border-radius:4px;font-size:11px}
-.studio-video-title{font-size:14px;line-height:1.4;margin-bottom:7px;color:#e8eef6}
-.studio-video-meta{font-size:12px;color:#8295aa;margin-bottom:10px}
-.studio-video-stats{display:flex;gap:18px;flex-wrap:wrap;color:#b1c0d1;font-size:12px}
-.studio-more{color:#9aabbe;background:none;border:0;font-size:18px}
-.studio-big-number{font-size:30px;font-weight:700;margin:6px 0}
-.studio-positive{font-size:12px;color:#35d477}
-.studio-divider{height:1px;background:#283441;margin:18px 0}
-.studio-topcontent{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:13px}
-.studio-mini-thumb{width:54px;height:36px;border-radius:5px;background:linear-gradient(135deg,#bca06d,#57402b);display:grid;place-items:center}
-.studio-topcontent .studio-number{margin-left:auto;color:#dce5ef}
-.studio-comment{display:grid;grid-template-columns:34px minmax(0,1fr) 50px;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid #283441}
-.studio-comment:last-child{border-bottom:0}
-.studio-comment-avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#6752cc;color:#fff;font-weight:bold}
-.studio-comment p{font-size:12px;line-height:1.5;margin:4px 0;color:#e2e8f0}
-.studio-comment small{font-size:11px;color:#91a2b6}
-.studio-news{display:flex;gap:12px;align-items:center;color:#c4d0de;font-size:13px;padding:15px 0 2px}
-.studio-news-icon{background:#ff0033;color:#fff;border-radius:6px;padding:5px 7px}
-.studio-approval{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
-.studio-main .action{background:#222f3d;border-color:#40536a}
-.studio-main .action.active{background:#dce8ff;color:#142031}
-.studio-main .warning{margin-top:12px}
-.studio-main .page h2{color:#f8fafc}
-.studio-main input,.studio-main select{color:#eef3ff}
-@media(max-width:1050px){.studio-nav{width:215px}.studio-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-content-grid{grid-template-columns:1fr}.studio-brand{min-width:170px}}
-@media(max-width:680px){.studio-top{height:62px;padding:0 12px;gap:9px}.studio-brand{min-width:0;font-size:18px}.studio-brand .studio-mark{width:32px;height:24px}.studio-search{display:none}.studio-top-right{gap:10px}.studio-shell{display:block}.studio-nav{width:100%;display:flex;overflow-x:auto;gap:4px;padding:8px;border-right:0;border-bottom:1px solid #25313e}.studio-channel{display:none}.studio-nav .studio-navbtn{width:auto;min-width:max-content;margin:0;padding:10px 12px}.studio-nav-icon{width:auto}.studio-main{padding:18px 12px 32px}.studio-pagehead{align-items:flex-start;flex-direction:column}.studio-pagehead h2{font-size:24px}.studio-period{padding:9px 12px}.studio-metrics{gap:10px}.studio-metric{padding:14px}.studio-metric-value{font-size:24px}.studio-metric-label{font-size:12px}.studio-metric-icon{width:32px;height:32px}.studio-panel{padding:15px}.studio-video{grid-template-columns:100px minmax(0,1fr) 14px;gap:10px}.studio-thumb{height:70px;font-size:25px}.studio-video-title{font-size:12px}.studio-video-stats{gap:10px}.studio-content-grid{display:block}}
-
-</style>
-<style>
-.studio-mark{display:none!important}
-.studio-brand{min-width:150px!important}
-.studio-brand:after{content:"";display:none}
-.studio-top-right{gap:16px}
-.top-icon-btn{width:40px;height:40px;border:0;border-radius:50%;display:grid;place-items:center;background:transparent;color:#dbe6f5;font-size:23px;position:relative}
-.top-icon-btn:hover{background:#253446}
-.top-add-btn{background:#172b43;border:1px solid #2e4968;color:#e8f2ff;font-size:25px}
-.top-profile-btn{width:34px;height:34px;font-size:15px;background:#2449bc;color:white}
-.studio-top{position:sticky}
-.top-popover{position:absolute;top:62px;right:72px;width:270px;max-width:calc(100vw - 24px);background:#111d2a;border:1px solid #2c3b4c;border-radius:15px;box-shadow:0 14px 40px #0008;padding:10px;z-index:100}
-.top-popover[hidden]{display:none}
-.top-popover-head{padding:12px;border-bottom:1px solid #2a3948;margin-bottom:6px;color:#edf4ff}
-.top-popover-head small{display:block;color:#93a7bd;margin-top:4px}
-.top-popover button,.top-popover a{display:flex;align-items:center;gap:12px;width:100%;padding:11px 12px;border:0;border-radius:8px;background:transparent;color:#e0eaf6;text-decoration:none;text-align:left;font-size:14px}
-.top-popover button:hover,.top-popover a:hover{background:#223144}
-.top-popover .pop-divider{height:1px;background:#293847;margin:6px 2px}
-@media(max-width:680px){.studio-brand{font-size:18px!important}.studio-top-right{gap:5px}.top-icon-btn{width:34px;height:36px}.top-popover{top:56px;right:8px}}
-</style>
-<style>
-/* Mobile Studio bottom navigation and reliable hamburger drawer */
-.studio-menu{cursor:pointer;position:relative;z-index:120;min-width:38px;min-height:38px;display:grid;place-items:center;border-radius:8px}
-.studio-menu:hover{background:#263442}
-@media(min-width:681px){
- .studio-nav.nav-expanded{width:248px}
-}
-@media(max-width:680px){
- body{padding-bottom:72px}
- .studio-shell{display:block;min-height:auto}
- .studio-nav{position:fixed;z-index:110;top:62px;bottom:0;left:0;width:min(290px,84vw);height:auto;display:flex;flex-direction:column;align-items:stretch;overflow-y:auto;overflow-x:hidden;gap:4px;padding:14px 10px 24px;background:#0e151d;border-right:1px solid #2b3948;box-shadow:12px 0 32px #0008;transform:translateX(-110%);visibility:hidden;transition:transform .2s ease,visibility .2s ease}
- .studio-nav.nav-expanded{transform:translateX(0);visibility:visible}
- .studio-nav .studio-channel{display:flex}
- .studio-nav .studio-navbtn{width:100%;min-width:0;flex-shrink:0}
- .studio-main{padding:16px 12px 26px}
-
-}
-
-</style>
-<style>
-/* NextGen duplicate dashboard polish: accessible, responsive, approval-first */
-:root{--ng-blue:#168bff;--ng-cyan:#12d7f4;--ng-green:#00d99a;--ng-purple:#a855f7;--ng-amber:#ffb020}
-body{background:radial-gradient(ellipse at 55% -12%,#123a67 0%,#07172c 42%,#050d1b 100%)!important;color:#edf5ff}
-.studio-top{background:rgba(4,18,37,.96)!important;border-bottom-color:#164a79!important;backdrop-filter:blur(14px)}
-.studio-brand{color:#f5f9ff!important;letter-spacing:.1px}
-.studio-brand:before{content:none;display:none}
-.studio-nav{background:rgba(3,16,32,.88)!important;border-right-color:#123657!important}
-.studio-nav .studio-navbtn{transition:background .18s ease,color .18s ease}
-.studio-nav .studio-navbtn.active,.studio-nav .studio-navbtn[aria-current=page]{background:linear-gradient(100deg,#0755a7,#0b3970)!important;color:#fff!important;box-shadow:inset 3px 0 #18caff}
-.studio-main{background:transparent}
-.studio-panel,.studio-metric,.studio-note,.studio-video,.studio-top-right .top-popover{border-color:#17436c!important;box-shadow:0 10px 30px #0002}
-.studio-panel{background:linear-gradient(145deg,#081f3a,#06172c)!important;border-radius:15px}
-.studio-metric{background:linear-gradient(145deg,#0c2440,#08162a)!important;border-radius:14px;transition:transform .18s ease,border-color .18s ease}
-.studio-metric:hover{transform:translateY(-2px);border-color:#2588d5!important}
-.studio-metric-value{letter-spacing:-.5px}
-.studio-main .action{border-color:#28547c;background:#102b48;color:#f2f8ff}
-.studio-main .action.active{background:linear-gradient(110deg,#0d9eff,#1764f5);color:white;border-color:#279fff}
-.studio-main input:focus,.studio-main select:focus,.studio-search:focus{outline:2px solid #13b9f4;outline-offset:2px}
-.studio-main .warning{background:#302516;border-color:#8d6927;color:#ffe2a6}
-.ng-bottom-nav{background:rgba(3,14,29,.97)!important;border-top-color:#1a4d76!important}
-.ng-bottom-nav a.active{background:#0c4e87!important;color:#fff!important}
-body>footer{background:#071b32!important;border-top-color:#17436c!important}
-@media(max-width:680px){.studio-top{gap:8px}.studio-brand{font-size:17px!important}.studio-brand:before{display:none}.studio-top-right{gap:5px}.studio-avatar{width:32px;height:32px}.studio-main{padding-top:13px}.studio-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-panel{border-radius:12px}.ng-bottom-nav{padding-bottom:calc(8px + env(safe-area-inset-bottom))}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
-</style>
-<style>
-.profile-menu{position:absolute;top:62px;right:14px;z-index:5000;width:min(310px,calc(100vw - 24px));max-height:calc(100vh - 90px);overflow-y:auto;background:#111d31;border:1px solid #35547e;border-radius:13px;box-shadow:0 14px 38px #0008;padding:8px}
-.profile-menu button{display:flex;align-items:center;gap:12px;width:100%;min-height:46px;padding:10px 12px;text-align:left;border:0;border-radius:8px;background:transparent;color:#eef3ff;font-size:14px;cursor:pointer}
-.profile-menu button:active,.profile-menu button:hover{background:#203e6b}
-.profile-menu button>span:first-child{width:22px;text-align:center;font-size:18px;color:#c5d9ff}
-.profile-menu .google-mark{font-weight:800;color:#4285f4!important}
-.profile-menu .top-popover-head{padding:10px 12px 13px;border-bottom:1px solid #293752;margin-bottom:5px}
-.profile-menu .top-popover-head b{display:block;font-size:15px}
-.profile-menu .top-popover-head small{display:block;margin-top:4px;color:#a5b3cc}
-.profile-menu .pop-divider{height:1px;background:#293752;margin:5px 4px}
-.studio-top-right{position:relative}
-</style>
-<style>
-.general-settings-panel{max-width:980px;margin:22px auto 40px;padding:0 18px 30px;min-height:50vh}
-.general-settings-panel[hidden]{display:none!important}
-.general-settings-panel .settings-title{font-size:30px;border:0;margin:18px 0 20px;padding:0}
-.general-setting-card{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:24px 22px;margin:0 0 18px;border:1px solid #293752;border-radius:24px;background:#111a2c;min-height:145px}
-.general-setting-copy{flex:1;min-width:0}
-.general-setting-copy h2{font-size:clamp(19px,4vw,27px);margin:0 0 14px;color:#f1f5ff}
-.general-setting-copy p{font-size:clamp(15px,3.5vw,21px);line-height:1.55;margin:0;color:#aebbd2}
-.mode-switch{flex:0 0 74px;width:74px;height:44px;border:0;border-radius:30px;padding:5px;background:#46536a;display:flex;align-items:center;justify-content:flex-start;cursor:pointer}
-.mode-switch span{width:34px;height:34px;border-radius:50%;background:#fff;display:block}
-.mode-switch.is-on{background:#75bca0;justify-content:flex-end}
-.general-back-button{padding:12px 16px;border-radius:10px;border:1px solid #35547e;background:#172640;color:#eef3ff;font-size:16px}
-@media(max-width:520px){.general-settings-panel{padding:0 14px}.general-setting-card{padding:19px 16px;gap:12px;border-radius:20px;min-height:130px}.mode-switch{flex-basis:62px;width:62px;height:38px}.mode-switch span{width:28px;height:28px}.general-setting-copy p{line-height:1.5}}
-</style>
-<style>
-.approval-safety-card{margin:22px 0 26px;padding:22px;border:1px solid #293752;border-radius:22px;background:#141e32;color:#eef3ff}
-.approval-safety-card>h2{font-size:24px;margin:0 0 24px}
-.approval-status-line{font-size:18px;line-height:1.45;margin:0 0 26px}
-.approval-status-line strong{font-weight:800}
-.approval-note{padding:18px 16px;border:1px solid #293752;border-radius:20px;background:#111a2c;margin:0 0 16px}
-.approval-note h3{font-size:19px;margin:0 0 12px}
-.approval-note p{font-size:16px;line-height:1.5;color:#aebbd2;margin:0}
-.approval-warning{padding:18px 16px;background:#302818;color:#ffe1a6;border:1px solid #806633;border-radius:18px;font-size:15px;line-height:1.65;margin-top:0}
-.approval-warning+.approval-warning{margin-top:0}
-@media(max-width:520px){.approval-safety-card{padding:18px 16px}.approval-safety-card>h2{font-size:22px}.approval-status-line{font-size:16px;margin-bottom:22px}.approval-warning{font-size:14px;line-height:1.6}}
-</style>
-
-<style id="nextgen-final-responsive-polish">
-:root{color-scheme:dark;--ng-bg:#07111f;--ng-panel:#0d1b2d;--ng-line:#243a54;--ng-text:#edf5ff;--ng-muted:#a9bdd3;--ng-blue:#398bff;--ng-cyan:#42d9ed}
-html{min-height:100%;scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;background-color:var(--ng-bg);color:var(--ng-text);overflow-x:hidden}
-main, .main, .container, .app-container, .page-content{min-width:0;max-width:100%}
-img,video,canvas,svg{max-width:100%;height:auto}
-input,select,textarea,button{font:inherit;max-width:100%;touch-action:manipulation}
-button,[role="button"],input[type="button"],input[type="submit"],a.btn,.btn{cursor:pointer;-webkit-tap-highlight-color:transparent;min-height:42px}
-input,select,textarea{min-height:42px}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--ng-cyan);outline-offset:3px}
-.ng-shared-footer{position:static!important;inset:auto!important;z-index:1;width:100%;margin-top:auto;padding:18px max(16px,env(safe-area-inset-right)) calc(18px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;background:#081321;border-top:1px solid var(--ng-line);color:var(--ng-muted);font-size:12px;line-height:1.5;box-sizing:border-box}
-.ng-shared-footer .ng-credit{font-size:11px;letter-spacing:.04em;white-space:normal;text-align:right}
-.ng-bottom-nav{padding-bottom:env(safe-area-inset-bottom)!important}
-.ng-bottom-nav a{touch-action:manipulation;min-height:48px}
-@media(max-width:600px){
- body{font-size:14px}
- .ng-shared-footer{font-size:11px;padding:14px 14px calc(14px + env(safe-area-inset-bottom));gap:6px}
- .ng-shared-footer .ng-credit{text-align:left}
- input,select,textarea{width:100%;box-sizing:border-box}
- table{display:block;max-width:100%;overflow-x:auto}
- .ng-bottom-nav{grid-template-columns:repeat(5,minmax(0,1fr));gap:2px}
- .ng-bottom-nav a{padding-left:2px!important;padding-right:2px!important}
-}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
-</style>
-
-<meta name="theme-color" content="#07111f">
-<link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" href="./icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="./icon.svg">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="NextGen">
-
-<style id="nextgen-final-polish-20261028">
-:root{--ng-final-bg:#07111f;--ng-final-panel:#0d1c30;--ng-final-line:#25415f;--ng-final-blue:#268bff;--ng-final-cyan:#42d9ed;--ng-final-text:#eef6ff;--ng-final-muted:#a9bdd3}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{background:radial-gradient(ellipse at 50% -18%,#123b68 0%,#071426 46%,#040b16 100%)!important;color:var(--ng-final-text);overflow-x:hidden}
-button,a,input,select,textarea{touch-action:manipulation}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--ng-final-cyan)!important;outline-offset:3px}
-.card,.studio-panel,.studio-metric,.draft,.draft-card,.channel-card,.settings-card{border-color:var(--ng-final-line)!important;box-shadow:0 10px 30px #0002}
-.card,.studio-panel{background:linear-gradient(145deg,#10233b,#0a182a)!important;border-radius:15px}
-button,.action,nav button,.studio-navbtn{transition:background-color .15s ease,border-color .15s ease,transform .15s ease}
-button:active,.action:active{transform:translateY(1px)}
-input,select,textarea{min-height:42px;border-radius:10px}
-textarea{min-height:100px}
-nav button,.studio-navbtn{border-radius:10px!important}
-nav button.active,.studio-navbtn.active{background:linear-gradient(100deg,#0755a7,#0b3970)!important;color:#fff!important;border:1px solid #2879ba!important}
-.action{border:1px solid #31577d!important;background:#102d4a!important;color:#f2f8ff!important;border-radius:10px!important;padding:11px 15px!important;font-weight:650}
-.action.active,.action.primary{background:linear-gradient(110deg,#138fff,#1766e8)!important;color:white!important}
-.warning,.notice{border-radius:12px!important;line-height:1.55}
-.ng-shared-footer{width:100%;box-sizing:border-box;gap:10px!important;border-radius:12px!important;background:linear-gradient(110deg,#07182d,#102e50 65%,#101a3b)!important;border:1px solid #214e78!important;margin-top:22px!important;padding:15px 18px!important;color:#c9dcf4!important}
-.ng-shared-footer .ng-credit{color:#d7eaff!important;font-weight:750!important}
-.ng-bottom-nav{padding-bottom:calc(8px + env(safe-area-inset-bottom))!important;background:rgba(4,14,28,.97)!important;border-top:1px solid #214b72!important}
-.ng-bottom-nav a{min-height:45px}
-.ng-bottom-nav a.active{background:#0b4a82!important;color:#fff!important}
-@media(max-width:680px){
- body{padding-bottom:calc(78px + env(safe-area-inset-bottom))!important}
- main,.studio-main{padding-left:12px!important;padding-right:12px!important}
- .layout{display:block!important;min-height:unset!important}
- .layout>nav{width:100%!important;max-width:100%;display:flex!important;overflow-x:auto!important;overscroll-behavior-x:contain;padding:9px!important;gap:6px!important}
- .layout>nav button{flex:0 0 auto;width:auto!important;min-width:max-content!important;margin:0!important;padding:11px 13px!important}
- .stats,.drafts,.channels{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
- .card{padding:14px!important}
- .ng-shared-footer{margin-bottom:8px!important;padding:13px 12px!important;font-size:11px!important;flex-direction:column;align-items:flex-start!important}
- .ng-shared-footer .ng-copyright,.ng-shared-footer .ng-credit{text-align:left!important;white-space:normal!important}
-}
-@media(max-width:390px){.stats,.drafts,.channels{grid-template-columns:minmax(0,1fr)!important}.ng-bottom-nav a small{font-size:9px!important}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
-</style>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NextGen – Settings</title>
 <link rel="stylesheet" href="./nextgen-shared.css?v=master-design-v32-20261029">
-<link rel="icon" href="./icon.svg" type="image/svg+xml">
-<link rel="manifest" href="./manifest.webmanifest">
-<meta name="theme-color" content="#0b1020">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="NextGen">
-<style id="ng-horizontal-wordmark-update-20261028">
-.studio-brand.ng-logo-brand{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:0!important;white-space:nowrap!important;min-width:0!important}
-.ng-brand-copy{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:3px!important;min-width:0!important}
-.ng-logo-brand .studio-brand-name{display:block!important;font-size:23px!important;font-weight:900!important;letter-spacing:-.7px!important;line-height:1!important;background:none!important;color:#fff!important;-webkit-text-fill-color:initial!important}
-.ng-logo-brand .ng-next-word{color:#fff!important}
-.ng-logo-brand .ng-gen-word{background:linear-gradient(110deg,#00e5f0 0%,#087cff 52%,#df2cff 100%);-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important}
-.ng-logo-brand .studio-tagline{display:block!important;font-size:8px!important;font-weight:700!important;letter-spacing:.05px!important;color:#b9d4fa!important;white-space:nowrap!important;line-height:1.15!important}
-@media(max-width:680px){.ng-logo-brand .studio-brand-name{font-size:21px!important}.ng-logo-brand .studio-tagline{font-size:8px!important}}
-</style>
-<style id="ng-profile-logo-only-20261028">
-.ng-profile-logo{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;border-radius:50%!important}
-.top-profile-btn{overflow:hidden!important;padding:0!important;background:#071126!important;border:1px solid #13c9ff!important}
-.studio-channel-logo{display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;background:#020817!important;padding:0!important}
-.studio-channel-logo img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important}
+<style>
+:root{color-scheme:dark;box-sizing:border-box;--bg:#030b24;--txt:#fff;--mut:#8fa6d6;--green:#16e08a;padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;min-height:100%;margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;overflow:hidden}
+.app{max-width:430px;margin:0 auto;width:100%;height:100vh;height:100dvh;position:relative;display:flex;flex-direction:column;overflow:hidden}
+main{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:auto;padding-bottom:16px;touch-action:pan-y}
+main::-webkit-scrollbar{display:none}
+header{flex:none;z-index:5;height:46px;min-height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 10px 0 12px;background:linear-gradient(180deg,#050c2a,#07123a);border-bottom:2px solid #2a5bff;border-radius:0 0 18px 18px;box-shadow:0 0 14px #3a2cff88;position:relative}
+header::after{content:"";position:absolute;right:0;top:0;bottom:0;width:30px;border-right:3px solid #9b3cff;border-radius:0 0 22px 22px}
+.burger{width:20px;display:grid;gap:4px;margin-right:6px}
+.burger i{height:2.5px;background:#fff;border-radius:2px}
+.logo{height:46px;width:auto;max-width:180px;object-fit:contain;margin-right:auto;border-radius:6px;display:block}
+.hr{display:flex;align-items:center;gap:13px;z-index:1}
+.circ{width:29px;height:29px;border-radius:50%;display:grid;place-items:center}
+.plus{border:2px solid #2a5bff;background:#0a1650;box-shadow:0 0 8px #2a5bff}
+.bell{position:relative;width:29px;height:29px;display:grid;place-items:center}.bell svg{transform-origin:50% 12%;animation:bellSwing 1.8s ease-in-out infinite}@keyframes bellSwing{0%,72%,100%{transform:rotate(0deg)}76%{transform:rotate(12deg)}80%{transform:rotate(-10deg)}84%{transform:rotate(7deg)}88%{transform:rotate(-5deg)}92%{transform:rotate(2deg)}}@media(prefers-reduced-motion:reduce){.bell svg{animation:none}}
+.bell u{position:absolute;top:0;right:2px;width:9px;height:9px;border-radius:50%;background:#ff2d3d}
+.av{background:linear-gradient(135deg,#2a6bff,#3b3cff);font-weight:700;font-size:15px;box-shadow:0 0 8px #2a5bff88}
+.hd{display:flex;gap:11px;align-items:center;padding:14px 10px 10px}
+.hico{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#2a8bff,#4a4cff);display:grid;place-items:center;box-shadow:0 0 10px #2a6bff77}
+.hd h1{font-size:23px;font-weight:800;line-height:1.1}
+.hd p{font-size:12px;color:var(--mut);margin-top:2px}
+.bar{display:flex;gap:9px;padding:0 10px;margin-bottom:16px}
+.search{flex:1;display:flex;align-items:center;gap:12px;height:31px;border:1.5px solid #1e4fb5;border-radius:11px;background:#07123a;padding:0 10px;color:var(--mut);font-size:13px}
+.add{border:0;color:#fff;width:108px;height:32px;border-radius:9px;background:linear-gradient(90deg,#1a3cff,#1f9bff);display:flex;align-items:center;justify-content:center;gap:6px;font-weight:700;font-size:12.5px;box-shadow:0 0 10px #1f7bff88}
+.bar .search{min-width:0;overflow:hidden;white-space:nowrap}.bar .search input::placeholder{color:var(--mut);opacity:1}.card .rv{border:0;color:#fff;cursor:pointer}.channel-dialog{width:min(92vw,390px);border:1px solid #2459bd;border-radius:16px;padding:18px;background:#07123a;color:#fff;margin:auto;box-shadow:0 16px 48px #0009}.channel-dialog::backdrop{background:#020718bb}.channel-dialog h2{font-size:20px;margin-bottom:12px}.channel-dialog label{display:block;font-size:13px;color:#b9c9ed;margin:12px 0 5px}.channel-dialog input,.channel-dialog select{width:100%;height:42px;border-radius:9px;border:1px solid #2857a4;background:#030b24;color:#fff;padding:0 10px;font:inherit}.dialog-actions{display:flex;gap:8px;margin-top:16px}.dialog-actions button{flex:1;min-height:40px;border-radius:9px;border:1px solid #2857a4;background:#10245b;color:#fff}.dialog-actions .primary{background:#1b63e8;border:0}.dialog-note{font-size:12px;color:#9eb1d8;line-height:1.45;margin-top:10px}
+.bar .refresh-page{position:relative;z-index:2;flex:0 0 34px;width:34px;min-width:34px;min-height:32px;height:32px;padding:0;border:1px solid #2a6bff;border-radius:9px;background:#0a1650;color:#fff;display:grid;place-items:center;box-shadow:0 0 8px #1f7bff55;cursor:pointer;touch-action:manipulation}.refresh-page:active{transform:scale(.96);background:#12316f}
+.list{padding:0 9px;display:grid;gap:8px}
+.card{--ac:#ff3b4e;position:relative;height:71px;border:1px solid #17407f;border-left:0;border-radius:11px;background:linear-gradient(180deg,#081a45,#061237);display:flex;align-items:center;padding:0 8px 0 18px}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:9px;border-left:3px solid var(--ac);border-radius:11px 0 0 11px}
+.ico{position:absolute;left:18px;top:9px;width:41px;height:41px;border-radius:10px;display:grid;place-items:center}
+.info{position:absolute;left:72px;top:10px}
+.info b{display:block;font-size:20px;font-weight:700;line-height:1.1}
+.info span{font-size:15px;color:#4DB8FF;display:block;margin-top:3px}
+.st{position:absolute;left:72px;top:52px;bottom:auto;font-size:12px;color:#c9d6f5;display:flex;align-items:center;gap:6px}
+.st i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green)}
+.rv{position:absolute;right:9px;top:18px;width:83px;height:28px;border-radius:9px;display:flex;align-items:center;justify-content:center;gap:4px;font-weight:700;font-size:12.5px}
+.yt{--ac:#ff3b4e}.yt .ico{background:#ff1f1f}.yt .rv{background:linear-gradient(90deg,#ff3355,#ff4a5a)}
+.fb{--ac:#1e8bff}.fb .ico{background:#1d6bff}.fb .rv{background:linear-gradient(90deg,#1a63ff,#1e8bff)}
+.ig{--ac:#c026ff}.ig .ico{background:linear-gradient(45deg,#ffb100,#ff2d6f 50%,#8a2be2)}.ig .rv{background:linear-gradient(90deg,#b11cff,#d52cff)}
+.th{--ac:#4f7bd1}.th .ico{background:#000}.th .rv{background:#1c3a74}
+.blur{filter:blur(9px);opacity:.75;margin-top:8px;pointer-events:none;height:500px;overflow:hidden}
+nav{flex:none;position:relative;z-index:5;width:100%;height:calc(43px + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);display:flex;background:linear-gradient(180deg,#07123a,#050b28);border-top:2px solid #1e4fb5;border-radius:18px 18px 0 0;box-shadow:0 -2px 14px #3a2cff66}
+nav a{flex:1;min-width:0;height:100%;padding:2px 0!important;margin:0!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:9px;color:#cfd8f5;font-weight:600;position:relative;text-decoration:none;background:transparent!important;border:0!important;box-shadow:none!important}
+.app nav.ng-bottom-nav{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;z-index:5!important;width:100%!important;height:calc(43px + env(safe-area-inset-bottom,0px))!important;padding:0 4px env(safe-area-inset-bottom,0px)!important;display:flex!important;justify-content:space-around!important;align-items:stretch!important;gap:2px!important;border-radius:18px 18px 0 0!important}.app nav.ng-bottom-nav a{flex:1!important;min-width:0!important;height:100%!important;min-height:0!important;margin:0!important;padding:2px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:2px!important;border:1px solid transparent!important;border-radius:9px!important;background:transparent!important;box-shadow:none!important;color:#cfd8f5!important;font-size:9px!important}.app nav.ng-bottom-nav a.active{background:#0b4a82!important;border:1px solid rgba(77,184,255,.28)!important;border-radius:9px!important;color:#fff!important}.app nav.ng-bottom-nav a.active::before,.app nav.ng-bottom-nav a.active::after{content:none!important;display:none!important}.app nav.ng-bottom-nav a small{display:block!important;font-size:9px!important;line-height:1.2!important;text-align:center!important}.app nav.ng-bottom-nav a .channel-master-icon{width:23px!important;height:23px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}nav a .schedule-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .schedule-master-icon svg{width:23px;height:23px}nav a .approval-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .approval-master-icon svg{width:23px;height:23px}nav a .content-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .content-master-icon svg{width:23px;height:23px}nav a .channel-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .channel-master-icon svg{width:23px;height:23px}nav a .dashboard-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .dashboard-master-icon svg{width:23px;height:23px;overflow:visible}nav a .channel-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .channel-master-icon svg{width:23px;height:23px;overflow:visible}
+nav a.on::after{content:none!important;display:none!important}nav a:not(.on) .dashboard-master-icon,nav a:not(.on) .channel-master-icon,nav a:not(.on) .content-master-icon,nav a:not(.on) .approval-master-icon,nav a:not(.on) .schedule-master-icon{background:transparent;border:0;box-shadow:none;border-radius:0}
+svg{display:block}
+
+/* Channels reference design refresh */
+.hd{gap:11px;padding:6px 11px 8px}
+.hd h1{font-size:24px}
+.hd p{font-size:12px}
+.bar{gap:9px;padding:0 11px;margin-bottom:13px}
+.bar .search{height:36px;border-radius:12px;padding:0 14px;font-size:13px}
+.bar .search svg{flex:none}
+.bar .add{flex:0 0 120px;width:120px;height:36px;border-radius:10px;font-size:13px}
+.bar .refresh-page{height:34px;min-height:34px}
+.list{padding:0 10px;gap:8px}
+.card{height:80px;border-radius:12px;padding:0 8px 0 18px}
+.card::before{width:10px;border-left-width:4px}
+.ico{left:19px;top:10px;width:44px;height:42px;border-radius:10px}
+.yt .ico{width:44px;height:42px}
+.info{left:80px;top:10px}
+.info b{font-size:18px}
+.info span{font-size:13px;margin-top:4px}
+.st{left:19px;top:54px;font-size:12px}
+.st i{width:8px;height:8px;flex:none}
+.rv{right:10px;top:20px;width:92px;height:31px;border-radius:10px;font-size:12.5px}
+.safety{margin:17px 12px 18px;padding:19px 15px 22px;border:1px solid #1d2f50;border-radius:16px;background:linear-gradient(180deg,#0f1d3a,#0b1630)}
+.safety h2{font-size:27px;font-weight:700;color:#8f9bff;line-height:1.2}
+.safety p{font-size:15.5px;color:#fff;margin-top:22px;line-height:1.3}
+.safety p+p{margin-top:21px}
+.safety b{font-weight:700}
+.safety .b1,.safety .b2{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#fff;font-family:inherit;cursor:pointer}
+.safety .b1{width:100%;min-height:48px;margin-top:31px;border-radius:14px;background:linear-gradient(90deg,#1a8cff,#1a63e8);box-shadow:0 0 12px #1a63e855;border:0}
+.safety .b2{width:190px;min-height:48px;margin-top:13px;border-radius:14px;background:#12294a;border:1px solid #1f3d6b}
+@media(max-width:360px){.bar .add{flex-basis:105px;width:105px}.info b{font-size:16px}.info span{font-size:12px}.rv{width:78px}.st{font-size:11px}}
+
+/* Override shared mobile main padding so the page reaches the requested side spacing. */
+@media(max-width:430px){
+  .app,main{width:100%!important;max-width:100%!important}
+  main{padding-left:.01px!important;padding-right:.01px!important}
+}
+/* Force 0.01px left/right spacing on mobile content sections. */
+@media(max-width:430px){
+  .hd,.bar,.list,.safety,.ng-shared-footer{width:calc(100% - .02px)!important;margin-left:.01px!important;margin-right:.01px!important}
+  .hd,.bar,.list,.ng-shared-footer{padding-left:.01px!important;padding-right:.01px!important}
+  .safety{padding-left:15px!important;padding-right:15px!important}
+}
 </style>
 
-<style id="nextgen-channel-master-overrides">
-/* Match Channels master design across NextGen pages without replacing page-specific controls. */
-:root{color-scheme:dark;--ng-bg:#030b24;--ng-panel:#081a45;--ng-panel-2:#061237;--ng-line:#17407f;--ng-text:#fff;--ng-muted:#8fa6d6;--ng-blue:#4DB8FF}
-html{background:#030b24}
-body{background:radial-gradient(ellipse at top right,#0b2457 0%,#030b24 55%)!important;color:#fff!important;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important}
-header,.studio-top{background:linear-gradient(180deg,#050c2a,#07123a)!important;color:#fff!important;border-bottom:2px solid #2a5bff!important;border-radius:0 0 18px 18px!important;box-shadow:0 0 14px #3a2cff55!important}
-header h1,header h2,header strong,.studio-brand,.brand{color:#fff}
-header p,header small{color:#8fa6d6}
-button,.btn,.button,input[type=submit]{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #27c4ff;outline-offset:3px}
-.card,.panel,.intro,.settings-card,.section-card,.plan,.faq-item{background:linear-gradient(180deg,#081a45,#061237);border-color:#17407f}
-.ng-shared-footer{background:#050b28!important;border-top:1px solid #1e4fb5!important;color:#8fa6d6!important}
-.ng-shared-footer .ng-credit{color:#fff!important}
-@media(max-width:600px){header,.studio-top{padding-left:10px!important;padding-right:10px!important}}
+<style id="ng-header-logo-crop-fix">
+/* header-reference.webp contains the old small hamburger baked into the left edge; crop that part out of the image itself. */
+.app>header>img.logo{clip-path:none!important;}
+</style>
+
+<style id="ng-hamburger-final-fix">
+/* The screenshot shows a second standalone hamburger between the square menu button and logo. Keep only the square menu button, logo and right-side actions. */
+.app>header>:not(#ng-hamburger):not(.logo):not(.hr){display:none!important}
+.app>header #ng-hamburger{display:flex!important}
+</style>
+
+<style id="ng-hamburger-single-fix">
+/* Keep only the dedicated menu control; hide any legacy header burger that may duplicate it. */
+.app>header .burger,.app>header [data-legacy-hamburger="true"]{display:none!important}
+.app>header .ng-hamburger{appearance:none;-webkit-appearance:none;background:#0a1650!important;}
+</style>
+
+<style id="ng-header-right-edge-fix">
+/* Keep the complete NextGen header inside the mobile viewport. */
+.app>header{width:100%;max-width:100%;min-width:0;overflow:hidden;gap:6px;padding-left:10px;padding-right:10px;justify-content:flex-start}
+.app>header::after{display:none!important}
+.app>header .ng-hamburger{flex:0 0 34px!important;width:34px!important;min-width:34px!important;margin-right:2px!important}
+.app>header>img.logo{position:static!important;left:auto!important;top:auto!important;flex:1 1 auto!important;width:auto!important;min-width:0!important;max-width:180px!important;height:42px!important;object-fit:contain;object-position:center center;clip-path:none!important;margin:0!important}
+.app>header .hr{flex:0 0 auto;gap:9px;margin-left:auto;min-width:0}
+.app>header .hr .circ,.app>header .hr .bell{flex:0 0 29px}
+@media(max-width:380px){
+ .app>header{gap:4px;padding-left:6px;padding-right:6px}
+ .app>header>img.logo{max-width:calc(100vw - 168px)!important;height:38px!important}
+ .app>header .hr{gap:6px}
+}
+</style>
+<style id="ng-hamburger-fix">
+header .ng-hamburger{flex:0 0 36px;width:36px;height:36px;min-height:36px;padding:7px 6px;margin:-3px 8px 0 0;border:0!important;border-radius:0!important;box-shadow:none!important;border:1px solid #2857a4;border-radius:9px;background:#0a1650;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;position:relative;z-index:30;touch-action:manipulation}
+.app>header .ng-hamburger span{display:block!important;width:20px!important;height:2.5px!important;flex:none;border-radius:2px;background:#fff;pointer-events:none;transform:translateY(3px)}
+header .ng-hamburger::before,header .ng-hamburger::after{content:none!important;display:none!important}header .ng-hamburger{background-image:none!important}
+.ng-menu-backdrop[hidden]{display:none!important}
+.ng-menu-backdrop{position:fixed;inset:0;z-index:90;background:#020718b8}
+.ng-menu-drawer{position:fixed;z-index:91;left:0;top:0;bottom:0;width:min(290px,82vw);padding:calc(18px + env(safe-area-inset-top,0px)) 14px calc(20px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,#071a3e,#030b24);border-right:1px solid #2a6bff;box-shadow:12px 0 32px #0008;transform:translateX(-105%);visibility:hidden;transition:transform .2s ease,visibility .2s ease;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
+.ng-menu-drawer.is-open{transform:translateX(0);visibility:visible}
+.ng-menu-title{display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:20px;font-weight:800;padding:8px 6px 16px;border-bottom:1px solid #24509a;margin-bottom:8px}
+.ng-menu-title button{width:36px;height:36px;min-height:36px;border:1px solid #2857a4;border-radius:9px;background:#10245b;color:#fff;font-size:25px;line-height:1}
+.ng-menu-drawer>a{display:flex;align-items:center;min-height:46px;padding:10px 12px;border:1px solid transparent;border-radius:9px;color:#eaf3ff;text-decoration:none;font-size:15px;font-weight:650;touch-action:manipulation}
+.ng-menu-drawer>a:active,.ng-menu-drawer>a[aria-current="page"]{background:#0b3970;border-color:#1c78c8;color:#fff}
+body.ng-menu-open{overflow:hidden}
+@media(prefers-reduced-motion:reduce){.ng-menu-drawer{transition:none}}
+</style>
+
+<style id="ng-logo-shift-left">
+/* Shift the header logo image left so it sits closer to the square menu button. */
+.app>header>img.logo{position:relative!important;left:-23px!important;top:-0.7px!important;height:48px!important;max-width:210px!important;transform:translateX(-23px) scale(1.15)!important;transform-origin:left center!important;}
 </style>
 
 <style id="ng-master-final-v32">
@@ -388,316 +158,175 @@ header.studio-top{height:46px!important;min-height:46px!important;padding:4px 10
 header.studio-top .studio-menu{flex:0 0 34px!important;width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;font-size:0!important;display:inline-grid!important;place-items:center!important;background:transparent!important;border:0!important;box-shadow:none!important}
 header.studio-top .studio-menu::before{content:""!important;display:block!important;width:20px!important;height:2.5px!important;background:#fff!important;box-shadow:0 6px 0 #fff,0 -6px 0 #fff!important;border-radius:2px!important}
 header .ng-hamburger{flex:0 0 34px!important;width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;margin:0 8px 0 0!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
-header .ng-hamburger span{display:block!important;width:20px!important;height:2.5px!important;min-height:2.5px!important;flex:0 0 2.5px!important;transform:none!important;border-radius:2px!important;background:#fff!important}
+header .ng-hamburger span{display:block!important;width:20px!important;height:2.5px!important;min-height:2.5px!important;flex:0 0 2.5px!important;transform:translateY(2.6px)!important;border-radius:2px!important;background:#fff!important}
 header .ng-hamburger:before,header .ng-hamburger:after{display:none!important;content:none!important}
 .ng-shared-footer{position:static!important;inset:auto!important;bottom:auto!important;transform:none!important;min-height:28px!important;width:100%!important;max-width:none!important;margin:8px 0 0!important;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))!important;display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;justify-content:space-between!important;align-items:center!important;gap:5px!important;background:#050b28!important;border-top:1px solid #1e4fb5!important;color:#8fa6d6!important;font-size:10px!important;line-height:1.25!important;white-space:nowrap!important;box-sizing:border-box!important}
 .ng-shared-footer .ng-copyright{flex:1 1 auto!important;min-width:0!important;text-align:left!important;font-size:10px!important;font-weight:400!important;white-space:nowrap!important}
 .ng-shared-footer .ng-credit{flex:0 0 auto!important;margin-left:auto!important;text-align:right!important;font-size:9px!important;font-weight:600!important;white-space:nowrap!important;color:#fff!important}
 @media(max-width:380px){header.studio-top{gap:6px!important;padding-left:5px!important;padding-right:5px!important}header.studio-top .studio-brand,header.studio-top .studio-brand-name{font-size:18px!important}header.studio-top .studio-tagline{font-size:7px!important}header.studio-top .studio-menu{flex-basis:30px!important;width:30px!important;min-width:30px!important}}
-@media(max-width:600px){.ng-shared-footer{font-size:9px!important;gap:3px!important;padding:5px 5px calc(5px + env(safe-area-inset-bottom,0px))!important}.ng-shared-footer .ng-copyright{font-size:9px!important}.ng-shared-footer .ng-credit{font-size:8px!important}}
+@media(max-width:600px){.ng-shared-footer{font-size:10px!important;display:flex!important;flex-direction:column!important;flex-wrap:nowrap!important;gap:2px!important;padding:3px 4px calc(3px + env(safe-area-inset-bottom,0px))!important;margin-top:2px!important;justify-content:center!important;align-items:center!important;overflow:hidden!important}.ng-shared-footer .ng-copyright{display:block!important;flex:0 0 auto!important;width:128%!important;max-width:none!important;min-width:0!important;font-size:12px!important;letter-spacing:-.2px!important;white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important;text-align:center!important;transform:scaleX(.78)!important;transform-origin:center center!important}.ng-shared-footer .ng-credit{display:block!important;flex:0 0 auto!important;max-width:none!important;font-size:10px!important;letter-spacing:-.15px!important;white-space:nowrap!important;margin:0!important;text-align:center!important}}
 </style>
 
-</head>
 
+<style id="channels-footer-master-match">
+@media(max-width:600px){
+  html body .app main > footer.ng-shared-footer{
+    position:relative!important;left:calc(50% - 50vw)!important;right:auto!important;
+    width:100vw!important;max-width:100vw!important;min-width:100vw!important;
+    margin:8px 0 0!important;
+    padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))!important;
+    box-sizing:border-box!important;display:flex!important;flex-direction:column!important;
+    flex-wrap:nowrap!important;justify-content:center!important;align-items:stretch!important;
+    gap:2px!important;text-align:center!important;transform:none!important;overflow:hidden!important;
+  }
+  html body .app main > footer.ng-shared-footer > .ng-copyright,
+  html body .app main > footer.ng-shared-footer > .ng-credit{
+    display:block!important;flex:0 0 auto!important;width:100%!important;max-width:100%!important;
+    min-width:0!important;margin:0!important;padding:0!important;box-sizing:border-box!important;
+    text-align:center!important;white-space:nowrap!important;transform:none!important;
+  }
+  html body .app main > footer.ng-shared-footer > .ng-copyright{font-size:10px!important;line-height:1.3!important}
+  html body .app main > footer.ng-shared-footer > .ng-credit{font-size:8px!important;line-height:1.3!important}
+}
+</style>
+
+
+<style id="ng-channels-native-scroll">
+  /* Match Dashboard: document viewport scroll enables Android Chrome's native pull-to-refresh. */
+  html, body {
+    height: auto !important;
+    min-height: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior-y: auto !important;
+  }
+  body {
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+  }
+  body > .app {
+    height: auto !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    overflow: visible !important;
+  }
+  body > .app > header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 30 !important;
+  }
+  body > .app > main {
+    flex: 1 0 auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    overscroll-behavior-y: auto !important;
+    touch-action: auto !important;
+    padding-bottom: calc(16px + 52px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  body > .app > nav.ng-bottom-nav {
+    position: fixed !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: 0 !important;
+    transform: translateX(-50%) !important;
+    width: 100% !important;
+    max-width: 430px !important;
+    z-index: 30 !important;
+    flex: 0 0 auto !important;
+  }
+</style>
+
+
+<style id="ng-master-page-shell">
+.page-intro{display:flex;align-items:center;gap:12px;padding:14px 11px 12px}.page-icon{width:42px;height:42px;flex:0 0 42px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,#168bff,#4a4cff);box-shadow:0 0 10px #2a6bff55;color:#fff;font-size:23px}.page-intro h1{font-size:24px;line-height:1.1;font-weight:800}.page-intro p{font-size:12px;color:#8fa6d6;margin-top:4px}.page-panel{margin:8px 11px 14px;padding:17px 14px;border:1px solid #17436c;border-radius:15px;background:linear-gradient(145deg,#081f3a,#06172c);box-shadow:0 10px 30px #0002}.page-panel h2{font-size:19px;color:#f4f8ff;margin-bottom:12px}.page-panel .muted{font-size:13px;line-height:1.55;color:#a8c1e8}.page-empty{min-height:145px;margin-top:14px;padding:18px 12px;border:1px dashed #2857a4;border-radius:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;background:#071634}.page-empty>span{font-size:27px;color:#4DB8FF}.page-empty strong{font-size:15px;color:#fff}.page-empty small{font-size:12px;color:#8fa6d6}.mode-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #17385c;color:#eaf3ff;font-size:14px}.mode-on,.mode-off{font-size:12px;padding:5px 10px;border-radius:8px}.mode-on{background:#063e37;color:#45e4b0}.mode-off{background:#3b2630;color:#ff9bab}.time-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0}.time-slots>div{padding:13px 5px;border:1px solid #1c5790;border-radius:12px;background:#071a36;text-align:center}.time-slots strong{display:block;font-size:20px;color:#fff}.time-slots small{display:block;margin-top:5px;color:#8fa6d6;font-size:11px}@media(max-width:350px){.time-slots strong{font-size:17px}.page-panel{margin-left:8px;margin-right:8px}}
+</style>
+</head>
 <body>
-<header class="studio-top">
-  <button class="studio-menu" type="button" aria-label="Menu" onclick="window.location.assign(&quot;index.html&quot;)">☰</button>
-  <div class="studio-brand" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:0;line-height:1"><span class="studio-brand-name" style="font-size:20px;font-weight:800;letter-spacing:.75px;line-height:1.05"><span style="color:#00BFFF">N</span>extGen</span><span class="studio-tagline" style="display:block;font-size:6px;font-weight:700;letter-spacing:.1px;color:#aabbd0;white-space:nowrap;line-height:1.05">Smart Automation. Smarter Growth.</span></div>
-  <input class="studio-search" type="search" aria-label="Search across your workspace" placeholder="⌕  Search across your workspace" onkeydown="if(event.key==='Enter'){window.location.href='index.html#content'}">
-  <div class="studio-top-right">
-    <button class="top-icon-btn top-add-btn" type="button" aria-label="Add channel or content" onclick="toggleTopMenu('addMenu')">+</button>
-    <button class="top-icon-btn" type="button" aria-label="Notifications" title="Notifications" onclick="toggleTopMenu('notificationMenu')"><span class="notification-bell-3d" aria-hidden="true">🔔</span></button>
-    <button class="top-icon-btn top-profile-btn" type="button" aria-label="Profile menu" onclick="toggleTopMenu('profileMenu')"><img src="./ng-symbol.jpg?v=20261028" alt="" class="ng-profile-logo"></button>
-  </div>
-  <div id="addMenu" class="top-popover" hidden>
-    <button type="button" onclick="window.location.href='channels.html'"><span>＋</span> Add channel</button>
-    <button type="button" onclick="window.location.href='index.html#content'"><span>▣</span> Add content</button>
-  </div>
-  <div id="notificationMenu" class="top-popover" hidden style="right:42px">
-    <div class="top-popover-head"><b>Notifications</b><small>No new notifications</small></div>
-    <button type="button" onclick="toggleTopMenu('notificationMenu')">Close</button>
-  </div>
-  <div id="profileMenu" class="top-popover profile-menu" hidden>
-    <div class="top-popover-head"><b>NextGen account</b><small>Account and preferences</small></div>
-    <button type="button" onclick="alert('Switch Account: multi-account login is not connected yet.')"><span>⇄</span> Switch Account</button>
-    <button type="button" onclick="alert('Google Account linking is not connected yet.')"><span class="google-mark">G</span> Google Account</button>
-    <button type="button" onclick="toggleTopMenu('profileMenu');var p=document.querySelector('.settings-list');if(p)p.scrollIntoView({behavior:'smooth',block:'start'});"><span>⚙</span> Settings</button>
-    <button type="button" onclick="alert('Send feedback: feedback form is not connected yet.')"><span>▤</span> Send feedback</button>
-    <div class="pop-divider"></div>
-    <button type="button" onclick="window.location.href='settings.html#account'"><span>◎</span> Account status</button>
-    <button type="button" onclick="window.location.href='help-centre.html'"><span>?</span> Help Centre</button>
-    <button type="button" onclick="window.location.href='privacy-settings.html#terms'"><span>▤</span> Terms of Service</button>
+<div class="app">
+<header>
+  <button type="button" class="ng-hamburger" id="ng-hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="ng-menu-drawer"><span></span><span></span><span></span></button>
+  <img class="logo" src="./file_000000005ab0820896e23efe9cf142bb.png" alt="NextGen — Smart Automation. Smarter Growth.">
+  <div class="hr">
+    <div class="circ plus"><svg width="16" height="16" viewBox="0 0 16 16" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M8 1v14M1 8h14"/></svg></div>
+    <div class="bell"><svg width="24" height="24" viewBox="0 0 24 24" aria-label="Notifications"><path fill="#fff" d="M12 2.1a2.45 2.45 0 0 0-2.45 2.45v.63C6.18 6.25 4 9.18 4 12.65v4.02l-1.4 1.66c-.45.54-.07 1.36.63 1.36h17.54c.7 0 1.08-.82.63-1.36L20 16.67v-4.02c0-3.47-2.18-6.4-5.55-7.47v-.63A2.45 2.45 0 0 0 12 2.1Z"/><path fill="#fff" d="M8.4 21.1a3.7 3.7 0 0 0 7.2 0Z"/></svg><u></u></div>
+    <div class="circ av">A</div>
   </div>
 </header>
-<main class="settings-list" aria-label="NextGen settings">
-  <h1 class="settings-title">Settings</h1>
-  <a class="settings-item" href="settings.html"><span class="settings-icon">⚙</span><span>General Settings</span><span class="settings-arrow">›</span></a>
-  <a class="settings-item" href="privacy-settings.html"><span class="settings-icon">🔐</span><span>Privacy Settings</span><span class="settings-arrow">›</span></a>
-  <a class="settings-item" href="settings.html#keyboard-shortcuts"><span class="settings-icon">🔒</span><span>Privacy Center</span><span class="settings-arrow">›</span></a>
-  <a class="settings-item" href="settings.html#notifications"><span class="settings-icon">🔔</span><span>Notification Center</span><span class="settings-arrow">›</span></a>
-  <a class="settings-item" href="settings.html#device-requests"><span class="settings-icon">⌂</span><span>Device Requests</span><span class="settings-arrow">›</span></a>
-  <a class="settings-item" href="help-centre.html"><span class="settings-icon">ⓘ</span><span>Help &amp; Support</span><span class="settings-arrow">›</span></a>
-  <a class="settings-item" href="settings.html#link-history"><span class="settings-icon">🔗</span><span>Link History</span><span class="settings-arrow">›</span></a>
-  <a class="settings-item" href="settings.html#backup"><span class="settings-icon">💾</span><span>Backup &amp; Restore</span><span class="settings-arrow">›</span></a>
-  <a class="settings-item" href="#ml-settings" id="mlSettingsItem"><span class="settings-icon">✧</span><span>ML Settings</span><span class="settings-arrow">›</span></a>
-  <button class="settings-item settings-dark" id="darkModeToggle" type="button" aria-pressed="true"><span class="settings-icon">☾</span><span>Dark Mode</span><span class="settings-toggle"><span id="darkModeState">ON</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></button>
+<div class="ng-menu-backdrop" id="ng-menu-backdrop" hidden></div>
+<aside class="ng-menu-drawer" id="ng-menu-drawer" aria-label="Navigation menu" aria-hidden="true">
+  <div class="ng-menu-title">NextGen <button type="button" id="ng-menu-close" aria-label="Close navigation menu">×</button></div>
+  <a href="./index.html">Home</a>
+  <a href="./channels.html">Channels</a>
+  <a href="./content.html">Content</a>
+  <a href="./approvals.html">Approvals</a>
+  <a href="./schedule.html">Schedule</a>
+  <a href="./settings.html" aria-current="page">Settings</a>
+</aside>
+
+<main>
+<section class="page-intro"><div class="page-icon">⚙</div><div><h1>Settings</h1></div></section>
+<footer class="ng-shared-footer"><span class="ng-copyright">©2026 NextGen. All Rights Reserved. Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
 </main>
-<section id="generalSettingsPanel" class="general-settings-panel" hidden aria-label="General Settings">
-<h1 class="settings-title">General</h1>
-<div class="general-setting-card"><div class="general-setting-copy"><h2>Manual Approval Mode</h2><p>Keep new content pending until you approve it. Recommended default.</p></div><button class="mode-switch is-on" id="manualApprovalSwitch" type="button" role="switch" aria-checked="true" aria-label="Manual Approval Mode"><span></span></button></div>
-<div class="general-setting-card"><div class="general-setting-copy"><h2>Auto Approval Mode</h2><p>OFF by default. Do not auto-approve or publish content unless you explicitly enable this mode later.</p></div><button class="mode-switch" id="autoApprovalSwitch" type="button" role="switch" aria-checked="false" aria-label="Auto Approval Mode"><span></span></button></div>
-<div class="general-setting-card"><div class="general-setting-copy"><h2>Content notifications</h2><p>Show in-app reminders for items waiting for review (prototype preference).</p></div><button class="mode-switch is-on" id="contentNotificationsSwitch" type="button" role="switch" aria-checked="true" aria-label="Content notifications"><span></span></button></div>
-<div class="general-setting-card"><div class="general-setting-copy"><h2>Background mode preference</h2><p>Remember that you want NextGen to run continuously when a real background service is implemented. This switch does not run a worker yet.</p></div><button class="mode-switch is-on" id="backgroundPreferenceSwitch" type="button" role="switch" aria-checked="true" aria-label="Background mode preference"><span></span></button></div>
-<section class="approval-safety-card" aria-label="Daily Idea Schedule">
-<h2>Daily Idea Schedule</h2>
-<p class="approval-status-line">Choose when NextGen should prepare ideas. This saves your preferred times; a live scheduler/background worker is not active yet.</p>
-<div class="general-setting-card"><div class="general-setting-copy"><h3>Morning ideas</h3><p>Default: 8:00 AM</p></div><input id="ideaTime1" type="time" value="08:00" aria-label="Morning idea time" style="padding:10px;border-radius:8px;background:#0b1020;color:#eef3ff;border:1px solid #53688d"></div>
-<div class="general-setting-card"><div class="general-setting-copy"><h3>Afternoon ideas</h3><p>Default: 2:00 PM</p></div><input id="ideaTime2" type="time" value="14:00" aria-label="Afternoon idea time" style="padding:10px;border-radius:8px;background:#0b1020;color:#eef3ff;border:1px solid #53688d"></div>
-<div class="general-setting-card"><div class="general-setting-copy"><h3>Evening ideas</h3><p>Default: 6:00 PM</p></div><input id="ideaTime3" type="time" value="18:00" aria-label="Evening idea time" style="padding:10px;border-radius:8px;background:#0b1020;color:#eef3ff;border:1px solid #53688d"></div>
-<button type="button" class="general-back-button" id="saveIdeaSchedule">Save idea times</button>
-<p id="ideaScheduleStatus" class="muted" role="status">Default times are 08:00, 14:00, 18:00 (Asia/Kolkata).</p>
-</section>
-<section class="approval-safety-card" aria-label="Approval Safety">
-<h2>Approval Safety</h2>
-<p class="approval-status-line">Publishing mode: <strong id="publishingModeText">Manual Approval Mode — ON</strong></p>
-<p class="approval-status-line">Auto Approval Mode: <strong id="autoApprovalStatusText">OFF</strong></p>
-<div class="approval-note"><h3>Manual Approval (Recommended)</h3><p>Content stays pending until you review and approve it. This is the default mode.</p></div>
-<div class="approval-warning">Auto mode is a demo toggle only. If later connected to a real backend, it must auto-approve only low-risk, brand-safe content after spelling, factual, copyright, duplicate, and platform-policy checks. Sensitive, uncertain, complaint-related, or failing content must remain pending manual review.</div>
-<div class="approval-warning">This is a front-end prototype. Channel pause settings and approval mode are saved only in this browser on this device. Real account connections, secure login, shared database, automated checks, scheduling, and 24/7 background monitoring are not implemented yet. No publishing or scheduling is performed by this prototype.</div>
-</section>
-<button type="button" class="general-back-button" id="backToSettings">‹ Back to Settings</button>
-</section>
-<section id="mlSettingsPanel" class="general-settings-panel" hidden aria-label="ML Settings">
-<h1 class="settings-title">ML Settings</h1>
-<div class="general-setting-card"><div class="general-setting-copy"><h2>Machine Learning features</h2><p>Configure future ML-assisted content recommendations and performance insights. These features are not connected to a live ML service yet.</p></div><span class="status">Not connected</span></div>
-<div class="general-setting-card"><div class="general-setting-copy"><h2>AI content suggestions</h2><p>Preference for suggested ideas and captions. This prototype setting does not generate or publish content.</p></div><span class="status">Preview only</span></div>
-<div class="approval-warning">ML Settings are a UI preview only. No model training, account data processing, or automated publishing is active.</div>
-<button type="button" class="general-back-button" id="backFromMLSettings">‹ Back to Settings</button>
-</section>
-
-<style>
-.settings-list{max-width:850px;margin:20px auto 40px;padding:0 18px 25px;min-height:45vh}
-.settings-title{font-size:28px;color:#f4f7ff;margin:18px 0 10px;padding-bottom:14px;border-bottom:1px solid #293752}
-.settings-item{display:flex;align-items:center;gap:18px;width:100%;min-height:76px;padding:16px 10px;border:0;border-bottom:1px solid #293752;background:transparent;color:#eef3ff;text-decoration:none;text-align:left;font:500 18px Arial,sans-serif;cursor:pointer}
-.settings-icon{width:38px;min-width:38px;text-align:center;font-size:25px;color:#c5d9ff}
-.settings-arrow{margin-left:auto;color:#9aaabd;font-size:30px;line-height:1}
-.settings-toggle{margin-left:auto;display:flex;align-items:center;gap:12px;color:#b8c9e8;font-size:13px}
-.toggle-track{width:44px;height:25px;border-radius:20px;background:#3869a5;padding:3px;display:flex;justify-content:flex-end}
-.toggle-thumb{width:19px;height:19px;background:white;border-radius:50%;display:block}
-.settings-dark[aria-pressed="false"] .toggle-track{background:#4b5563;justify-content:flex-start}
-@media(max-width:520px){.settings-list{padding:0 14px}.settings-title{font-size:24px}.settings-item{min-height:70px;font-size:17px;gap:14px}.settings-icon{width:32px;min-width:32px;font-size:23px}}
-</style>
-<script>
-(function(){
- var button=document.getElementById('darkModeToggle');
- var state=document.getElementById('darkModeState');
- if(!button||!state)return;
- var enabled=true;
- try{enabled=localStorage.getItem('nextgen-copy-dark-mode')!=='off'}catch(e){}
- function render(){
-   button.setAttribute('aria-pressed',String(enabled));
-   state.textContent=enabled?'ON':'OFF';
-   button.classList.toggle('dark-off',!enabled);
-   document.body.style.background=enabled?'#0b1020':'#f5f7fb';
-   document.body.style.color=enabled?'#eef3ff':'#18202b';
-   document.querySelectorAll('.settings-item').forEach(function(item){
-     item.style.color=enabled?'#eef3ff':'#18202b';
-     item.style.borderBottomColor=enabled?'#293752':'#d8dee8';
-   });
-   var title=document.querySelector('.settings-title');
-   if(title)title.style.color=enabled?'#f4f7ff':'#18202b';
- }
- button.addEventListener('click',function(){
-   enabled=!enabled;try{localStorage.setItem('nextgen-copy-dark-mode',enabled?'on':'off')}catch(e){}render();
- });
- render();
-})();
-</script>
-
 <nav class="ng-bottom-nav" aria-label="Main navigation">
-<a href="index.html#dashboard" data-page="dashboard" onclick="event.preventDefault();mobileNavigate('dashboard',this)"><span class="dashboard-master-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M5 7 Q5 4 9 4 H19 Q23 4 23 8 V13 Q23 17 19 17 H9 Q5 17 5 13 Z" fill="none" stroke="url(#dg)" stroke-width="3.2" stroke-linejoin="round"/><path d="M28 8 Q28 4 32 4 H39 Q43 4 43 8 V17 Q43 21 39 21 H35 M28 15 V12" fill="none" stroke="url(#dg)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 29 V25 Q5 21 9 21 H19 Q23 21 23 25 V39 Q23 43 19 43 H9 Q5 43 5 39 V33" fill="none" stroke="url(#dg)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 29 Q28 25 32 25 H39 Q43 25 43 29 V39 Q43 43 39 43 H32 Q28 43 28 39 Z" fill="none" stroke="url(#dg)" stroke-width="3.2" stroke-linejoin="round"/><defs><linearGradient id="dg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4DB8FF"/><stop offset="1" stop-color="#21A9E0"/></linearGradient></defs></svg></span><small>Dashboard</small></a>
-<a href="channels.html" data-page="channels"><span class="channel-master-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 26 10 34M33 26l5 8M15 39h18"/><path d="M23 8v4"/></g><circle cx="24" cy="5.5" r="3.5" fill="#FF9F2E" stroke="#FFFFFF" stroke-width="1.5"/><rect x="13" y="12" width="22" height="17" rx="5" fill="#21A9E0" stroke="#FFFFFF" stroke-width="2.5"/><circle cx="19" cy="20" r="1.7" fill="#FFFFFF"/><circle cx="29" cy="20" r="1.7" fill="#FFFFFF"/><rect x="4" y="33" width="15" height="12" rx="3.5" fill="#07123A" stroke="#FFFFFF" stroke-width="2.3"/><circle cx="9" cy="39" r="1.2" fill="#FFFFFF"/><circle cx="14" cy="39" r="1.2" fill="#FFFFFF"/><rect x="29" y="33" width="15" height="12" rx="3.5" fill="#07123A" stroke="#FFFFFF" stroke-width="2.3"/><circle cx="34" cy="39" r="1.2" fill="#FFFFFF"/><circle cx="39" cy="39" r="1.2" fill="#FFFFFF"/></svg></span><small>Channels</small></a>
-<a href="index.html#content" data-page="content" onclick="event.preventDefault();mobileNavigate('content',this)"><span class="content-master-icon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M10.2 22H6.1A3.1 3.1 0 0 1 3 18.9V5.1A3.1 3.1 0 0 1 6.1 2h11.8A3.1 3.1 0 0 1 21 5.1v7.4" stroke="#6524B8" stroke-width="1.9"/><path d="M7 7.2h2.7M7 10.5h10M7 13.8h10M7 17.1h7" stroke="#6524B8" stroke-width="1.9"/><path d="M17.4 14.3c.6 2.1 1.5 3 3.6 3.6-2.1.6-3 1.5-3.6 3.6-.6-2.1-1.5-3-3.6-3.6 2.1-.6 3-1.5 3.6-3.6Z" fill="#FF9418" stroke="#FF9418" stroke-width="1.3"/></svg></span><small>Content</small></a>
-<a href="index.html#approvals" data-page="approvals" onclick="event.preventDefault();mobileNavigate('approvals',this)"><span class="approval-master-icon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#16E08A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v6.2a2.8 2.8 0 0 1-2.8 2.8H5.8A2.8 2.8 0 0 1 3 18.2V5.8A2.8 2.8 0 0 1 5.8 3H14"/><path d="m7.2 12.2 3.4 3.4L21 5.2"/></svg></span><small>Approvals</small></a>
-<a href="index.html#schedule" data-page="schedule" onclick="event.preventDefault();mobileNavigate('schedule',this)"><span class="schedule-master-icon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#08B9D1" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="15.5" height="17" rx="2.3"/><path d="M7 2v4M13.5 2v4M2.5 9h15.5M6 12.5h2M10 12.5h2M6 16h2"/><circle cx="17.5" cy="16.5" r="5.1" fill="#030b24"/><path d="M17.5 13.5v3l2 1.5"/></svg></span><small>Schedule</small></a>
+  <a href="index.html"><span class="dashboard-master-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M5 7 Q5 4 9 4 H19 Q23 4 23 8 V13 Q23 17 19 17 H9 Q5 17 5 13 Z" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linejoin="round"/><path d="M28 8 Q28 4 32 4 H39 Q43 4 43 8 V17 Q43 21 39 21 H35 M28 15 V12" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 29 V25 Q5 21 9 21 H19 Q23 21 23 25 V39 Q23 43 19 43 H9 Q5 43 5 39 V33" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 29 Q28 25 32 25 H39 Q43 25 43 29 V39 Q43 43 39 43 H32 Q28 43 28 39 Z" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linejoin="round"/><defs><linearGradient id="dg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient></defs></svg></span><small>Dashboard</small></a>
+  <a href="channels.html"><span class="channel-master-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 26 10 34M33 26l5 8M15 39h18"/><path d="M23 8v4"/></g><circle cx="24" cy="5.5" r="3.5" fill="#FF9F2E" stroke="#FFFFFF" stroke-width="1.5"/><rect x="13" y="12" width="22" height="17" rx="5" fill="#21A9E0" stroke="#FFFFFF" stroke-width="2.5"/><circle cx="19" cy="20" r="1.7" fill="#FFFFFF"/><circle cx="29" cy="20" r="1.7" fill="#FFFFFF"/><rect x="4" y="33" width="15" height="12" rx="3.5" fill="#07123A" stroke="#FFFFFF" stroke-width="2.3"/><circle cx="9" cy="39" r="1.2" fill="#FFFFFF"/><circle cx="14" cy="39" r="1.2" fill="#FFFFFF"/><rect x="29" y="33" width="15" height="12" rx="3.5" fill="#07123A" stroke="#FFFFFF" stroke-width="2.3"/><circle cx="34" cy="39" r="1.2" fill="#FFFFFF"/><circle cx="39" cy="39" r="1.2" fill="#FFFFFF"/></svg></span><small>Channels</small></a>
+    <a href="content.html" class="active" aria-current="page"><span class="content-master-icon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M10.2 22H6.1A3.1 3.1 0 0 1 3 18.9V5.1A3.1 3.1 0 0 1 6.1 2h11.8A3.1 3.1 0 0 1 21 5.1v7.4" stroke="#6524B8" stroke-width="1.9"/><path d="M7 7.2h2.7M7 10.5h10M7 13.8h10M7 17.1h7" stroke="#6524B8" stroke-width="1.9"/><path d="M17.4 14.3c.6 2.1 1.5 3 3.6 3.6-2.1.6-3 1.5-3.6 3.6-.6-2.1-1.5-3-3.6-3.6 2.1-.6 3-1.5 3.6-3.6Z" fill="#FF9418" stroke="#FF9418" stroke-width="1.3"/></svg></span><small>Content</small></a>
+  <a href="approvals.html"><span class="approval-master-icon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#16E08A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v6.2a2.8 2.8 0 0 1-2.8 2.8H5.8A2.8 2.8 0 0 1 3 18.2V5.8A2.8 2.8 0 0 1 5.8 3H14"/><path d="m7.2 12.2 3.4 3.4L21 5.2"/></svg></span><small>Approvals</small></a>
+  <a href="schedule.html"><span class="schedule-master-icon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#08B9D1" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="15.5" height="17" rx="2.3"/><path d="M7 2v4M13.5 2v4M2.5 9h15.5M6 12.5h2M10 12.5h2M6 16h2"/><circle cx="17.5" cy="16.5" r="5.1" fill="#030b24"/><path d="M17.5 13.5v3l2 1.5"/></svg></span><small>Schedule</small></a>
 </nav>
-<script>
-function mobileNavigate(section,button){ if(section==='channels'){window.location.href='channels.html';return;} window.location.href='index.html#'+section; }
-function toggleTopMenu(id){
-  ['addMenu','notificationMenu','profileMenu'].forEach(function(menuId){
-    var el=document.getElementById(menuId);
-    if(el) el.hidden=(menuId!==id || !el.hidden);
-  });
-}
-document.addEventListener('click',function(event){
-  if(!event.target.closest('.studio-top-right')&&!event.target.closest('.top-popover')){
-    ['addMenu','notificationMenu','profileMenu'].forEach(function(id){
-      var el=document.getElementById(id); if(el) el.hidden=true;
-    });
-  }
-});
-</script>
+</div>
+<script id="ng-hamburger-fix-script">
+(function(){
+ // Keep only the intended square menu button, logo and right-side actions in the header.
+ var header=document.querySelector('.app>header');
+ var trigger=document.getElementById('ng-hamburger');
+ function cleanHeader(){if(!header)return;Array.prototype.slice.call(header.children).forEach(function(el){if(el!==trigger&&!el.classList.contains('logo')&&!el.classList.contains('hr'))el.remove();});}
+ cleanHeader();
+ if(header&&window.MutationObserver){new MutationObserver(cleanHeader).observe(header,{childList:true});}
+ if(trigger){trigger.querySelectorAll('span').forEach(function(line,i){if(i>2)line.remove();});}
 
-<script>
-(function(){
- var settingsList=document.querySelector('.settings-list');
- var general=document.getElementById('generalSettingsPanel');
- function showGeneral(){if(settingsList)settingsList.hidden=true;if(general)general.hidden=false;window.scrollTo(0,0)}
- function showSettings(){if(general)general.hidden=true;if(settingsList)settingsList.hidden=false;window.scrollTo(0,0)}
- document.querySelectorAll('.settings-item[href="settings.html"]').forEach(function(el){el.addEventListener('click',function(e){e.preventDefault();showGeneral()})});
- var mlPanel=document.getElementById('mlSettingsPanel');
- function showML(){if(settingsList)settingsList.hidden=true;if(general)general.hidden=true;if(mlPanel)mlPanel.hidden=false;window.scrollTo(0,0)}
- function showSettings(){if(general)general.hidden=true;if(mlPanel)mlPanel.hidden=true;if(settingsList)settingsList.hidden=false;window.scrollTo(0,0)}
- var mlItem=document.getElementById('mlSettingsItem');if(mlItem)mlItem.addEventListener('click',function(e){e.preventDefault();showML()});
- var mlBack=document.getElementById('backFromMLSettings');if(mlBack)mlBack.addEventListener('click',showSettings);
- var back=document.getElementById('backToSettings');if(back)back.addEventListener('click',showSettings);
- function bindSwitch(id,key,defaultOn,onChange){var b=document.getElementById(id);if(!b)return;var value=defaultOn;try{var saved=localStorage.getItem('nextgen-copy-'+key);if(saved!==null)value=saved==='on'}catch(e){}function render(){b.classList.toggle('is-on',value);b.setAttribute('aria-checked',String(value))}b.addEventListener('click',function(){var next=!value;if(id==='autoApprovalSwitch'&&next){var manual=document.getElementById('manualApprovalSwitch');if(manual&&manual.getAttribute('aria-checked')==='true'){alert('Turn Manual Approval Mode OFF before enabling Auto Approval Mode.');return}}if(id==='manualApprovalSwitch'&& !next){var auto=document.getElementById('autoApprovalSwitch');if(auto&&auto.getAttribute('aria-checked')==='true'){alert('Turn Auto Approval Mode OFF first.');return}}value=next;try{localStorage.setItem('nextgen-copy-'+key,value?'on':'off')}catch(e){}render();if(onChange)onChange(value)});render()}
- bindSwitch('manualApprovalSwitch','manual-approval',true);
- bindSwitch('autoApprovalSwitch','auto-approval',false);
- bindSwitch('contentNotificationsSwitch','content-notifications',true);
- bindSwitch('backgroundPreferenceSwitch','background-preference',true);
-})();
-</script>
-<script>
-(function(){
- var manual=document.getElementById('manualApprovalSwitch');
- var auto=document.getElementById('autoApprovalSwitch');
- var modeText=document.getElementById('publishingModeText');
- var autoText=document.getElementById('autoApprovalStatusText');
- function updateApprovalSummary(){
-   var manualOn=manual&&manual.getAttribute('aria-checked')==='true';
-   var autoOn=auto&&auto.getAttribute('aria-checked')==='true';
-   if(modeText)modeText.textContent=manualOn?'Manual Approval Mode — ON':'Manual Approval Mode — OFF';
-   if(autoText)autoText.textContent=autoOn?'ON':'OFF';
+ var drawer=document.getElementById('ng-menu-drawer');
+ var backdrop=document.getElementById('ng-menu-backdrop');
+ var close=document.getElementById('ng-menu-close');
+ if(!trigger||!drawer||!backdrop||!close||trigger.dataset.ready==='1')return;
+ trigger.dataset.ready='1';
+ function openMenu(){
+   drawer.classList.add('is-open');drawer.setAttribute('aria-hidden','false');
+   backdrop.hidden=false;trigger.setAttribute('aria-expanded','true');
+   trigger.setAttribute('aria-label','Close navigation menu');
+   document.body.classList.add('ng-menu-open');
  }
- if(manual)manual.addEventListener('click',function(){setTimeout(updateApprovalSummary,0)});
- if(auto)auto.addEventListener('click',function(){setTimeout(updateApprovalSummary,0)});
- updateApprovalSummary();
+ function closeMenu(){
+   drawer.classList.remove('is-open');drawer.setAttribute('aria-hidden','true');
+   backdrop.hidden=true;trigger.setAttribute('aria-expanded','false');
+   trigger.setAttribute('aria-label','Open navigation menu');
+   document.body.classList.remove('ng-menu-open');
+ }
+ trigger.addEventListener('click',function(){if(drawer.classList.contains('is-open'))closeMenu();else openMenu();});
+ close.addEventListener('click',closeMenu);
+ backdrop.addEventListener('click',closeMenu);
+ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
+ drawer.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu);});
 })();
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./supabase-config.js"></script>
-<script>
-/* Cloud persistence for approval preferences; publishing remains disabled in this prototype. */
-(function(){
-  let client=null, userId=null, saving=false;
-  const statusLine=document.getElementById('autoApprovalStatusText');
-  function getClient(){
-    if(client)return client;
-    const cfg=window.NEXTGEN_SUPABASE_CONFIG||{};
-    if(!window.supabase||!cfg.url||!cfg.anonKey)throw new Error('Supabase client configuration unavailable.');
-    client=window.supabase.createClient(cfg.url,cfg.anonKey);
-    return client;
-  }
-  function currentValues(){
-    const manual=document.getElementById('manualApprovalSwitch')?.getAttribute('aria-checked')==='true';
-    const auto=document.getElementById('autoApprovalSwitch')?.getAttribute('aria-checked')==='true';
-    const background=document.getElementById('backgroundPreferenceSwitch')?.getAttribute('aria-checked')==='true';
-    return {approval_mode:auto?'auto':'manual',auto_approval_enabled:auto,background_mode_enabled:background};
-  }
-  async function saveCloud(){
-    if(saving||!userId)return;
-    saving=true;
-    try{
-      const c=getClient(), values=currentValues();
-      const {error}=await c.from('automation_settings').upsert({
-        owner_id:userId,
-        approval_mode:values.approval_mode,
-        auto_approval_enabled:values.auto_approval_enabled,
-        background_mode_enabled:values.background_mode_enabled,
-        daily_idea_times:readIdeaTimes()
-      },{onConflict:'owner_id'});
-      if(error)throw error;
-      if(statusLine)statusLine.title='Approval preference saved to your NextGen account.';
-      return true;
-    }catch(e){
-      if(statusLine)statusLine.title='Cloud save unavailable: '+(e?.message||'Please sign in again.');
-      return false;
-    }finally{saving=false;}
-  }
-  function alignSwitch(id,wantOn){
-    const el=document.getElementById(id);
-    if(el&&((el.getAttribute('aria-checked')==='true')!==wantOn))el.click();
-  }
-  async function init(){
-    try{
-      const c=getClient(), {data,error}=await c.auth.getSession();
-      if(error)throw error;
-      userId=data.session?.user?.id||null;
-      if(!userId)return;
-      const result=await c.from('automation_settings').select('approval_mode,auto_approval_enabled,background_mode_enabled,daily_idea_times').eq('owner_id',userId).maybeSingle();
-      if(result.error)throw result.error;
-      const row=result.data;
-      if(row){
-        const autoOn=row.auto_approval_enabled===true&&row.approval_mode==='auto';
-        alignSwitch('backgroundPreferenceSwitch',row.background_mode_enabled===true);
-        if(Array.isArray(row.daily_idea_times)&&row.daily_idea_times.length===3){
-          ['ideaTime1','ideaTime2','ideaTime3'].forEach((id,i)=>{const input=document.getElementById(id);if(input)input.value=row.daily_idea_times[i];});
-          const scheduleStatus=document.getElementById('ideaScheduleStatus');
-          if(scheduleStatus)scheduleStatus.textContent='Saved to your account (Asia/Kolkata): '+row.daily_idea_times.join(', ')+'. Live scheduling is not active yet.';
-        }
-        // Disable the current mode first; the UI prevents both modes being ON.
-        if(autoOn){
-          alignSwitch('manualApprovalSwitch',false);
-          alignSwitch('autoApprovalSwitch',true);
-        }else{
-          alignSwitch('autoApprovalSwitch',false);
-          alignSwitch('manualApprovalSwitch',true);
-        }
-      }else{
-        // A new account always starts safely in manual mode, regardless of device-local state.
-        alignSwitch('autoApprovalSwitch',false);
-        alignSwitch('manualApprovalSwitch',true);
-        await saveCloud(); // persist safe defaults: manual ON, auto OFF
-      }
-      c.auth.onAuthStateChange((_event,session)=>{userId=session?.user?.id||null;});
-    }catch(e){
-      if(statusLine)statusLine.title='Cloud approval settings not loaded: '+(e?.message||'Please sign in to sync settings.');
-    }
-  }
-  function readIdeaTimes(){
-    return ['ideaTime1','ideaTime2','ideaTime3'].map((id,i)=>{
-      const input=document.getElementById(id);
-      return input&&/^([01]\d|2[0-3]):[0-5]\d$/.test(input.value)?input.value:['08:00','14:00','18:00'][i];
-    });
-  }
-  const saveScheduleButton=document.getElementById('saveIdeaSchedule');
-  if(saveScheduleButton)saveScheduleButton.addEventListener('click',async()=>{
-    const status=document.getElementById('ideaScheduleStatus');
-    if(!userId){if(status)status.textContent='Sign in first to save these times to your account.';return;}
-    if(status)status.textContent='Saving…';
-    const saved=await saveCloud();
-    if(status)status.textContent=saved?'Schedule preferences saved (Asia/Kolkata): '+readIdeaTimes().join(', ')+'. Live scheduling/background worker is not active yet.':'Save failed. Check sign-in and try again.';
-  });
-  ['manualApprovalSwitch','autoApprovalSwitch','backgroundPreferenceSwitch'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el)el.addEventListener('click',()=>setTimeout(saveCloud,0));
-  });
-  init();
-})();
-</script>
+<style id="ng-master-design-lock">
+/* MASTER DESIGN LOCK — do not change logo/menu alignment or size without explicit user request. */
+.app>header>img.logo{position:relative!important;left:-23px!important;top:-0.2px!important;height:48px!important;max-width:210px!important;transform:translateX(-23px) scale(1.15)!important;transform-origin:left center!important;}
+header .ng-hamburger span{transform:translateY(3.5px)!important;}
+</style>
+<style id="ng-header-footer-design-lock">
+/* HEADER + FOOTER MASTER LOCK — preserve approved visual styling unless user explicitly requests a change. */
+body>.app>header, body>header:not(.ng-auth-master-header), body>main>header:not(.ng-auth-master-header), body>.app>header:not(.ng-auth-master-header), header.studio-top{
+  background:linear-gradient(180deg,#050c2a 0%,#07123a 100%)!important;
+  color:#fff!important;border-bottom:2px solid #2a5bff!important;
+  box-shadow:0 0 14px #3a2cff55!important;box-sizing:border-box!important;
+}
+.app main > footer.ng-shared-footer{
+  background:#050b28!important;border-top:1px solid #1e4fb5!important;color:#8fa6d6!important;
+}
+.app main > footer.ng-shared-footer .ng-credit{color:#fff!important;}
+</style>
 
-
-<script>
-(function(){
-  function applyNextGenSharedBranding(){
-    document.querySelectorAll('footer').forEach(function(f){if(!f.classList.contains('ng-bottom-nav'))f.remove();});
-    var footer=document.createElement('footer');
-    footer.className='ng-shared-footer';
-    footer.innerHTML='<span class="ng-copyright">NextGen · Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span>';
-    document.body.appendChild(footer);
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',applyNextGenSharedBranding);else applyNextGenSharedBranding();
-})();
-</script>
-
-<script id="ng-register-sw">if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
-
-
-
-
-
-<footer class="ng-shared-footer"><span class="ng-copyright">NextGen · Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
 </body>
 </html>
