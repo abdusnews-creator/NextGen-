@@ -539,54 +539,6 @@ html body .app main > footer.ng-shared-footer > .ng-credit{font-size:10px!import
 
 
 
-<style id="ng-dashboard-native-scroll">
-  /* Use the document viewport as the scroll surface so Android Chrome can show its native pull-to-refresh. */
-  html, body {
-    height: auto !important;
-    min-height: 100% !important;
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
-    overscroll-behavior-y: auto !important;
-  }
-  body {
-    min-height: 100vh !important;
-    min-height: 100dvh !important;
-  }
-  body > .app {
-    height: auto !important;
-    min-height: 100vh !important;
-    min-height: 100dvh !important;
-    overflow: visible !important;
-  }
-  body > .app > header {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 30 !important;
-  }
-  body > .app > main {
-    flex: 1 0 auto !important;
-    min-height: 0 !important;
-    overflow: visible !important;
-    overscroll-behavior-y: auto !important;
-    touch-action: auto !important;
-  }
-  body > .app > main {
-    padding-bottom: calc(16px + 52px + env(safe-area-inset-bottom, 0px)) !important;
-  }
-  body > .app > nav.ng-bottom-nav {
-    position: fixed !important;
-    left: 50% !important;
-    right: auto !important;
-    bottom: 0 !important;
-    transform: translateX(-50%) !important;
-    width: 100% !important;
-    max-width: 430px !important;
-    z-index: 30 !important;
-    flex: 0 0 auto !important;
-  }
-</style>
-
-
 <style id="ng-profile-avatar-shape-fix">
 /* Keep the header profile control perfectly circular; prevent inherited button sizing/stretch. */
 .app>header .hr>button.ng-profile-trigger{
@@ -1200,21 +1152,6 @@ html.ng-menu-refresh-open body .ng-menu-backdrop[hidden]{
 
 <style id="ng-profile-extra-actions">
 .ng-profile-action-divider{height:1px;background:#174c83;margin:9px 0 5px}.ng-profile-action-spacer{height:62px}.ng-profile-links a.ng-profile-delete{color:#ff315b!important}.ng-profile-links a.ng-profile-delete span{color:#ff315b!important}
-</style>
-<style id="ng-scroll-header-lock-20261030">
-/* Keep the existing master header design unchanged; only detach it from document scrolling. */
-body > .app { padding-top:46px!important; }
-body > .app > header {
-  position:fixed!important;
-  top:0!important;
-  left:0!important;
-  right:0!important;
-  width:100%!important;
-  max-width:430px!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
-  z-index:1000!important;
-}
 </style>
 </body>
 </html>
