@@ -108,6 +108,9 @@ svg{display:block}
 @media(max-width:480px){.subscription-plans{gap:20px}.subscription-plan{padding:24px 26px}.subscription-plan h2{margin-bottom:36px}.subscription-plan ul{padding-left:34px}}
 
 .subscription-important{box-sizing:border-box;margin:18px 4px 28px;padding:22px;border:1px solid #8b7130;border-radius:22px;background:#29230f;color:#e8d18a;font-size:clamp(14px,3.6vw,20px);line-height:1.75}.subscription-important strong{color:#ffe3a0}
+
+.subscription-plan-free{border-color:#36b8d8;box-shadow:0 0 0 1px #145b79 inset,0 0 18px #13c8ff20}
+.subscription-plan-free h2{color:#73e5ff}
 </style>
 
 <style id="ng-header-logo-crop-fix">
@@ -473,6 +476,18 @@ body>.app>nav.ng-bottom-nav{
 <main>
 <section class="page-intro"><div class="page-icon">⚙</div><div><h1>Subscription Package</h1></div></section>
 <section class="subscription-plans" aria-label="Subscription plans">
+  <article class="subscription-plan subscription-plan-free">
+    <h2>7 Days Free Package</h2>
+    <div class="subscription-price">₹0</div>
+    <p class="subscription-limit">Free access for 7 days</p>
+    <ul>
+      <li>Explore the NextGen workspace</li>
+      <li>Content drafts and planning tools</li>
+      <li>Manual approval before publishing</li>
+      <li>Try the available channel management features</li>
+    </ul>
+    <div class="subscription-status">Free package activation coming soon</div>
+  </article>
   <article class="subscription-plan">
     <h2>Starter Plan</h2>
     <div class="subscription-price">₹499</div>
@@ -510,7 +525,7 @@ body>.app>nav.ng-bottom-nav{
     <div class="subscription-status">Subscription activation coming soon</div>
   </article>
 </section>
-<aside class="subscription-important"><strong>Important:</strong> Billing period and final free-trial duration (previously discussed as 3–5 days) are not confirmed yet. These prices are displayed for plan review only. Online payments and automatic plan activation are not connected. Publishing still requires your explicit approval.</aside>
+<aside class="subscription-important"><strong>Important:</strong> The 7-day free package is listed above. Paid-plan billing periods are not confirmed yet. These prices are displayed for plan review only. Online payments and automatic plan activation are not connected. Publishing still requires your explicit approval.</aside>
 <footer class="ng-shared-footer"><span class="ng-copyright">©2026 NextGen. All Rights Reserved. Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
 </main>
 <nav class="ng-bottom-nav" aria-label="Main navigation">
