@@ -544,6 +544,42 @@ html body .app main > footer.ng-shared-footer > .ng-credit{font-size:10px!import
 }
 </style>
 
+
+<style id="ng-dashboard-home-scroll-system">
+  /* Match Home Page body scrolling while preserving the Dashboard layout. */
+  html, body {
+    height: auto !important;
+    min-height: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior-y: auto !important;
+  }
+  .app {
+    height: auto !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    overflow: visible !important;
+  }
+  .app > header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 20 !important;
+  }
+  .app > main {
+    flex: 1 0 auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    overscroll-behavior-y: auto !important;
+    touch-action: auto !important;
+  }
+  .app > nav.ng-bottom-nav {
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 20 !important;
+    flex: 0 0 auto !important;
+  }
+</style>
+
 </head>
 <body>
 <div class="app">
