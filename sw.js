@@ -1,4 +1,4 @@
-const CACHE_NAME = "nextgen-shell-v33";
+const CACHE_NAME = "nextgen-shell-v34";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -12,6 +12,9 @@ const APP_SHELL = [
   "./review.html",
   "./settings.html",
   "./subscription-package.html",
+  "./send-feedback.html",
+  "./help-centre.html",
+  "./privacy-policy.html",
   "./manifest.webmanifest",
   "./icon.svg",
   "./ng-symbol.jpg",
