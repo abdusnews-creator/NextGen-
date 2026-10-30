@@ -89,6 +89,21 @@
     form.reset();setNote('draftNote','Draft saved to your NextGen account. It is unpublished and awaits your review.',false);
     await loadBase();renderContent();
   }
+  function renderChannels(){
+    const root=document.querySelector('.app main .list');if(!root)return;
+    root.innerHTML='';
+    if(!channels.length){empty(root,'No channels are saved in this workspace yet. Use Add Channel to verify and save a profile.');return;}
+    channels.forEach(ch=>{
+      const card=document.createElement('div');card.className='card '+({youtube:'yt',facebook:'fb',instagram:'ig',threads:'th'}[ch.platform]||'');
+      const icon=document.createElement('div');icon.className='ico';icon.textContent=({youtube:'▶',facebook:'f',instagram:'◎',threads:'＠'}[ch.platform]||'•');
+      const info=document.createElement('div');info.className='info';
+      const name=document.createElement('b');name.textContent=ch.display_name||ch.platform;
+      const handle=document.createElement('span');handle.textContent=ch.handle?'@'+String(ch.handle).replace(/^@/,''):'Profile name pending';
+      info.append(name,handle);
+      const status=document.createElement('div');status.className='st';status.textContent='Connection: '+ch.connection_status+(ch.is_paused?' · Paused':'');
+      card.append(icon,info,status);root.append(card);
+    });
+  }
   function renderContent(){
     const root=$('draftList');if(!root)return;
     root.innerHTML='';safeText($('draftCount'),content.length);
@@ -219,6 +234,7 @@
     try{
       await loadBase();
       if(page==='content.html')renderContent();
+      if(page==='channels.html')renderChannels();
       if(page==='approvals.html'){
         renderApprovals();
         const mode=settings&&settings.approval_mode==='auto'?'auto':'manual';
