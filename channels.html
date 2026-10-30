@@ -304,6 +304,30 @@ body.ng-profile-open{overflow:hidden}
 html,body{background-color:#030b24!important;background-image:none!important}
 </style>
 <!-- NextGen: remove page-level decorative background; preserve cards, header, footer and master design -->
+<style id="ng-native-pull-to-refresh">
+/* Restore document-viewport scrolling for Android Chrome native pull-to-refresh. */
+html,body{
+ height:auto!important;min-height:100%!important;
+ overflow-x:hidden!important;overflow-y:auto!important;
+ overscroll-behavior-y:auto!important;
+}
+body{min-height:100vh!important;min-height:100dvh!important}
+body>.app{
+ height:auto!important;min-height:100vh!important;min-height:100dvh!important;
+ overflow:visible!important;
+}
+body>.app>header{position:sticky!important;top:0!important;z-index:30!important}
+body>.app>main{
+ flex:1 0 auto!important;min-height:0!important;overflow:visible!important;
+ overscroll-behavior-y:auto!important;touch-action:auto!important;
+ padding-bottom:calc(16px + 52px + env(safe-area-inset-bottom,0px))!important;
+}
+body>.app>nav.ng-bottom-nav{
+ position:fixed!important;left:50%!important;right:auto!important;bottom:0!important;
+ transform:translateX(-50%)!important;width:100%!important;max-width:430px!important;
+ z-index:30!important;flex:0 0 auto!important;
+}
+</style>
 </head>
 <body>
 <div class="app">
