@@ -586,6 +586,30 @@ html body .app main > footer.ng-shared-footer > .ng-credit{font-size:10px!import
   }
 </style>
 
+
+<style id="ng-profile-menu-styles">
+.ng-profile-trigger{appearance:none;-webkit-appearance:none;border:1px solid #36baff!important;color:#fff!important;cursor:pointer;font-size:11px!important;font-weight:800!important;letter-spacing:-.5px;background:linear-gradient(135deg,#081a45,#123d80)!important;box-shadow:0 0 9px #168bff88!important}
+.ng-profile-backdrop[hidden]{display:none!important}
+.ng-profile-backdrop{position:fixed;inset:0;z-index:79;background:#0005}
+.ng-profile-menu{position:fixed;z-index:80;top:calc(52px + env(safe-area-inset-top,0px));right:max(8px,calc((100vw - 430px)/2 + 8px));width:min(370px,calc(100vw - 16px));max-height:calc(100dvh - 112px);overflow-y:auto;padding:16px 14px 12px;border:1px solid #00cfff;border-radius:17px;background:linear-gradient(155deg,#061a3b,#030b24 72%);box-shadow:0 12px 38px #000b,0 0 16px #087bff33;opacity:0;visibility:hidden;transform:translateY(-7px);transition:opacity .16s ease,transform .16s ease,visibility .16s ease}
+.ng-profile-menu.is-open{opacity:1;visibility:visible;transform:translateY(0)}
+.ng-profile-account{display:flex;align-items:center;gap:11px;padding:3px 2px 15px}
+.ng-profile-brand-avatar{flex:0 0 58px;width:58px;height:58px;border:2px solid #13bfff;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 25%,#ffca36,#111a3d 55%,#020817);color:#ffd54a;font-size:17px;font-weight:900;box-shadow:0 0 9px #138cff}
+.ng-profile-account-copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:4px}
+.ng-profile-account-copy strong{font-size:17px;color:#fff;line-height:1.2}
+.ng-profile-account-copy span{font-size:12px;color:#a9c9ee;overflow-wrap:anywhere}
+.ng-profile-edit{border:0;background:transparent;color:#fff;font-size:25px;padding:6px}
+.ng-profile-account-actions{display:flex;gap:7px;padding:4px 0 13px;border-bottom:1px solid #174c83}
+.ng-profile-account-actions button{flex:1;min-width:0;min-height:36px;padding:5px 7px;border:1px solid #167ac0;border-radius:22px;background:#09264a;color:#fff;font-size:11px;font-weight:650}
+.ng-profile-links{display:flex;flex-direction:column}
+.ng-profile-links a{min-height:43px;display:flex;align-items:center;gap:12px;padding:7px 3px;color:#f3f8ff;text-decoration:none;font-size:14px;border-bottom:1px solid #12355c}
+.ng-profile-links a:last-child{border-bottom:0}
+.ng-profile-links a span{width:25px;flex:0 0 25px;text-align:center;color:#25caff;font-size:20px}
+.ng-profile-links a i{margin-left:auto;color:#70caff;font-style:normal;font-size:22px}
+body.ng-profile-open{overflow:hidden}
+@media(max-width:380px){.ng-profile-menu{padding:13px 11px}.ng-profile-account-copy strong{font-size:15px}.ng-profile-links a{min-height:40px;font-size:13px}}
+@media(prefers-reduced-motion:reduce){.ng-profile-menu{transition:none}}
+</style>
 </head>
 <body>
 <div class="app">
@@ -595,9 +619,31 @@ html body .app main > footer.ng-shared-footer > .ng-credit{font-size:10px!import
   <div class="hr">
     <div class="circ plus"><svg width="16" height="16" viewBox="0 0 16 16" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M8 1v14M1 8h14"/></svg></div>
     <div class="bell"><svg width="24" height="24" viewBox="0 0 24 24" aria-label="Notifications"><path fill="#fff" d="M12 2.1a2.45 2.45 0 0 0-2.45 2.45v.63C6.18 6.25 4 9.18 4 12.65v4.02l-1.4 1.66c-.45.54-.07 1.36.63 1.36h17.54c.7 0 1.08-.82.63-1.36L20 16.67v-4.02c0-3.47-2.18-6.4-5.55-7.47v-.63A2.45 2.45 0 0 0 12 2.1Z"/><path fill="#fff" d="M8.4 21.1a3.7 3.7 0 0 0 7.2 0Z"/></svg><u></u></div>
-    <div class="circ av">A</div>
+    <button type="button" class="circ av ng-profile-trigger" id="ng-profile-trigger" aria-label="Open profile menu" aria-expanded="false" aria-controls="ng-profile-menu">RF</button>
   </div>
 </header>
+
+<div class="ng-profile-backdrop" id="ng-profile-backdrop" hidden></div>
+<aside class="ng-profile-menu" id="ng-profile-menu" aria-label="Profile menu" aria-hidden="true">
+  <div class="ng-profile-account">
+    <div class="ng-profile-brand-avatar">RF</div>
+    <div class="ng-profile-account-copy"><strong>Royal Furniture</strong><span>@RoyalFurnitureHouse</span></div>
+    <button type="button" class="ng-profile-edit" aria-label="Edit profile">✎</button>
+  </div>
+  <div class="ng-profile-account-actions">
+    <button type="button">▣&nbsp; Switch account</button>
+    <button type="button"><b>G</b>&nbsp; Google Account</button>
+  </div>
+  <div class="ng-profile-links">
+    <a href="./settings.html"><span>⚙</span>Settings<i>›</i></a>
+    <a href="./settings.html#account-status"><span>◎</span>Account status<i>›</i></a>
+    <a href="./help-centre.html#feedback"><span>✉</span>Send feedback<i>›</i></a>
+    <a href="./help-centre.html"><span>ⓘ</span>Help Centre<i>›</i></a>
+    <a href="https://www.youtube.com/@RoyalFurnitureHouse" target="_blank" rel="noopener"><span>▶</span>YouTube<i>↗</i></a>
+    <a href="./privacy-settings.html"><span>◇</span>Privacy policy<i>›</i></a>
+    <a href="./settings.html#terms"><span>▤</span>Terms of Service<i>›</i></a>
+  </div>
+</aside>
 <div class="ng-menu-backdrop" id="ng-menu-backdrop" hidden></div>
 <aside class="ng-menu-drawer" id="ng-menu-drawer" aria-label="Navigation menu" aria-hidden="true">
   <div class="ng-menu-title">NextGen <button type="button" id="ng-menu-close" aria-label="Close navigation menu">×</button></div>
@@ -941,5 +987,19 @@ body>.app>header, body>header:not(.ng-auth-master-header), body>main>header:not(
 
 
 
+
+<script id="ng-profile-menu-script">
+(function(){
+ var trigger=document.getElementById('ng-profile-trigger'),menu=document.getElementById('ng-profile-menu'),backdrop=document.getElementById('ng-profile-backdrop');
+ if(!trigger||!menu||!backdrop||trigger.dataset.profileReady==='1')return;
+ trigger.dataset.profileReady='1';
+ function openMenu(){menu.classList.add('is-open');menu.setAttribute('aria-hidden','false');backdrop.hidden=false;trigger.setAttribute('aria-expanded','true');document.body.classList.add('ng-profile-open')}
+ function closeMenu(){menu.classList.remove('is-open');menu.setAttribute('aria-hidden','true');backdrop.hidden=true;trigger.setAttribute('aria-expanded','false');document.body.classList.remove('ng-profile-open')}
+ trigger.addEventListener('click',function(){menu.classList.contains('is-open')?closeMenu():openMenu()});
+ backdrop.addEventListener('click',closeMenu);
+ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
+ menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu)});
+})();
+</script>
 </body>
 </html>
