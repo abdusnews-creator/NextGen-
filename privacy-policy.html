@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NextGen – Privacy Policy</title>
+<link rel="stylesheet" href="./nextgen-shared.css?v=pull-refresh-root-scroll-20261031">
+<style>
+:root{color-scheme:dark;box-sizing:border-box;--bg:#030b24;--txt:#fff;--mut:#8fa6d6;--green:#16e08a;padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;min-height:100%;margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;overflow:hidden}
+.app{max-width:430px;margin:0 auto;width:100%;height:100vh;height:100dvh;position:relative;display:flex;flex-direction:column;overflow:hidden}
+main{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:auto;padding-bottom:16px;touch-action:pan-y}
+main::-webkit-scrollbar{display:none}
+header{flex:none;z-index:5;height:46px;min-height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 10px 0 12px;background:linear-gradient(180deg,#050c2a,#07123a);border-bottom:2px solid #2a5bff;border-radius:0 0 18px 18px;box-shadow:0 0 14px #3a2cff88;position:relative}
+header::after{content:"";position:absolute;right:0;top:0;bottom:0;width:30px;border-right:3px solid #9b3cff;border-radius:0 0 22px 22px}
+.burger{width:20px;display:grid;gap:4px;margin-right:6px}
+.burger i{height:2.5px;background:#fff;border-radius:2px}
+.logo{height:46px;width:auto;max-width:180px;object-fit:contain;margin-right:auto;border-radius:6px;display:block}
+.hr{display:flex;align-items:center;gap:13px;z-index:1}
+.circ{width:29px;height:29px;border-radius:50%;display:grid;place-items:center}
+.plus{border:2px solid #2a5bff;background:#0a1650;box-shadow:0 0 8px #2a5bff}
+.bell{position:relative;width:29px;height:29px;display:grid;place-items:center}.bell svg{transform-origin:50% 12%;animation:bellSwing 1.8s ease-in-out infinite}@keyframes bellSwing{0%,72%,100%{transform:rotate(0deg)}76%{transform:rotate(12deg)}80%{transform:rotate(-10deg)}84%{transform:rotate(7deg)}88%{transform:rotate(-5deg)}92%{transform:rotate(2deg)}}@media(prefers-reduced-motion:reduce){.bell svg{animation:none}}
+.bell u{position:absolute;top:0;right:2px;width:9px;height:9px;border-radius:50%;background:#ff2d3d}
+.av{background:linear-gradient(135deg,#2a6bff,#3b3cff);font-weight:700;font-size:15px;box-shadow:0 0 8px #2a5bff88}
+.hd{display:flex;gap:11px;align-items:center;padding:14px 10px 10px}
+.hico{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#2a8bff,#4a4cff);display:grid;place-items:center;box-shadow:0 0 10px #2a6bff77}
+.hd h1{font-size:23px;font-weight:800;line-height:1.1}
+.hd p{font-size:12px;color:var(--mut);margin-top:2px}
+.bar{display:flex;gap:9px;padding:0 10px;margin-bottom:16px}
+.search{flex:1;display:flex;align-items:center;gap:12px;height:31px;border:1.5px solid #1e4fb5;border-radius:11px;background:#07123a;padding:0 10px;color:var(--mut);font-size:13px}
+.add{border:0;color:#fff;width:108px;height:32px;border-radius:9px;background:linear-gradient(90deg,#1a3cff,#1f9bff);display:flex;align-items:center;justify-content:center;gap:6px;font-weight:700;font-size:12.5px;box-shadow:0 0 10px #1f7bff88}
+.bar .search{min-width:0;overflow:hidden;white-space:nowrap}.bar .search input::placeholder{color:var(--mut);opacity:1}.card .rv{border:0;color:#fff;cursor:pointer}.channel-dialog{width:min(92vw,390px);border:1px solid #2459bd;border-radius:16px;padding:18px;background:#07123a;color:#fff;margin:auto;box-shadow:0 16px 48px #0009}.channel-dialog::backdrop{background:#020718bb}.channel-dialog h2{font-size:20px;margin-bottom:12px}.channel-dialog label{display:block;font-size:13px;color:#b9c9ed;margin:12px 0 5px}.channel-dialog input,.channel-dialog select{width:100%;height:42px;border-radius:9px;border:1px solid #2857a4;background:#030b24;color:#fff;padding:0 10px;font:inherit}.dialog-actions{display:flex;gap:8px;margin-top:16px}.dialog-actions button{flex:1;min-height:40px;border-radius:9px;border:1px solid #2857a4;background:#10245b;color:#fff}.dialog-actions .primary{background:#1b63e8;border:0}.dialog-note{font-size:12px;color:#9eb1d8;line-height:1.45;margin-top:10px}
+.bar .refresh-page{position:relative;z-index:2;flex:0 0 34px;width:34px;min-width:34px;min-height:32px;height:32px;padding:0;border:1px solid #2a6bff;border-radius:9px;background:#0a1650;color:#fff;display:grid;place-items:center;box-shadow:0 0 8px #1f7bff55;cursor:pointer;touch-action:manipulation}.refresh-page:active{transform:scale(.96);background:#12316f}
+.list{padding:0 9px;display:grid;gap:8px}
+.card{--ac:#ff3b4e;position:relative;height:71px;border:1px solid #17407f;border-left:0;border-radius:11px;background:linear-gradient(180deg,#081a45,#061237);display:flex;align-items:center;padding:0 8px 0 18px}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:9px;border-left:3px solid var(--ac);border-radius:11px 0 0 11px}
+.ico{position:absolute;left:18px;top:9px;width:41px;height:41px;border-radius:10px;display:grid;place-items:center}
+.info{position:absolute;left:72px;top:10px}
+.info b{display:block;font-size:20px;font-weight:700;line-height:1.1}
+.info span{font-size:15px;color:#4DB8FF;display:block;margin-top:3px}
+.st{position:absolute;left:72px;top:52px;bottom:auto;font-size:12px;color:#c9d6f5;display:flex;align-items:center;gap:6px}
+.st i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green)}
+.rv{position:absolute;right:9px;top:18px;width:83px;height:28px;border-radius:9px;display:flex;align-items:center;justify-content:center;gap:4px;font-weight:700;font-size:12.5px}
+.yt{--ac:#ff3b4e}.yt .ico{background:#ff1f1f}.yt .rv{background:linear-gradient(90deg,#ff3355,#ff4a5a)}
+.fb{--ac:#1e8bff}.fb .ico{background:#1d6bff}.fb .rv{background:linear-gradient(90deg,#1a63ff,#1e8bff)}
+.ig{--ac:#c026ff}.ig .ico{background:linear-gradient(45deg,#ffb100,#ff2d6f 50%,#8a2be2)}.ig .rv{background:linear-gradient(90deg,#b11cff,#d52cff)}
+.th{--ac:#4f7bd1}.th .ico{background:#000}.th .rv{background:#1c3a74}
+.blur{filter:blur(9px);opacity:.75;margin-top:8px;pointer-events:none;height:500px;overflow:hidden}
+nav{flex:none;position:relative;z-index:5;width:100%;height:calc(43px + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);display:flex;background:linear-gradient(180deg,#07123a,#050b28);border-top:2px solid #1e4fb5;border-radius:18px 18px 0 0;box-shadow:0 -2px 14px #3a2cff66}
+nav a{flex:1;min-width:0;height:100%;padding:2px 0!important;margin:0!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:9px;color:#cfd8f5;font-weight:600;position:relative;text-decoration:none;background:transparent!important;border:0!important;box-shadow:none!important}
+.app nav.ng-bottom-nav{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;z-index:5!important;width:100%!important;height:calc(43px + env(safe-area-inset-bottom,0px))!important;padding:0 4px env(safe-area-inset-bottom,0px)!important;display:flex!important;justify-content:space-around!important;align-items:stretch!important;gap:2px!important;border-radius:18px 18px 0 0!important}.app nav.ng-bottom-nav a{flex:1!important;min-width:0!important;height:100%!important;min-height:0!important;margin:0!important;padding:2px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:2px!important;border:1px solid transparent!important;border-radius:9px!important;background:transparent!important;box-shadow:none!important;color:#cfd8f5!important;font-size:9px!important}.app nav.ng-bottom-nav a.active{background:#0b4a82!important;border:1px solid rgba(77,184,255,.28)!important;border-radius:9px!important;color:#fff!important}.app nav.ng-bottom-nav a.active::before,.app nav.ng-bottom-nav a.active::after{content:none!important;display:none!important}.app nav.ng-bottom-nav a small{display:block!important;font-size:9px!important;line-height:1.2!important;text-align:center!important}.app nav.ng-bottom-nav a .channel-master-icon{width:23px!important;height:23px!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}nav a .schedule-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .schedule-master-icon svg{width:23px;height:23px}nav a .approval-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .approval-master-icon svg{width:23px;height:23px}nav a .content-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .content-master-icon svg{width:23px;height:23px}nav a .channel-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .channel-master-icon svg{width:23px;height:23px}nav a .dashboard-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .dashboard-master-icon svg{width:23px;height:23px;overflow:visible}nav a .channel-master-icon{display:flex;align-items:center;justify-content:center;width:23px;height:23px}nav a .channel-master-icon svg{width:23px;height:23px;overflow:visible}
+nav a.on::after{content:none!important;display:none!important}nav a:not(.on) .dashboard-master-icon,nav a:not(.on) .channel-master-icon,nav a:not(.on) .content-master-icon,nav a:not(.on) .approval-master-icon,nav a:not(.on) .schedule-master-icon{background:transparent;border:0;box-shadow:none;border-radius:0}
+svg{display:block}
+
+/* Channels reference design refresh */
+.hd{gap:11px;padding:6px 11px 8px}
+.hd h1{font-size:24px}
+.hd p{font-size:12px}
+.bar{gap:9px;padding:0 11px;margin-bottom:13px}
+.bar .search{height:36px;border-radius:12px;padding:0 14px;font-size:13px}
+.bar .search svg{flex:none}
+.bar .add{flex:0 0 120px;width:120px;height:36px;border-radius:10px;font-size:13px}
+.bar .refresh-page{height:34px;min-height:34px}
+.list{padding:0 10px;gap:8px}
+.card{height:80px;border-radius:12px;padding:0 8px 0 18px}
+.card::before{width:10px;border-left-width:4px}
+.ico{left:19px;top:10px;width:44px;height:42px;border-radius:10px}
+.yt .ico{width:44px;height:42px}
+.info{left:80px;top:10px}
+.info b{font-size:18px}
+.info span{font-size:13px;margin-top:4px}
+.st{left:19px;top:54px;font-size:12px}
+.st i{width:8px;height:8px;flex:none}
+.rv{right:10px;top:20px;width:92px;height:31px;border-radius:10px;font-size:12.5px}
+.safety{margin:17px 12px 18px;padding:19px 15px 22px;border:1px solid #1d2f50;border-radius:16px;background:linear-gradient(180deg,#0f1d3a,#0b1630)}
+.safety h2{font-size:27px;font-weight:700;color:#8f9bff;line-height:1.2}
+.safety p{font-size:15.5px;color:#fff;margin-top:22px;line-height:1.3}
+.safety p+p{margin-top:21px}
+.safety b{font-weight:700}
+.safety .b1,.safety .b2{display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#fff;font-family:inherit;cursor:pointer}
+.safety .b1{width:100%;min-height:48px;margin-top:31px;border-radius:14px;background:linear-gradient(90deg,#1a8cff,#1a63e8);box-shadow:0 0 12px #1a63e855;border:0}
+.safety .b2{width:190px;min-height:48px;margin-top:13px;border-radius:14px;background:#12294a;border:1px solid #1f3d6b}
+@media(max-width:360px){.bar .add{flex-basis:105px;width:105px}.info b{font-size:16px}.info span{font-size:12px}.rv{width:78px}.st{font-size:11px}}
+
+/* Override shared mobile main padding so the page reaches the requested side spacing. */
+@media(max-width:430px){
+  .app,main{width:100%!important;max-width:100%!important}
+  main{padding-left:.01px!important;padding-right:.01px!important}
+}
+/* Force 0.01px left/right spacing on mobile content sections. */
+@media(max-width:430px){
+  .hd,.bar,.list,.safety,.ng-shared-footer{width:calc(100% - .02px)!important;margin-left:.01px!important;margin-right:.01px!important}
+  .hd,.bar,.list,.ng-shared-footer{padding-left:.01px!important;padding-right:.01px!important}
+  .safety{padding-left:15px!important;padding-right:15px!important}
+}
+</style>
+
+<style id="ng-header-logo-crop-fix">
+/* header-reference.webp contains the old small hamburger baked into the left edge; crop that part out of the image itself. */
+.app>header>img.logo{clip-path:none!important;}
+</style>
+
+<style id="ng-hamburger-final-fix">
+/* The screenshot shows a second standalone hamburger between the square menu button and logo. Keep only the square menu button, logo and right-side actions. */
+.app>header>:not(#ng-hamburger):not(.logo):not(.hr){display:none!important}
+.app>header #ng-hamburger{display:flex!important}
+</style>
+
+<style id="ng-hamburger-single-fix">
+/* Keep only the dedicated menu control; hide any legacy header burger that may duplicate it. */
+.app>header .burger,.app>header [data-legacy-hamburger="true"]{display:none!important}
+.app>header .ng-hamburger{appearance:none;-webkit-appearance:none;background:#0a1650!important;}
+</style>
+
+<style id="ng-header-right-edge-fix">
+/* Keep the complete NextGen header inside the mobile viewport. */
+.app>header{width:100%;max-width:100%;min-width:0;overflow:hidden;gap:6px;padding-left:10px;padding-right:10px;justify-content:flex-start}
+.app>header::after{display:none!important}
+.app>header .ng-hamburger{flex:0 0 34px!important;width:34px!important;min-width:34px!important;margin-right:2px!important}
+.app>header>img.logo{position:static!important;left:auto!important;top:auto!important;flex:1 1 auto!important;width:auto!important;min-width:0!important;max-width:180px!important;height:42px!important;object-fit:contain;object-position:center center;clip-path:none!important;margin:0!important}
+.app>header .hr{flex:0 0 auto;gap:9px;margin-left:auto;min-width:0}
+.app>header .hr .circ,.app>header .hr .bell{flex:0 0 29px}
+@media(max-width:380px){
+ .app>header{gap:4px;padding-left:6px;padding-right:6px}
+ .app>header>img.logo{max-width:calc(100vw - 168px)!important;height:38px!important}
+ .app>header .hr{gap:6px}
+}
+</style>
+<style id="ng-hamburger-fix">
+header .ng-hamburger{flex:0 0 36px;width:36px;height:36px;min-height:36px;padding:7px 6px;margin:-3px 8px 0 0;border:0!important;border-radius:0!important;box-shadow:none!important;border:1px solid #2857a4;border-radius:9px;background:#0a1650;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;position:relative;z-index:30;touch-action:manipulation}
+.app>header .ng-hamburger span{display:block!important;width:20px!important;height:2.5px!important;flex:none;border-radius:2px;background:#fff;pointer-events:none;transform:translateY(3px)}
+header .ng-hamburger::before,header .ng-hamburger::after{content:none!important;display:none!important}header .ng-hamburger{background-image:none!important}
+.ng-menu-backdrop[hidden]{display:none!important}
+.ng-menu-backdrop{position:fixed;inset:0;z-index:90;background:#020718b8}
+.ng-menu-drawer{position:fixed;z-index:91;left:0;top:0;bottom:0;width:min(290px,82vw);padding:calc(18px + env(safe-area-inset-top,0px)) 14px calc(20px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,#071a3e,#030b24);border-right:1px solid #2a6bff;box-shadow:12px 0 32px #0008;transform:translateX(-105%);visibility:hidden;transition:transform .2s ease,visibility .2s ease;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
+.ng-menu-drawer.is-open{transform:translateX(0);visibility:visible}
+.ng-menu-title{display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:20px;font-weight:800;padding:8px 6px 16px;border-bottom:1px solid #24509a;margin-bottom:8px}
+.ng-menu-title button{width:36px;height:36px;min-height:36px;border:1px solid #2857a4;border-radius:9px;background:#10245b;color:#fff;font-size:25px;line-height:1}
+.ng-menu-drawer>a{display:flex;align-items:center;min-height:46px;padding:10px 12px;border:1px solid transparent;border-radius:9px;color:#eaf3ff;text-decoration:none;font-size:15px;font-weight:650;touch-action:manipulation}
+.ng-menu-drawer>a:active,.ng-menu-drawer>a[aria-current="page"]{background:#0b3970;border-color:#1c78c8;color:#fff}
+body.ng-menu-open{overflow:hidden}
+@media(prefers-reduced-motion:reduce){.ng-menu-drawer{transition:none}}
+</style>
+
+<style id="ng-logo-shift-left">
+/* Shift the header logo image left so it sits closer to the square menu button. */
+.app>header>img.logo{position:relative!important;left:-23px!important;top:-0.7px!important;height:48px!important;max-width:210px!important;transform:translateX(-23px) scale(1.15)!important;transform-origin:left center!important;}
+</style>
+
+<style id="ng-master-final-v32">
+/* Master design v32: loaded after each page's local styles to prevent page CSS overriding it. */
+:root{--ng-master-design-version:"2026-10-29-v32"}
+body>header:not(.ng-auth-master-header),body>main>header:not(.ng-auth-master-header),body>.app>header:not(.ng-auth-master-header),header.studio-top{background:linear-gradient(180deg,#050c2a 0%,#07123a 100%)!important;color:#fff!important;border-bottom:2px solid #2a5bff!important;box-shadow:0 0 14px #3a2cff55!important;box-sizing:border-box!important}
+body>header:not(.ng-auth-master-header) a,body>header:not(.ng-auth-master-header) strong,body>header:not(.ng-auth-master-header) h1,body>header:not(.ng-auth-master-header) h2,header.studio-top .studio-brand,header.studio-top .studio-brand-name{color:#fff!important}
+body>header:not(.ng-auth-master-header) p,body>header:not(.ng-auth-master-header) small,header.studio-top .studio-tagline{color:#8fa6d6!important}
+header.studio-top{height:46px!important;min-height:46px!important;padding:4px 10px!important;gap:10px!important;border-radius:0 0 12px 12px!important}
+header.studio-top .studio-menu{flex:0 0 34px!important;width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;font-size:0!important;display:inline-grid!important;place-items:center!important;background:transparent!important;border:0!important;box-shadow:none!important}
+header.studio-top .studio-menu::before{content:""!important;display:block!important;width:20px!important;height:2.5px!important;background:#fff!important;box-shadow:0 6px 0 #fff,0 -6px 0 #fff!important;border-radius:2px!important}
+header .ng-hamburger{flex:0 0 34px!important;width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;margin:0 8px 0 0!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+header .ng-hamburger span{display:block!important;width:20px!important;height:2.5px!important;min-height:2.5px!important;flex:0 0 2.5px!important;transform:translateY(2.6px)!important;border-radius:2px!important;background:#fff!important}
+header .ng-hamburger:before,header .ng-hamburger:after{display:none!important;content:none!important}
+.ng-shared-footer{position:static!important;inset:auto!important;bottom:auto!important;transform:none!important;min-height:28px!important;width:100%!important;max-width:none!important;margin:8px 0 0!important;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))!important;display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;justify-content:space-between!important;align-items:center!important;gap:5px!important;background:#050b28!important;border-top:1px solid #1e4fb5!important;color:#8fa6d6!important;font-size:10px!important;line-height:1.25!important;white-space:nowrap!important;box-sizing:border-box!important}
+.ng-shared-footer .ng-copyright{flex:1 1 auto!important;min-width:0!important;text-align:left!important;font-size:10px!important;font-weight:400!important;white-space:nowrap!important}
+.ng-shared-footer .ng-credit{flex:0 0 auto!important;margin-left:auto!important;text-align:right!important;font-size:9px!important;font-weight:600!important;white-space:nowrap!important;color:#fff!important}
+@media(max-width:380px){header.studio-top{gap:6px!important;padding-left:5px!important;padding-right:5px!important}header.studio-top .studio-brand,header.studio-top .studio-brand-name{font-size:18px!important}header.studio-top .studio-tagline{font-size:7px!important}header.studio-top .studio-menu{flex-basis:30px!important;width:30px!important;min-width:30px!important}}
+@media(max-width:600px){.ng-shared-footer{font-size:10px!important;display:flex!important;flex-direction:column!important;flex-wrap:nowrap!important;gap:2px!important;padding:3px 4px calc(3px + env(safe-area-inset-bottom,0px))!important;margin-top:2px!important;justify-content:center!important;align-items:center!important;overflow:hidden!important}.ng-shared-footer .ng-copyright{display:block!important;flex:0 0 auto!important;width:128%!important;max-width:none!important;min-width:0!important;font-size:12px!important;letter-spacing:-.2px!important;white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important;text-align:center!important;transform:scaleX(.78)!important;transform-origin:center center!important}.ng-shared-footer .ng-credit{display:block!important;flex:0 0 auto!important;max-width:none!important;font-size:10px!important;letter-spacing:-.15px!important;white-space:nowrap!important;margin:0!important;text-align:center!important}}
+</style>
+
+
+<style id="channels-footer-master-match">
+@media(max-width:600px){
+  html body .app main > footer.ng-shared-footer{
+    position:relative!important;left:calc(50% - 50vw)!important;right:auto!important;
+    width:100vw!important;max-width:100vw!important;min-width:100vw!important;
+    margin:8px 0 0!important;
+    padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))!important;
+    box-sizing:border-box!important;display:flex!important;flex-direction:column!important;
+    flex-wrap:nowrap!important;justify-content:center!important;align-items:stretch!important;
+    gap:2px!important;text-align:center!important;transform:none!important;overflow:hidden!important;
+  }
+  html body .app main > footer.ng-shared-footer > .ng-copyright,
+  html body .app main > footer.ng-shared-footer > .ng-credit{
+    display:block!important;flex:0 0 auto!important;width:100%!important;max-width:100%!important;
+    min-width:0!important;margin:0!important;padding:0!important;box-sizing:border-box!important;
+    text-align:center!important;white-space:nowrap!important;transform:none!important;
+  }
+  html body .app main > footer.ng-shared-footer > .ng-copyright{font-size:10px!important;line-height:1.3!important}
+  html body .app main > footer.ng-shared-footer > .ng-credit{font-size:8px!important;line-height:1.3!important}
+}
+</style>
+
+
+<style id="ng-master-page-shell">
+.page-intro{display:flex;align-items:center;gap:12px;padding:14px 11px 12px}.page-icon{width:42px;height:42px;flex:0 0 42px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,#168bff,#4a4cff);box-shadow:0 0 10px #2a6bff55;color:#fff;font-size:23px}.page-intro h1{font-size:24px;line-height:1.1;font-weight:800}.page-intro p{font-size:12px;color:#8fa6d6;margin-top:4px}.page-panel{margin:8px 11px 14px;padding:17px 14px;border:1px solid #17436c;border-radius:15px;background:linear-gradient(145deg,#081f3a,#06172c);box-shadow:0 10px 30px #0002}.page-panel h2{font-size:19px;color:#f4f8ff;margin-bottom:12px}.page-panel .muted{font-size:13px;line-height:1.55;color:#a8c1e8}.page-empty{min-height:145px;margin-top:14px;padding:18px 12px;border:1px dashed #2857a4;border-radius:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;background:#071634}.page-empty>span{font-size:27px;color:#4DB8FF}.page-empty strong{font-size:15px;color:#fff}.page-empty small{font-size:12px;color:#8fa6d6}.mode-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #17385c;color:#eaf3ff;font-size:14px}.mode-on,.mode-off{font-size:12px;padding:5px 10px;border-radius:8px}.mode-on{background:#063e37;color:#45e4b0}.mode-off{background:#3b2630;color:#ff9bab}.time-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0}.time-slots>div{padding:13px 5px;border:1px solid #1c5790;border-radius:12px;background:#071a36;text-align:center}.time-slots strong{display:block;font-size:20px;color:#fff}.time-slots small{display:block;margin-top:5px;color:#8fa6d6;font-size:11px}@media(max-width:350px){.time-slots strong{font-size:17px}.page-panel{margin-left:8px;margin-right:8px}}
+</style>
+
+<style id="ng-settings-content">
+.settings-list{padding:2px 12px 12px;color:#fff}
+.settings-list h2{font-size:19px;font-weight:800;margin:20px 0 8px;color:#fff}
+.settings-list h2:first-child{margin-top:8px}
+.settings-row{min-height:68px;display:flex;align-items:center;gap:13px;padding:10px 5px;border-bottom:1px solid #16365d}
+.settings-icon{flex:0 0 34px;width:34px;height:34px;display:grid;place-items:center;color:#65c8ff;font-size:25px;font-weight:700}
+.settings-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.settings-copy strong{font-size:15px;line-height:1.25;color:#f5f8ff;font-weight:700}
+.settings-copy small{font-size:12px;line-height:1.4;color:#9fb5d9}
+.settings-arrow{color:#6eaef4;font-size:26px;padding:0 5px}
+.settings-note{font-size:12px;line-height:1.5;color:#9fb5d9;padding:12px 4px 3px}
+.settings-row>.settings-toggle{appearance:none!important;-webkit-appearance:none!important;box-sizing:border-box!important;flex:0 0 50px!important;width:50px!important;min-width:50px!important;max-width:50px!important;height:30px!important;min-height:30px!important;max-height:30px!important;padding:0!important;border:1px solid #52709b!important;border-radius:999px!important;background:#34445e!important;position:relative!important;display:inline-block!important;vertical-align:middle!important;cursor:pointer!important;touch-action:manipulation!important;transition:background-color .16s ease!important}
+.settings-row>.settings-toggle:after{content:""!important;position:absolute!important;box-sizing:border-box!important;width:24px!important;height:24px!important;left:2px!important;top:2px!important;border:0!important;border-radius:50%!important;background:#fff!important;box-shadow:0 1px 2px #0003!important;transform:translateX(0)!important;transition:transform .16s ease!important}
+.settings-row>.settings-toggle.is-on{background:#1679d2!important;border-color:#3199f0!important}
+.settings-row>.settings-toggle.is-on:after{transform:translateX(20px)!important}
+.settings-row>.settings-toggle:focus-visible{outline:2px solid #65c8ff!important;outline-offset:3px!important}
+@media(prefers-reduced-motion:reduce){.settings-row>.settings-toggle,.settings-row>.settings-toggle:after{transition:none!important}}
+@media(max-width:360px){.settings-list{padding-left:9px;padding-right:9px}.settings-copy strong{font-size:14px}.settings-copy small{font-size:11px}}
+</style>
+
+
+<style id="ng-profile-avatar-shape-fix">
+/* Keep the header profile control perfectly circular; prevent inherited button sizing/stretch. */
+.app>header .hr>button.ng-profile-trigger{
+  box-sizing:border-box!important;
+  display:grid!important;
+  place-items:center!important;
+  flex:0 0 38px!important;
+  width:38px!important;
+  min-width:38px!important;
+  max-width:38px!important;
+  height:38px!important;
+  min-height:38px!important;
+  max-height:38px!important;
+  aspect-ratio:1/1!important;
+  padding:0!important;
+  margin:0!important;
+  border-radius:50%!important;
+  line-height:1!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+}
+</style>
+<style id="ng-profile-menu-styles">
+.ng-profile-trigger{appearance:none;-webkit-appearance:none;border:1px solid #36baff!important;color:#fff!important;cursor:pointer;font-size:11px!important;font-weight:800!important;letter-spacing:-.5px;background:linear-gradient(135deg,#081a45,#123d80)!important;box-shadow:0 0 9px #168bff88!important}
+.ng-profile-backdrop[hidden]{display:none!important}
+.ng-profile-backdrop{position:fixed;inset:0;z-index:79;background:#0005}
+.ng-profile-menu{position:fixed;z-index:80;top:calc(52px + env(safe-area-inset-top,0px));right:max(8px,calc((100vw - 430px)/2 + 8px));width:min(370px,calc(100vw - 16px));max-height:calc(100dvh - 112px);overflow-y:auto;padding:16px 14px 12px;border:1px solid #00cfff;border-radius:17px;background:linear-gradient(155deg,#061a3b,#030b24 72%);box-shadow:0 12px 38px #000b,0 0 16px #087bff33;opacity:0;visibility:hidden;transform:translateY(-7px);transition:opacity .16s ease,transform .16s ease,visibility .16s ease}
+.ng-profile-menu.is-open{opacity:1;visibility:visible;transform:translateY(0)}
+.ng-profile-account{display:flex;align-items:center;gap:11px;padding:3px 2px 15px}
+.ng-profile-brand-avatar{flex:0 0 58px;width:58px;height:58px;border:2px solid #13bfff;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 25%,#ffca36,#111a3d 55%,#020817);color:#ffd54a;font-size:17px;font-weight:900;box-shadow:0 0 9px #138cff}
+.ng-profile-account-copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:4px}
+.ng-profile-account-copy strong{font-size:17px;color:#fff;line-height:1.2}
+.ng-profile-account-copy span{font-size:12px;color:#a9c9ee;overflow-wrap:anywhere}
+.ng-profile-edit{border:0;background:transparent;color:#fff;font-size:25px;padding:6px}
+.ng-profile-account-actions{display:flex;gap:7px;padding:4px 0 13px;border-bottom:1px solid #174c83}
+.ng-profile-account-actions button{flex:1;min-width:0;min-height:36px;padding:5px 7px;border:1px solid #167ac0;border-radius:22px;background:#09264a;color:#fff;font-size:11px;font-weight:650}
+.ng-profile-links{display:flex;flex-direction:column}
+.ng-profile-links a{min-height:43px;display:flex;align-items:center;gap:12px;padding:7px 3px;color:#f3f8ff;text-decoration:none;font-size:16px;border-bottom:1px solid #12355c}
+.ng-profile-links a:last-child{border-bottom:0}
+.ng-profile-links a span{width:25px;flex:0 0 25px;text-align:center;color:#25caff;font-size:20px}
+.ng-profile-links a i{margin-left:auto;color:#70caff;font-style:normal;font-size:22px}
+body.ng-profile-open{overflow:hidden}
+@media(max-width:380px){.ng-profile-menu{padding:13px 11px}.ng-profile-account-copy strong{font-size:15px}.ng-profile-links a{min-height:40px;font-size:16px}}
+@media(prefers-reduced-motion:reduce){.ng-profile-menu{transition:none}}
+</style>
+<style id="ng-profile-avatar-final-geometry">
+.app>header .hr>button.ng-profile-trigger{
+  box-sizing:border-box!important;
+  display:grid!important;
+  place-items:center!important;
+  flex:0 0 29px!important;
+  width:29px!important;
+  min-width:29px!important;
+  max-width:29px!important;
+  height:29px!important;
+  min-height:29px!important;
+  max-height:29px!important;
+  aspect-ratio:1/1!important;
+  padding:0!important;
+  margin:0!important;
+  border-radius:50%!important;
+  overflow:hidden!important;
+  line-height:1!important;
+}
+</style>
+
+<style id="ng-facebook-style-menu">
+.ng-menu-drawer.ng-facebook-style-menu{width:min(360px,88vw)!important;padding:calc(14px + env(safe-area-inset-top,0px)) 12px calc(16px + env(safe-area-inset-bottom,0px))!important;gap:10px!important}
+.ng-menu-account{display:flex;align-items:center;gap:11px;padding:10px 5px 14px;border-bottom:1px solid #174c83}
+.ng-menu-logo{width:48px;height:48px;flex:0 0 48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#00d9ff,#253dff 55%,#a300ff);color:#fff;font-size:19px;font-weight:900;box-shadow:0 0 12px #168bff88}
+.ng-menu-account div{display:flex;flex-direction:column;gap:3px}.ng-menu-account strong{font-size:17px;color:#fff}.ng-menu-account small{font-size:10px;color:#8fa6d6}
+.ng-menu-section-title{font-size:14px;color:#70caff;margin:3px 4px 0}
+.ng-menu-shortcuts{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 9px;border-bottom:1px solid #174c83}
+.ng-menu-shortcuts a{flex:0 0 75px;display:flex;flex-direction:column;align-items:center;gap:5px;text-decoration:none;color:#eaf3ff}
+.ng-menu-shortcuts a span{width:58px;height:58px;border-radius:12px;border:1px solid #2267a5;background:linear-gradient(135deg,#092b59,#101b49);display:grid;place-items:center;color:#fff;font-size:18px;font-weight:800}
+.ng-menu-shortcuts a small{font-size:10px;white-space:nowrap;max-width:75px;overflow:hidden;text-overflow:ellipsis}
+.ng-menu-main-links{display:flex;flex-direction:column;gap:2px}
+.ng-menu-main-links a,.ng-menu-accordion-panel a{min-height:39px;display:flex;align-items:center;gap:12px;padding:7px 8px;border-radius:8px;color:#eef6ff;text-decoration:none;font-family:Roboto,Arial,sans-serif;font-size:15px;font-weight:400}.ng-menu-main-links a{padding-left:2px;gap:8px}
+.ng-menu-main-links a span{width:25px;height:25px;flex:0 0 25px;display:inline-flex;align-items:center;justify-content:center;text-align:center;color:#26caff;font-size:20px}.ng-menu-main-links a span svg{width:25px;height:25px;display:block;flex:0 0 25px}
+.ng-menu-main-links a:active,.ng-menu-accordion-panel a:active{background:#0b3970}
+.ng-menu-see-less{width:100%;min-height:38px;border:0;border-radius:10px;background:#102c52;color:#dff6ff;font-weight:700}
+.ng-menu-accordion{border-top:1px solid #174c83;margin:0 -12px;padding:4px 12px}
+.ng-menu-accordion-trigger{width:100%;min-height:44px;display:flex;align-items:center;gap:11px;border:0;border-bottom:1px solid #15385f;background:transparent;color:#fff;text-align:left;font-family:Roboto,Arial,sans-serif;font-size:15px;font-weight:400}
+.ng-menu-accordion-trigger span{color:#26caff;font-size:19px}.ng-menu-accordion-trigger i{margin-left:auto;color:#70caff;font-size:19px;font-style:normal}
+.ng-menu-accordion-panel{padding:3px 0 7px 28px}.ng-menu-accordion-panel[hidden]{display:none!important}.ng-menu-accordion-panel a{min-height:36px;font-family:Roboto,Arial,sans-serif;font-size:15px;font-weight:400}
+.ng-menu-logout{width:100%;min-height:40px;border:1px solid #1b426c;border-radius:10px;background:#10213d;color:#7992b6;font-weight:700}
+.ng-menu-main-links.is-collapsed a:nth-child(n+7){display:none}
+</style>
+
+
+
+
+
+
+<style id="ng-menu-shortcuts-flex-fix">
+/* Prevent the drawer's flex layout from shrinking/clipping the shortcuts row. */
+.ng-menu-drawer.ng-facebook-style-menu .ng-menu-shortcuts{
+  flex:0 0 100px!important;
+  height:100px!important;
+  min-height:100px!important;
+  max-height:100px!important;
+  box-sizing:border-box!important;
+  align-self:stretch!important;
+  overflow-x:auto!important;
+  overflow-y:visible!important;
+  padding:4px 2px 12px!important;
+  border-bottom:1px solid #174c83!important;
+}
+.ng-menu-drawer.ng-facebook-style-menu .ng-menu-shortcuts a{
+  flex:0 0 75px!important;
+  min-width:75px!important;
+}
+</style>
+
+<style id="ng-settings-extra">.ng-settings-line{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid #17345e}.ng-settings-line span{color:#9eb1d8;font-size:12px;text-align:right}.page-panel{margin:12px;padding:15px;border:1px solid #17407f;border-radius:13px;background:linear-gradient(180deg,#081a45,#061237)}.page-panel h2{margin-bottom:10px}</style>
+<style id="ng-remove-page-background-20261031">
+/* Plain page canvas only. Keep component, card, header and footer styling intact. */
+html,body{background-color:#030b24!important;background-image:none!important}
+</style>
+<!-- NextGen: remove page-level decorative background; preserve cards, header, footer and master design -->
+<style id="ng-native-pull-to-refresh">
+/* Restore document-viewport scrolling for Android Chrome native pull-to-refresh. */
+html,body{
+ height:auto!important;min-height:100%!important;
+ overflow-x:clip!important;overflow-y:visible!important;
+ overscroll-behavior-y:auto!important;
+}
+body:not(.ng-menu-open):not(.ng-profile-open){
+ height:auto!important;min-height:100%!important;
+ overflow:visible!important;
+ overscroll-behavior-y:auto!important;
+}
+body{height:auto!important;min-height:100vh!important;min-height:100dvh!important}
+body>.app{
+ height:auto!important;min-height:100vh!important;min-height:100dvh!important;
+ overflow:visible!important;
+}
+body>.app>header{position:sticky!important;top:0!important;z-index:30!important}
+body>.app>main{
+ flex:1 0 auto!important;min-height:0!important;overflow:visible!important;
+ overscroll-behavior-y:auto!important;touch-action:auto!important;
+ padding-bottom:calc(16px + 52px + env(safe-area-inset-bottom,0px))!important;
+}
+body>.app>nav.ng-bottom-nav{
+ position:fixed!important;left:0!important;right:0!important;bottom:0!important;
+ transform:none!important;width:100%!important;max-width:430px!important;margin:0 auto!important;
+ z-index:1000!important;flex:0 0 auto!important;
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <button type="button" class="ng-hamburger" id="ng-hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="ng-menu-drawer"><span></span><span></span><span></span></button>
+  <img class="logo" src="./file_000000005ab0820896e23efe9cf142bb.png" alt="NextGen — Smart Automation. Smarter Growth.">
+  <div class="hr">
+    <div class="circ plus"><svg width="16" height="16" viewBox="0 0 16 16" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M8 1v14M1 8h14"/></svg></div>
+    <div class="bell"><svg width="24" height="24" viewBox="0 0 24 24" aria-label="Notifications"><path fill="#fff" d="M12 2.1a2.45 2.45 0 0 0-2.45 2.45v.63C6.18 6.25 4 9.18 4 12.65v4.02l-1.4 1.66c-.45.54-.07 1.36.63 1.36h17.54c.7 0 1.08-.82.63-1.36L20 16.67v-4.02c0-3.47-2.18-6.4-5.55-7.47v-.63A2.45 2.45 0 0 0 12 2.1Z"/><path fill="#fff" d="M8.4 21.1a3.7 3.7 0 0 0 7.2 0Z"/></svg><u></u></div>
+    <button type="button" class="circ av ng-profile-trigger" id="ng-profile-trigger" aria-label="Open profile menu" aria-expanded="false" aria-controls="ng-profile-menu">RF</button>
+  </div>
+</header>
+
+<div class="ng-profile-backdrop" id="ng-profile-backdrop" hidden></div>
+<aside class="ng-profile-menu" id="ng-profile-menu" aria-label="Profile menu" aria-hidden="true">
+  <div class="ng-profile-account">
+    <div class="ng-profile-brand-avatar">RF</div>
+    <div class="ng-profile-account-copy"><strong>Royal Furniture</strong><span>@RoyalFurnitureHouse</span></div>
+    <button type="button" class="ng-profile-edit" aria-label="Edit profile">✎</button>
+  </div>
+  <div class="ng-profile-account-actions">
+    <button type="button">▣&nbsp; Switch account</button>
+    <button type="button"><b>G</b>&nbsp; Google Account</button>
+  </div>
+  <div class="ng-profile-links">
+    <a href="./settings.html"><span>⚙</span>Settings<i>›</i></a>
+    <a href="./settings.html#account-status"><span>◎</span>Account status<i>›</i></a>
+    <a href="https://www.youtube.com/@RoyalFurnitureHouse" target="_blank" rel="noopener"><span>▶</span>YouTube<i>↗</i></a>
+    <a href="./settings.html#terms"><span>▤</span>Terms of Service<i>›</i></a>
+    <div class="ng-profile-action-divider" aria-hidden="true"></div>
+    <a href="#" data-profile-action="share"><span>♧</span>Share<i>›</i></a>
+    <a href="#" data-profile-action="pin"><span>⌖</span>Pin<i>›</i></a>
+    <a href="#" data-profile-action="lock"><span>▣</span>Lock chat<i>›</i></a>
+    <div class="ng-profile-action-spacer" aria-hidden="true"></div>
+    <a href="./content.html"><span>📎</span>Uploaded files<i>›</i></a>
+    <a href="./content.html"><span>⌕</span>Find in chat<i>›</i></a>
+    <a href="#" data-profile-action="home"><span>⌂</span>Add to home<i>›</i></a>
+    <a href="#" data-profile-action="archive"><span>▤</span>Archive<i>›</i></a>
+    <a href="#" data-profile-action="delete" class="ng-profile-delete"><span>▤</span>Delete<i>›</i></a>
+  </div>
+</aside>
+<div class="ng-menu-backdrop" id="ng-menu-backdrop" hidden></div>
+<aside class="ng-menu-drawer ng-facebook-style-menu" id="ng-menu-drawer" aria-label="Navigation menu" aria-hidden="true">
+  <div class="ng-menu-title"><span>NextGen Menu</span><button type="button" id="ng-menu-close" aria-label="Close navigation menu">×</button></div>
+  <div class="ng-menu-account"><span class="ng-menu-logo">NG</span><div><strong>NextGen</strong><small>Smart Automation. Smarter Growth.</small></div></div>
+  <h3 class="ng-menu-section-title">Your shortcuts</h3>
+  <div class="ng-menu-shortcuts">
+    <a href="./channels.html"><span>RF</span><small>Royal Furniture</small></a>
+    <a href="./channels.html"><span>NG</span><small>NextGen</small></a>
+    <a href="./dashboard.html"><span>▦</span><small>Dashboard</small></a>
+  </div>
+  <div class="ng-menu-main-links">
+    <a href="./dashboard.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="4" y="5" width="32" height="30" rx="5"/><path d="M12 28V20h5v8M23 28V12h5v16"/></svg></span>Dashboard</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><rect x="13" y="5" width="22" height="24" rx="4" transform="rotate(8 13 5)"/><rect x="5" y="11" width="23" height="24" rx="4"/><circle cx="13" cy="18" r="2.5"/><path d="m7 30 7-7 5 5 3-3 6 6"/></svg></span>Images</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="6" width="8" height="28" rx="3"/><rect x="16" y="6" width="8" height="28" rx="3"/><path d="m27 7 5-1 5 26-6 2z"/></svg></span>Library</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13V9a4 4 0 0 1 4-4h8l5 5h9a4 4 0 0 1 4 4v17a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M5 19h30"/></svg></span>Projects</a>
+    <a href="./settings.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="5" width="24" height="19" rx="3"/><path d="M5 25h30v4H5zM12 33h16"/><circle cx="8" cy="36" r="1.2" fill="currentColor"/><circle cx="14" cy="36" r="1.2" fill="currentColor"/><circle cx="20" cy="36" r="1.2" fill="currentColor"/><circle cx="26" cy="36" r="1.2" fill="currentColor"/><circle cx="32" cy="36" r="1.2" fill="currentColor"/></svg></span>Remote</a>
+    <a href="./schedule.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="20" r="15"/><path d="M20 10v11l-7 7"/></svg></span>Scheduled</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M9 5h22v30L20 27 9 35z"/></svg></span>Saved</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M7 17a14 14 0 1 1 2 12"/><path d="M7 7v10h10M20 11v10l7 4"/></svg></span>Memories</a>
+    <a href="./channels.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="13" r="6"/><circle cx="8" cy="19" r="4"/><circle cx="32" cy="19" r="4"/><path d="M8 34c0-7 5-11 12-11s12 4 12 11M2 34c0-5 2-8 7-9M38 34c0-5-2-8-7-9"/></svg></span>Groups</a>
+    <a href="./settings.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 17v7h7l18 9V8l-18 9zM12 24l4 11h7l-5-8"/></svg></span>Ad Center</a>
+    <a href="./schedule.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="7" width="30" height="29" rx="5"/><path d="M12 4v7M28 4v7M5 15h30"/><path d="m20 19 2 4 4 .5-3 3 .8 4.5-3.8-2.2-3.8 2.2.8-4.5-3-3 4-.5z"/></svg></span>Events</a>
+    <a href="./channels.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="15" cy="12" r="6"/><path d="M4 34c0-7 4-11 11-11s11 4 11 11"/><circle cx="30" cy="13" r="4"/><path d="M28 24c5 0 8 3 8 8"/></svg></span>Explore People</a>
+    <a href="./dashboard.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 6c16 0 28 12 28 28M6 17c10 0 17 7 17 17"/><circle cx="8" cy="32" r="2" fill="currentColor" stroke="none"/></svg></span>Feeds</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 18 22 5h12v12L17 34a5 5 0 0 1-7 0l-5-9a5 5 0 0 1 0-7z"/><circle cx="27" cy="12" r="2"/><path d="m15 18 2 4 4 1-4 2-1 4-2-4-4-1 4-2z"/></svg></span>Finds</a>
+    <a href="./channels.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 35V5h26l-4 10 4 10H8"/></svg></span>Pages</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 19h7v14H5zM12 21l12-10c3-2 6 1 4 4l-4 5h8c3 0 4 4 1 6l-7 7H12z"/><path d="M24 11 27 7M29 15l5-1"/></svg></span>Pokes</a>
+  </div>
+  <button class="ng-menu-see-less" type="button" id="ng-menu-see-less">See less</button>
+  <div class="ng-menu-accordion">
+    <button type="button" class="ng-menu-accordion-trigger" aria-expanded="false"><span><svg viewBox="0 0 48 48" width="28" height="28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 4C12.95 4 4 12.5 4 23c0 5.2 2.2 9.9 5.8 13.2L8 44l9-3.2c2.2.8 4.6 1.2 7 1.2 11.05 0 20-8.5 20-19S35.05 4 24 4Z"/><path d="M18.5 17.5a5.7 5.7 0 1 1 9.7 4c-2.2 2.1-4.2 2.8-4.2 6"/><circle cx="24" cy="34.5" r="1.6" fill="currentColor" stroke="none"/></svg></span>Help and support <i>⌄</i></button>
+    <div class="ng-menu-accordion-panel" hidden>
+      <a href="./settings.html#terms">Terms and Policies</a>
+    </div>
+    <button type="button" class="ng-menu-accordion-trigger" aria-expanded="false"><span><svg viewBox="0 0 48 48" width="28" height="28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4h8l1.5 5.1a16 16 0 0 1 3.6 1.5l4.8-2 5.7 5.7-2 4.8a16 16 0 0 1 1.5 3.6L48 24v8l-5.1 1.5a16 16 0 0 1-1.5 3.6l2 4.8-5.7 5.7-4.8-2a16 16 0 0 1-3.6 1.5L28 52h-8l-1.5-5.1a16 16 0 0 1-3.6-1.5l-4.8 2-5.7-5.7 2-4.8a16 16 0 0 1-1.5-3.6L0 32v-8l5.1-1.5a16 16 0 0 1 1.5-3.6l-2-4.8 5.7-5.7 4.8 2a16 16 0 0 1 3.6-1.5L20 4Z" transform="translate(4 0) scale(.83)"/><circle cx="24" cy="24" r="7"/></svg></span>Settings and privacy <i>⌄</i></button>
+    <div class="ng-menu-accordion-panel" hidden>
+    </div>
+  </div>
+  <button type="button" class="ng-menu-logout" disabled aria-disabled="true">Log out · Account connection pending</button>
+</aside>
+
+<main>
+<section class="page-intro"><div class="page-icon">⚙</div><div><h1>Privacy Policy</h1></div></section>
+<section class="settings-list" aria-label="Settings options">
+  <h2>Account</h2>
+  <div class="settings-row"><span class="settings-icon"><svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></span><div class="settings-copy"><strong>Push notifications</strong><small>Choose your preferences</small></div><span class="settings-arrow">›</span></div>
+
+  <h2>Channel</h2>
+  <div class="settings-row"><span class="settings-icon">▣</span><div class="settings-copy"><strong>Audience</strong><small>Not made for children</small></div><span class="settings-arrow">›</span></div>
+  <div class="settings-row"><span class="settings-icon">◎</span><div class="settings-copy"><strong>Country of residence</strong><small>India</small></div><span class="settings-arrow">›</span></div>
+  <div class="settings-row"><span class="settings-icon">♧</span><div class="settings-copy"><strong>Permissions</strong><small>Add or change permissions for your channel</small></div><span class="settings-arrow">›</span></div>
+  <div class="settings-row"><span class="settings-icon">▣</span><div class="settings-copy"><strong>Creator demographics</strong></div><span class="settings-arrow">›</span></div>
+
+  <h2>Content</h2>
+  <div class="settings-row"><span class="settings-icon">▤</span><div class="settings-copy"><strong>Clips</strong><small>Viewers can clip and share my videos</small></div><button class="settings-toggle is-on" type="button" aria-pressed="true" aria-label="Clips"></button></div>
+  <div class="settings-row"><span class="settings-icon">✋</span><div class="settings-copy"><strong>Censor auto-captions</strong><small>Hide inappropriate words</small></div><button class="settings-toggle is-on" type="button" aria-pressed="true" aria-label="Censor auto-captions"></button></div>
+
+  <h2>Community</h2>
+  <div class="settings-row"><span class="settings-icon">☷</span><div class="settings-copy"><strong>Content controls</strong><small>Set moderation preferences for comments, posts and more</small></div><span class="settings-arrow">›</span></div>
+  <p class="settings-note">For user management and channel guidelines settings, use Studio on desktop.</p>
+
+  <h2>Privacy</h2>
+  <div class="settings-row"><span class="settings-icon">▤</span><div class="settings-copy"><strong>Device requests</strong></div><span class="settings-arrow">›</span></div>
+  <div class="settings-row"><span class="settings-icon">↗</span><div class="settings-copy"><strong>Link history</strong></div><span class="settings-arrow">›</span></div>
+
+  <h2>Earn</h2>
+  <div class="settings-row"><span class="settings-icon">$</span><div class="settings-copy"><strong>Currency</strong><small>USD - US Dollar</small></div><span class="settings-arrow">›</span></div>
+  <div class="settings-row"><span class="settings-icon">⌁</span><div class="settings-copy"><strong>Brand partner access</strong><small>Manage brand partners with automatic access to your videos and their metrics</small></div><span class="settings-arrow">›</span></div>
+
+  <h2>Device</h2>
+  <div class="settings-row"><span class="settings-icon">☾</span><div class="settings-copy"><strong>Appearance</strong><small>Use device theme</small></div><span class="settings-arrow">›</span></div>
+  <div class="settings-row"><span class="settings-icon">☾</span><div class="settings-copy"><strong>Dark mode</strong></div><span class="settings-arrow">›</span></div>
+  <div class="settings-row"><span class="settings-icon">▥</span><div class="settings-copy"><strong>Cellular Data Usage</strong></div><span class="settings-arrow">›</span></div>
+</section>
+<section class="page-panel" id="integrations"><h2>Platform Integrations</h2><p class="muted">Connection state is shown honestly; connect each platform before using its data or publishing features.</p><div class="ng-settings-line"><b>YouTube</b><span>Connection pending</span></div><div class="ng-settings-line"><b>Facebook</b><span>Connection pending</span></div><div class="ng-settings-line"><b>Instagram</b><span>Connection pending</span></div><div class="ng-settings-line"><b>Threads</b><span>Connection pending</span></div></section>
+<section class="page-panel" id="ng-notification-preferences"><h2>Notification Preferences</h2><p class="muted">Choose which workspace updates you want to receive.</p><div id="ng-notification-controls"><p class="muted">Sign in to load notification preferences.</p></div><p id="ng-notification-note" class="muted">Preferences are saved to your NextGen account.</p></section>
+<section class="page-panel" id="team"><h2>Team Management</h2><p class="muted">Invitations, roles and channel-level access will be enabled after authentication and workspace permissions are connected.</p><div class="ng-settings-line"><b>Owner</b><span>Workspace owner</span></div><div class="ng-settings-line"><b>Team members</b><span>Not configured</span></div></section>
+<section class="page-panel" id="publishing"><h2>Publishing Safety</h2><p class="muted">Manual approval remains the default. Auto approval is OFF unless explicitly switched on. Publishing is not connected in this prototype.</p><a href="./approvals.html">Open Approval Controls →</a></section>
+<section class="page-panel"><h2>Analytics</h2><p class="muted">Only verified account performance will be shown.</p><a href="./analytics.html">Open Channel Analytics →</a></section><footer class="ng-shared-footer"><span class="ng-copyright">©2026 NextGen. All Rights Reserved. Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
+</main>
+<nav class="ng-bottom-nav" aria-label="Main navigation">
+  <a href="index.html"><span class="dashboard-master-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M5 7 Q5 4 9 4 H19 Q23 4 23 8 V13 Q23 17 19 17 H9 Q5 17 5 13 Z" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linejoin="round"/><path d="M28 8 Q28 4 32 4 H39 Q43 4 43 8 V17 Q43 21 39 21 H35 M28 15 V12" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 29 V25 Q5 21 9 21 H19 Q23 21 23 25 V39 Q23 43 19 43 H9 Q5 43 5 39 V33" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 29 Q28 25 32 25 H39 Q43 25 43 29 V39 Q43 43 39 43 H32 Q28 43 28 39 Z" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linejoin="round"/><defs><linearGradient id="dg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient></defs></svg></span><small>Dashboard</small></a>
+  <a href="channels.html"><span class="channel-master-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 26 10 34M33 26l5 8M15 39h18"/><path d="M23 8v4"/></g><circle cx="24" cy="5.5" r="3.5" fill="#FF9F2E" stroke="#FFFFFF" stroke-width="1.5"/><rect x="13" y="12" width="22" height="17" rx="5" fill="#21A9E0" stroke="#FFFFFF" stroke-width="2.5"/><circle cx="19" cy="20" r="1.7" fill="#FFFFFF"/><circle cx="29" cy="20" r="1.7" fill="#FFFFFF"/><rect x="4" y="33" width="15" height="12" rx="3.5" fill="#07123A" stroke="#FFFFFF" stroke-width="2.3"/><circle cx="9" cy="39" r="1.2" fill="#FFFFFF"/><circle cx="14" cy="39" r="1.2" fill="#FFFFFF"/><rect x="29" y="33" width="15" height="12" rx="3.5" fill="#07123A" stroke="#FFFFFF" stroke-width="2.3"/><circle cx="34" cy="39" r="1.2" fill="#FFFFFF"/><circle cx="39" cy="39" r="1.2" fill="#FFFFFF"/></svg></span><small>Channels</small></a>
+    <a href="content.html"><span class="content-master-icon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M10.2 22H6.1A3.1 3.1 0 0 1 3 18.9V5.1A3.1 3.1 0 0 1 6.1 2h11.8A3.1 3.1 0 0 1 21 5.1v7.4" stroke="#6524B8" stroke-width="1.9"/><path d="M7 7.2h2.7M7 10.5h10M7 13.8h10M7 17.1h7" stroke="#6524B8" stroke-width="1.9"/><path d="M17.4 14.3c.6 2.1 1.5 3 3.6 3.6-2.1.6-3 1.5-3.6 3.6-.6-2.1-1.5-3-3.6-3.6 2.1-.6 3-1.5 3.6-3.6Z" fill="#FF9418" stroke="#FF9418" stroke-width="1.3"/></svg></span><small>Content</small></a>
+  <a href="approvals.html"><span class="approval-master-icon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#16E08A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v6.2a2.8 2.8 0 0 1-2.8 2.8H5.8A2.8 2.8 0 0 1 3 18.2V5.8A2.8 2.8 0 0 1 5.8 3H14"/><path d="m7.2 12.2 3.4 3.4L21 5.2"/></svg></span><small>Approvals</small></a>
+  <a href="schedule.html"><span class="schedule-master-icon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#08B9D1" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="15.5" height="17" rx="2.3"/><path d="M7 2v4M13.5 2v4M2.5 9h15.5M6 12.5h2M10 12.5h2M6 16h2"/><circle cx="17.5" cy="16.5" r="5.1" fill="#030b24"/><path d="M17.5 13.5v3l2 1.5"/></svg></span><small>Schedule</small></a>
+</nav>
+</div>
+<script id="ng-hamburger-fix-script">
+(function(){
+ // Keep only the intended square menu button, logo and right-side actions in the header.
+ var header=document.querySelector('.app>header');
+ var trigger=document.getElementById('ng-hamburger');
+ function cleanHeader(){if(!header)return;Array.prototype.slice.call(header.children).forEach(function(el){if(el!==trigger&&!el.classList.contains('logo')&&!el.classList.contains('hr'))el.remove();});}
+ cleanHeader();
+ if(header&&window.MutationObserver){new MutationObserver(cleanHeader).observe(header,{childList:true});}
+ if(trigger){trigger.querySelectorAll('span').forEach(function(line,i){if(i>2)line.remove();});}
+
+ var drawer=document.getElementById('ng-menu-drawer');
+ var backdrop=document.getElementById('ng-menu-backdrop');
+ var close=document.getElementById('ng-menu-close');
+ if(!trigger||!drawer||!backdrop||!close||trigger.dataset.ready==='1')return;
+ trigger.dataset.ready='1';
+ function openMenu(){
+   drawer.classList.add('is-open');drawer.setAttribute('aria-hidden','false');
+   backdrop.hidden=false;trigger.setAttribute('aria-expanded','true');
+   trigger.setAttribute('aria-label','Close navigation menu');
+   document.body.classList.add('ng-menu-open');
+ }
+ function closeMenu(){
+   drawer.classList.remove('is-open');drawer.setAttribute('aria-hidden','true');
+   backdrop.hidden=true;trigger.setAttribute('aria-expanded','false');
+   trigger.setAttribute('aria-label','Open navigation menu');
+   document.body.classList.remove('ng-menu-open');
+ }
+ trigger.addEventListener('click',function(){if(drawer.classList.contains('is-open'))closeMenu();else openMenu();});
+ close.addEventListener('click',closeMenu);
+ backdrop.addEventListener('click',closeMenu);
+ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
+ drawer.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu);});
+})();
+</script>
+
+<style id="ng-master-design-lock">
+/* MASTER DESIGN LOCK — do not change logo/menu alignment or size without explicit user request. */
+.app>header>img.logo{position:relative!important;left:-23px!important;top:-0.2px!important;height:48px!important;max-width:210px!important;transform:translateX(-23px) scale(1.15)!important;transform-origin:left center!important;}
+header .ng-hamburger span{transform:translateY(3.5px)!important;}
+</style>
+<style id="ng-header-footer-design-lock">
+/* HEADER + FOOTER MASTER LOCK — preserve approved visual styling unless user explicitly requests a change. */
+body>.app>header, body>header:not(.ng-auth-master-header), body>main>header:not(.ng-auth-master-header), body>.app>header:not(.ng-auth-master-header), header.studio-top{
+  background:linear-gradient(180deg,#050c2a 0%,#07123a 100%)!important;
+  color:#fff!important;border-bottom:2px solid #2a5bff!important;
+  box-shadow:0 0 14px #3a2cff55!important;box-sizing:border-box!important;
+}
+.app main > footer.ng-shared-footer{
+  background:#050b28!important;border-top:1px solid #1e4fb5!important;color:#8fa6d6!important;
+}
+.app main > footer.ng-shared-footer .ng-credit{color:#fff!important;}
+</style>
+
+
+<script id="ng-settings-toggle-script">
+document.querySelectorAll('.settings-toggle').forEach(function(button){
+ button.addEventListener('click',function(){
+  var on=button.classList.toggle('is-on');
+  button.setAttribute('aria-pressed',String(on));
+ });
+});
+</script>
+
+
+<script id="ng-profile-menu-script">
+(function(){
+ var trigger=document.getElementById('ng-profile-trigger'),menu=document.getElementById('ng-profile-menu'),backdrop=document.getElementById('ng-profile-backdrop');
+ if(!trigger||!menu||!backdrop||trigger.dataset.profileReady==='1')return;
+ trigger.dataset.profileReady='1';
+ function openMenu(){menu.classList.add('is-open');menu.setAttribute('aria-hidden','false');backdrop.hidden=false;trigger.setAttribute('aria-expanded','true');document.body.classList.add('ng-profile-open')}
+ function closeMenu(){menu.classList.remove('is-open');menu.setAttribute('aria-hidden','true');backdrop.hidden=true;trigger.setAttribute('aria-expanded','false');document.body.classList.remove('ng-profile-open')}
+ trigger.addEventListener('click',function(){menu.classList.contains('is-open')?closeMenu():openMenu()});
+ backdrop.addEventListener('click',closeMenu);
+ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
+ menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu)});
+})();
+</script>
+<script id="ng-facebook-menu-script">
+(function(){
+ var drawer=document.getElementById('ng-menu-drawer');if(!drawer||drawer.dataset.facebookMenuReady==='1')return;drawer.dataset.facebookMenuReady='1';
+ drawer.querySelectorAll('.ng-menu-accordion-trigger').forEach(function(btn){btn.addEventListener('click',function(){var panel=btn.nextElementSibling,open=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!open));panel.hidden=open;var icon=btn.querySelector('i');if(icon)icon.textContent=open?'⌄':'⌃';});});
+ var less=document.getElementById('ng-menu-see-less'),links=drawer.querySelector('.ng-menu-main-links');if(less&&links)less.addEventListener('click',function(){var collapsed=links.classList.toggle('is-collapsed');less.textContent=collapsed?'See more':'See less';});
+})();
+</script>
+
+
+<script id="ng-menu-refresh-early-state">
+(function(){
+ try{
+   if(sessionStorage.getItem('ngNextGenMenuOpen')==='1'){
+     document.documentElement.classList.add('ng-menu-refresh-open');
+   }
+ }catch(e){}
+})();
+</script>
+<style id="ng-menu-refresh-no-jump">
+html.ng-menu-refresh-open body .ng-menu-drawer{
+  transform:translateX(0)!important;
+  visibility:visible!important;
+  transition:none!important;
+}
+html.ng-menu-refresh-open body .ng-menu-backdrop[hidden]{
+  display:block!important;
+}
+</style>
+<script id="ng-menu-refresh-state">
+(function(){
+ var key='ngNextGenMenuOpen';
+ var trigger=document.getElementById('ng-hamburger');
+ var drawer=document.getElementById('ng-menu-drawer');
+ var close=document.getElementById('ng-menu-close');
+ var backdrop=document.getElementById('ng-menu-backdrop');
+ if(!trigger||!drawer)return;
+ function clear(){
+   try{sessionStorage.removeItem(key)}catch(e){}
+   document.documentElement.classList.remove('ng-menu-refresh-open');
+   drawer.classList.remove('ng-menu-restored-no-motion');
+ }
+ function remember(){
+   try{
+     if(drawer.classList.contains('is-open'))sessionStorage.setItem(key,'1');
+     else clear();
+   }catch(e){}
+ }
+ trigger.addEventListener('click',function(){setTimeout(remember,0);});
+ if(close)close.addEventListener('click',clear);
+ if(backdrop)backdrop.addEventListener('click',clear);
+ drawer.querySelectorAll('a').forEach(function(a){a.addEventListener('click',clear);});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape')clear();});
+ window.addEventListener('pagehide',remember);
+ try{
+   if(sessionStorage.getItem(key)==='1'){
+     drawer.classList.add('ng-menu-restored-no-motion','is-open');
+     drawer.setAttribute('aria-hidden','false');
+     if(backdrop)backdrop.hidden=false;
+     trigger.setAttribute('aria-expanded','true');
+     trigger.setAttribute('aria-label','Close navigation menu');
+     document.body.classList.add('ng-menu-open');
+   }
+ }catch(e){}
+})();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js?v=20261030-workspace"></script>
+<script src="./nextgen-workspace.js?v=20261030-hamburger-auth-bottom"></script>
+
+<style id="ng-hamburger-main-point-icons-size">
+/* Enlarge only the cyan point icons in the main list of the three-line menu. */
+.ng-menu-main-links a span{font-size:35px!important;line-height:1!important;width:40px!important;flex:0 0 40px!important;}
+</style>
+<style id="ng-menu-reference-line-icons">.ng-menu-main-links a span.ng-point-icon{width:30px!important;min-width:30px!important;max-width:30px!important;flex:0 0 30px!important;height:30px!important;display:flex!important;align-items:center!important;justify-content:center!important;color:#26caff!important;font-size:initial!important;line-height:1!important}.ng-menu-main-links a span.ng-point-icon svg{width:30px!important;min-width:30px!important;max-width:30px!important;height:30px!important;display:block!important;flex:0 0 30px!important;fill:none!important;stroke:currentColor!important;stroke-width:2.6!important;stroke-linecap:round!important;stroke-linejoin:round!important;overflow:visible!important}</style>
+
+<style id="ng-menu-main-align-to-accordion">/* Align every item above the accordion with Help & Support / Settings & Privacy. */
+.ng-menu-main-links a{padding-left:0!important;gap:9px!important;}
+</style>
+
+<style id="ng-profile-extra-actions">
+.ng-profile-action-divider{height:1px;background:#174c83;margin:9px 0 5px}.ng-profile-action-spacer{height:62px}.ng-profile-links a.ng-profile-delete{color:#ff315b!important}.ng-profile-links a.ng-profile-delete span{color:#ff315b!important}
+</style>
+</body>
+</html>
