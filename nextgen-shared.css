@@ -125,37 +125,40 @@ html body .app>header #ng-hamburger{background:transparent!important;background-
    Keep the approved header and bottom navigation outside the scrolling content.
    This changes layout behavior only; it does not restyle the logo, menu or profile controls. */
 html,body{
-  height:100%!important;
+  height:auto!important;
   min-height:100%!important;
-  overflow:hidden!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior-y:auto!important;
 }
 html body .app{
-  position:fixed!important;
-  inset:0!important;
+  position:relative!important;
+  inset:auto!important;
   width:100%!important;
   max-width:430px!important;
-  height:100dvh!important;
-  min-height:0!important;
+  height:auto!important;
+  min-height:100vh!important;
+  min-height:100dvh!important;
   margin:0 auto!important;
   display:flex!important;
   flex-direction:column!important;
-  overflow:hidden!important;
+  overflow:visible!important;
   box-sizing:border-box!important;
 }
 html body .app>header{
   flex:0 0 46px!important;
   height:46px!important;
   min-height:46px!important;
-  position:relative!important;
-  z-index:5!important;
+  position:sticky!important;
+  top:0!important;
+  z-index:30!important;
 }
 html body .app>main{
-  flex:1 1 0!important;
+  flex:1 0 auto!important;
   min-height:0!important;
-  overflow-y:auto!important;
-  overflow-x:hidden!important;
-  -webkit-overflow-scrolling:touch!important;
-  overscroll-behavior-y:contain!important;
+  overflow:visible!important;
+  overscroll-behavior-y:auto!important;
+  touch-action:auto!important;
 }
 html body .app>nav.ng-bottom-nav{
   position:relative!important;
