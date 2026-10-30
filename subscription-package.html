@@ -693,5 +693,61 @@ html.ng-menu-refresh-open body .ng-menu-backdrop[hidden]{
 <style id="ng-profile-extra-actions">
 .ng-profile-action-divider{height:1px;background:#174c83;margin:9px 0 5px}.ng-profile-action-spacer{height:62px}.ng-profile-links a.ng-profile-delete{color:#ff315b!important}.ng-profile-links a.ng-profile-delete span{color:#ff315b!important}
 </style>
+<style id="ng-master-design-unified-v1">
+/* Unified Master Design — Dashboard is the approved visual reference. Header, logo, hamburger and footer only. */
+html body .app>header{
+  height:46px!important;min-height:46px!important;flex:0 0 46px!important;
+  box-sizing:border-box!important;
+  background:linear-gradient(180deg,#050c2a 0%,#07123a 100%)!important;
+  color:#fff!important;border-bottom:2px solid #2a5bff!important;
+  box-shadow:0 0 14px #3a2cff55!important;
+}
+html body .app>header>img.logo{
+  position:relative!important;left:-23px!important;top:-0.2px!important;
+  height:48px!important;max-width:210px!important;
+  transform:translateX(-23px) scale(1.15)!important;transform-origin:left center!important;
+}
+html body .app>header .ng-hamburger{
+  flex:0 0 34px!important;width:34px!important;min-width:34px!important;
+  height:34px!important;min-height:34px!important;padding:0!important;
+  margin:0 8px 0 0!important;display:flex!important;align-items:center!important;
+  justify-content:center!important;gap:4px!important;background:transparent!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;
+}
+html body .app>header .ng-hamburger span{
+  display:block!important;width:20px!important;height:2.5px!important;
+  min-height:2.5px!important;flex:0 0 2.5px!important;
+  transform:translateY(3.5px)!important;border-radius:2px!important;background:#fff!important;
+}
+html body .app>header .ng-hamburger:before,
+html body .app>header .ng-hamburger:after{display:none!important;content:none!important}
+html body .app main>footer.ng-shared-footer{
+  position:static!important;inset:auto!important;left:auto!important;right:auto!important;
+  width:100%!important;max-width:100%!important;min-width:0!important;
+  margin:8px 0 0!important;padding:6px 0!important;box-sizing:border-box!important;
+  display:flex!important;flex-direction:column!important;flex-wrap:nowrap!important;
+  justify-content:center!important;align-items:stretch!important;gap:2px!important;
+  text-align:center!important;transform:none!important;overflow:hidden!important;
+  background:#050b28!important;border-top:1px solid #1e4fb5!important;color:#8fa6d6!important;
+}
+html body .app main>footer.ng-shared-footer>.ng-copyright,
+html body .app main>footer.ng-shared-footer>.ng-credit{
+  display:block!important;flex:0 0 auto!important;width:100%!important;max-width:100%!important;
+  min-width:0!important;margin:0!important;padding:0!important;box-sizing:border-box!important;
+  text-align:center!important;white-space:nowrap!important;transform:none!important;
+}
+html body .app main>footer.ng-shared-footer>.ng-copyright{font-size:12px!important;line-height:1.2!important}
+html body .app main>footer.ng-shared-footer>.ng-credit{font-size:10px!important;line-height:1.2!important;color:#fff!important}
+@media(max-width:600px){
+  html body .app main>footer.ng-shared-footer{
+    position:relative!important;left:calc(50% - 50vw)!important;right:auto!important;
+    width:100vw!important;max-width:100vw!important;min-width:100vw!important;
+    margin:8px 0 0!important;padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))!important;
+    align-items:stretch!important;overflow:hidden!important;
+  }
+  html body .app main>footer.ng-shared-footer>.ng-copyright{font-size:10px!important}
+  html body .app main>footer.ng-shared-footer>.ng-credit{font-size:8px!important;line-height:1.3!important}
+}
+</style>
 </body>
 </html>
