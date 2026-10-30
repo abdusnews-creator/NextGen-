@@ -785,7 +785,7 @@ body.ng-profile-open{overflow:hidden}
   <button type="button" class="ng-menu-logout" disabled aria-disabled="true">Log out · Account connection pending</button>
 </aside>
 <main><section class="page-intro"><div class="page-icon">▥</div><div><h1>Channel Analytics</h1><p>Performance overview across your social platforms</p></div></section>
-<section class="page-panel"><h2>Reporting Period</h2><label class="ng-analytics-label">Period<select id="analyticsPeriod"><option>Last 28 days</option><option>Last 7 days</option><option>Last 90 days</option></select></label><p class="muted">Live analytics are not connected yet. Metrics remain blank until platform APIs provide verified data.</p></section>
+<section class="page-panel"><h2>Reporting Period</h2><label class="ng-analytics-label">Period<select id="analyticsPeriod"><option>Last 28 days</option><option>Last 7 days</option><option>Last 90 days</option></select></label><p class="muted"><span id="ng-analytics-status">Sign in to load your verified analytics records. Metrics remain blank until platform data is synced.</span></p></section>
 <section class="page-panel"><h2>Performance Overview</h2><div class="ng-metric-grid"><article><small>Total Views</small><strong>—</strong><span>Awaiting platform data</span></article><article><small>Followers</small><strong>—</strong><span>Awaiting platform data</span></article><article><small>Engagement Rate</small><strong>—</strong><span>Awaiting platform data</span></article><article><small>Watch Time</small><strong>—</strong><span>Awaiting platform data</span></article></div></section>
 <section class="page-panel"><h2>Platform Breakdown</h2><div class="ng-platform-row"><b>YouTube</b><span>Analytics connection pending</span></div><div class="ng-platform-row"><b>Facebook</b><span>Analytics connection pending</span></div><div class="ng-platform-row"><b>Instagram</b><span>Analytics connection pending</span></div><div class="ng-platform-row"><b>Threads</b><span>Analytics connection pending</span></div></section>
 <section class="page-panel"><h2>Top Content</h2><p class="muted">Top-performing posts will appear after verified analytics permissions are connected.</p></section><footer class="ng-shared-footer"><span class="ng-copyright">©2026 NextGen. All Rights Reserved. Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
@@ -1119,5 +1119,6 @@ html.ng-menu-refresh-open body .ng-menu-backdrop[hidden]{
 })();
 </script>
 
+<script src="./nextgen-workspace.js?v=20261030-live-data"></script>
 </body>
 </html>
