@@ -355,7 +355,7 @@ body.ng-profile-open{overflow:hidden}
 }
 </style>
 
-</head>
+<style id="ng-data-page-additions">.ng-form{display:grid;gap:11px}.ng-form label,.ng-slots label{display:grid;gap:6px;color:#c9d6f5;font-size:13px}.ng-form input,.ng-form textarea,.ng-form select,.ng-slots input{width:100%;min-width:0;min-height:42px;padding:9px;border:1px solid #2857a4;border-radius:9px;background:#030b24;color:#fff;font:inherit}.ng-actions,.ng-mode{display:flex;gap:8px;flex-wrap:wrap}.ng-actions button,.ng-mode button,.ng-form button,#saveSlots{min-height:40px;padding:8px 13px;border:1px solid #2857a4;border-radius:9px;background:#1558bd;color:white}.ng-actions button+button{background:#10245b}.ng-mode button{flex:1;background:#10245b}.ng-mode button.selected{background:#1558bd;border-color:#4db8ff}.ng-checks{padding-left:20px;line-height:1.9;color:#d7e4ff}.ng-entry{padding:11px;margin:9px 0;border:1px solid #17407f;border-radius:10px;background:#07183b}.ng-entry strong{display:block}.ng-entry small{color:#9eb1d8}.ng-entry button{margin:8px 6px 0 0;min-height:35px;padding:6px 10px;border:1px solid #2857a4;border-radius:8px;background:#10245b;color:#fff}.ng-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}@media(max-width:350px){.ng-slots{grid-template-columns:1fr}}</style></head>
 <body>
 <div class="app">
 <header>
@@ -441,9 +441,18 @@ body.ng-profile-open{overflow:hidden}
   <button type="button" class="ng-menu-logout" disabled aria-disabled="true">Log out · Account connection pending</button>
 </aside>
 
-<main>
-<section class="page-intro"><div class="page-icon">✦</div><div><h1>Content</h1><p>Create, organize and review your content drafts</p></div></section><section class="page-panel"><h2>Content Workspace</h2><p class="muted">Your content workspace is ready. Draft creation, thumbnail tools, captions, hashtags, tags and keywords will be added here.</p><div class="page-empty"><span>✎</span><strong>No content drafts shown</strong><small>Content tools are not connected on this page yet.</small></div></section>
-<footer class="ng-shared-footer"><span class="ng-copyright">©2026 NextGen. All Rights Reserved. Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
+<main><section class="page-intro"><div class="page-icon">✦</div><div><h1>Content Workspace</h1><p>Create drafts and prepare platform-ready posts</p></div></section>
+<section class="page-panel"><h2>Create Content Draft</h2><form id="draftForm" class="ng-form">
+<label>Content type<select id="draftType"><option>Reels / Short Video</option><option>Long-form Video</option><option>Photo Post</option><option>Carousel Photo Post</option><option>Story</option><option>Text Post</option></select></label>
+<label>Title<input id="draftTitle" required maxlength="120" placeholder="Searchable post title"></label>
+<label>Thumbnail image URL<input id="draftImage" type="url" placeholder="Optional image URL"></label>
+<label>Thumbnail prompt<textarea id="draftPrompt" rows="3" placeholder="Describe the thumbnail you want"></textarea></label>
+<label>Caption<textarea id="draftCaption" rows="4" placeholder="Write your caption"></textarea></label>
+<label>Hashtags<input id="draftHash" placeholder="#NextGen #Creator"></label>
+<label>Tags & Keywords<input id="draftTags" placeholder="Comma-separated SEO tags"></label>
+<div class="ng-actions"><button type="submit">Save Draft</button><button type="button" id="copySeo">Copy SEO Text</button></div><p id="draftNote" class="muted">Saved on this device only. Nothing is published.</p></form></section>
+<section class="page-panel"><h2>Draft Queue (<span id="draftCount">0</span>)</h2><div id="draftList"><p class="muted">No drafts saved yet.</p></div></section>
+<section class="page-panel"><h2>SEO Tools</h2><p class="muted">Use external tools to research keywords and optimize titles.</p><p><a href="https://vidiq.com/" target="_blank" rel="noopener">vidIQ ↗</a>　<a href="https://www.tubebuddy.com/" target="_blank" rel="noopener">TubeBuddy ↗</a></p><p class="muted">No SEO account is connected in this prototype.</p></section><footer class="ng-shared-footer"><span class="ng-copyright">©2026 NextGen. All Rights Reserved. Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
 </main>
 <nav class="ng-bottom-nav" aria-label="Main navigation">
   <a href="index.html"><span class="dashboard-master-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M5 7 Q5 4 9 4 H19 Q23 4 23 8 V13 Q23 17 19 17 H9 Q5 17 5 13 Z" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linejoin="round"/><path d="M28 8 Q28 4 32 4 H39 Q43 4 43 8 V17 Q43 21 39 21 H35 M28 15 V12" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 29 V25 Q5 21 9 21 H19 Q23 21 23 25 V39 Q23 43 19 43 H9 Q5 43 5 39 V33" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 29 Q28 25 32 25 H39 Q43 25 43 29 V39 Q43 43 39 43 H32 Q28 43 28 39 Z" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linejoin="round"/><defs><linearGradient id="dg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient></defs></svg></span><small>Dashboard</small></a>
@@ -586,5 +595,5 @@ html.ng-menu-refresh-open body .ng-menu-backdrop[hidden]{
 })();
 </script>
 
-</body>
+<script>(function(){const $=id=>document.getElementById(id),key='ngNextGenDrafts';let data=[];try{data=JSON.parse(localStorage.getItem(key)||'[]')}catch(e){}function render(){const root=$('draftList');root.innerHTML='';$('draftCount').textContent=data.length;if(!data.length){root.textContent='No drafts saved yet.';return}data.forEach((d,i)=>{const el=document.createElement('div');el.className='ng-entry';const t=document.createElement('strong');t.textContent=d.title;const m=document.createElement('small');m.textContent=d.type+' · '+(d.status||'Pending review');const p=document.createElement('p');p.textContent=d.caption||'No caption';const c=document.createElement('button');c.textContent='Copy SEO';c.onclick=()=>navigator.clipboard?.writeText([d.title,d.caption,d.hashtags,d.tags].filter(Boolean).join('\n'));const del=document.createElement('button');del.textContent='Delete';del.onclick=()=>{data.splice(i,1);save()};el.append(t,m,p,c,del);root.append(el)})}function save(){localStorage.setItem(key,JSON.stringify(data));render()}$('draftForm').onsubmit=e=>{e.preventDefault();data.unshift({type:$('draftType').value,title:$('draftTitle').value.trim(),image:$('draftImage').value,prompt:$('draftPrompt').value,caption:$('draftCaption').value,hashtags:$('draftHash').value,tags:$('draftTags').value});save();e.target.reset();$('draftNote').textContent='Draft saved locally. It remains unpublished until you approve it.'};$('copySeo').onclick=()=>{navigator.clipboard?.writeText(['draftTitle','draftCaption','draftHash','draftTags'].map(id=>$(id).value).filter(Boolean).join('\n'));$('draftNote').textContent='SEO text copied if clipboard permission is available.'};render()})();</script></body>
 </html>
