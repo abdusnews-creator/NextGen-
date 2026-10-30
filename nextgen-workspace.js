@@ -92,8 +92,13 @@
   }
   function renderChannels(){
     const root=document.querySelector('.app main .list');if(!root)return;
+    // Keep the four existing unverified starter cards visible until real channel
+    // records are saved. Do not wipe the page's starter cards on an empty DB result.
+    if(!channels.length){
+      if(!root.querySelector('.card'))empty(root,'No channels are saved in this workspace yet. Use Add Channel to verify and save a profile.');
+      return;
+    }
     root.innerHTML='';
-    if(!channels.length){empty(root,'No channels are saved in this workspace yet. Use Add Channel to verify and save a profile.');return;}
     channels.forEach(ch=>{
       const card=document.createElement('div');card.className='card '+({youtube:'yt',facebook:'fb',instagram:'ig',threads:'th'}[ch.platform]||'');
       const icon=document.createElement('div');icon.className='ico';icon.textContent=({youtube:'▶',facebook:'f',instagram:'◎',threads:'＠'}[ch.platform]||'•');
