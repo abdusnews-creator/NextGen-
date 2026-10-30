@@ -7,7 +7,6 @@ const APP_SHELL = [
   "./nextgen-shared.css",
   "./channels.html",
   "./channel-preferences.html",
-  "./help-centre.html",
   "./login.html",
   "./signin.html",
   "./privacy-settings.html",
