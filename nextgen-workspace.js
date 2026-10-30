@@ -195,7 +195,7 @@
       metricNodes[2].textContent=engagement===null?'—':engagement.toFixed(2)+'%';
       metricNodes[3].textContent=rows.length?(totals.watch/3600).toFixed(1)+' h':'—';
     }
-    const status=document.querySelector('.ng-analytics-status');
+    const status=$('ng-analytics-status')||document.querySelector('.ng-analytics-status');
     if(status)status.textContent=rows.length?'Metrics loaded from verified daily analytics records.':'No verified analytics have been synced from the platforms yet.';
     const platformRows=document.querySelectorAll('.ng-platform-row');
     const names=['youtube','facebook','instagram','threads'];
@@ -229,6 +229,23 @@
     const panel=$('integrations');if(panel){const rows=panel.querySelectorAll('.ng-settings-line');const names=['youtube','facebook','instagram','threads'];rows.forEach((row,i)=>{const match=(connections||[]).find(x=>x.platform===names[i]);const span=row.querySelector('span');if(span)span.textContent=match?(match.display_name||match.handle||match.connection_status)+' · '+match.connection_status:'Not connected';});}
     const prefs=await client.from('notification_preferences').select('*').eq('owner_id',user.id).maybeSingle();
     if(prefs.error)throw prefs.error;
+    const root=$('ng-notification-controls');
+    if(root){
+      root.innerHTML='';
+      const values=prefs.data||{in_app_enabled:true,email_enabled:true,push_enabled:false,approval_updates:true,publishing_updates:true,connection_alerts:true,weekly_analytics:true};
+      const labels=[['in_app_enabled','In-app notifications'],['email_enabled','Email notifications'],['push_enabled','Push notifications'],['approval_updates','Approval updates'],['publishing_updates','Publishing updates'],['connection_alerts','Connection alerts'],['weekly_analytics','Weekly analytics summary']];
+      labels.forEach(([key,label])=>{
+        const row=document.createElement('label');row.style.cssText='display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 2px;border-bottom:1px solid #17385c;color:#eaf3ff;font-size:13px';
+        const span=document.createElement('span');span.textContent=label;
+        const input=document.createElement('input');input.type='checkbox';input.checked=!!values[key];input.addEventListener('change',async()=>{
+          const next=Object.assign({},values,{[key]:input.checked,owner_id:user.id,timezone:'Asia/Kolkata',updated_at:new Date().toISOString()});
+          const {error}=await client.from('notification_preferences').upsert(next,{onConflict:'owner_id'});
+          if(error){input.checked=!input.checked;const note=$('ng-notification-note');if(note)note.textContent='Could not save: '+error.message;}
+          else Object.assign(values,next);
+        });
+        row.append(span,input);root.append(row);
+      });
+    }
   }
   async function refresh(){
     try{
@@ -264,6 +281,8 @@
     }
     if($('manualMode')){$('manualMode').onclick=null;$('manualMode').addEventListener('click',()=>setApprovalMode('manual').catch(e=>setNote('modeNote',e.message,true)));}
     if($('autoMode')){$('autoMode').onclick=null;$('autoMode').addEventListener('click',()=>setApprovalMode('auto').catch(e=>setNote('modeNote',e.message,true)));}
+    if($('manual-approval-mode'))$('manual-approval-mode').addEventListener('click',()=>setApprovalMode('manual').catch(e=>setNote('approval-mode-note',e.message,true)));
+    if($('auto-approval-mode'))$('auto-approval-mode').addEventListener('click',()=>setApprovalMode('auto').catch(e=>setNote('approval-mode-note',e.message,true)));
     if($('dash1-manual-approval')){$('dash1-manual-approval').onclick=null;$('dash1-manual-approval').addEventListener('click',()=>setApprovalMode('manual').catch(()=>{}));}
     if($('dash1-auto-approval')){$('dash1-auto-approval').onclick=null;$('dash1-auto-approval').addEventListener('click',()=>setApprovalMode('auto').catch(()=>{}));}
     if($('saveSlots')){$('saveSlots').onclick=null;$('saveSlots').addEventListener('click',()=>saveDailyTimes().catch(e=>setNote('slotNote',e.message,true)));}
