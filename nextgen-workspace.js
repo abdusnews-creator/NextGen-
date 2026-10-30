@@ -10,47 +10,41 @@
   let content = [];
   let settings = null;
   let authPanel, authMessage;
-
-  function setNote(id, message, isError){
-    const node=$(id); if(!node)return;
-    node.textContent=message;
-    node.style.color=isError?'#ffadad':'#a8c1e8';
-  }
   function showAuthPanel(){
-    if(!main)return;
-    if(authPanel){authPanel.remove();authPanel=null;}
-    authPanel=document.createElement('section');
-    authPanel.className='page-panel';
+    const drawer=document.getElementById('ng-menu-drawer');
+    if(!drawer)return;
+    if(authPanel)authPanel.remove();
+    authPanel=document.createElement('div');
     authPanel.id='ng-workspace-auth';
-    authPanel.style.cssText='margin:10px 11px 14px;padding:14px;border:1px solid #17436c;border-radius:15px;background:linear-gradient(145deg,#081f3a,#06172c);color:#eef5ff';
-    const heading=document.createElement('h2');heading.textContent='Connect your NextGen workspace';
-    const description=document.createElement('p');description.className='muted';description.textContent='Sign in with your workspace email to save drafts, approvals, schedules and settings securely.';
-    const input=document.createElement('input');input.type='email';input.autocomplete='email';input.placeholder='Your email address';input.required=true;input.id='ng-workspace-email';input.style.cssText='width:100%;min-height:42px;margin:8px 0;padding:10px;border:1px solid #285a89;border-radius:9px;background:#07142d;color:#fff';
-    const button=document.createElement('button');button.type='button';button.textContent='Send secure sign-in link';button.style.cssText='min-height:40px;padding:8px 14px;border:1px solid #21bdf1;border-radius:9px;background:#0c3154;color:#fff;font-weight:700';
-    authMessage=document.createElement('p');authMessage.className='muted';authMessage.style.cssText='font-size:12px;line-height:1.5;margin-top:8px';
+    authPanel.style.cssText='margin:14px 0 4px;padding:12px;border:1px solid #285a89;border-radius:11px;background:#07142d;color:#eef5ff';
+    const title=document.createElement('strong');title.textContent='NextGen Account';title.style.cssText='display:block;margin-bottom:8px;color:#fff;font-size:14px';
+    authMessage=document.createElement('p');authMessage.className='muted';authMessage.style.cssText='font-size:12px;line-height:1.45;margin:0 0 8px;color:#a8c1e8';
+    const input=document.createElement('input');input.type='email';input.autocomplete='email';input.placeholder='Your email address';input.required=true;input.id='ng-workspace-email';input.style.cssText='box-sizing:border-box;width:100%;min-height:40px;margin:0 0 8px;padding:9px;border:1px solid #285a89;border-radius:8px;background:#061a35;color:#fff';
+    const button=document.createElement('button');button.type='button';button.textContent='Sign in';button.style.cssText='width:100%;min-height:40px;padding:8px 12px;border:1px solid #21bdf1;border-radius:9px;background:#0c3154;color:#fff;font-weight:700';
     button.addEventListener('click',async function(){
       const email=input.value.trim();
       if(!email){authMessage.textContent='Enter your email address first.';return;}
-      button.disabled=true;authMessage.textContent='Sending sign-in link…';
+      button.disabled=true;authMessage.textContent='Sending secure sign-in link…';
       const {error}=await client.auth.signInWithOtp({email,options:{emailRedirectTo:location.origin+location.pathname}});
       button.disabled=false;
       authMessage.textContent=error?'Sign-in link could not be sent: '+error.message:'Check your email and open the secure NextGen sign-in link on this device.';
     });
-    authPanel.append(heading,description,input,button,authMessage);
-    const intro=main.querySelector('.page-intro, .hd');
-    if(intro&&intro.nextSibling)main.insertBefore(authPanel,intro.nextSibling);else main.insertBefore(authPanel,main.firstChild);
+    authPanel.append(title,authMessage,input,button);
+    const old=drawer.querySelector('.ng-menu-logout');
+    if(old)old.remove();
+    drawer.append(authPanel);
   }
   function setSignedIn(){
     if(!authPanel)return;
     authPanel.innerHTML='';
-    const heading=document.createElement('h2');heading.textContent='Workspace connected';
-    const info=document.createElement('p');info.className='muted';info.textContent='Signed in as '+(user.email||'authenticated user')+'. Your records are saved securely in NextGen.';
-    const button=document.createElement('button');button.type='button';button.textContent='Sign out';button.style.cssText='min-height:36px;padding:7px 13px;border:1px solid #285a89;border-radius:9px;background:#07142d;color:#fff';
-    button.addEventListener('click',async()=>{await client.auth.signOut();});
-    authPanel.append(heading,info,button);
+    const title=document.createElement('strong');title.textContent='NextGen Account';title.style.cssText='display:block;margin-bottom:6px;color:#fff;font-size:14px';
+    const info=document.createElement('p');info.className='muted';info.textContent='Signed in as '+(user.email||'authenticated user');info.style.cssText='font-size:12px;line-height:1.45;margin:0 0 9px;color:#a8c1e8;overflow-wrap:anywhere';
+    const button=document.createElement('button');button.type='button';button.textContent='Sign out';button.style.cssText='width:100%;min-height:40px;padding:8px 12px;border:1px solid #285a89;border-radius:9px;background:#10213d;color:#fff;font-weight:700';
+    button.addEventListener('click',async()=>{button.disabled=true;const {error}=await client.auth.signOut();if(error){button.disabled=false;info.textContent='Could not sign out: '+error.message;}});
+    authPanel.append(title,info,button);
   }
   async function requireUser(){
-    if(!user)throw new Error('Sign in to NextGen above to continue.');
+    if(!user)throw new Error('Open the three-line menu and sign in at the bottom to continue.');
     return user;
   }
   async function loadBase(){
