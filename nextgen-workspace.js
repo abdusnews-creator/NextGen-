@@ -102,7 +102,7 @@
     const enabled=mode==='auto';
     const {error}=await client.from('automation_settings').upsert({
       owner_id:user.id,approval_mode:mode,auto_approval_enabled:enabled,background_mode_enabled:false,
-      timezone:'Asia/Kolkata',daily_idea_times:['08:00:00','14:00:00','18:00:00']
+      timezone:'Asia/Kolkata',daily_idea_times:(settings&&settings.daily_idea_times)||['08:00:00','14:00:00','18:00:00']
     },{onConflict:'owner_id'});
     if(error)throw error;
     if($('manualMode'))$('manualMode').classList.toggle('selected',!enabled);
@@ -242,15 +242,16 @@
   }
   function bindPage(){
     if($('draftForm')){
+      $('draftForm').onsubmit=null;
       $('draftForm').addEventListener('submit',async e=>{e.preventDefault();try{await saveDraft(e.currentTarget);}catch(err){setNote('draftNote',err.message,true);}});
       if($('copySeo'))$('copySeo').addEventListener('click',()=>navigator.clipboard?.writeText(['draftTitle','draftCaption','draftHash','draftTags'].map(id=>$(id)?.value||'').filter(Boolean).join('\n')));
     }
-    if($('manualMode'))$('manualMode').addEventListener('click',()=>setApprovalMode('manual').catch(e=>setNote('modeNote',e.message,true)));
-    if($('autoMode'))$('autoMode').addEventListener('click',()=>setApprovalMode('auto').catch(e=>setNote('modeNote',e.message,true)));
-    if($('dash1-manual-approval'))$('dash1-manual-approval').addEventListener('click',()=>setApprovalMode('manual').catch(()=>{}));
-    if($('dash1-auto-approval'))$('dash1-auto-approval').addEventListener('click',()=>setApprovalMode('auto').catch(()=>{}));
-    if($('saveSlots'))$('saveSlots').addEventListener('click',()=>saveDailyTimes().catch(e=>setNote('slotNote',e.message,true)));
-    if($('scheduleForm'))$('scheduleForm').addEventListener('submit',e=>{e.preventDefault();scheduleContent().catch(err=>setNote('scheduleNote',err.message,true));});
+    if($('manualMode')){$('manualMode').onclick=null;$('manualMode').addEventListener('click',()=>setApprovalMode('manual').catch(e=>setNote('modeNote',e.message,true)));}
+    if($('autoMode')){$('autoMode').onclick=null;$('autoMode').addEventListener('click',()=>setApprovalMode('auto').catch(e=>setNote('modeNote',e.message,true)));}
+    if($('dash1-manual-approval')){$('dash1-manual-approval').onclick=null;$('dash1-manual-approval').addEventListener('click',()=>setApprovalMode('manual').catch(()=>{}));}
+    if($('dash1-auto-approval')){$('dash1-auto-approval').onclick=null;$('dash1-auto-approval').addEventListener('click',()=>setApprovalMode('auto').catch(()=>{}));}
+    if($('saveSlots')){$('saveSlots').onclick=null;$('saveSlots').addEventListener('click',()=>saveDailyTimes().catch(e=>setNote('slotNote',e.message,true)));}
+    if($('scheduleForm')){$('scheduleForm').onsubmit=null;$('scheduleForm').addEventListener('submit',e=>{e.preventDefault();scheduleContent().catch(err=>setNote('scheduleNote',err.message,true));});}
     if($('analyticsPeriod'))$('analyticsPeriod').addEventListener('change',()=>loadAnalytics().catch(()=>{}));
   }
   function showAuth(){
