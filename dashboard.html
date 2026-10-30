@@ -1140,8 +1140,24 @@ body>.app>header, body>header:not(.ng-auth-master-header), body>main>header:not(
 </script>
 
 
+<script id="ng-menu-refresh-early-state">
+(function(){
+ try{
+   if(sessionStorage.getItem('ngNextGenMenuOpen')==='1'){
+     document.documentElement.classList.add('ng-menu-refresh-open');
+   }
+ }catch(e){}
+})();
+</script>
 <style id="ng-menu-refresh-no-jump">
-.ng-menu-drawer.ng-menu-restored-no-motion{transition:none!important}
+html.ng-menu-refresh-open body .ng-menu-drawer{
+  transform:translateX(0)!important;
+  visibility:visible!important;
+  transition:none!important;
+}
+html.ng-menu-refresh-open body .ng-menu-backdrop[hidden]{
+  display:block!important;
+}
 </style>
 <script id="ng-menu-refresh-state">
 (function(){
@@ -1153,6 +1169,7 @@ body>.app>header, body>header:not(.ng-auth-master-header), body>main>header:not(
  if(!trigger||!drawer)return;
  function clear(){
    try{sessionStorage.removeItem(key)}catch(e){}
+   document.documentElement.classList.remove('ng-menu-refresh-open');
    drawer.classList.remove('ng-menu-restored-no-motion');
  }
  function remember(){
