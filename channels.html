@@ -510,8 +510,8 @@ body.ng-profile-open{overflow:hidden}
     <label for="channel-name">Page / Profile / Channel Name</label>
     <input id="channel-name" name="name" type="text" placeholder="Verified name will appear here" readonly required maxlength="80" aria-describedby="detect-status">
     <p id="detect-status" class="dialog-note" role="status">Paste a profile link to detect the username. The actual display name requires the platform API and authorization.</p>
-    <p class="dialog-note">This saves a draft on this device only. It does not connect or authorize the social account.</p>
-    <div class="dialog-actions"><button type="button" id="cancel-channel">Cancel</button><button class="primary" type="submit">Save draft</button></div>
+    <p class="dialog-note">Save the profile to your NextGen workspace as Pending. Platform authorization is a separate step; no social account is connected or published automatically.</p>
+    <div class="dialog-actions"><button type="button" id="cancel-channel">Cancel</button><button class="primary" type="submit">Save Channel</button></div>
     <p id="channel-message" class="dialog-note" role="status"></p>
   </form>
 </dialog>
@@ -612,30 +612,27 @@ body.ng-profile-open{overflow:hidden}
     alert((title?title.textContent:'Channel')+'\n'+(handle?handle.textContent:'')+'\nConnection: Not verified. Connect the platform API before publishing.');
   });});
   if(form)form.addEventListener('submit',async function(e){
-    e.preventDefault();var u=urlInput.value.trim(),p=platform.value,n=nameInput.value.trim(),handle=(usernameInput&&usernameInput.value||'').trim();
-    if(!u||!p){msg.textContent='Add a valid profile link first.';return;}
-    if(!verifiedProfileName||!n){msg.textContent='The real profile name must be verified by the platform API before saving.';return;}
+    e.preventDefault();
+    var u=urlInput.value.trim(),p=String(platform.value||'').toLowerCase(),n=nameInput.value.trim(),handle=(usernameInput&&usernameInput.value||'').trim();
+    var parsedProfile=parseProfile(u);
+    if(!parsedProfile||parsedProfile.platform.toLowerCase()!==p||!parsedProfile.handle){msg.textContent='Use a valid profile URL so NextGen can detect its platform and handle.';return;}
+    if(!handle)handle='@'+parsedProfile.handle;
+    var isVerified=!!(verifiedProfileName&&n);
+    var displayName=isVerified?n:(p.charAt(0).toUpperCase()+p.slice(1)+' profile — verification pending');
     try{
-      var records=JSON.parse(localStorage.getItem('nextgen-channel-drafts')||'[]');
-      var canonicalUrl;
-      try{var parsedUrl=new URL(u);parsedUrl.hash='';parsedUrl.search='';canonicalUrl=(parsedUrl.origin+parsedUrl.pathname).replace(/\/$/,'').toLowerCase();}catch(ignore){canonicalUrl=u.toLowerCase();}
-      var canonicalHandle=handle.replace(/^@/,'').toLowerCase();
-      if(records.some(function(x){
-        var oldUrl=String(x.url||'').toLowerCase();
-        var oldHandle=String(x.username||'').replace(/^@/,'').toLowerCase();
-        return oldUrl===u.toLowerCase() || oldUrl.replace(/[?#].*$/,'').replace(/\/$/,'')===canonicalUrl || (String(x.platform||'').toLowerCase()===p.toLowerCase()&&canonicalHandle&&oldHandle===canonicalHandle);
-      })){msg.textContent='This channel/profile is already saved on this device.';return;}
       var dbClient=window.supabase.createClient(window.NEXTGEN_SUPABASE_CONFIG.url,window.NEXTGEN_SUPABASE_CONFIG.anonKey);
       var authResult=await dbClient.auth.getUser();
       if(authResult.error||!authResult.data.user){msg.textContent='Sign in to NextGen above before saving this channel.';return;}
-      var savedChannel=await dbClient.from('channels').insert({owner_id:authResult.data.user.id,platform:p.toLowerCase(),display_name:n,handle:handle.replace(/^@/,''),profile_url:u,connection_status:'pending'}).select('id').single();
-      if(savedChannel.error){msg.textContent='Channel could not be saved to your account: '+savedChannel.error.message;return;}
-      records.push({url:u,canonical_url:canonicalUrl,platform:p,name:n,username:handle,createdAt:new Date().toISOString(),status:'draft',verified_by_platform:true});
-      localStorage.setItem('nextgen-channel-drafts',JSON.stringify(records));
-      msg.textContent='Channel record saved to your account. Platform publishing authorization is still pending.';
-      form.reset();
+      var existing=await dbClient.from('channels').select('id,profile_url,handle').eq('owner_id',authResult.data.user.id).eq('platform',p);
+      if(existing.error){msg.textContent='Could not check saved channels: '+existing.error.message;return;}
+      var cleanHandle=handle.replace(/^@/,'').toLowerCase();
+      if((existing.data||[]).some(function(row){return String(row.profile_url||'').toLowerCase()===u.toLowerCase()||String(row.handle||'').replace(/^@/,'').toLowerCase()===cleanHandle;})){msg.textContent='This channel is already saved in your NextGen workspace.';return;}
+      var savedChannel=await dbClient.from('channels').insert({owner_id:authResult.data.user.id,platform:p,display_name:displayName,handle:handle.replace(/^@/,''),profile_url:u,connection_status:'pending'}).select('id').single();
+      if(savedChannel.error){msg.textContent='Channel could not be saved: '+savedChannel.error.message;return;}
+      msg.textContent=isVerified?'Verified profile saved. Platform authorization is still pending.':'Channel saved as Pending. The verified profile name requires platform API authorization.';
+      form.reset();verifiedProfileName=false;
       if(window.NGWorkspace)window.NGWorkspace.refresh();
-    }catch(err){msg.textContent='Could not save on this device. Please check browser storage settings.';}
+    }catch(err){msg.textContent='Could not save this channel: '+(err&&err.message?err.message:'Please try again.');}
   });
 })();
 </script>
@@ -804,6 +801,6 @@ html.ng-menu-refresh-open body .ng-menu-backdrop[hidden]{
 })();
 </script>
 
-<script src="./nextgen-workspace.js?v=20261030-channel-merge-fix"></script>
+<script src="./nextgen-workspace.js?v=20261030-channel-save-workflow"></script>
 </body>
 </html>
