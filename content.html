@@ -83,6 +83,11 @@ svg{display:block}
 .safety .b2{width:190px;min-height:48px;margin-top:13px;border-radius:14px;background:#12294a;border:1px solid #1f3d6b}
 @media(max-width:360px){.bar .add{flex-basis:105px;width:105px}.info b{font-size:16px}.info span{font-size:12px}.rv{width:78px}.st{font-size:11px}}
 
+/* Override shared mobile main padding so the page reaches the requested side spacing. */
+@media(max-width:430px){
+  .app,main{width:100%!important;max-width:100%!important}
+  main{padding-left:.01px!important;padding-right:.01px!important}
+}
 /* Force 0.01px left/right spacing on mobile content sections. */
 @media(max-width:430px){
   .hd,.bar,.list,.safety,.ng-shared-footer{width:calc(100% - .02px)!important;margin-left:.01px!important;margin-right:.01px!important}
