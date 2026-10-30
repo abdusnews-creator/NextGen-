@@ -167,3 +167,26 @@ html body .app>nav.ng-bottom-nav{
   z-index:5!important;
   box-sizing:border-box!important;
 }
+
+
+/* NEXTGEN WORKSPACE PAGES — common scrolling contract for pages without .app wrapper.
+   Keep each page's existing header artwork and popovers untouched; only assign scroll ownership. */
+@supports selector(body:has(> header)){
+  html body:has(> header):has(> main):has(> nav.ng-bottom-nav){
+    display:flex!important;flex-direction:column!important;height:100dvh!important;
+    min-height:0!important;overflow:hidden!important;box-sizing:border-box!important;
+  }
+  html body:has(> header):has(> main):has(> nav.ng-bottom-nav)>header{
+    flex:0 0 auto!important;position:relative!important;z-index:5!important;
+  }
+  html body:has(> header):has(> main):has(> nav.ng-bottom-nav)>main{
+    flex:1 1 0!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;
+    -webkit-overflow-scrolling:touch!important;overscroll-behavior-y:contain!important;
+  }
+  html body:has(> header):has(> main):has(> nav.ng-bottom-nav)>nav.ng-bottom-nav{
+    position:relative!important;inset:auto!important;
+    flex:0 0 calc(43px + env(safe-area-inset-bottom,0px))!important;
+    width:100%!important;min-height:0!important;margin:0!important;z-index:5!important;box-sizing:border-box!important;
+  }
+  html body:has(> header):has(> main):has(> nav.ng-bottom-nav)>footer.ng-shared-footer{flex:0 0 auto!important}
+}
