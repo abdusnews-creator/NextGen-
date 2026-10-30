@@ -36,7 +36,7 @@
       authMessage.textContent=error?'Sign-in link could not be sent: '+error.message:'Check your email and open the secure NextGen sign-in link on this device.';
     });
     authPanel.append(heading,description,input,button,authMessage);
-    const intro=main.querySelector('.page-intro');
+    const intro=main.querySelector('.page-intro, .hd');
     if(intro&&intro.nextSibling)main.insertBefore(authPanel,intro.nextSibling);else main.insertBefore(authPanel,main.firstChild);
   }
   function setSignedIn(){
