@@ -611,7 +611,7 @@ body.ng-profile-open{overflow:hidden}
     var title=card.querySelector('.info b');var handle=card.querySelector('.info span');
     alert((title?title.textContent:'Channel')+'\n'+(handle?handle.textContent:'')+'\nConnection: Not verified. Connect the platform API before publishing.');
   });});
-  if(form)form.addEventListener('submit',function(e){
+  if(form)form.addEventListener('submit',async function(e){
     e.preventDefault();var u=urlInput.value.trim(),p=platform.value,n=nameInput.value.trim(),handle=(usernameInput&&usernameInput.value||'').trim();
     if(!u||!p){msg.textContent='Add a valid profile link first.';return;}
     if(!verifiedProfileName||!n){msg.textContent='The real profile name must be verified by the platform API before saving.';return;}
@@ -625,6 +625,11 @@ body.ng-profile-open{overflow:hidden}
         var oldHandle=String(x.username||'').replace(/^@/,'').toLowerCase();
         return oldUrl===u.toLowerCase() || oldUrl.replace(/[?#].*$/,'').replace(/\/$/,'')===canonicalUrl || (String(x.platform||'').toLowerCase()===p.toLowerCase()&&canonicalHandle&&oldHandle===canonicalHandle);
       })){msg.textContent='This channel/profile is already saved on this device.';return;}
+      var dbClient=window.supabase.createClient(window.NEXTGEN_SUPABASE_CONFIG.url,window.NEXTGEN_SUPABASE_CONFIG.anonKey);
+      var authResult=await dbClient.auth.getUser();
+      if(authResult.error||!authResult.data.user){msg.textContent='Sign in to NextGen above before saving this channel.';return;}
+      var savedChannel=await dbClient.from('channels').insert({owner_id:authResult.data.user.id,platform:p.toLowerCase(),display_name:n,handle:handle.replace(/^@/,''),profile_url:u,connection_status:'pending'}).select('id').single();
+      if(savedChannel.error){msg.textContent='Channel could not be saved to your account: '+savedChannel.error.message;return;}
       records.push({url:u,canonical_url:canonicalUrl,platform:p,name:n,username:handle,createdAt:new Date().toISOString(),status:'draft',verified_by_platform:true});
       localStorage.setItem('nextgen-channel-drafts',JSON.stringify(records));
       msg.textContent='Draft saved on this device. API connection is not completed.';
@@ -798,5 +803,6 @@ html.ng-menu-refresh-open body .ng-menu-backdrop[hidden]{
 })();
 </script>
 
+<script src="./nextgen-workspace.js?v=20261030-live-data"></script>
 </body>
 </html>
