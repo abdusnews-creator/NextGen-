@@ -570,9 +570,17 @@ html body .app main > footer.ng-shared-footer > .ng-credit{font-size:10px!import
     overscroll-behavior-y: auto !important;
     touch-action: auto !important;
   }
+  body > .app > main {
+    padding-bottom: calc(16px + 52px + env(safe-area-inset-bottom, 0px)) !important;
+  }
   body > .app > nav.ng-bottom-nav {
-    position: sticky !important;
+    position: fixed !important;
+    left: 50% !important;
+    right: auto !important;
     bottom: 0 !important;
+    transform: translateX(-50%) !important;
+    width: 100% !important;
+    max-width: 430px !important;
     z-index: 30 !important;
     flex: 0 0 auto !important;
   }
