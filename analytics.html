@@ -744,7 +744,7 @@ body.ng-profile-open{overflow:hidden}
     <a href="./dashboard.html"><span>▦</span><small>Dashboard</small></a>
   </div>
   <div class="ng-menu-main-links">
-    <a href="./dashboard.html"><span>▣</span>Creator Dashboard</a>
+    <a href="./dashboard.html"><span>▣</span>Creator Dashboard</a><a href="./analytics.html"><span>▥</span>Channel Analytics</a>
     <a href="./content.html"><span>▱</span>Saved</a>
     <a href="./content.html"><span>◷</span>Memories</a>
     <a href="./channels.html"><span>◎</span>Groups</a>
@@ -784,78 +784,7 @@ body.ng-profile-open{overflow:hidden}
   </div>
   <button type="button" class="ng-menu-logout" disabled aria-disabled="true">Log out · Account connection pending</button>
 </aside>
-<main>
-
-
-
-<section class="dash1-analytics" aria-labelledby="dash1-analytics-title">
-  <h2 id="dash1-analytics-title">Channel Analytics</h2>
-  <p class="dash1-analytics-subtitle">Welcome back! Your creator workspace is ready.</p>
-  <label class="dash1-period"><span aria-hidden="true">▣</span><select aria-label="Analytics period"><option>Last 28 days</option><option>Last 7 days</option><option>Last 90 days</option></select></label>
-  <div class="dash1-analytics-notice">Preview dashboard — live views, subscribers, watch time and revenue are not connected yet. No analytics figures below are being claimed as real.</div>
-  <div class="dash1-analytics-grid">
-    <article class="dash1-metric"><div class="dash1-metric-heading"><span class="dash1-metric-icon">▶</span><span>Views</span></div><strong>—</strong><p>Connect YouTube to view data</p></article>
-    <article class="dash1-metric"><div class="dash1-metric-heading"><span class="dash1-metric-icon">◎</span><span>Watch time (hours)</span></div><strong>—</strong><p>Analytics not connected</p></article>
-    <article class="dash1-metric"><div class="dash1-metric-heading"><span class="dash1-metric-icon">♟</span><span>Subscribers</span></div><strong>—</strong><p>Channel data unavailable</p></article>
-    <article class="dash1-metric"><div class="dash1-metric-heading"><span class="dash1-metric-icon">$</span><span>Estimated revenue</span></div><strong>—</strong><p>Monetization data unavailable</p></article>
-  </div>
-</section>
-<section class="dash1-recent" aria-labelledby="dash1-recent-title">
-  <div class="dash1-recent-head"><h2 id="dash1-recent-title">Recent content</h2><a href="./content.html">View all</a></div>
-  <div class="dash1-content-list">
-    <article class="dash1-content-row">
-      <div class="dash1-thumb dash1-thumb-gold"><span>♛</span><small>0:10</small></div>
-      <div class="dash1-content-info"><h3>Luxury Wooden Table | Royal Furniture House</h3><p>Demo content idea · Not published by NextGen</p><div class="dash1-content-stats"><span>⊙ Views —</span><span>▤ Comments —</span><span>♡ Likes —</span></div></div>
-      <button class="dash1-content-more" type="button" aria-label="More options for Luxury Wooden Table" onclick="window.location.href='./content.html'">⋮</button>
-    </article>
-    <article class="dash1-content-row">
-      <div class="dash1-thumb dash1-thumb-brown"><span>♜</span><small>0:12</small></div>
-      <div class="dash1-content-info"><h3>Premium Bed Design | Royal Furniture House</h3><p>Demo content idea · Pending review</p><div class="dash1-content-stats"><span>⊙ Views —</span><span>▤ Comments —</span><span>♡ Likes —</span></div></div>
-      <button class="dash1-content-more" type="button" aria-label="More options for Premium Bed Design" onclick="window.location.href='./content.html'">⋮</button>
-    </article>
-    <article class="dash1-content-row">
-      <div class="dash1-thumb dash1-thumb-stone"><span>▬</span><small>0:11</small></div>
-      <div class="dash1-content-info"><h3>Modern Sofa Set | Royal Furniture House</h3><p>Demo content idea · Pending review</p><div class="dash1-content-stats"><span>⊙ Views —</span><span>▤ Comments —</span><span>♡ Likes —</span></div></div>
-      <button class="dash1-content-more" type="button" aria-label="More options for Modern Sofa Set" onclick="window.location.href='./content.html'">⋮</button>
-    </article>
-    <article class="dash1-content-row">
-      <div class="dash1-thumb dash1-thumb-wood"><span>♧</span><small>0:13</small></div>
-      <div class="dash1-content-info"><h3>Dining Table Collection | Royal Furniture House</h3><p>Demo content idea · Not published by NextGen</p><div class="dash1-content-stats"><span>⊙ Views —</span><span>▤ Comments —</span><span>♡ Likes —</span></div></div>
-      <button class="dash1-content-more" type="button" aria-label="More options for Dining Table Collection" onclick="window.location.href='./content.html'">⋮</button>
-    </article>
-  </div>
-</section>
-<section class="dash1-publishing-card" aria-labelledby="dash1-publishing-title">
-  <div class="dash1-publishing-head"><h2 id="dash1-publishing-title">Publishing approval control</h2><a href="./settings.html">Settings</a></div>
-  <p class="dash1-publishing-status" id="dash1-publishing-status">Manual Approval Mode — ON</p>
-  <div class="dash1-publishing-buttons"><button type="button" class="is-selected" id="dash1-manual-approval">Manual Approval</button><button type="button" id="dash1-auto-approval">Auto Approval</button></div>
-  <p class="dash1-publishing-help" id="dash1-publishing-help">Content requires your approval before publishing.</p>
-  <div class="dash1-publishing-warning">Auto Approval is OFF by default. This prototype does not publish or schedule posts.</div>
-</section>
-<section class="dash1-whatsnew" aria-labelledby="dash1-whatsnew-title">
-  <div class="dash1-whatsnew-head"><h2 id="dash1-whatsnew-title">What's new in NextGen</h2><span aria-hidden="true">▶</span></div>
-  <a class="dash1-whatsnew-item" href="./index.html"><span>↗</span><span>Dashboard design updated to a Studio-style layout</span><b>›</b></a>
-  <a class="dash1-whatsnew-item" href="./settings.html"><span>✓</span><span>Manual approval remains the safe default</span><b>›</b></a>
-</section>
-<section class="page-panel"><h2>Analytics Guide</h2><p class="muted">Connect each platform with read-only analytics permissions. Publishing permissions are separate.</p></section>
-<section class="dash1-comments-card" aria-labelledby="dash1-comments-title">
-  <div class="dash1-section-heading"><h2 id="dash1-comments-title">Latest comments</h2><a href="./content.html">View all</a></div>
-  <p class="dash1-comments-status">Comment management is not connected yet.</p>
-  <div class="dash1-comment-row"><div class="dash1-comment-avatar dash1-avatar-purple">R</div><div class="dash1-comment-body"><p>Example comment · demo</p><blockquote>“Beautiful furniture design!”</blockquote></div><div class="dash1-comment-thumb dash1-comment-gold">♛</div></div>
-  <div class="dash1-comment-row"><div class="dash1-comment-avatar dash1-avatar-green">S</div><div class="dash1-comment-body"><p>Example comment · demo</p><blockquote>“How can I get more details?”</blockquote></div><div class="dash1-comment-thumb dash1-comment-brown">♜</div></div>
-  <p class="dash1-comments-note">These are examples, not live viewer comments.</p>
-</section>
-
-<section class="dash1-channel-overview" aria-labelledby="dash1-overview-title">
-  <div class="dash1-section-heading"><h2 id="dash1-overview-title">Channel overview</h2><a href="./channels.html">Manage</a></div>
-  <div class="dash1-overview-row"><span class="dash1-platform-icon">▶</span><span>YouTube</span><span class="dash1-planned">Planned</span></div>
-  <div class="dash1-overview-row"><span class="dash1-platform-icon">f</span><span>Facebook</span><span class="dash1-planned">Planned</span></div>
-  <div class="dash1-overview-row"><span class="dash1-platform-icon">◎</span><span>Instagram</span><span class="dash1-planned">Planned</span></div>
-  <div class="dash1-overview-row"><span class="dash1-platform-icon">◎</span><span>Threads</span><span class="dash1-planned">Planned</span></div>
-  <div class="dash1-overview-divider"></div>
-  <p class="dash1-overview-note">Platform connections and background publishing are not yet verified.</p>
-</section>
-<section class="page-intro"><div class="page-icon">▥</div><div><h1>Channel Analytics</h1><p>Performance overview across your social platforms</p></div></section>
+<main><section class="page-intro"><div class="page-icon">▥</div><div><h1>Channel Analytics</h1><p>Performance overview across your social platforms</p></div></section>
 <section class="page-panel"><h2>Reporting Period</h2><label class="ng-analytics-label">Period<select id="analyticsPeriod"><option>Last 28 days</option><option>Last 7 days</option><option>Last 90 days</option></select></label><p class="muted">Live analytics are not connected yet. Metrics remain blank until platform APIs provide verified data.</p></section>
 <section class="page-panel"><h2>Performance Overview</h2><div class="ng-metric-grid"><article><small>Total Views</small><strong>—</strong><span>Awaiting platform data</span></article><article><small>Followers</small><strong>—</strong><span>Awaiting platform data</span></article><article><small>Engagement Rate</small><strong>—</strong><span>Awaiting platform data</span></article><article><small>Watch Time</small><strong>—</strong><span>Awaiting platform data</span></article></div></section>
 <section class="page-panel"><h2>Platform Breakdown</h2><div class="ng-platform-row"><b>YouTube</b><span>Analytics connection pending</span></div><div class="ng-platform-row"><b>Facebook</b><span>Analytics connection pending</span></div><div class="ng-platform-row"><b>Instagram</b><span>Analytics connection pending</span></div><div class="ng-platform-row"><b>Threads</b><span>Analytics connection pending</span></div></section>
