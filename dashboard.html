@@ -1078,22 +1078,7 @@ body.ng-profile-open{overflow:hidden}
 })();
 </script>
 
-<script id="dash1-approval-preview">
-(function(){
- var manual=document.getElementById('dash1-manual-approval'),auto=document.getElementById('dash1-auto-approval');
- var status=document.getElementById('dash1-publishing-status'),help=document.getElementById('dash1-publishing-help');
- if(!manual||!auto||!status||!help)return;
- function setMode(isAuto){
-   manual.classList.toggle('is-selected',!isAuto);auto.classList.toggle('is-selected',isAuto);
-   manual.setAttribute('aria-pressed',String(!isAuto));auto.setAttribute('aria-pressed',String(isAuto));
-   status.textContent=isAuto?'Auto Approval Mode — ON':'Manual Approval Mode — ON';
-   help.textContent=isAuto?'Auto approval is a preview preference only. This prototype does not publish or schedule posts.':'Content requires your approval before publishing.';
- }
- manual.addEventListener('click',function(){setMode(false);});
- auto.addEventListener('click',function(){setMode(true);});
- setMode(false);
-})();
-</script>
+<script id="dash1-approval-preview">/* Supabase workspace controls handle approval mode. */</script>
 
 <style id="ng-master-design-lock">
 /* MASTER DESIGN LOCK — do not change logo/menu alignment or size without explicit user request. */
