@@ -94,6 +94,18 @@ svg{display:block}
   .hd,.bar,.list,.ng-shared-footer{padding-left:.01px!important;padding-right:.01px!important}
   .safety{padding-left:15px!important;padding-right:15px!important}
 }
+
+/* Subscription Package cards */
+.subscription-plans{display:flex;flex-direction:column;gap:22px;padding:12px 0 8px}
+.subscription-plan{box-sizing:border-box;width:100%;padding:26px;border:1px solid #28517f;border-radius:27px;background:linear-gradient(135deg,#0b1d3d 0%,#071630 100%);color:#eaf3ff;box-shadow:0 0 0 1px #102b50 inset}
+.subscription-plan h2{margin:8px 0 34px;color:#8bd8ff;font-size:clamp(22px,5vw,32px);font-weight:800;line-height:1.2}
+.subscription-price{margin:0 0 18px;color:#fff;font-size:clamp(38px,8vw,58px);font-weight:850;line-height:1.1}
+.subscription-limit{margin:0 0 28px;color:#c6d8f1;font-size:clamp(16px,4vw,22px)}
+.subscription-plan ul{margin:0 0 28px;padding-left:34px;color:#e6efff;font-size:clamp(15px,3.8vw,22px);line-height:1.9}
+.subscription-plan li{padding-left:0;margin:0 0 4px}
+.subscription-status{min-height:66px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;padding:12px 14px;border:1px solid #31577e;border-radius:16px;background:#0a1d36;color:#a9c2e2;text-align:center;font-size:clamp(14px,3.6vw,21px)}
+.subscription-plan-featured{border-color:#398dff;box-shadow:0 0 0 1px #194b91 inset,0 0 18px #1677ff22}
+@media(max-width:480px){.subscription-plans{gap:20px}.subscription-plan{padding:24px 26px}.subscription-plan h2{margin-bottom:36px}.subscription-plan ul{padding-left:34px}}
 </style>
 
 <style id="ng-header-logo-crop-fix">
@@ -458,8 +470,31 @@ body>.app>nav.ng-bottom-nav{
 
 <main>
 <section class="page-intro"><div class="page-icon">⚙</div><div><h1>Subscription Package</h1></div></section>
-<section class="settings-list" aria-label="Subscription Package">
-  <div class="settings-row"><span class="settings-icon">₹</span><div class="settings-copy"><strong>Push notifications</strong><small>Choose your preferences</small></div><span class="settings-arrow">›</span></div>
+<section class="subscription-plans" aria-label="Subscription plans">
+  <article class="subscription-plan">
+    <h2>Starter Plan</h2>
+    <div class="subscription-price">₹499</div>
+    <p class="subscription-limit">Up to 1 channel</p>
+    <ul>
+      <li>YouTube, Facebook and Instagram support</li>
+      <li>Content drafts and scheduling tools</li>
+      <li>Manual approval before publishing</li>
+      <li>Channel workspace basics</li>
+    </ul>
+    <div class="subscription-status">Subscription activation coming soon</div>
+  </article>
+  <article class="subscription-plan subscription-plan-featured">
+    <h2>Growth Plan</h2>
+    <div class="subscription-price">₹1,499</div>
+    <p class="subscription-limit">Up to 3 channels</p>
+    <ul>
+      <li>YouTube, Facebook, Instagram and Threads support</li>
+      <li>Content planning and scheduling tools</li>
+      <li>Channel analytics workspace</li>
+      <li>Manual approval; Auto Approval remains OFF by default</li>
+    </ul>
+    <div class="subscription-status">Subscription activation coming soon</div>
+  </article>
 </section>
 <footer class="ng-shared-footer"><span class="ng-copyright">©2026 NextGen. All Rights Reserved. Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
 </main>
