@@ -608,5 +608,20 @@ html.ng-menu-refresh-open body .ng-menu-backdrop[hidden]{
 <style id="ng-profile-extra-actions">
 .ng-profile-action-divider{height:1px;background:#174c83;margin:9px 0 5px}.ng-profile-action-spacer{height:62px}.ng-profile-links a.ng-profile-delete{color:#ff315b!important}.ng-profile-links a.ng-profile-delete span{color:#ff315b!important}
 </style>
+<style id="ng-scroll-header-lock-20261030">
+/* Keep the existing master header design unchanged; only detach it from document scrolling. */
+body > .app { padding-top:46px!important; }
+body > .app > header {
+  position:fixed!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  width:100%!important;
+  max-width:430px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  z-index:1000!important;
+}
+</style>
 </body>
 </html>
