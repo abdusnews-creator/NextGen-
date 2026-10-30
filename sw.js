@@ -10,7 +10,6 @@ const APP_SHELL = [
   "./help-centre.html",
   "./login.html",
   "./signin.html",
-  "./packages.html",
   "./privacy-settings.html",
   "./review.html",
   "./settings.html",
