@@ -322,21 +322,21 @@ body.ng-profile-open{overflow:hidden}
 </style>
 
 
-<style id="ng-menu-shortcuts-height-fix">
-/* Give shortcut tiles enough vertical room; do not alter page/document scrolling. */
+
+
+<style id="ng-menu-shortcuts-flex-fix">
+/* Prevent the drawer's flex layout from shrinking/clipping the shortcuts row. */
 .ng-menu-drawer.ng-facebook-style-menu .ng-menu-shortcuts{
+  flex:0 0 100px!important;
+  height:100px!important;
+  min-height:100px!important;
+  max-height:100px!important;
   box-sizing:border-box!important;
-  min-height:112px!important;
-  height:112px!important;
-  padding:6px 2px 14px!important;
-  align-items:flex-start!important;
+  align-self:stretch!important;
   overflow-x:auto!important;
-  overflow-y:hidden!important;
-  scrollbar-width:none!important;
-  -ms-overflow-style:none!important;
-}
-.ng-menu-drawer.ng-facebook-style-menu .ng-menu-shortcuts::-webkit-scrollbar{
-  display:none!important;width:0!important;height:0!important;
+  overflow-y:visible!important;
+  padding:4px 2px 12px!important;
+  border-bottom:1px solid #174c83!important;
 }
 .ng-menu-drawer.ng-facebook-style-menu .ng-menu-shortcuts a{
   flex:0 0 75px!important;
