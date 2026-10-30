@@ -306,9 +306,14 @@ html,body{background-color:#030b24!important;background-image:none!important}
 <!-- NextGen: remove page-level decorative background; preserve cards, header, footer and master design -->
 <style id="ng-native-pull-to-refresh">
 /* Restore document-viewport scrolling for Android Chrome native pull-to-refresh. */
-html,body{
+html{
  height:auto!important;min-height:100%!important;
- overflow-x:hidden!important;overflow-y:auto!important;
+ overflow-x:clip!important;overflow-y:visible!important;
+ overscroll-behavior-y:auto!important;
+}
+body:not(.ng-menu-open):not(.ng-profile-open){
+ height:auto!important;min-height:100%!important;
+ overflow:visible!important;
  overscroll-behavior-y:auto!important;
 }
 body{min-height:100vh!important;min-height:100dvh!important}
