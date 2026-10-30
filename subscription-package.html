@@ -106,6 +106,8 @@ svg{display:block}
 .subscription-status{min-height:66px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;padding:12px 14px;border:1px solid #31577e;border-radius:16px;background:#0a1d36;color:#a9c2e2;text-align:center;font-size:clamp(14px,3.6vw,21px)}
 .subscription-plan-featured{border-color:#398dff;box-shadow:0 0 0 1px #194b91 inset,0 0 18px #1677ff22}
 @media(max-width:480px){.subscription-plans{gap:20px}.subscription-plan{padding:24px 26px}.subscription-plan h2{margin-bottom:36px}.subscription-plan ul{padding-left:34px}}
+
+.subscription-important{box-sizing:border-box;margin:18px 4px 28px;padding:22px;border:1px solid #8b7130;border-radius:22px;background:#29230f;color:#e8d18a;font-size:clamp(14px,3.6vw,20px);line-height:1.75}.subscription-important strong{color:#ffe3a0}
 </style>
 
 <style id="ng-header-logo-crop-fix">
@@ -495,7 +497,20 @@ body>.app>nav.ng-bottom-nav{
     </ul>
     <div class="subscription-status">Subscription activation coming soon</div>
   </article>
+  <article class="subscription-plan">
+    <h2>Business Plan</h2>
+    <div class="subscription-price">₹4,999</div>
+    <p class="subscription-limit">Up to 10 channels</p>
+    <ul>
+      <li>Multi-channel management across supported platforms</li>
+      <li>Advanced analytics workspace</li>
+      <li>Team management capabilities planned</li>
+      <li>Approval controls and content workflow</li>
+    </ul>
+    <div class="subscription-status">Subscription activation coming soon</div>
+  </article>
 </section>
+<aside class="subscription-important"><strong>Important:</strong> Billing period and final free-trial duration (previously discussed as 3–5 days) are not confirmed yet. These prices are displayed for plan review only. Online payments and automatic plan activation are not connected. Publishing still requires your explicit approval.</aside>
 <footer class="ng-shared-footer"><span class="ng-copyright">©2026 NextGen. All Rights Reserved. Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
 </main>
 <nav class="ng-bottom-nav" aria-label="Main navigation">
