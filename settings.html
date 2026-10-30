@@ -240,6 +240,25 @@ header .ng-hamburger:before,header .ng-hamburger:after{display:none!important;co
 <style id="ng-master-page-shell">
 .page-intro{display:flex;align-items:center;gap:12px;padding:14px 11px 12px}.page-icon{width:42px;height:42px;flex:0 0 42px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,#168bff,#4a4cff);box-shadow:0 0 10px #2a6bff55;color:#fff;font-size:23px}.page-intro h1{font-size:24px;line-height:1.1;font-weight:800}.page-intro p{font-size:12px;color:#8fa6d6;margin-top:4px}.page-panel{margin:8px 11px 14px;padding:17px 14px;border:1px solid #17436c;border-radius:15px;background:linear-gradient(145deg,#081f3a,#06172c);box-shadow:0 10px 30px #0002}.page-panel h2{font-size:19px;color:#f4f8ff;margin-bottom:12px}.page-panel .muted{font-size:13px;line-height:1.55;color:#a8c1e8}.page-empty{min-height:145px;margin-top:14px;padding:18px 12px;border:1px dashed #2857a4;border-radius:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;background:#071634}.page-empty>span{font-size:27px;color:#4DB8FF}.page-empty strong{font-size:15px;color:#fff}.page-empty small{font-size:12px;color:#8fa6d6}.mode-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #17385c;color:#eaf3ff;font-size:14px}.mode-on,.mode-off{font-size:12px;padding:5px 10px;border-radius:8px}.mode-on{background:#063e37;color:#45e4b0}.mode-off{background:#3b2630;color:#ff9bab}.time-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0}.time-slots>div{padding:13px 5px;border:1px solid #1c5790;border-radius:12px;background:#071a36;text-align:center}.time-slots strong{display:block;font-size:20px;color:#fff}.time-slots small{display:block;margin-top:5px;color:#8fa6d6;font-size:11px}@media(max-width:350px){.time-slots strong{font-size:17px}.page-panel{margin-left:8px;margin-right:8px}}
 </style>
+
+<style id="ng-settings-content">
+.settings-list{padding:2px 12px 12px;color:#fff}
+.settings-list h2{font-size:19px;font-weight:800;margin:20px 0 8px;color:#fff}
+.settings-list h2:first-child{margin-top:8px}
+.settings-row{min-height:68px;display:flex;align-items:center;gap:13px;padding:10px 5px;border-bottom:1px solid #16365d}
+.settings-icon{flex:0 0 34px;width:34px;height:34px;display:grid;place-items:center;color:#65c8ff;font-size:25px;font-weight:700}
+.settings-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.settings-copy strong{font-size:15px;line-height:1.25;color:#f5f8ff;font-weight:700}
+.settings-copy small{font-size:12px;line-height:1.4;color:#9fb5d9}
+.settings-arrow{color:#6eaef4;font-size:26px;padding:0 5px}
+.settings-note{font-size:12px;line-height:1.5;color:#9fb5d9;padding:12px 4px 3px}
+.settings-toggle{flex:0 0 46px;width:46px;height:26px;border:1px solid #52709b;border-radius:20px;background:#34445e;position:relative;cursor:pointer}
+.settings-toggle:after{content:"";position:absolute;width:20px;height:20px;left:2px;top:2px;border-radius:50%;background:#dce8f8;transition:transform .15s ease}
+.settings-toggle.is-on{background:#1679d2;border-color:#3199f0}
+.settings-toggle.is-on:after{transform:translateX(20px);background:#fff}
+@media(max-width:360px){.settings-list{padding-left:9px;padding-right:9px}.settings-copy strong{font-size:14px}.settings-copy small{font-size:11px}}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -265,6 +284,31 @@ header .ng-hamburger:before,header .ng-hamburger:after{display:none!important;co
 
 <main>
 <section class="page-intro"><div class="page-icon">⚙</div><div><h1>Settings</h1></div></section>
+<section class="settings-list" aria-label="Settings options">
+  <h2>Account</h2>
+  <div class="settings-row"><span class="settings-icon">♧</span><div class="settings-copy"><strong>Push notifications</strong><small>Choose your preferences</small></div><span class="settings-arrow">›</span></div>
+
+  <h2>Channel</h2>
+  <div class="settings-row"><span class="settings-icon">▣</span><div class="settings-copy"><strong>Audience</strong><small>Not made for children</small></div><span class="settings-arrow">›</span></div>
+  <div class="settings-row"><span class="settings-icon">◎</span><div class="settings-copy"><strong>Country of residence</strong><small>India</small></div><span class="settings-arrow">›</span></div>
+  <div class="settings-row"><span class="settings-icon">♧</span><div class="settings-copy"><strong>Permissions</strong><small>Add or change permissions for your channel</small></div><span class="settings-arrow">›</span></div>
+  <div class="settings-row"><span class="settings-icon">▣</span><div class="settings-copy"><strong>Creator demographics</strong></div><span class="settings-arrow">›</span></div>
+
+  <h2>Content</h2>
+  <div class="settings-row"><span class="settings-icon">▤</span><div class="settings-copy"><strong>Clips</strong><small>Viewers can clip and share my videos</small></div><button class="settings-toggle is-on" type="button" aria-pressed="true" aria-label="Clips"></button></div>
+  <div class="settings-row"><span class="settings-icon">✋</span><div class="settings-copy"><strong>Censor auto-captions</strong><small>Hide inappropriate words</small></div><button class="settings-toggle is-on" type="button" aria-pressed="true" aria-label="Censor auto-captions"></button></div>
+
+  <h2>Community</h2>
+  <div class="settings-row"><span class="settings-icon">☷</span><div class="settings-copy"><strong>Content controls</strong><small>Set moderation preferences for comments, posts and more</small></div><span class="settings-arrow">›</span></div>
+  <p class="settings-note">For user management and channel guidelines settings, use Studio on desktop.</p>
+
+  <h2>Earn</h2>
+  <div class="settings-row"><span class="settings-icon">$</span><div class="settings-copy"><strong>Currency</strong><small>USD - US Dollar</small></div><span class="settings-arrow">›</span></div>
+  <div class="settings-row"><span class="settings-icon">⌁</span><div class="settings-copy"><strong>Brand partner access</strong><small>Manage brand partners with automatic access to your videos and their metrics</small></div><span class="settings-arrow">›</span></div>
+
+  <h2>Device</h2>
+  <div class="settings-row"><span class="settings-icon">☾</span><div class="settings-copy"><strong>Appearance</strong><small>Use device theme</small></div><span class="settings-arrow">›</span></div>
+</section>
 <footer class="ng-shared-footer"><span class="ng-copyright">©2026 NextGen. All Rights Reserved. Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
 </main>
 <nav class="ng-bottom-nav" aria-label="Main navigation">
@@ -327,6 +371,16 @@ body>.app>header, body>header:not(.ng-auth-master-header), body>main>header:not(
 }
 .app main > footer.ng-shared-footer .ng-credit{color:#fff!important;}
 </style>
+
+
+<script id="ng-settings-toggle-script">
+document.querySelectorAll('.settings-toggle').forEach(function(button){
+ button.addEventListener('click',function(){
+  var on=button.classList.toggle('is-on');
+  button.setAttribute('aria-pressed',String(on));
+ });
+});
+</script>
 
 </body>
 </html>
