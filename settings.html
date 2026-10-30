@@ -252,13 +252,12 @@ header .ng-hamburger:before,header .ng-hamburger:after{display:none!important;co
 .settings-copy small{font-size:12px;line-height:1.4;color:#9fb5d9}
 .settings-arrow{color:#6eaef4;font-size:26px;padding:0 5px}
 .settings-note{font-size:12px;line-height:1.5;color:#9fb5d9;padding:12px 4px 3px}
-.settings-toggle{appearance:none;-webkit-appearance:none;flex:0 0 50px;width:50px;height:30px;min-width:50px;padding:0;border:1px solid #52709b;border-radius:999px;background:#34445e;position:relative;display:inline-block;vertical-align:middle;cursor:pointer;touch-action:manipulation;transition:background-color .16s ease}
-.settings-toggle:after{content:"";position:absolute;width:24px;height:24px;left:2px;top:2px;border-radius:50%;background:#fff;box-shadow:0 1px 2px #0003;transform:translateX(0);transition:transform .16s ease}
-.settings-toggle.is-on{background:#1679d2;border-color:#3199f0}
-.settings-toggle.is-on:after{transform:translateX(20px)}
-.settings-toggle:focus-visible{outline:2px solid #65c8ff;outline-offset:3px}
-.settings-toggle:active:after{width:25px}
-@media(prefers-reduced-motion:reduce){.settings-toggle,.settings-toggle:after{transition:none}}
+.settings-row>.settings-toggle{appearance:none!important;-webkit-appearance:none!important;box-sizing:border-box!important;flex:0 0 50px!important;width:50px!important;min-width:50px!important;max-width:50px!important;height:30px!important;min-height:30px!important;max-height:30px!important;padding:0!important;border:1px solid #52709b!important;border-radius:999px!important;background:#34445e!important;position:relative!important;display:inline-block!important;vertical-align:middle!important;cursor:pointer!important;touch-action:manipulation!important;transition:background-color .16s ease!important}
+.settings-row>.settings-toggle:after{content:""!important;position:absolute!important;box-sizing:border-box!important;width:24px!important;height:24px!important;left:2px!important;top:2px!important;border:0!important;border-radius:50%!important;background:#fff!important;box-shadow:0 1px 2px #0003!important;transform:translateX(0)!important;transition:transform .16s ease!important}
+.settings-row>.settings-toggle.is-on{background:#1679d2!important;border-color:#3199f0!important}
+.settings-row>.settings-toggle.is-on:after{transform:translateX(20px)!important}
+.settings-row>.settings-toggle:focus-visible{outline:2px solid #65c8ff!important;outline-offset:3px!important}
+@media(prefers-reduced-motion:reduce){.settings-row>.settings-toggle,.settings-row>.settings-toggle:after{transition:none!important}}
 @media(max-width:360px){.settings-list{padding-left:9px;padding-right:9px}.settings-copy strong{font-size:14px}.settings-copy small{font-size:11px}}
 </style>
 
