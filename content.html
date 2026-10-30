@@ -529,6 +529,9 @@ body>.app>header, body>header:not(.ng-auth-master-header), body>main>header:not(
 </script>
 
 
+<style id="ng-menu-refresh-no-jump">
+.ng-menu-drawer.ng-menu-restored-no-motion{transition:none!important}
+</style>
 <script id="ng-menu-refresh-state">
 (function(){
  var key='ngNextGenMenuOpen';
@@ -537,7 +540,10 @@ body>.app>header, body>header:not(.ng-auth-master-header), body>main>header:not(
  var close=document.getElementById('ng-menu-close');
  var backdrop=document.getElementById('ng-menu-backdrop');
  if(!trigger||!drawer)return;
- function clear(){try{sessionStorage.removeItem(key)}catch(e){}}
+ function clear(){
+   try{sessionStorage.removeItem(key)}catch(e){}
+   drawer.classList.remove('ng-menu-restored-no-motion');
+ }
  function remember(){
    try{
      if(drawer.classList.contains('is-open'))sessionStorage.setItem(key,'1');
@@ -549,10 +555,10 @@ body>.app>header, body>header:not(.ng-auth-master-header), body>main>header:not(
  if(backdrop)backdrop.addEventListener('click',clear);
  drawer.querySelectorAll('a').forEach(function(a){a.addEventListener('click',clear);});
  document.addEventListener('keydown',function(e){if(e.key==='Escape')clear();});
+ window.addEventListener('pagehide',remember);
  try{
    if(sessionStorage.getItem(key)==='1'){
-     sessionStorage.removeItem(key);
-     drawer.classList.add('is-open');
+     drawer.classList.add('ng-menu-restored-no-motion','is-open');
      drawer.setAttribute('aria-hidden','false');
      if(backdrop)backdrop.hidden=false;
      trigger.setAttribute('aria-expanded','true');
