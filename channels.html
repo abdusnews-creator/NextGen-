@@ -632,8 +632,9 @@ body.ng-profile-open{overflow:hidden}
       if(savedChannel.error){msg.textContent='Channel could not be saved to your account: '+savedChannel.error.message;return;}
       records.push({url:u,canonical_url:canonicalUrl,platform:p,name:n,username:handle,createdAt:new Date().toISOString(),status:'draft',verified_by_platform:true});
       localStorage.setItem('nextgen-channel-drafts',JSON.stringify(records));
-      msg.textContent='Draft saved on this device. API connection is not completed.';
+      msg.textContent='Channel record saved to your account. Platform publishing authorization is still pending.';
       form.reset();
+      if(window.NGWorkspace)window.NGWorkspace.refresh();
     }catch(err){msg.textContent='Could not save on this device. Please check browser storage settings.';}
   });
 })();
