@@ -92,22 +92,40 @@
   }
   function renderChannels(){
     const root=document.querySelector('.app main .list');if(!root)return;
-    // Keep the four existing unverified starter cards visible until real channel
-    // records are saved. Do not wipe the page's starter cards on an empty DB result.
+    // Preserve the four approved starter cards. Overlay saved records on their
+    // matching platform cards and append additional channels without duplicates.
+    const platformClass={youtube:'yt',facebook:'fb',instagram:'ig',threads:'th'};
+    const platformIcon={youtube:'▶',facebook:'f',instagram:'◎',threads:'＠'};
+    const starterByPlatform={};
+    root.querySelectorAll('.card').forEach(card=>{
+      const key=Object.keys(platformClass).find(p=>card.classList.contains(platformClass[p]));
+      if(key&&!starterByPlatform[key])starterByPlatform[key]=card;
+    });
     if(!channels.length){
       if(!root.querySelector('.card'))empty(root,'No channels are saved in this workspace yet. Use Add Channel to verify and save a profile.');
       return;
     }
-    root.innerHTML='';
+    const usedStarter=new Set();
     channels.forEach(ch=>{
-      const card=document.createElement('div');card.className='card '+({youtube:'yt',facebook:'fb',instagram:'ig',threads:'th'}[ch.platform]||'');
-      const icon=document.createElement('div');icon.className='ico';icon.textContent=({youtube:'▶',facebook:'f',instagram:'◎',threads:'＠'}[ch.platform]||'•');
-      const info=document.createElement('div');info.className='info';
-      const name=document.createElement('b');name.textContent=ch.display_name||ch.platform;
-      const handle=document.createElement('span');handle.textContent=ch.handle?'@'+String(ch.handle).replace(/^@/,''):'Profile name pending';
-      info.append(name,handle);
-      const status=document.createElement('div');status.className='st';status.textContent='Connection: '+ch.connection_status+(ch.is_paused?' · Paused':'');
-      card.append(icon,info,status);root.append(card);
+      const platform=String(ch.platform||'').toLowerCase();
+      const existing=starterByPlatform[platform]&&!usedStarter.has(platform)?starterByPlatform[platform]:null;
+      const card=existing||document.createElement('div');
+      if(existing)usedStarter.add(platform);
+      else card.className='card '+(platformClass[platform]||'');
+      if(!existing){
+        const icon=document.createElement('div');icon.className='ico';icon.textContent=platformIcon[platform]||'•';
+        const info=document.createElement('div');info.className='info';
+        const name=document.createElement('b');const handle=document.createElement('span');
+        info.append(name,handle);
+        const status=document.createElement('div');status.className='st';
+        card.append(icon,info,status);root.append(card);
+      }
+      const nameNode=card.querySelector('.info b');
+      const handleNode=card.querySelector('.info span');
+      const statusNode=card.querySelector('.st');
+      if(nameNode)nameNode.textContent=ch.display_name||platform||'Channel';
+      if(handleNode)handleNode.textContent=ch.handle?'@'+String(ch.handle).replace(/^@/,''):'Profile name pending';
+      if(statusNode)statusNode.textContent='Connection: '+(ch.connection_status||'pending')+(ch.is_paused?' · Paused':'');
     });
   }
   function renderContent(){
