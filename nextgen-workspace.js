@@ -17,7 +17,8 @@
     node.style.color=isError?'#ffadad':'#a8c1e8';
   }
   function showAuthPanel(){
-    if(!main || authPanel)return;
+    if(!main)return;
+    if(authPanel){authPanel.remove();authPanel=null;}
     authPanel=document.createElement('section');
     authPanel.className='page-panel';
     authPanel.id='ng-workspace-auth';
@@ -120,6 +121,7 @@
       timezone:'Asia/Kolkata',daily_idea_times:(settings&&settings.daily_idea_times)||['08:00:00','14:00:00','18:00:00']
     },{onConflict:'owner_id'});
     if(error)throw error;
+    settings=Object.assign({},settings||{},{approval_mode:mode,auto_approval_enabled:enabled,background_mode_enabled:false});
     if($('manualMode'))$('manualMode').classList.toggle('selected',!enabled);
     if($('autoMode'))$('autoMode').classList.toggle('selected',enabled);
     if($('modeNote'))$('modeNote').textContent=enabled?'Auto mode preference saved. No automatic approval or publishing worker is active; every post still needs an explicit approval action.':'Manual Approval is active. Every post requires your explicit approval.';
