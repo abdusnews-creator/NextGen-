@@ -262,6 +262,28 @@ header .ng-hamburger:before,header .ng-hamburger:after{display:none!important;co
 </style>
 
 
+<style id="ng-profile-avatar-shape-fix">
+/* Keep the header profile control perfectly circular; prevent inherited button sizing/stretch. */
+.app>header .hr>button.ng-profile-trigger{
+  box-sizing:border-box!important;
+  display:grid!important;
+  place-items:center!important;
+  flex:0 0 38px!important;
+  width:38px!important;
+  min-width:38px!important;
+  max-width:38px!important;
+  height:38px!important;
+  min-height:38px!important;
+  max-height:38px!important;
+  aspect-ratio:1/1!important;
+  padding:0!important;
+  margin:0!important;
+  border-radius:50%!important;
+  line-height:1!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+}
+</style>
 <style id="ng-profile-menu-styles">
 .ng-profile-trigger{appearance:none;-webkit-appearance:none;border:1px solid #36baff!important;color:#fff!important;cursor:pointer;font-size:11px!important;font-weight:800!important;letter-spacing:-.5px;background:linear-gradient(135deg,#081a45,#123d80)!important;box-shadow:0 0 9px #168bff88!important}
 .ng-profile-backdrop[hidden]{display:none!important}
