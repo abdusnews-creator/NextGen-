@@ -376,6 +376,16 @@ body.ng-profile-open{overflow:hidden}
     <a href="https://www.youtube.com/@RoyalFurnitureHouse" target="_blank" rel="noopener"><span>▶</span>YouTube<i>↗</i></a>
     <a href="./privacy-settings.html"><span>◇</span>Privacy policy<i>›</i></a>
     <a href="./settings.html#terms"><span>▤</span>Terms of Service<i>›</i></a>
+    <div class="ng-profile-action-divider" aria-hidden="true"></div>
+    <a href="#" data-profile-action="share"><span>♧</span>Share<i>›</i></a>
+    <a href="#" data-profile-action="pin"><span>⌖</span>Pin<i>›</i></a>
+    <a href="#" data-profile-action="lock"><span>▣</span>Lock chat<i>›</i></a>
+    <div class="ng-profile-action-spacer" aria-hidden="true"></div>
+    <a href="./content.html"><span>📎</span>Uploaded files<i>›</i></a>
+    <a href="./content.html"><span>⌕</span>Find in chat<i>›</i></a>
+    <a href="#" data-profile-action="home"><span>⌂</span>Add to home<i>›</i></a>
+    <a href="#" data-profile-action="archive"><span>▤</span>Archive<i>›</i></a>
+    <a href="#" data-profile-action="delete" class="ng-profile-delete"><span>▤</span>Delete<i>›</i></a>
   </div>
 </aside>
 <div class="ng-menu-backdrop" id="ng-menu-backdrop" hidden></div>
@@ -805,6 +815,10 @@ html.ng-menu-refresh-open body .ng-menu-backdrop[hidden]{
 
 <style id="ng-menu-main-align-to-accordion">/* Align every item above the accordion with Help & Support / Settings & Privacy. */
 .ng-menu-main-links a{padding-left:0!important;gap:9px!important;}
+</style>
+
+<style id="ng-profile-extra-actions">
+.ng-profile-action-divider{height:1px;background:#174c83;margin:9px 0 5px}.ng-profile-action-spacer{height:62px}.ng-profile-links a.ng-profile-delete{color:#ff315b!important}.ng-profile-links a.ng-profile-delete span{color:#ff315b!important}
 </style>
 </body>
 </html>
