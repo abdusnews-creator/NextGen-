@@ -13,6 +13,7 @@ const APP_SHELL = [
   "./privacy-settings.html",
   "./review.html",
   "./settings.html",
+  "./subscription-package.html",
   "./manifest.webmanifest",
   "./icon.svg",
   "./ng-symbol.jpg",
