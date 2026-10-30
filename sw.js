@@ -9,7 +9,6 @@ const APP_SHELL = [
   "./channel-preferences.html",
   "./login.html",
   "./signin.html",
-  "./privacy-settings.html",
   "./review.html",
   "./settings.html",
   "./subscription-package.html",
