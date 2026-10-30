@@ -123,6 +123,11 @@
     if($('manualMode'))$('manualMode').classList.toggle('selected',!enabled);
     if($('autoMode'))$('autoMode').classList.toggle('selected',enabled);
     if($('modeNote'))$('modeNote').textContent=enabled?'Auto mode preference saved. No automatic approval or publishing worker is active; every post still needs an explicit approval action.':'Manual Approval is active. Every post requires your explicit approval.';
+    if($('manual-approval-mode'))$('manual-approval-mode').setAttribute('aria-pressed',String(!enabled));
+    if($('auto-approval-mode'))$('auto-approval-mode').setAttribute('aria-pressed',String(enabled));
+    if($('publishing-mode-label'))$('publishing-mode-label').textContent=enabled?'Auto Approval Mode — ON':'Manual Approval Mode — ON';
+    if($('auto-approval-label'))$('auto-approval-label').textContent=enabled?'ON':'OFF';
+    if($('approval-mode-note'))$('approval-mode-note').textContent=enabled?'Auto mode preference saved only. No automatic approval or publishing worker is active.':'Manual Approval is active. Every post requires your explicit approval.';
     if($('dash1-publishing-status'))$('dash1-publishing-status').textContent=enabled?'Auto Approval preference — ON (no auto-publisher active)':'Manual Approval Mode — ON';
     if($('dash1-manual-approval'))$('dash1-manual-approval').classList.toggle('is-selected',!enabled);
     if($('dash1-auto-approval'))$('dash1-auto-approval').classList.toggle('is-selected',enabled);
@@ -251,7 +256,12 @@
     try{
       await loadBase();
       if(page==='content.html')renderContent();
-      if(page==='channels.html')renderChannels();
+      if(page==='channels.html'){
+        renderChannels();
+        const mode=settings&&settings.approval_mode==='auto';
+        if($('publishing-mode-label'))$('publishing-mode-label').textContent=mode?'Auto Approval Mode — ON':'Manual Approval Mode — ON';
+        if($('auto-approval-label'))$('auto-approval-label').textContent=mode?'ON':'OFF';
+      }
       if(page==='approvals.html'){
         renderApprovals();
         const mode=settings&&settings.approval_mode==='auto'?'auto':'manual';
