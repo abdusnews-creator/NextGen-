@@ -739,5 +739,33 @@ body>.app>header, body>header:not(.ng-auth-master-header), body>main>header:not(
  var less=document.getElementById('ng-menu-see-less'),links=drawer.querySelector('.ng-menu-main-links');if(less&&links)less.addEventListener('click',function(){var collapsed=links.classList.toggle('is-collapsed');less.textContent=collapsed?'See more':'See less';});
 })();
 </script>
+<script id="ng-menu-refresh-state">
+(function(){
+ var key='ngNextGenMenuOpen';
+ var trigger=document.getElementById('ng-hamburger');
+ var drawer=document.getElementById('ng-menu-drawer');
+ var close=document.getElementById('ng-menu-close');
+ var backdrop=document.getElementById('ng-menu-backdrop');
+ if(!trigger||!drawer)return;
+ function remember(){
+   try{
+     if(drawer.classList.contains('is-open'))sessionStorage.setItem(key,'1');
+     else sessionStorage.removeItem(key);
+   }catch(e){}
+ }
+ trigger.addEventListener('click',function(){setTimeout(remember,0);});
+ if(close)close.addEventListener('click',function(){try{sessionStorage.removeItem(key)}catch(e){}});
+ if(backdrop)backdrop.addEventListener('click',function(){try{sessionStorage.removeItem(key)}catch(e){}});
+ drawer.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){try{sessionStorage.removeItem(key)}catch(e){}});});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'){try{sessionStorage.removeItem(key)}catch(err){}}});
+ try{
+   if(sessionStorage.getItem(key)==='1'){
+     sessionStorage.removeItem(key);
+     trigger.click();
+   }
+ }catch(e){}
+})();
+</script>
+
 </body>
 </html>
