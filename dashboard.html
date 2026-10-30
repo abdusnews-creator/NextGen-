@@ -535,6 +535,46 @@ html body .app main > footer.ng-shared-footer > .ng-credit{font-size:10px!import
 }
 </style>
 
+
+<style id="ng-dashboard-pull-refresh">
+  /* Custom pull-down refresh for the Dashboard's internal scrolling area. */
+  .app > main {
+    overscroll-behavior-y: contain;
+  }
+  #ng-dashboard-ptr-indicator {
+    position: fixed;
+    top: 58px;
+    left: 50%;
+    z-index: 99999;
+    width: 38px;
+    height: 38px;
+    margin-left: -19px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #35547e;
+    border-top-color: #39c6ff;
+    border-radius: 50%;
+    background: #07123a;
+    box-shadow: 0 0 12px #39c6ff55;
+    pointer-events: none;
+  }
+  #ng-dashboard-ptr-indicator.visible {
+    display: flex;
+  }
+  #ng-dashboard-ptr-indicator.refreshing {
+    animation: ng-dashboard-ptr-spin .75s linear infinite;
+  }
+  @keyframes ng-dashboard-ptr-spin {
+    to { transform: rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #ng-dashboard-ptr-indicator.refreshing {
+      animation-duration: 1.5s;
+    }
+  }
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -558,6 +598,9 @@ html body .app main > footer.ng-shared-footer > .ng-credit{font-size:10px!import
   <a href="./settings.html">Settings</a>
 </aside>
 <main>
+
+<div id="ng-dashboard-ptr-indicator" role="status" aria-label="Refreshing"></div>
+
 <section class="dash1-analytics" aria-labelledby="dash1-analytics-title">
   <h2 id="dash1-analytics-title">Channel Analytics</h2>
   <p class="dash1-analytics-subtitle">Welcome back! Your creator workspace is ready.</p>
@@ -883,6 +926,61 @@ body>.app>header, body>header:not(.ng-auth-master-header), body>main>header:not(
 }
 .app main > footer.ng-shared-footer .ng-credit{color:#fff!important;}
 </style>
+
+
+<script id="ng-dashboard-pull-refresh">
+(function () {
+  var main = document.querySelector('.app > main');
+  var indicator = document.getElementById('ng-dashboard-ptr-indicator');
+  if (!main || !indicator) return;
+
+  var startY = 0;
+  var pulling = false;
+  var refreshing = false;
+  var threshold = 78;
+
+  document.addEventListener('touchstart', function (event) {
+    if (refreshing || event.touches.length !== 1) return;
+    if (!main.contains(event.target)) return;
+    startY = event.touches[0].clientY;
+    pulling = main.scrollTop <= 0;
+  }, { passive: true });
+
+  document.addEventListener('touchmove', function (event) {
+    if (!pulling || refreshing || event.touches.length !== 1) return;
+    var distance = event.touches[0].clientY - startY;
+    if (distance <= 0 || main.scrollTop > 0) {
+      indicator.classList.remove('visible');
+      return;
+    }
+    if (event.cancelable) event.preventDefault();
+    indicator.classList.add('visible');
+  }, { passive: false });
+
+  document.addEventListener('touchend', function (event) {
+    if (!pulling || refreshing) return;
+    var endY = event.changedTouches && event.changedTouches[0]
+      ? event.changedTouches[0].clientY : startY;
+    var distance = endY - startY;
+    pulling = false;
+
+    if (distance >= threshold && main.scrollTop <= 0) {
+      refreshing = true;
+      indicator.classList.add('visible', 'refreshing');
+      window.setTimeout(function () {
+        window.location.reload();
+      }, 450);
+    } else {
+      indicator.classList.remove('visible');
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchcancel', function () {
+    pulling = false;
+    if (!refreshing) indicator.classList.remove('visible');
+  }, { passive: true });
+})();
+</script>
 
 </body>
 </html>
