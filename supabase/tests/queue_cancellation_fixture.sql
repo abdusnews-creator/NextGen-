@@ -16,6 +16,8 @@ $$;
 CREATE TABLE public.channels (
   id uuid PRIMARY KEY,
   owner_id uuid NOT NULL REFERENCES auth.users(id),
+  platform text NOT NULL DEFAULT 'youtube',
+  is_paused boolean NOT NULL DEFAULT false,
   UNIQUE (id, owner_id)
 );
 CREATE TABLE public.content_items (
@@ -23,6 +25,10 @@ CREATE TABLE public.content_items (
   owner_id uuid NOT NULL REFERENCES auth.users(id),
   channel_id uuid,
   status text NOT NULL,
+  platform text NOT NULL DEFAULT 'youtube',
+  approved_at timestamptz,
+  approved_by uuid,
+  rejection_reason text,
   scheduled_for timestamptz,
   updated_at timestamptz NOT NULL DEFAULT now(),
   UNIQUE (id, owner_id),
@@ -92,3 +98,5 @@ BEFORE INSERT OR UPDATE OF status ON public.publishing_jobs
 FOR EACH ROW EXECUTE FUNCTION public.guard_publishing_job_status();
 
 GRANT SELECT ON public.channels, public.content_items, public.approval_events, public.publishing_jobs TO authenticated;
+GRANT UPDATE ON public.content_items TO authenticated;
+GRANT INSERT ON public.publishing_jobs TO authenticated;
