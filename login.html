@@ -996,6 +996,15 @@ body.ng-auth-second-step .app>.ng-shared-footer{display:flex!important;flex:0 0 
 body.ng-auth-second-step main.auth-scroll{padding-bottom:0!important}
 body.ng-auth-second-step main.auth-scroll>.auth-legal{display:none!important}
 </style>
+<style id="ng-legal-footer-visibility-final">
+/* Explicitly keep the legal links footer visible on both authentication screens. */
+html body .app>main.auth-scroll>footer.ng-shared-footer{display:flex!important;visibility:visible!important;position:relative!important;flex:0 0 auto!important;flex-direction:row!important;flex-wrap:wrap!important;justify-content:space-between!important;align-items:center!important;row-gap:4px!important;width:100%!important;max-width:none!important;margin:0!important;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))!important;overflow:visible!important;z-index:10!important;background:#050b28!important;border-top:1px solid #1e4fb5!important;box-sizing:border-box!important}
+html body .app>main.auth-scroll>footer.ng-shared-footer>.ng-footer-legal{display:block!important;visibility:visible!important;order:0!important;flex:0 0 100%!important;width:100%!important;text-align:center!important;font-size:13px!important;line-height:1.35!important;white-space:nowrap!important;color:#b9d9fa!important}
+html body .app>main.auth-scroll>footer.ng-shared-footer>.ng-footer-legal a{display:inline!important;color:#8bdcff!important;font-size:13px!important;font-weight:600!important;text-decoration:underline!important;text-underline-offset:2px!important}
+html body .app>main.auth-scroll>footer.ng-shared-footer>.ng-copyright{order:1!important}
+html body .app>main.auth-scroll>footer.ng-shared-footer>.ng-credit{order:2!important}
+body.ng-auth-second-step html body .app>main.auth-scroll>footer.ng-shared-footer{display:flex!important}
+</style>
 </head>
 <body>
 <div class="app">
