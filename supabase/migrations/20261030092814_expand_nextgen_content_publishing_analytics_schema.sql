@@ -1,3 +1,4 @@
+
 -- NextGen schema expansion: additive only; preserve existing records and tables.
 ALTER TABLE public.content_items
   ADD COLUMN IF NOT EXISTS content_type text NOT NULL DEFAULT 'reel',
@@ -196,3 +197,4 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON public.publishing_jobs,
 GRANT ALL ON public.publishing_jobs, public.channel_analytics_daily,
   public.content_analytics_daily, public.notification_preferences,
   public.activity_logs TO service_role;
+
