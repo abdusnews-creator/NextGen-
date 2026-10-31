@@ -43,7 +43,7 @@
 
 ## Current result
 
-**Expanded isolated PostgreSQL CI — PASSED (2026-10-31):** GitHub Actions [Run #38](https://github.com/nextgen-i/NextGen/actions/runs/41184470658), commit `923a1468607abc3342a8647acb95ab8f13f20963`. The workflow applied the cancellation migration and the existing approval/scheduling migration to a disposable PostgreSQL 17 service, then ran the following tests successfully:
+**Expanded isolated PostgreSQL CI — PASSED (2026-10-31):** GitHub Actions [Run #39](https://github.com/nextgen-i/NextGen/actions/runs/41184528360), commit `c2b7cce95b94802dfba7137f967f87decccc6787`. The workflow applied the cancellation migration and the existing approval/scheduling migration to a disposable PostgreSQL 17 service, then ran the following tests successfully:
 
 - Cancellation authorization and state transitions: owner, cross-owner, unauthenticated, queued/processing/published/already-cancelled states, active-job protection, newer schedule preservation, and 1,000-character audit-note bound.
 - Approval/rejection RPC regression using test-only snapshots of the current production `SECURITY DEFINER` RPC definitions: owner approval, owner rejection, audit events, bounded rejection reason, cross-owner rejection, repeated-decision rejection, invalid-action rejection, and unauthenticated rejection.
