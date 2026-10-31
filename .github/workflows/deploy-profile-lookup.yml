@@ -1,4 +1,4 @@
-name: Deploy NextGen profile lookup
+name: Deploy NextGen backend functions
 
 on:
   workflow_dispatch:
@@ -18,7 +18,7 @@ jobs:
         with:
           version: latest
 
-      - name: Deploy channel profile lookup
+      - name: Deploy authenticated backend functions
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
         run: |
@@ -28,3 +28,4 @@ jobs:
           fi
           supabase link --project-ref vexntvbufnawtxszslsz
           supabase functions deploy channel-profile-lookup --project-ref vexntvbufnawtxszslsz
+          supabase functions deploy platform-connection-status --project-ref vexntvbufnawtxszslsz
