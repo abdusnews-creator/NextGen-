@@ -1,6 +1,6 @@
 # Queue Cancellation — Staging Validation Plan
 
-**Status:** Pending staging environment. This plan is not evidence that tests have run.
+**Status:** Isolated PostgreSQL CI subset passed; full Supabase staging validation remains pending.
 
 ## Current safety boundary
 
@@ -42,7 +42,11 @@
 
 ## Current result
 
-**Not run:** staging is not available in the connected Supabase project. No production schema or data was changed as part of this validation-plan work.
+**Isolated PostgreSQL CI — PASSED (2026-10-31):** GitHub Actions run [#6](https://github.com/nextgen-i/NextGen/actions/runs/41183143844), commit `b03f7d60bdf4c1c5ce1c682c2825ee882fcb2bb5`. The fixture loaded, the cancellation migration applied, and the authorization/state-transition test script completed successfully. Covered: owner cancels own queued job with content restoration and audit event; cross-owner cancellation is rejected without changing the other owner's job; another active queued job prevents content restoration; processing jobs cannot be cancelled.
+
+**Not covered by this CI run:** unauthenticated caller, published/already-cancelled jobs, newer content state mismatch, long audit-note bounds, repeated/concurrent cancellation, full existing review/scheduling RPC regression, and Supabase-specific RLS/security-advisor behavior. These remain staging/release-gate items.
+
+This is an isolated PostgreSQL fixture test, not a Supabase staging environment. No production schema or data was changed; the cancellation migration remains undeployed to production.
 
 
 ## Read-only preflight review (2026-10-31)
@@ -54,4 +58,4 @@
 - Static source review is not a runtime test. In particular, the eventual publishing worker must use a compatible content-then-job lock order (or an explicitly tested concurrency strategy) to avoid lock-order deadlocks.
 - The existing `guard_publishing_job_status` trigger is intended to allow only queued-to-cancelled browser updates while preserving immutable job fields. Verify this trigger interaction in staging along with the RPC and audit insert.
 
-**Preflight result:** Read-only inspection only. No production writes, no migration applied, and no staging runtime tests performed.
+**Preflight result:** Read-only production inspection only. The isolated PostgreSQL CI test above passed; no production writes or migration deployment occurred, and full Supabase staging runtime tests remain outstanding.
