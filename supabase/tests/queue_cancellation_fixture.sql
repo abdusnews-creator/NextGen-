@@ -103,3 +103,5 @@ FOR EACH ROW EXECUTE FUNCTION public.guard_publishing_job_status();
 GRANT SELECT ON public.channels, public.content_items, public.approval_events, public.publishing_jobs TO authenticated;
 GRANT UPDATE ON public.content_items, public.channels TO authenticated;
 GRANT INSERT ON public.publishing_jobs TO authenticated;
+-- Mirror the pre-hardening production grant so the migration must revoke it.
+GRANT UPDATE ON public.publishing_jobs TO authenticated;
