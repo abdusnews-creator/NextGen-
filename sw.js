@@ -1,10 +1,12 @@
-const CACHE_NAME = "nextgen-shell-v36";
+const CACHE_NAME = "nextgen-shell-v37";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./dashboard.html",
   "./channels-archive.html",
   "./nextgen-shared.css",
+  "./hamburger-menu.html",
+  "./hamburger-menu.js",
   "./channels.html",
   "./analytics.html",
   "./approvals.html",
