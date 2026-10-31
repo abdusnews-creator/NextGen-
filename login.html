@@ -906,6 +906,43 @@ body.ng-auth-second-step main.auth-scroll>.auth-legal{
   font-size:12px!important;
 }
 </style>
+
+<style id="ng-second-step-scroll-stability">
+/* Keep step two fixed in the viewport; only its form area may scroll if needed. */
+html:has(body.ng-auth-second-step),
+html:has(body.ng-auth-second-step) body{
+  height:100%!important;
+  min-height:100%!important;
+  overflow:hidden!important;
+}
+body.ng-auth-second-step .app{
+  height:100svh!important;
+  min-height:100svh!important;
+  max-height:100svh!important;
+  overflow:hidden!important;
+}
+body.ng-auth-second-step main.auth-scroll{
+  height:100%!important;
+  min-height:0!important;
+  max-height:100%!important;
+  flex:1 1 auto!important;
+  overflow:hidden!important;
+  overscroll-behavior:none!important;
+}
+body.ng-auth-second-step main.auth-scroll>section.auth-card{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  height:auto!important;
+  max-height:100%!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain!important;
+  -webkit-overflow-scrolling:touch;
+}
+body.ng-auth-second-step main.auth-scroll>.auth-legal{
+  flex:0 0 auto!important;
+  margin-top:0!important;
+}
+</style>
 </head>
 <body>
 <div class="app">
