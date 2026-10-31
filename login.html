@@ -966,6 +966,16 @@ body.ng-auth-second-step main.auth-scroll>.auth-legal{
 /* Keep the login prompt and brand tagline together on one line at a matching text size. */
 #welcomeScreen .welcome-combined-line{display:block!important;width:128%!important;margin:9px 0 22px -14%!important;padding:0!important;color:#b9d9fa!important;font-size:13px!important;line-height:1.45!important;font-weight:600!important;text-align:center!important;white-space:nowrap!important;transform:scaleX(.78)!important;transform-origin:center center!important;background:transparent!important;border:0!important;box-shadow:none!important}
 </style>
+<style id="ng-welcome-legal-links-in-footer-final">
+/* Page one: place legal links inside the footer; keep page two's legal links and footer layout unchanged. */
+.app>.ng-shared-footer .ng-footer-legal{display:none!important}
+body:not(.ng-auth-second-step) .app>.ng-shared-footer{display:flex!important;flex-wrap:wrap!important;justify-content:space-between!important;row-gap:4px!important}
+body:not(.ng-auth-second-step) .app>.ng-shared-footer .ng-footer-legal{display:block!important;order:0!important;flex:0 0 100%!important;width:100%!important;text-align:center!important;font-size:13px!important;line-height:1.35!important;color:#b9d9fa!important;white-space:nowrap!important}
+body:not(.ng-auth-second-step) .app>.ng-shared-footer .ng-footer-legal a{color:#b9d9fa!important;text-decoration:none!important;font-size:13px!important;font-weight:600!important}
+body:not(.ng-auth-second-step) .app>.ng-shared-footer .ng-copyright{order:1!important}
+body:not(.ng-auth-second-step) .app>.ng-shared-footer .ng-credit{order:2!important}
+body.ng-auth-second-step main.auth-scroll>.auth-legal{display:block!important}
+</style>
 </head>
 <body>
 <div class="app">
@@ -1120,8 +1130,7 @@ body.ng-auth-second-step main.auth-scroll>.auth-legal{
 <p class="status" id="status" role="status" aria-live="polite"></p>
 <div class="security-note">Your NextGen account is protected by secure authentication.</div>
 </section>
-<p class="auth-legal"><a href="./privacy-policy.html">Terms of Use</a><span> · </span><a href="./privacy-policy.html">Privacy Policy</a></p>
-<footer class="ng-shared-footer"><span class="ng-copyright">© 2026 NextGen. All Rights Reserved.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
+<footer class="ng-shared-footer"><span class="ng-footer-legal"><a href="./privacy-policy.html">Terms of Use</a><span> · </span><a href="./privacy-policy.html">Privacy Policy</a></span><span class="ng-copyright">© 2026 NextGen. All Rights Reserved.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
 </main>
 <nav class="ng-bottom-nav" aria-label="Main navigation">
   <a href="dashboard.html"><span class="dashboard-master-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M5 7 Q5 4 9 4 H19 Q23 4 23 8 V13 Q23 17 19 17 H9 Q5 17 5 13 Z" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linejoin="round"/><path d="M28 8 Q28 4 32 4 H39 Q43 4 43 8 V17 Q43 21 39 21 H35 M28 15 V12" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 29 V25 Q5 21 9 21 H19 Q23 21 23 25 V39 Q23 43 19 43 H9 Q5 43 5 39 V33" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 29 Q28 25 32 25 H39 Q43 25 43 29 V39 Q43 43 39 43 H32 Q28 43 28 39 Z" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linejoin="round"/><defs><linearGradient id="dg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient></defs></svg></span><small>Dashboard</small></a>
