@@ -238,9 +238,10 @@ html body .app>nav.ng-bottom-nav{
   min-width:75px!important;
 }
 
-
-/* Hamburger drawer: hide the page bottom navigation while the menu is open.
-   The navigation remains unchanged on every page when the drawer is closed. */
+/* Strong override for page-level .app navigation rules while the hamburger drawer is open. */
+html body.ng-menu-open>.app>nav.ng-bottom-nav,
 html body.ng-menu-open nav.ng-bottom-nav{
   display:none!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
 }
