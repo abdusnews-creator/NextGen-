@@ -426,6 +426,31 @@ html body .app>header{
 }
 </style>
 
+<style id="ng-chatgpt-style-auth-flow">
+.auth-card{max-width:440px}
+.auth-screen{width:100%}
+.auth-screen[hidden]{display:none!important}
+.ng-auth-mark{width:54px;height:54px;margin:10px auto 24px;display:grid;place-items:center;border:2px solid #27c4ff;border-radius:17px;background:linear-gradient(145deg,#0d3471,#061536);color:#fff;font-size:19px;font-weight:900;letter-spacing:-1px;box-shadow:0 0 20px #168bff55}
+#welcomeScreen{text-align:center;padding:12px 0 8px}
+#welcomeScreen h1{font-size:25px}
+#welcomeScreen .intro{margin:10px 0 28px}
+.account-button{justify-content:flex-start;text-align:left;background:#f8fbff;color:#17233b;border-color:#d5e1ee;margin-bottom:10px}
+.account-button>span:last-child{display:flex;flex-direction:column;gap:3px}
+.account-button small{font-size:11px;color:#68778d}
+.account-mark{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:#102b55;color:#fff;font-weight:900}
+#welcomeGoogle{margin-bottom:10px}
+.alternate-button{justify-content:center;background:transparent}
+.back-auth{width:34px;height:34px;margin:0 0 18px;border:0;border-radius:50%;background:#10284f;color:#fff;font-size:27px;line-height:1}
+#loginOptionsScreen h1{font-size:24px}
+#loginOptionsScreen .intro{margin:8px 0 18px}
+#loginOptionsScreen .tabs{margin-bottom:15px}
+#loginOptionsScreen .field{margin-bottom:12px}
+#loginOptionsScreen .social-stack{gap:9px}
+#loginOptionsScreen .social-button{min-height:44px}
+.phone-mark{width:22px;height:22px;display:grid;place-items:center;color:#dcecff;font-size:19px}
+#loginOptionsScreen .google-button{margin:0}
+#loginOptionsScreen .auth-divider{margin:15px 0}
+</style>
 </head>
 <body>
 <div class="app">
@@ -540,26 +565,36 @@ html body .app>header{
 </style>
 <main class="auth-scroll">
 <section class="auth-card">
-<p class="eyebrow">Welcome to your control room</p>
-<h1 id="pageTitle">Sign in to NextGen</h1>
-<p class="intro" id="pageIntro">Continue to manage your channels, content and publishing approvals.</p>
-<div class="tabs" role="tablist" aria-label="Account access">
-<button class="tab" id="signupTab" type="button" role="tab" aria-selected="false">Sign up</button>
-<button class="tab" id="loginTab" type="button" role="tab" aria-selected="true">Sign in</button>
+<div id="welcomeScreen" class="auth-screen">
+  <div class="ng-auth-mark" aria-hidden="true">NG</div>
+  <h1>Welcome to NextGen</h1>
+  <p class="intro">Smart Automation. Smarter Growth.</p>
+  <button class="social-button account-button" id="continueAccount" type="button"><span class="account-mark">N</span><span><strong>Continue with this account</strong><small id="accountHint">Your NextGen account</small></span></button>
+  <button class="social-button google-button" id="welcomeGoogle" type="button"><span class="google-mark">G</span>Continue with Google</button>
+  <button class="social-button alternate-button" id="showSignInOptions" type="button">Log in another way</button>
 </div>
-<button class="social-button google-button" id="googleSignIn" type="button"><span class="google-mark" aria-hidden="true">G</span>Sign in with Google</button>
-<div class="auth-divider"><span>OR CONTINUE WITH EMAIL</span></div>
-<form id="authForm" novalidate>
-<div class="field"><label for="email">Email Id</label><input id="email" name="email" type="email" autocomplete="email" placeholder="Enter your email address" required></div>
-<div class="field"><label for="password">Password</label><div class="password-wrap"><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" minlength="8" required><button class="show-pass" id="showPassword" type="button">Show</button></div></div>
-<div class="field" id="confirmWrap" hidden><label for="confirmPassword">Confirm password</label><input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Re-enter your password" minlength="8"></div>
-<button class="primary" id="submitButton" type="submit">Sign in</button>
-</form>
-<div class="links"><a href="#" id="forgotLink">Forgot password?</a><a href="./index.html">Back to NextGen</a></div>
-<div class="auth-divider social-divider"><span>OR SIGN IN WITH</span></div>
-<div class="social-stack">
-<button class="social-button" id="facebookSignIn" type="button"><span class="facebook-mark" aria-hidden="true">f</span>Sign in with Facebook</button>
-<button class="social-button" id="instagramSignIn" type="button"><span class="instagram-mark" aria-hidden="true">◎</span>Sign in with Instagram</button>
+<div id="loginOptionsScreen" class="auth-screen" hidden>
+  <button class="back-auth" id="backToWelcome" type="button" aria-label="Back">‹</button>
+  <h1 id="pageTitle">Log in or sign up</h1>
+  <p class="intro" id="pageIntro">You'll get smarter responses and can manage your NextGen workspace.</p>
+  <div class="tabs" role="tablist" aria-label="Account access">
+    <button class="tab" id="loginTab" type="button" role="tab" aria-selected="true">Sign in</button>
+    <button class="tab" id="signupTab" type="button" role="tab" aria-selected="false">Sign up</button>
+  </div>
+  <form id="authForm" novalidate>
+    <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" placeholder="Email" required></div>
+    <div class="field"><label for="password">Password</label><div class="password-wrap"><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Password" minlength="8" required><button class="show-pass" id="showPassword" type="button">Show</button></div></div>
+    <div class="field" id="confirmWrap" hidden><label for="confirmPassword">Confirm password</label><input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Re-enter your password" minlength="8"></div>
+    <button class="primary" id="submitButton" type="submit">Continue</button>
+  </form>
+  <div class="auth-divider"><span>OR</span></div>
+  <div class="social-stack">
+    <button class="social-button google-button" id="googleSignIn" type="button"><span class="google-mark">G</span>Continue with Google</button>
+    <button class="social-button" id="phoneSignIn" type="button"><span class="phone-mark">☎</span>Continue with phone</button>
+    <button class="social-button" id="facebookSignIn" type="button"><span class="facebook-mark">f</span>Continue with Facebook</button>
+    <button class="social-button" id="instagramSignIn" type="button"><span class="instagram-mark">◎</span>Continue with Instagram</button>
+  </div>
+  <div class="links"><a href="#" id="forgotLink">Forgot password?</a><a href="./index.html">Back to NextGen</a></div>
 </div>
 <p class="status" id="status" role="status" aria-live="polite"></p>
 <div class="security-note">Your NextGen account is protected by secure authentication.</div>
@@ -586,14 +621,26 @@ html body .app>header{
   if(window.supabase&&cfg.url&&cfg.anonKey&&/^https:\/\//.test(cfg.url))client=window.supabase.createClient(cfg.url,cfg.anonKey);
  }catch(e){console.error('NextGen auth setup error',e);}
  function message(text,type=''){const el=$('status');el.textContent=text;el.className='status'+(type?' '+type:'');}
+ function showOptions(){ $('welcomeScreen').hidden=true; $('loginOptionsScreen').hidden=false; window.scrollTo({top:0,behavior:'smooth'}); }
+ function showWelcome(){ $('loginOptionsScreen').hidden=true; $('welcomeScreen').hidden=false; message(''); window.scrollTo({top:0,behavior:'smooth'}); }
+ $('showSignInOptions').addEventListener('click',showOptions);
+ $('backToWelcome').addEventListener('click',showWelcome);
+ async function continueExisting(){
+  if(!client){message('No saved NextGen session found. Choose another sign-in method.','error');return;}
+  const {data,error}=await client.auth.getSession();
+  if(error){message(error.message,'error');return;}
+  if(data.session){location.href='./index.html';return;}
+  message('No active session found. Please continue with Google or another sign-in method.','error');
+ }
+ $('continueAccount').addEventListener('click',continueExisting);
+ $('welcomeGoogle').addEventListener('click',()=>socialSignIn('google'));
  function setMode(next){
-  mode=next;
-  const signup=mode==='signup';
+  mode=next;const signup=mode==='signup';
   $('loginTab').setAttribute('aria-selected',String(!signup));
   $('signupTab').setAttribute('aria-selected',String(signup));
-  $('pageTitle').textContent=signup?'Sign up':'Sign in to NextGen';
-  $('pageIntro').textContent=signup?'Create one account to manage your NextGen workspace.':'Continue to manage your channels, content and publishing approvals.';
-  $('submitButton').textContent=signup?'Sign up':'Sign in';
+  $('pageTitle').textContent='Log in or sign up';
+  $('pageIntro').textContent=signup?'Create your NextGen account to get started.':"You'll get smarter responses and can manage your NextGen workspace.";
+  $('submitButton').textContent='Continue';
   $('confirmWrap').hidden=!signup;
   password.autocomplete=signup?'new-password':'current-password';
   $('forgotLink').hidden=signup;
@@ -604,11 +651,11 @@ html body .app>header{
  $('signupTab').addEventListener('click',()=>setMode('signup'));
  $('googleSignIn').addEventListener('click',()=>socialSignIn('google'));
  $('facebookSignIn').addEventListener('click',()=>socialSignIn('facebook'));
- $('instagramSignIn').addEventListener('click',()=>message('Instagram sign-in needs Meta/Instagram OAuth setup before it can be enabled.','error'));
+ $('instagramSignIn').addEventListener('click',()=>message('Instagram sign-in needs Meta/Instagram OAuth configuration before it can be enabled.','error'));
+ $('phoneSignIn').addEventListener('click',()=>message('Phone sign-in needs SMS provider and phone OTP configuration before it can be enabled.','error'));
  async function socialSignIn(provider){
   if(!client){message('Authentication is not connected. Please check the Supabase configuration.','error');return;}
-  try{
-   message('Connecting to '+(provider==='google'?'Google':'Facebook')+'…');
+  try{message('Connecting to '+(provider==='google'?'Google':'Facebook')+'…');
    const {error}=await client.auth.signInWithOAuth({provider,options:{redirectTo:new URL('./index.html',location.href).href}});
    if(error)throw error;
   }catch(err){message(err&&err.message?err.message:'Social sign-in could not be started.','error');}
@@ -617,15 +664,10 @@ html body .app>header{
   const show=password.type==='password';password.type=show?'text':'password';$('showPassword').textContent=show?'Hide':'Show';
  });
  $('forgotLink').addEventListener('click',async e=>{
-  e.preventDefault();
-  if(!client){message('Authentication is not connected. Please check the Supabase configuration.','error');return;}
-  const value=email.value.trim();
-  if(!value){message('Enter your email address first, then choose Forgot password.','error');email.focus();return;}
-  try{
-   const {error}=await client.auth.resetPasswordForEmail(value,{redirectTo:new URL('./login.html',location.href).href});
-   if(error)throw error;
-   message('Password reset instructions have been sent if this email is registered.','success');
-  }catch(err){message(err.message||'Could not send the password reset email.','error');}
+  e.preventDefault();if(!client){message('Authentication is not connected. Please check the Supabase configuration.','error');return;}
+  const value=email.value.trim();if(!value){message('Enter your email address first, then choose Forgot password.','error');email.focus();return;}
+  try{const {error}=await client.auth.resetPasswordForEmail(value,{redirectTo:new URL('./login.html',location.href).href});if(error)throw error;message('Password reset instructions have been sent if this email is registered.','success');}
+  catch(err){message(err.message||'Could not send the password reset email.','error');}
  });
  form.addEventListener('submit',async e=>{
   e.preventDefault();message('');
@@ -634,7 +676,7 @@ html body .app>header{
   if(!mail||!email.checkValidity()){message('Enter a valid email address.','error');email.focus();return;}
   if(pass.length<8){message('Password must contain at least 8 characters.','error');password.focus();return;}
   if(mode==='signup'&&pass!==confirmPassword.value){message('The passwords do not match.','error');confirmPassword.focus();return;}
-  const button=$('submitButton');button.disabled=true;button.textContent=mode==='signup'?'Creating account…':'Signing in…';
+  const button=$('submitButton');button.disabled=true;button.textContent=mode==='signup'?'Creating account…':'Continuing…';
   try{
    if(mode==='signup'){
     const {data,error}=await client.auth.signUp({email:mail,password:pass,options:{emailRedirectTo:new URL('./index.html',location.href).href}});
@@ -647,7 +689,7 @@ html body .app>header{
     message('Login successful. Opening NextGen…','success');setTimeout(()=>location.href='./index.html',500);
    }
   }catch(err){message(err&&err.message?err.message:'Authentication failed. Please try again.','error');}
-  finally{button.disabled=false;button.textContent=mode==='signup'?'Sign up':'Sign in';}
+  finally{button.disabled=false;button.textContent='Continue';}
  });
  setMode('login');
  if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
