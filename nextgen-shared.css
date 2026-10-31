@@ -476,3 +476,53 @@ html body #ng-menu-drawer .ng-menu-accordion-trigger>i{
   margin-left:auto!important;
   flex:0 0 auto!important;
 }
+
+
+/* CENTRAL HAMBURGER MENU — single shared component */
+#ng-menu-drawer .ng-menu-main-links>a,
+#ng-menu-drawer .ng-menu-accordion-panel>a{
+  display:grid!important;
+  grid-template-columns:30px minmax(0,1fr)!important;
+  align-items:center!important;
+  justify-content:initial!important;
+  column-gap:10px!important;
+  width:100%!important;
+  min-width:0!important;
+  padding:7px 8px!important;
+  text-align:left!important;
+  white-space:normal!important;
+}
+#ng-menu-drawer .ng-menu-main-links>a>.ng-point-icon,
+#ng-menu-drawer .ng-menu-accordion-panel>a>.ng-point-icon{
+  grid-column:1!important;
+  grid-row:1!important;
+  width:30px!important;min-width:30px!important;max-width:30px!important;
+  height:30px!important;min-height:30px!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  margin:0!important;padding:0!important;
+}
+#ng-menu-drawer .ng-menu-main-links>a>.ng-point-icon svg,
+#ng-menu-drawer .ng-menu-accordion-panel>a>.ng-point-icon svg{
+  display:block!important;width:22px!important;height:22px!important;
+  max-width:22px!important;min-width:22px!important;flex:0 0 22px!important;
+}
+#ng-menu-drawer .ng-menu-accordion-trigger{
+  display:grid!important;
+  grid-template-columns:30px minmax(0,1fr) auto!important;
+  align-items:center!important;
+  column-gap:10px!important;
+  text-align:left!important;
+}
+#ng-menu-drawer .ng-menu-accordion-trigger>.ng-menu-accordion-icon{
+  width:30px!important;min-width:30px!important;height:30px!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  margin:0!important;padding:0!important;
+}
+#ng-menu-drawer .ng-menu-accordion-trigger>.ng-menu-accordion-icon svg{width:22px!important;height:22px!important}
+#ng-menu-drawer .ng-menu-accordion-trigger>i{grid-column:3!important;margin:0!important}
+#ng-menu-drawer .ng-menu-accordion-panel{padding-left:0!important}
+#ng-menu-drawer .ng-menu-main-links a,
+#ng-menu-drawer .ng-menu-accordion-panel a{box-sizing:border-box!important}
+#ng-menu-drawer .ng-menu-main-links a:focus-visible,
+#ng-menu-drawer .ng-menu-accordion-panel a:focus-visible,
+#ng-menu-drawer .ng-menu-accordion-trigger:focus-visible{outline:2px solid #26caff!important;outline-offset:2px!important}
