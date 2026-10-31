@@ -108,3 +108,10 @@ The original SQL for the three previously missing migrations was recovered direc
 - `supabase/migrations/20261027223652_add_platform_connections_secure.sql`
 
 All three files were fetched back from GitHub after creation to verify that the files exist and contain content. These files are restored source artifacts only; no migration was re-applied to the live database, and no production schema was changed during this recovery step. Before any future deployment, compare the restored files with the live schema and the later hardening migrations, then validate the full migration chain in a disposable/staging database.
+
+
+## Full migration-chain reconciliation (2026-10-31)
+
+The complete live migration ledger was compared against the repository's `supabase/migrations/` files. All 11 applied migration versions now have corresponding SQL files in the repository. The four missing later migration files were restored from the live ledger, and the two pre-existing files that differed only by blank-line formatting were verified as equivalent to the ledger SQL. The comparison passed for all 11 files when ignoring blank-line formatting; no SQL statement differences were detected.
+
+No production migrations were re-applied as part of this reconciliation. The next safe validation is to replay the chain against a disposable/staging Supabase database, not the live project.
