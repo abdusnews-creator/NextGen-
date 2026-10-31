@@ -597,6 +597,12 @@ body.ng-auth-second-step #loginOptionsScreen .auth-legal a{
   text-underline-offset:2px!important;
 }
 </style>
+<style id="ng-login-hide-bottom-navigation">
+/* Authentication screens are standalone: hide workspace bottom navigation on login and sign-up. */
+html body .app>nav.ng-bottom-nav{display:none!important;visibility:hidden!important;pointer-events:none!important}
+html body .app{padding-bottom:0!important}
+html body{padding-bottom:0!important}
+</style>
 </head>
 <body>
 <div class="app">
