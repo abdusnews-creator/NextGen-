@@ -881,6 +881,31 @@ body.ng-auth-second-step main.auth-scroll>.auth-legal span{color:#6f8fb8!importa
 }
 #welcomeScreen .intro{margin-top:5px!important}
 </style>
+<style id="ng-legal-footer-alignment-adjustment">
+/* Legal links: centered footer on welcome screen and slightly higher on step two. */
+main.auth-scroll>.auth-legal{
+  display:block!important;
+  width:100%!important;
+  margin:14px auto 0!important;
+  padding:12px 0!important;
+  text-align:center!important;
+  font-size:12px!important;
+  line-height:1.45!important;
+  color:#b9d9fa!important;
+}
+main.auth-scroll>.auth-legal a{
+  color:#8bdcff!important;
+  text-decoration:underline!important;
+  text-underline-offset:2px;
+}
+main.auth-scroll>.auth-legal span{color:#6f8fb8!important}
+body.ng-auth-second-step main.auth-scroll>.auth-legal{
+  margin-top:17px!important; /* 1px higher than the previous 18px position */
+  padding-top:12px!important;
+  padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))!important;
+  font-size:12px!important;
+}
+</style>
 </head>
 <body>
 <div class="app">
