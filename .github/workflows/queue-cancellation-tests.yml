@@ -45,6 +45,7 @@ jobs:
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/migrations/20261031140000_move_privileged_nextgen_rpcs_to_private_schema.sql
       - name: Verify RPC schema and execution boundaries
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/queue_rpc_schema_security_test.sql
+# This guards against bypassing the audited cancellation RPC with direct table updates.
       - name: Verify browser cannot bypass audited cancellation
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/queue_browser_job_update_block_test.sql
       - name: Run approval RPC regression tests
