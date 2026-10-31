@@ -943,6 +943,19 @@ body.ng-auth-second-step main.auth-scroll>.auth-legal{
   margin-top:0!important;
 }
 </style>
+
+<style id="ng-legal-links-size-and-footer-position-final">
+/* Match welcome-screen legal link size to step two; restore step-two footer spacing. */
+main.auth-scroll>.auth-legal{
+  font-size:13px!important;
+}
+body.ng-auth-second-step main.auth-scroll>.auth-legal{
+  margin-top:17px!important;
+  padding-top:12px!important;
+  padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))!important;
+  font-size:13px!important;
+}
+</style>
 </head>
 <body>
 <div class="app">
