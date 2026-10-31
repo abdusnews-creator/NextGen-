@@ -1107,6 +1107,29 @@ body:not(.ng-auth-second-step) html body .app>main.auth-scroll>footer.ng-shared-
 }
 </style>
 
+
+<style id="ng-welcome-footer-bottom-align-final">
+/* Place welcome-screen legal links at the same bottom level as step two, above Android navigation. */
+html body:not(.ng-auth-second-step) .app>main.auth-scroll{
+  display:flex!important;
+  flex-direction:column!important;
+  flex:1 0 auto!important;
+  min-height:calc(100dvh - 100px)!important;
+  height:auto!important;
+  overflow:visible!important;
+}
+html body:not(.ng-auth-second-step) .app>main.auth-scroll>section.auth-card{
+  flex:1 0 auto!important;
+  min-height:0!important;
+}
+html body:not(.ng-auth-second-step) .app>main.auth-scroll>footer.ng-shared-footer{
+  flex:0 0 auto!important;
+  margin-top:auto!important;
+  border-top:0!important;
+  box-shadow:none!important;
+}
+</style>
+
 </head>
 <body>
 <div class="app">
