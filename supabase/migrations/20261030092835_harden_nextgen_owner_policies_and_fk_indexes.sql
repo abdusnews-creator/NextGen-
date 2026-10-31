@@ -1,3 +1,4 @@
+
 -- Performance hardening for owner-scoped policies and foreign-key lookups.
 DROP POLICY IF EXISTS "owners manage their channels" ON public.channels;
 CREATE POLICY "owners manage their channels"
@@ -52,3 +53,4 @@ CREATE INDEX IF NOT EXISTS activity_logs_actor_user_idx
   ON public.activity_logs(actor_user_id);
 CREATE INDEX IF NOT EXISTS content_items_approved_by_idx
   ON public.content_items(approved_by);
+
