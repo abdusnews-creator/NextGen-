@@ -46,7 +46,7 @@ CREATE TABLE public.approval_events (
   created_at timestamptz NOT NULL DEFAULT now()
 );
 CREATE TABLE public.publishing_jobs (
-  id uuid PRIMARY KEY,
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   owner_id uuid NOT NULL REFERENCES auth.users(id),
   content_id uuid NOT NULL,
   channel_id uuid NOT NULL,
