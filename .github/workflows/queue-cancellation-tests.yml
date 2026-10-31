@@ -37,3 +37,5 @@ jobs:
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/migrations/20261031130000_add_audited_queue_cancellation.sql
       - name: Run authorization and state-transition tests
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/queue_cancellation_test.sql
+      - name: Run concurrent cancellation race test
+        run: bash supabase/tests/queue_cancellation_concurrency_test.sh
