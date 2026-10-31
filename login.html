@@ -451,6 +451,14 @@ html body .app>header{
 #loginOptionsScreen .google-button{margin:0}
 #loginOptionsScreen .auth-divider{margin:15px 0}
 </style>
+<style id="ng-apple-microsoft-auth">
+.apple-button{background:#050505!important;color:#fff!important;border-color:#333!important}
+.apple-mark{width:22px;height:22px;display:grid;place-items:center;color:#fff;font-size:23px;line-height:1}
+.microsoft-button{background:#f8fbff!important;color:#1b2638!important;border-color:#cbd7e5!important}
+.microsoft-mark{width:20px;height:20px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px}
+.microsoft-mark i:nth-child(1){background:#f25022}.microsoft-mark i:nth-child(2){background:#7fba00}.microsoft-mark i:nth-child(3){background:#00a4ef}.microsoft-mark i:nth-child(4){background:#ffb900}
+#welcomeScreen .apple-button,#welcomeScreen .microsoft-button{margin-bottom:10px}
+</style>
 </head>
 <body>
 <div class="app">
@@ -571,6 +579,8 @@ html body .app>header{
   <p class="intro">Smart Automation. Smarter Growth.</p>
   <button class="social-button account-button" id="continueAccount" type="button"><span class="account-mark">N</span><span><strong>Continue with this account</strong><small id="accountHint">Your NextGen account</small></span></button>
   <button class="social-button google-button" id="welcomeGoogle" type="button"><span class="google-mark">G</span>Continue with Google</button>
+  <button class="social-button apple-button" id="welcomeApple" type="button"><span class="apple-mark">●</span>Continue with Apple</button>
+  <button class="social-button microsoft-button" id="welcomeMicrosoft" type="button"><span class="microsoft-mark"><i></i><i></i><i></i><i></i></span>Continue with Microsoft</button>
   <button class="social-button alternate-button" id="showSignInOptions" type="button">Log in another way</button>
 </div>
 <div id="loginOptionsScreen" class="auth-screen" hidden>
@@ -590,6 +600,8 @@ html body .app>header{
   <div class="auth-divider"><span>OR</span></div>
   <div class="social-stack">
     <button class="social-button google-button" id="googleSignIn" type="button"><span class="google-mark">G</span>Continue with Google</button>
+    <button class="social-button apple-button" id="appleSignIn" type="button"><span class="apple-mark">●</span>Continue with Apple</button>
+    <button class="social-button microsoft-button" id="microsoftSignIn" type="button"><span class="microsoft-mark"><i></i><i></i><i></i><i></i></span>Continue with Microsoft</button>
     <button class="social-button" id="phoneSignIn" type="button"><span class="phone-mark">☎</span>Continue with phone</button>
     <button class="social-button" id="facebookSignIn" type="button"><span class="facebook-mark">f</span>Continue with Facebook</button>
     <button class="social-button" id="instagramSignIn" type="button"><span class="instagram-mark">◎</span>Continue with Instagram</button>
@@ -634,6 +646,8 @@ html body .app>header{
  }
  $('continueAccount').addEventListener('click',continueExisting);
  $('welcomeGoogle').addEventListener('click',()=>socialSignIn('google'));
+ $('welcomeApple').addEventListener('click',()=>socialSignIn('apple'));
+ $('welcomeMicrosoft').addEventListener('click',()=>socialSignIn('azure'));
  function setMode(next){
   mode=next;const signup=mode==='signup';
   $('loginTab').setAttribute('aria-selected',String(!signup));
@@ -650,12 +664,14 @@ html body .app>header{
  $('loginTab').addEventListener('click',()=>setMode('login'));
  $('signupTab').addEventListener('click',()=>setMode('signup'));
  $('googleSignIn').addEventListener('click',()=>socialSignIn('google'));
+ $('appleSignIn').addEventListener('click',()=>socialSignIn('apple'));
+ $('microsoftSignIn').addEventListener('click',()=>socialSignIn('azure'));
  $('facebookSignIn').addEventListener('click',()=>socialSignIn('facebook'));
  $('instagramSignIn').addEventListener('click',()=>message('Instagram sign-in needs Meta/Instagram OAuth configuration before it can be enabled.','error'));
  $('phoneSignIn').addEventListener('click',()=>message('Phone sign-in needs SMS provider and phone OTP configuration before it can be enabled.','error'));
  async function socialSignIn(provider){
   if(!client){message('Authentication is not connected. Please check the Supabase configuration.','error');return;}
-  try{message('Connecting to '+(provider==='google'?'Google':'Facebook')+'…');
+  try{message('Connecting to '+(provider==='google'?'Google':provider==='apple'?'Apple':provider==='azure'?'Microsoft':'Facebook')+'…');
    const {error}=await client.auth.signInWithOAuth({provider,options:{redirectTo:new URL('./index.html',location.href).href}});
    if(error)throw error;
   }catch(err){message(err&&err.message?err.message:'Social sign-in could not be started.','error');}
