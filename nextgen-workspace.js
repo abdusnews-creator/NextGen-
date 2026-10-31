@@ -195,7 +195,7 @@
     jobs.forEach(job=>{
       const item=content.find(x=>x.id===job.content_id),channel=channels.find(x=>x.id===job.channel_id);
       addEntry(root,item?item.title:'Scheduled content', (channel?channel.display_name:'Channel')+' · '+new Date(job.scheduled_for).toLocaleString()+' · '+job.status,'Queued in NextGen. Publishing has not been performed.',[
-        ...(job.status==='queued'?[{label:'Cancel',onClick:async()=>{const {error}=await client.from('publishing_jobs').update({status:'cancelled',updated_at:new Date().toISOString()}).eq('id',job.id);if(error){setNote('scheduleNote',error.message,true);return;}await loadBase();renderSchedule();}}]:[])
+        ...(job.status==='queued'?[{label:'Cancel',onClick:async()=>{if(!confirm('Cancel this scheduled item? It will return to Approved only if no other active schedule exists.'))return;const {data,error}=await client.rpc('cancel_scheduled_content',{p_job_id:job.id,p_note:'Cancelled by owner from Schedule page'});if(error){const message=error.code==='PGRST202'||error.code==='42883'?'Queue cancellation update is not deployed yet. The scheduled item was not changed.':error.message;setNote('scheduleNote',message,true);return;}setNote('scheduleNote',data?.content_restored_to_approved?'Schedule cancelled. Content returned to Approved and can be edited or rescheduled.':'Schedule cancelled. Content was not reset because another active schedule or newer state exists.',false);await loadBase();renderSchedule();}}]:[])
       ]);
     });
   }

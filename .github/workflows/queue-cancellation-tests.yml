@@ -1,0 +1,56 @@
+name: Queue cancellation isolated PostgreSQL tests
+
+on:
+  pull_request:
+    paths:
+      - "supabase/migrations/**"
+      - "supabase/tests/**"
+      - ".github/workflows/queue-cancellation-tests.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  queue-cancellation:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: nextgen_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d nextgen_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nextgen_test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare isolated fixture
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/queue_cancellation_fixture.sql
+      - name: Apply queue cancellation migration
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/migrations/20261031130000_add_audited_queue_cancellation.sql
+      - name: Run authorization and state-transition tests
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/queue_cancellation_test.sql
+      - name: Apply approval and scheduling RPC migration
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/migrations/20261030093128_add_nextgen_audited_approval_and_safe_scheduling.sql
+      - name: Align RPC fixture with production SECURITY DEFINER definitions
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/queue_rpc_production_security_fixture.sql
+      - name: Move privileged RPC implementations into private schema
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/migrations/20261031140000_move_privileged_nextgen_rpcs_to_private_schema.sql
+      - name: Verify RPC schema and execution boundaries
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/queue_rpc_schema_security_test.sql
+# This guards against bypassing the audited cancellation RPC with direct table updates.
+      - name: Verify browser cannot bypass audited cancellation
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/queue_browser_job_update_block_test.sql
+      - name: Run approval RPC regression tests
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/queue_rpc_regression_test.sql
+      - name: Run concurrent cancellation race test
+        run: bash supabase/tests/queue_cancellation_concurrency_test.sh
+      - name: Run schedule-versus-cancellation regression test
+        run: bash supabase/tests/queue_schedule_cancel_concurrency_test.sh
