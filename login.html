@@ -531,6 +531,18 @@ html body .app>header{
  #loginOptionsScreen .intro{font-size:16px!important;margin-bottom:78px!important}
 }
 </style>
+<style id="ng-chatgpt-fullscreen-second-step">
+body.ng-auth-second-step,body.ng-auth-second-step html{background:#fff!important;color:#111!important}
+body.ng-auth-second-step .app{max-width:430px!important;min-height:100dvh!important;height:auto!important;background:#fff!important;color:#111!important;box-shadow:none!important}
+body.ng-auth-second-step .app>header,
+body.ng-auth-second-step .app>.ng-bottom-nav,
+body.ng-auth-second-step .app .ng-shared-footer{display:none!important}
+body.ng-auth-second-step .auth-scroll{padding:0!important;margin:0!important;min-height:100dvh!important;background:#fff!important;overflow:visible!important}
+body.ng-auth-second-step .auth-card{width:100%!important;max-width:430px!important;min-height:100dvh!important;margin:0 auto!important;padding:20px 26px 24px!important;background:#fff!important;border:0!important;border-radius:0!important;box-shadow:none!important;gap:0!important;color:#111!important}
+body.ng-auth-second-step #loginOptionsScreen{min-height:calc(100dvh - 44px)!important}
+body.ng-auth-second-step .security-note{display:none!important}
+body.ng-auth-second-step .status{color:#333!important}
+</style>
 </head>
 <body>
 <div class="app">
@@ -705,8 +717,8 @@ html body .app>header{
  let mode='login',client=null;
  try{const cfg=window.NEXTGEN_SUPABASE_CONFIG||{};if(window.supabase&&cfg.url&&cfg.anonKey&&/^https:\/\//.test(cfg.url))client=window.supabase.createClient(cfg.url,cfg.anonKey);}catch(e){console.error('NextGen auth setup error',e);}
  function message(text,type=''){const el=$('status');el.textContent=text;el.className='status'+(type?' '+type:'');}
- function showOptions(){$('welcomeScreen').hidden=true;$('loginOptionsScreen').hidden=false;window.scrollTo({top:0,behavior:'smooth'});}
- function showWelcome(){$('loginOptionsScreen').hidden=true;$('welcomeScreen').hidden=false;message('');window.scrollTo({top:0,behavior:'smooth'});}
+ function showOptions(){$('welcomeScreen').hidden=true;$('loginOptionsScreen').hidden=false;document.body.classList.add('ng-auth-second-step');window.scrollTo({top:0,behavior:'smooth'});}
+ function showWelcome(){$('loginOptionsScreen').hidden=true;$('welcomeScreen').hidden=false;document.body.classList.remove('ng-auth-second-step');message('');window.scrollTo({top:0,behavior:'smooth'});}
  $('showSignInOptions').addEventListener('click',showOptions);
  $('backToWelcome').addEventListener('click',showWelcome);
  async function continueExisting(){if(!client){message('Authentication is not connected. Please check the Supabase configuration.','error');return;}const {data,error}=await client.auth.getSession();if(error){message(error.message,'error');return;}if(data.session){location.href='./index.html';return;}await socialSignIn('google');}
