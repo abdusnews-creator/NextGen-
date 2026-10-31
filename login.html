@@ -9,47 +9,430 @@
 <meta name="apple-mobile-web-app-title" content="NextGen">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./nextgen-shared.css?v=master-design-v32-20261029">
 <title>NextGen | Login & Sign Up</title>
 <style>
 :root{color-scheme:dark;--bg:#030b24;--panel:#081a45;--line:#17407f;--blue:#4db8ff;--cyan:#18c8ed;--text:#f4f8ff;--muted:#9eb2d8}
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--text)}
-body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;background:radial-gradient(ellipse at 50% -15%,#12336d 0%,#030b24 58%,#020817 100%)}
-header{min-height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:16px 12px;background:linear-gradient(180deg,#050c2a,#07123a);border-bottom:2px solid #2a5bff;box-shadow:0 0 18px #3a2cff44}
-.brand{font-size:27px;line-height:1.1;font-weight:850;letter-spacing:.35px}
-.tagline{font-size:12px;letter-spacing:.25px;color:#8fa6d6}
-main{width:min(100% - 28px,440px);margin:clamp(24px,6vh,58px) auto 28px;padding:clamp(20px,5vw,30px);background:linear-gradient(180deg,#081a45,#061237);border:1px solid var(--line);border-radius:20px;box-shadow:0 18px 50px #0006,0 0 24px #087be422}
+html,body{margin:0;width:100%;height:100%;min-height:100%;overflow:hidden;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--text);background:#030b24}
+body{padding:0!important}
+.app{width:100%;max-width:430px;height:100vh;height:100dvh;min-height:0;margin:0 auto;display:flex;flex-direction:column;overflow:hidden;position:relative;background:radial-gradient(ellipse at 50% -15%,#12336d 0%,#030b24 58%,#020817 100%)}
+.app>header{height:46px;min-height:46px;flex:0 0 46px;display:flex;align-items:center;justify-content:flex-start;gap:6px;padding:0 10px;background:linear-gradient(180deg,#050c2a,#07123a)!important;border-bottom:2px solid #2a5bff!important;border-radius:0 0 18px 18px;box-shadow:0 0 14px #3a2cff88;position:relative;z-index:5}
+.ng-hamburger{flex:0 0 34px;width:34px;height:36px;min-height:36px;padding:7px 6px;margin:0 2px 0 0;border:0;border-radius:8px;background:#0a1650;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer}
+.ng-hamburger span{display:block;width:20px;height:2.5px;border-radius:2px;background:#fff}
+.logo{position:relative;left:-23px;top:-.2px;flex:1 1 auto;width:auto;min-width:0;height:48px;max-width:210px;object-fit:contain;transform:translateX(-23px) scale(1.15);transform-origin:left center}
+.hr{display:flex;align-items:center;gap:9px;margin-left:auto;z-index:1}
+.circ{width:29px;height:29px;border-radius:50%;display:grid;place-items:center}
+.plus{border:2px solid #2a5bff;background:#0a1650;box-shadow:0 0 8px #2a5bff}
+.bell{position:relative;width:29px;height:29px;display:grid;place-items:center}.bell u{position:absolute;top:0;right:2px;width:9px;height:9px;border-radius:50%;background:#ff2d3d}
+.av{background:linear-gradient(135deg,#2a6bff,#3b3cff);font-weight:700;font-size:11px;box-shadow:0 0 8px #2a5bff88}
+.auth-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;padding:20px 14px 8px;display:flex;flex-direction:column;gap:18px}
+.auth-card{width:100%;max-width:440px;margin:0 auto;padding:clamp(20px,5vw,30px);background:linear-gradient(180deg,#081a45,#061237);border:1px solid var(--line);border-radius:20px;box-shadow:0 18px 50px #0006,0 0 24px #087be422}
 .eyebrow{margin:0 0 8px;color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase}
-h1{margin:0;font-size:27px;line-height:1.2}
-.intro{margin:9px 0 22px;color:var(--muted);font-size:13px;line-height:1.55}
+h1{margin:0;font-size:27px;line-height:1.2;color:#fff}
+.intro{margin:9px 0 22px;color:var(--muted);font-size:13px;line-height:1.55;background:transparent;border:0;box-shadow:none;padding:0}
 .tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:5px;margin-bottom:21px;border:1px solid #1b4074;border-radius:12px;background:#030f2b}
 .tab{min-height:42px;border:0;border-radius:8px;background:transparent;color:#9eb2d8;font-weight:750;cursor:pointer}
 .tab[aria-selected=true]{background:linear-gradient(90deg,#168ee8,#16bde3);color:#03142a;box-shadow:0 3px 12px #078bda44}
 .field{margin:0 0 15px}
-label{display:block;margin:0 0 7px;font-size:13px;font-weight:700;color:#eaf3ff}
-input{width:100%;min-height:47px;padding:12px 13px;border:1px solid #28517d;border-radius:10px;background:#030f28;color:#fff;font:inherit;font-size:14px;outline:none}
-input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #18c8ed20}
-input::placeholder{color:#7188b2}
-.password-wrap{position:relative}
-.password-wrap input{padding-right:76px}
+.auth-card label{display:block;margin:0 0 7px;font-size:13px;font-weight:700;color:#eaf3ff}
+.auth-card input{width:100%;min-height:47px;padding:12px 13px;border:1px solid #28517d;border-radius:10px;background:#030f28;color:#fff;font:inherit;font-size:14px;outline:none}
+.auth-card input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #18c8ed20}
+.auth-card input::placeholder{color:#7188b2}
+.password-wrap{position:relative}.password-wrap input{padding-right:76px}
 .show-pass{position:absolute;right:8px;top:7px;min-height:33px;padding:4px 9px;border:1px solid #28517d;border-radius:7px;background:#0b2444;color:#cce5ff;font-size:11px;font-weight:700}
 .primary{width:100%;min-height:48px;margin-top:5px;border:1px solid #39c5ff;border-radius:11px;background:linear-gradient(90deg,#168ee8,#16bde3);color:#03142a;font-size:15px;font-weight:850;cursor:pointer}
 .primary:disabled{opacity:.6;cursor:wait}
 .links{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:15px}
-a{color:#70cfff;text-decoration:none;font-size:12px;font-weight:650}
-a:hover{text-decoration:underline}
+.auth-card a{color:#70cfff;text-decoration:none;font-size:12px;font-weight:650}
+.auth-card a:hover{text-decoration:underline}
 .status{min-height:20px;margin:15px 0 0;color:#b9d9fa;font-size:12px;line-height:1.5;overflow-wrap:anywhere}
 .status.error{color:#ffb7b7}.status.success{color:#9df2c0}
 .security-note{margin-top:18px;padding:11px 12px;border:1px solid #1a548a;border-radius:10px;background:#0b2444;color:#b9d9fa;font-size:11px;line-height:1.5}
-footer{margin-top:auto;padding:13px 14px calc(13px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;align-items:center;gap:8px;background:#050b28;border-top:1px solid #1e4fb5;color:#8fa6d6;font-size:10px}
-.credit{color:#fff;font-weight:700;white-space:nowrap}
+.ng-shared-footer{position:static!important;flex:none!important;width:100%!important;margin:0!important;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))!important;display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;justify-content:space-between!important;align-items:center!important;gap:5px!important;background:#050b28!important;border-top:1px solid #1e4fb5!important;color:#8fa6d6!important;font-size:10px!important;line-height:1.25!important;white-space:nowrap!important;box-sizing:border-box!important;border-radius:0!important}
+.ng-shared-footer .ng-copyright{font-size:10px!important;white-space:nowrap!important;flex:1 1 auto;min-width:0}
+.ng-shared-footer .ng-credit{font-size:9px!important;color:#fff!important;white-space:nowrap!important}
+.app>nav.ng-bottom-nav{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;z-index:5!important;flex:0 0 calc(43px + env(safe-area-inset-bottom,0px));width:100%!important;height:calc(43px + env(safe-area-inset-bottom,0px))!important;padding:0 4px env(safe-area-inset-bottom,0px)!important;display:flex!important;justify-content:space-around!important;align-items:stretch!important;gap:2px!important;border-radius:18px 18px 0 0!important}
+.app>nav.ng-bottom-nav a{flex:1!important;min-width:0!important;height:100%!important;min-height:0!important;margin:0!important;padding:2px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:2px!important;border:1px solid transparent!important;border-radius:9px!important;background:transparent!important;box-shadow:none!important;color:#cfd8f5!important;font-size:9px!important;text-decoration:none}
+.app>nav.ng-bottom-nav a.active{background:#0b4a82!important;border:1px solid rgba(77,184,255,.28)!important;color:#fff!important}
+.app>nav.ng-bottom-nav a small{display:block!important;font-size:9px!important;line-height:1.2!important;text-align:center!important}
+@media(max-width:380px){.app>header{gap:4px;padding-left:6px;padding-right:6px}.app>header .logo{max-width:calc(100vw - 168px)!important;height:38px!important}.app>header .hr{gap:6px}.ng-shared-footer{gap:2px!important;padding-left:4px!important;padding-right:4px!important}.ng-shared-footer .ng-copyright{font-size:8px!important}.ng-shared-footer .ng-credit{font-size:7px!important}}
+@media(max-width:360px){.auth-card{padding:18px 15px}h1{font-size:24px}}
+@media(min-width:900px){.app{max-width:430px}.auth-scroll{padding-top:24px}}
 [hidden]{display:none!important}
-@media(max-width:360px){header{min-height:78px}.brand{font-size:24px}h1{font-size:24px}main{padding:18px 15px}footer{font-size:9px}}
 </style>
+<style id="ng-hamburger-single-fix">
+/* Keep only the dedicated menu control; hide any legacy header burger that may duplicate it. */
+.app>header .burger,.app>header [data-legacy-hamburger="true"]{display:none!important}
+.app>header .ng-hamburger{appearance:none;-webkit-appearance:none;background:#0a1650!important;}
+</style>
+<style id="ng-header-right-edge-fix">
+/* Keep the complete NextGen header inside the mobile viewport. */
+.app>header{width:100%;max-width:100%;min-width:0;overflow:hidden;gap:6px;padding-left:10px;padding-right:10px;justify-content:flex-start}
+.app>header::after{display:none!important}
+.app>header .ng-hamburger{flex:0 0 34px!important;width:34px!important;min-width:34px!important;margin-right:2px!important}
+.app>header>img.logo{position:static!important;left:auto!important;top:auto!important;flex:1 1 auto!important;width:auto!important;min-width:0!important;max-width:180px!important;height:42px!important;object-fit:contain;object-position:center center;clip-path:none!important;margin:0!important}
+.app>header .hr{flex:0 0 auto;gap:9px;margin-left:auto;min-width:0}
+.app>header .hr .circ,.app>header .hr .bell{flex:0 0 29px}
+@media(max-width:380px){
+ .app>header{gap:4px;padding-left:6px;padding-right:6px}
+ .app>header>img.logo{max-width:calc(100vw - 168px)!important;height:38px!important}
+ .app>header .hr{gap:6px}
+}
+</style>
+<style id="ng-hamburger-fix">
+header .ng-hamburger{flex:0 0 36px;width:36px;height:36px;min-height:36px;padding:7px 6px;margin:-3px 8px 0 0;border:0!important;border-radius:0!important;box-shadow:none!important;border:1px solid #2857a4;border-radius:9px;background:#0a1650;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;position:relative;z-index:30;touch-action:manipulation}
+.app>header .ng-hamburger span{display:block!important;width:20px!important;height:2.5px!important;flex:none;border-radius:2px;background:#fff;pointer-events:none;transform:translateY(3px)}
+header .ng-hamburger::before,header .ng-hamburger::after{content:none!important;display:none!important}header .ng-hamburger{background-image:none!important}
+.ng-menu-backdrop[hidden]{display:none!important}
+.ng-menu-backdrop{position:fixed;inset:0;z-index:90;background:#020718b8}
+.ng-menu-drawer{position:fixed;z-index:91;left:0;top:0;bottom:0;width:min(290px,82vw);padding:calc(18px + env(safe-area-inset-top,0px)) 14px calc(20px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,#071a3e,#030b24);border-right:1px solid #2a6bff;box-shadow:12px 0 32px #0008;transform:translateX(-105%);visibility:hidden;transition:transform .2s ease,visibility .2s ease;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
+.ng-menu-drawer.is-open{transform:translateX(0);visibility:visible}
+.ng-menu-title{display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:20px;font-weight:800;padding:8px 6px 16px;border-bottom:1px solid #24509a;margin-bottom:8px}
+.ng-menu-title button{width:36px;height:36px;min-height:36px;border:1px solid #2857a4;border-radius:9px;background:#10245b;color:#fff;font-size:25px;line-height:1}
+.ng-menu-drawer>a{display:flex;align-items:center;min-height:46px;padding:10px 12px;border:1px solid transparent;border-radius:9px;color:#eaf3ff;text-decoration:none;font-size:15px;font-weight:650;touch-action:manipulation}
+.ng-menu-drawer>a:active,.ng-menu-drawer>a[aria-current="page"]{background:#0b3970;border-color:#1c78c8;color:#fff}
+body.ng-menu-open{overflow:hidden}
+@media(prefers-reduced-motion:reduce){.ng-menu-drawer{transition:none}}
+</style>
+<style id="ng-master-final-v32">
+/* Master design v32: loaded after each page's local styles to prevent page CSS overriding it. */
+:root{--ng-master-design-version:"2026-10-29-v32"}
+body>header:not(.ng-auth-master-header),body>main>header:not(.ng-auth-master-header),body>.app>header:not(.ng-auth-master-header),header.studio-top{background:linear-gradient(180deg,#050c2a 0%,#07123a 100%)!important;color:#fff!important;border-bottom:2px solid #2a5bff!important;box-shadow:0 0 14px #3a2cff55!important;box-sizing:border-box!important}
+body>header:not(.ng-auth-master-header) a,body>header:not(.ng-auth-master-header) strong,body>header:not(.ng-auth-master-header) h1,body>header:not(.ng-auth-master-header) h2,header.studio-top .studio-brand,header.studio-top .studio-brand-name{color:#fff!important}
+body>header:not(.ng-auth-master-header) p,body>header:not(.ng-auth-master-header) small,header.studio-top .studio-tagline{color:#8fa6d6!important}
+header.studio-top{height:46px!important;min-height:46px!important;padding:4px 10px!important;gap:10px!important;border-radius:0 0 12px 12px!important}
+header.studio-top .studio-menu{flex:0 0 34px!important;width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;font-size:0!important;display:inline-grid!important;place-items:center!important;background:transparent!important;border:0!important;box-shadow:none!important}
+header.studio-top .studio-menu::before{content:""!important;display:block!important;width:20px!important;height:2.5px!important;background:#fff!important;box-shadow:0 6px 0 #fff,0 -6px 0 #fff!important;border-radius:2px!important}
+header .ng-hamburger{flex:0 0 34px!important;width:34px!important;min-width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;margin:0 8px 0 0!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+header .ng-hamburger span{display:block!important;width:20px!important;height:2.5px!important;min-height:2.5px!important;flex:0 0 2.5px!important;transform:translateY(2.6px)!important;border-radius:2px!important;background:#fff!important}
+header .ng-hamburger:before,header .ng-hamburger:after{display:none!important;content:none!important}
+.ng-shared-footer{position:static!important;inset:auto!important;bottom:auto!important;transform:none!important;min-height:28px!important;width:100%!important;max-width:none!important;margin:8px 0 0!important;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))!important;display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;justify-content:space-between!important;align-items:center!important;gap:5px!important;background:#050b28!important;border-top:1px solid #1e4fb5!important;color:#8fa6d6!important;font-size:10px!important;line-height:1.25!important;white-space:nowrap!important;box-sizing:border-box!important}
+.ng-shared-footer .ng-copyright{flex:1 1 auto!important;min-width:0!important;text-align:left!important;font-size:10px!important;font-weight:400!important;white-space:nowrap!important}
+.ng-shared-footer .ng-credit{flex:0 0 auto!important;margin-left:auto!important;text-align:right!important;font-size:9px!important;font-weight:600!important;white-space:nowrap!important;color:#fff!important}
+@media(max-width:380px){header.studio-top{gap:6px!important;padding-left:5px!important;padding-right:5px!important}header.studio-top .studio-brand,header.studio-top .studio-brand-name{font-size:18px!important}header.studio-top .studio-tagline{font-size:7px!important}header.studio-top .studio-menu{flex-basis:30px!important;width:30px!important;min-width:30px!important}}
+@media(max-width:600px){.ng-shared-footer{font-size:10px!important;display:flex!important;flex-direction:column!important;flex-wrap:nowrap!important;gap:2px!important;padding:3px 4px calc(3px + env(safe-area-inset-bottom,0px))!important;margin-top:2px!important;justify-content:center!important;align-items:center!important;overflow:hidden!important}.ng-shared-footer .ng-copyright{display:block!important;flex:0 0 auto!important;width:128%!important;max-width:none!important;min-width:0!important;font-size:12px!important;letter-spacing:-.2px!important;white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important;text-align:center!important;transform:scaleX(.78)!important;transform-origin:center center!important}.ng-shared-footer .ng-credit{display:block!important;flex:0 0 auto!important;max-width:none!important;font-size:10px!important;letter-spacing:-.15px!important;white-space:nowrap!important;margin:0!important;text-align:center!important}}
+</style>
+<style id="ng-profile-avatar-shape-fix">
+/* Keep the header profile control perfectly circular; prevent inherited button sizing/stretch. */
+.app>header .hr>button.ng-profile-trigger{
+  box-sizing:border-box!important;
+  display:grid!important;
+  place-items:center!important;
+  flex:0 0 38px!important;
+  width:38px!important;
+  min-width:38px!important;
+  max-width:38px!important;
+  height:38px!important;
+  min-height:38px!important;
+  max-height:38px!important;
+  aspect-ratio:1/1!important;
+  padding:0!important;
+  margin:0!important;
+  border-radius:50%!important;
+  line-height:1!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+}
+</style>
+<style id="ng-profile-menu-styles">
+.ng-profile-trigger{appearance:none;-webkit-appearance:none;border:1px solid #36baff!important;color:#fff!important;cursor:pointer;font-size:11px!important;font-weight:800!important;letter-spacing:-.5px;background:linear-gradient(135deg,#081a45,#123d80)!important;box-shadow:0 0 9px #168bff88!important}
+.ng-profile-backdrop[hidden]{display:none!important}
+.ng-profile-backdrop{position:fixed;inset:0;z-index:79;background:#0005}
+.ng-profile-menu{position:fixed;z-index:80;top:calc(52px + env(safe-area-inset-top,0px));right:max(8px,calc((100vw - 430px)/2 + 8px));width:min(370px,calc(100vw - 16px));max-height:calc(100dvh - 112px);overflow-y:auto;padding:16px 14px 12px;border:1px solid #00cfff;border-radius:17px;background:linear-gradient(155deg,#061a3b,#030b24 72%);box-shadow:0 12px 38px #000b,0 0 16px #087bff33;opacity:0;visibility:hidden;transform:translateY(-7px);transition:opacity .16s ease,transform .16s ease,visibility .16s ease}
+.ng-profile-menu.is-open{opacity:1;visibility:visible;transform:translateY(0)}
+.ng-profile-account{display:flex;align-items:center;gap:11px;padding:3px 2px 15px}
+.ng-profile-brand-avatar{flex:0 0 58px;width:58px;height:58px;border:2px solid #13bfff;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 25%,#ffca36,#111a3d 55%,#020817);color:#ffd54a;font-size:17px;font-weight:900;box-shadow:0 0 9px #138cff}
+.ng-profile-account-copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:4px}
+.ng-profile-account-copy strong{font-size:17px;color:#fff;line-height:1.2}
+.ng-profile-account-copy span{font-size:12px;color:#a9c9ee;overflow-wrap:anywhere}
+.ng-profile-edit{border:0;background:transparent;color:#fff;font-size:25px;padding:6px}
+.ng-profile-account-actions{display:flex;gap:7px;padding:4px 0 13px;border-bottom:1px solid #174c83}
+.ng-profile-account-actions button{flex:1;min-width:0;min-height:36px;padding:5px 7px;border:1px solid #167ac0;border-radius:22px;background:#09264a;color:#fff;font-size:11px;font-weight:650}
+.ng-profile-links{display:flex;flex-direction:column}
+.ng-profile-links a{min-height:43px;display:flex;align-items:center;gap:12px;padding:7px 3px;color:#f3f8ff;text-decoration:none;font-size:16px;border-bottom:1px solid #12355c}
+.ng-profile-links a:last-child{border-bottom:0}
+.ng-profile-links a span{width:25px;flex:0 0 25px;text-align:center;color:#25caff;font-size:20px}
+.ng-profile-links a i{margin-left:auto;color:#70caff;font-style:normal;font-size:22px}
+body.ng-profile-open{overflow:hidden}
+@media(max-width:380px){.ng-profile-menu{padding:13px 11px}.ng-profile-account-copy strong{font-size:15px}.ng-profile-links a{min-height:40px;font-size:16px}}
+@media(prefers-reduced-motion:reduce){.ng-profile-menu{transition:none}}
+</style>
+<style id="ng-profile-avatar-final-geometry">
+.app>header .hr>button.ng-profile-trigger{
+  box-sizing:border-box!important;
+  display:grid!important;
+  place-items:center!important;
+  flex:0 0 29px!important;
+  width:29px!important;
+  min-width:29px!important;
+  max-width:29px!important;
+  height:29px!important;
+  min-height:29px!important;
+  max-height:29px!important;
+  aspect-ratio:1/1!important;
+  padding:0!important;
+  margin:0!important;
+  border-radius:50%!important;
+  overflow:hidden!important;
+  line-height:1!important;
+}
+</style>
+<style id="ng-facebook-style-menu">
+.ng-menu-drawer.ng-facebook-style-menu{width:min(360px,88vw)!important;padding:calc(14px + env(safe-area-inset-top,0px)) 12px calc(16px + env(safe-area-inset-bottom,0px))!important;gap:10px!important}
+.ng-menu-account{display:flex;align-items:center;gap:11px;padding:10px 5px 14px;border-bottom:1px solid #174c83}
+.ng-menu-logo{width:48px;height:48px;flex:0 0 48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#00d9ff,#253dff 55%,#a300ff);color:#fff;font-size:19px;font-weight:900;box-shadow:0 0 12px #168bff88}
+.ng-menu-account div{display:flex;flex-direction:column;gap:3px}.ng-menu-account strong{font-size:17px;color:#fff}.ng-menu-account small{font-size:10px;color:#8fa6d6}
+.ng-menu-section-title{font-size:14px;color:#70caff;margin:3px 4px 0}
+.ng-menu-shortcuts{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 9px;border-bottom:1px solid #174c83}
+.ng-menu-shortcuts a{flex:0 0 75px;display:flex;flex-direction:column;align-items:center;gap:5px;text-decoration:none;color:#eaf3ff}
+.ng-menu-shortcuts a span{width:58px;height:58px;border-radius:12px;border:1px solid #2267a5;background:linear-gradient(135deg,#092b59,#101b49);display:grid;place-items:center;color:#fff;font-size:18px;font-weight:800}
+.ng-menu-shortcuts a small{font-size:10px;white-space:nowrap;max-width:75px;overflow:hidden;text-overflow:ellipsis}
+.ng-menu-main-links{display:flex;flex-direction:column;gap:2px}
+.ng-menu-main-links a,.ng-menu-accordion-panel a{min-height:39px;display:flex;align-items:center;gap:12px;padding:7px 8px;border-radius:8px;color:#eef6ff;text-decoration:none;font-family:Roboto,Arial,sans-serif;font-size:15px;font-weight:400}.ng-menu-main-links a{padding-left:2px;gap:8px}
+.ng-menu-main-links a span{width:25px;height:25px;flex:0 0 25px;display:inline-flex;align-items:center;justify-content:center;text-align:center;color:#26caff;font-size:20px}.ng-menu-main-links a span svg{width:25px;height:25px;display:block;flex:0 0 25px}
+.ng-menu-main-links a:active,.ng-menu-accordion-panel a:active{background:#0b3970}
+.ng-menu-see-less{width:100%;min-height:38px;border:0;border-radius:10px;background:#102c52;color:#dff6ff;font-weight:700}
+.ng-menu-accordion{border-top:1px solid #174c83;margin:0 -12px;padding:4px 12px}
+.ng-menu-accordion-trigger{width:100%;min-height:44px;display:flex;align-items:center;gap:11px;border:0;border-bottom:1px solid #15385f;background:transparent;color:#fff;text-align:left;font-family:Roboto,Arial,sans-serif;font-size:15px;font-weight:400}
+.ng-menu-accordion-trigger span{color:#26caff;font-size:19px}.ng-menu-accordion-trigger i{margin-left:auto;color:#70caff;font-size:19px;font-style:normal}
+.ng-menu-accordion-panel{padding:3px 0 7px 28px}.ng-menu-accordion-panel[hidden]{display:none!important}.ng-menu-accordion-panel a{min-height:36px;font-family:Roboto,Arial,sans-serif;font-size:15px;font-weight:400}
+.ng-menu-logout{width:100%;min-height:40px;border:1px solid #1b426c;border-radius:10px;background:#10213d;color:#7992b6;font-weight:700}
+.ng-menu-main-links.is-collapsed a:nth-child(n+13){display:none}
+</style>
+<style id="ng-menu-shortcuts-flex-fix">
+/* Prevent the drawer's flex layout from shrinking/clipping the shortcuts row. */
+.ng-menu-drawer.ng-facebook-style-menu .ng-menu-shortcuts{
+  flex:0 0 100px!important;
+  height:100px!important;
+  min-height:100px!important;
+  max-height:100px!important;
+  box-sizing:border-box!important;
+  align-self:stretch!important;
+  overflow-x:auto!important;
+  overflow-y:visible!important;
+  padding:4px 2px 12px!important;
+  border-bottom:1px solid #174c83!important;
+}
+.ng-menu-drawer.ng-facebook-style-menu .ng-menu-shortcuts a{
+  flex:0 0 75px!important;
+  min-width:75px!important;
+}
+</style>
+<style id="ng-master-design-lock">
+/* MASTER DESIGN LOCK — do not change logo/menu alignment or size without explicit user request. */
+.app>header>img.logo{position:relative!important;left:-23px!important;top:-0.2px!important;height:48px!important;max-width:210px!important;transform:translateX(-23px) scale(1.15)!important;transform-origin:left center!important;}
+header .ng-hamburger span{transform:translateY(3.5px)!important;}
+</style>
+<style id="ng-menu-refresh-no-jump">
+html.ng-menu-refresh-open body .ng-menu-drawer{
+  transform:translateX(0)!important;
+  visibility:visible!important;
+  transition:none!important;
+}
+html.ng-menu-refresh-open body .ng-menu-backdrop[hidden]{
+  display:block!important;
+}
+</style>
+<style id="ng-menu-3d-subtle">.ng-menu-drawer .ng-menu-main-links .ng-point-icon svg{filter:drop-shadow(0 0 .08px rgba(255,255,255,.12))}</style>
+
 </head>
 <body>
+<div class="app">
+<header>
+  <button type="button" class="ng-hamburger" id="ng-hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="ng-menu-drawer"><span></span><span></span><span></span></button>
+  <img class="logo" src="./file_000000005ab0820896e23efe9cf142bb.png" alt="NextGen — Smart Automation. Smarter Growth.">
+  <div class="hr">
+    <div class="circ plus"><svg width="16" height="16" viewBox="0 0 16 16" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M8 1v14M1 8h14"/></svg></div>
+    <div class="bell"><svg width="24" height="24" viewBox="0 0 24 24" aria-label="Notifications"><path fill="#fff" d="M12 2.1a2.45 2.45 0 0 0-2.45 2.45v.63C6.18 6.25 4 9.18 4 12.65v4.02l-1.4 1.66c-.45.54-.07 1.36.63 1.36h17.54c.7 0 1.08-.82.63-1.36L20 16.67v-4.02c0-3.47-2.18-6.4-5.55-7.47v-.63A2.45 2.45 0 0 0 12 2.1Z"/><path fill="#fff" d="M8.4 21.1a3.7 3.7 0 0 0 7.2 0Z"/></svg><u></u></div>
+    <button type="button" class="circ av ng-profile-trigger" id="ng-profile-trigger" aria-label="Open profile menu" aria-expanded="false" aria-controls="ng-profile-menu">RF</button>
+  </div>
+</header>
+
+<div class="ng-profile-backdrop" id="ng-profile-backdrop" hidden></div>
+<aside class="ng-profile-menu" id="ng-profile-menu" aria-label="Profile menu" aria-hidden="true">
+  <div class="ng-profile-account">
+    <div class="ng-profile-brand-avatar">RF</div>
+    <div class="ng-profile-account-copy"><strong>Royal Furniture</strong><span>@RoyalFurnitureHouse</span></div>
+    <button type="button" class="ng-profile-edit" aria-label="Edit profile">✎</button>
+  </div>
+  <div class="ng-profile-account-actions">
+    <button type="button">▣&nbsp; Switch account</button>
+    <button type="button"><b>G</b>&nbsp; Google Account</button>
+  </div>
+  <div class="ng-profile-links">
+    <a href="./settings.html"><span>⚙</span>Settings<i>›</i></a>
+    <a href="./login.html"><span>↪</span>Login / Sign Up<i>›</i></a>
+    <a href="./settings.html#account-status"><span>◎</span>Account status<i>›</i></a>
+    <a href="https://www.youtube.com/@RoyalFurnitureHouse" target="_blank" rel="noopener"><span>▶</span>YouTube<i>↗</i></a>
+    <a href="./settings.html#terms"><span>▤</span>Terms of Service<i>›</i></a>
+    <div class="ng-profile-action-divider" aria-hidden="true"></div>
+    <a href="#" data-profile-action="share"><span>♧</span>Share<i>›</i></a>
+    <a href="#" data-profile-action="pin"><span>⌖</span>Pin<i>›</i></a>
+    <a href="#" data-profile-action="lock"><span>▣</span>Lock chat<i>›</i></a>
+    <div class="ng-profile-action-spacer" aria-hidden="true"></div>
+    <a href="./content.html"><span>📎</span>Uploaded files<i>›</i></a>
+    <a href="./content.html"><span>⌕</span>Find in chat<i>›</i></a>
+    <a href="#" data-profile-action="home"><span>⌂</span>Add to home<i>›</i></a>
+    <a href="#" data-profile-action="archive"><span>▤</span>Archive<i>›</i></a>
+    <a href="#" data-profile-action="delete" class="ng-profile-delete"><span>▤</span>Delete<i>›</i></a>
+  </div>
+</aside>
+<div class="ng-menu-backdrop" id="ng-menu-backdrop" hidden></div>
+<aside class="ng-menu-drawer ng-facebook-style-menu" id="ng-menu-drawer" aria-label="Navigation menu" aria-hidden="true">
+  <div class="ng-menu-title"><span>NextGen Menu</span><button type="button" id="ng-menu-close" aria-label="Close navigation menu">×</button></div>
+  <div class="ng-menu-account"><span class="ng-menu-logo">NG</span><div><strong>NextGen</strong><small>Smart Automation. Smarter Growth.</small></div></div>
+  <h3 class="ng-menu-section-title">Your shortcuts</h3>
+  <div class="ng-menu-shortcuts">
+    <a href="./channels.html"><span>RF</span><small>Royal Furniture</small></a>
+    <a href="./channels.html"><span>NG</span><small>NextGen</small></a>
+    <a href="./dashboard.html"><span>▦</span><small>Dashboard</small></a>
+  </div>
+  <div class="ng-menu-main-links">
+    <a href="./dashboard.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum1)"><defs><linearGradient id="ngMenuSpectrum1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><rect x="4" y="5" width="32" height="30" rx="5"/><path d="M12 28V20h5v8M23 28V12h5v16"/></svg></span>Dashboard</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngMenuSpectrum2)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngMenuSpectrum2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><rect x="13" y="5" width="22" height="24" rx="4" transform="rotate(8 13 5)"/><rect x="5" y="11" width="23" height="24" rx="4"/><circle cx="13" cy="18" r="2.5"/><path d="m7 30 7-7 5 5 3-3 6 6"/></svg></span>Images</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngMenuSpectrum3)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngMenuSpectrum3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><rect x="5" y="6" width="8" height="28" rx="3"/><rect x="16" y="6" width="8" height="28" rx="3"/><path d="m27 7 5-1 5 26-6 2z"/></svg></span>Library</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngMenuSpectrum4)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngMenuSpectrum4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M5 13V9a4 4 0 0 1 4-4h8l5 5h9a4 4 0 0 1 4 4v17a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M5 19h30"/></svg></span>Projects</a>
+    <a href="./settings.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngMenuSpectrum5)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngMenuSpectrum5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><rect x="8" y="5" width="24" height="19" rx="3"/><path d="M5 25h30v4H5zM12 33h16"/><circle cx="8" cy="36" r="1.2" fill="currentColor"/><circle cx="14" cy="36" r="1.2" fill="currentColor"/><circle cx="20" cy="36" r="1.2" fill="currentColor"/><circle cx="26" cy="36" r="1.2" fill="currentColor"/><circle cx="32" cy="36" r="1.2" fill="currentColor"/></svg></span>Remote</a>
+    <a href="./schedule.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngMenuSpectrum6)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngMenuSpectrum6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><circle cx="20" cy="20" r="15"/><path d="M20 10v11l-7 7"/></svg></span>Scheduled</a><a href="./analytics.html"><span>▥</span>Channel Analytics</a>
+    <a href="./dashboard.html#notifications"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngAddedNav1)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngAddedNav1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="35%" stop-color="#3b82f6"/><stop offset="70%" stop-color="#a855f7"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs><path d="M20 5a3 3 0 0 0-6 0c-5 2-7 6-7 12l-3 4h26l-3-4c0-6-2-10-7-12"/><path d="M14 27a3 3 0 0 0 6 0"/><circle cx="30" cy="9" r="4" fill="#ec4899" stroke="none"/></svg></span>Notifications</a>
+    <a href="./schedule.html#planner"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngAddedNav2)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngAddedNav2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="35%" stop-color="#3b82f6"/><stop offset="70%" stop-color="#a855f7"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs><rect x="5" y="8" width="30" height="27" rx="5"/><path d="M12 4v8M28 4v8M5 16h30M12 22h5M23 22h5M12 28h5"/></svg></span>Planner</a>
+    <a href="./schedule.html#appointments"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngAddedNav3)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngAddedNav3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="35%" stop-color="#3b82f6"/><stop offset="70%" stop-color="#a855f7"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs><circle cx="20" cy="20" r="15"/><path d="M20 10v11l8 4"/><path d="M14 4h12"/></svg></span>Appointments</a>
+    <a href="./analytics.html#insights"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngAddedNav4)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngAddedNav4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="35%" stop-color="#3b82f6"/><stop offset="70%" stop-color="#a855f7"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs><path d="M20 4c-7 0-12 5-12 12 0 5 3 8 6 10v5h12v-5c3-2 6-5 6-10 0-7-5-12-12-12Z"/><path d="M14 35h12M15 16l4 4 7-8"/></svg></span>Insights</a>
+    <a href="./channels.html#leads-center"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngAddedNav5)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngAddedNav5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="35%" stop-color="#3b82f6"/><stop offset="70%" stop-color="#a855f7"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs><circle cx="20" cy="12" r="6"/><circle cx="8" cy="17" r="4"/><circle cx="32" cy="17" r="4"/><path d="M7 34c0-7 5-11 13-11s13 4 13 11M2 33c0-5 2-8 7-9M38 33c0-5-2-8-7-9"/></svg></span>Leads Center</a>
+    <a href="./help-centre.html#meta-latest-news"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngAddedNav6)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngAddedNav6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="35%" stop-color="#3b82f6"/><stop offset="70%" stop-color="#a855f7"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs><path d="M7 5h26v30H7z"/><path d="M12 12h16M12 18h16M12 24h10M12 30h7"/><circle cx="29" cy="29" r="4" fill="#ec4899" stroke="none"/></svg></span>Meta Letest News</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum7)"><defs><linearGradient id="ngMenuSpectrum7" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum7" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M9 5h22v30L20 27 9 35z"/></svg></span>Saved</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum8)"><defs><linearGradient id="ngMenuSpectrum8" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum8" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M7 17a14 14 0 1 1 2 12"/><path d="M7 7v10h10M20 11v10l7 4"/></svg></span>Memories</a>
+    <a href="./channels.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum9)"><defs><linearGradient id="ngMenuSpectrum9" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum9" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><circle cx="20" cy="13" r="6"/><circle cx="8" cy="19" r="4"/><circle cx="32" cy="19" r="4"/><path d="M8 34c0-7 5-11 12-11s12 4 12 11M2 34c0-5 2-8 7-9M38 34c0-5-2-8-7-9"/></svg></span>Groups</a>
+    <a href="./settings.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum10)"><defs><linearGradient id="ngMenuSpectrum10" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum10" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M5 17v7h7l18 9V8l-18 9zM12 24l4 11h7l-5-8"/></svg></span>Ad Center</a>
+    <a href="./subscription-package.html"><span class="ng-point-icon">₹</span>Subscription Package</a>
+    <a href="./schedule.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum11)"><defs><linearGradient id="ngMenuSpectrum11" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum11" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><rect x="5" y="7" width="30" height="29" rx="5"/><path d="M12 4v7M28 4v7M5 15h30"/><path d="m20 19 2 4 4 .5-3 3 .8 4.5-3.8-2.2-3.8 2.2.8-4.5-3-3 4-.5z"/></svg></span>Events</a>
+    <a href="./channels.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum12)"><defs><linearGradient id="ngMenuSpectrum12" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum12" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><circle cx="15" cy="12" r="6"/><path d="M4 34c0-7 4-11 11-11s11 4 11 11"/><circle cx="30" cy="13" r="4"/><path d="M28 24c5 0 8 3 8 8"/></svg></span>Explore People</a>
+    <a href="./dashboard.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum13)"><defs><linearGradient id="ngMenuSpectrum13" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum13" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M6 6c16 0 28 12 28 28M6 17c10 0 17 7 17 17"/><circle cx="8" cy="32" r="2" fill="currentColor" stroke="none"/></svg></span>Feeds</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum14)"><defs><linearGradient id="ngMenuSpectrum14" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum14" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M5 18 22 5h12v12L17 34a5 5 0 0 1-7 0l-5-9a5 5 0 0 1 0-7z"/><circle cx="27" cy="12" r="2"/><path d="m15 18 2 4 4 1-4 2-1 4-2-4-4-1 4-2z"/></svg></span>Finds</a>
+    <a href="./channels.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum15)"><defs><linearGradient id="ngMenuSpectrum15" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum15" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M8 35V5h26l-4 10 4 10H8"/></svg></span>Pages</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum16)"><defs><linearGradient id="ngMenuSpectrum16" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum16" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M5 19h7v14H5zM12 21l12-10c3-2 6 1 4 4l-4 5h8c3 0 4 4 1 6l-7 7H12z"/><path d="M24 11 27 7M29 15l5-1"/></svg></span>Pokes</a>
+  
+    
+  </div>
+  <button class="ng-menu-see-less" type="button" id="ng-menu-see-less">See less</button>
+  <div class="ng-menu-accordion">
+    <button type="button" class="ng-menu-accordion-trigger" aria-expanded="false"><span><svg viewBox="0 0 48 48" width="28" height="28" aria-hidden="true" fill="none" stroke="url(#ngMenuSpectrum17)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngMenuSpectrum17" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum17" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M24 4C12.95 4 4 12.5 4 23c0 5.2 2.2 9.9 5.8 13.2L8 44l9-3.2c2.2.8 4.6 1.2 7 1.2 11.05 0 20-8.5 20-19S35.05 4 24 4Z"/><path d="M18.5 17.5a5.7 5.7 0 1 1 9.7 4c-2.2 2.1-4.2 2.8-4.2 6"/><circle cx="24" cy="34.5" r="1.6" fill="currentColor" stroke="none"/></svg></span>Help &amp; Support <i>⌄</i></button>
+    <div class="ng-menu-accordion-panel" hidden>
+      <a href="./help-centre.html#scam-protection-center"><span class="ng-point-icon">🛡</span>Scam Protection Center</a>
+      <a href="./help-centre.html"><span class="ng-point-icon">❔</span>Support</a>
+      <a href="./send-feedback.html"><span class="ng-point-icon">⚑</span>Report a problem</a>
+      <a href="./privacy-policy.html#terms"><span class="ng-point-icon">▤</span>Terms &amp; policies</a>
+      <a href="./send-feedback.html"><span class="ng-point-icon">✉</span>Give feedback</a>
+    </div>
+    <button type="button" class="ng-menu-accordion-trigger" aria-expanded="false"><span><svg viewBox="0 0 48 48" width="28" height="28" aria-hidden="true" fill="none" stroke="url(#ngMenuSpectrum18)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngMenuSpectrum18" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum18" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M20 4h8l1.5 5.1a16 16 0 0 1 3.6 1.5l4.8-2 5.7 5.7-2 4.8a16 16 0 0 1 1.5 3.6L48 24v8l-5.1 1.5a16 16 0 0 1-1.5 3.6l2 4.8-5.7 5.7-4.8-2a16 16 0 0 1-3.6 1.5L28 52h-8l-1.5-5.1a16 16 0 0 1-3.6-1.5l-4.8 2-5.7-5.7 2-4.8a16 16 0 0 1-1.5-3.6L0 32v-8l5.1-1.5a16 16 0 0 1 1.5-3.6l-2-4.8 5.7-5.7 4.8 2a16 16 0 0 1 3.6-1.5L20 4Z" transform="translate(4 0) scale(.83)"/><circle cx="24" cy="24" r="7"/></svg></span>Settings &amp; Privacy <i>⌄</i></button>
+    <div class="ng-menu-accordion-panel" hidden>
+      <a href="./settings.html"><span class="ng-point-icon">⚙</span>Settings</a>
+      <a href="./privacy-policy.html"><span class="ng-point-icon">🔒</span>Privacy Center</a>
+      <a href="./settings.html#time-management"><span class="ng-point-icon">◷</span>Time management</a>
+      <a href="./settings.html#device-requests"><span class="ng-point-icon">▣</span>Device requests</a>
+      <a href="./subscription-package.html"><span class="ng-point-icon">♙</span>Your Subscription Activities</a>
+      <a href="./subscription-package.html#orders-and-payments"><span class="ng-point-icon">₹</span>Orders and payments</a>
+      <a href="./settings.html#link-history"><span class="ng-point-icon">↗</span>Link history</a>
+      <a href="./settings.html#appearance"><span class="ng-point-icon">◐</span>Dark mode / White Mode</a>
+      <a href="./settings.html#language"><span class="ng-point-icon">文</span>Language</a>
+    </div>
+  </div>
+  <button type="button" class="ng-menu-logout" disabled aria-disabled="true">Log out · Account connection pending</button>
+</aside>
+<div class="ng-profile-backdrop" id="ng-profile-backdrop" hidden></div>
+<aside class="ng-profile-menu" id="ng-profile-menu" aria-label="Profile menu" aria-hidden="true">
+  <div class="ng-profile-account">
+    <div class="ng-profile-brand-avatar">RF</div>
+    <div class="ng-profile-account-copy"><strong>Royal Furniture</strong><span>@RoyalFurnitureHouse</span></div>
+    <button type="button" class="ng-profile-edit" aria-label="Edit profile">✎</button>
+  </div>
+  <div class="ng-profile-account-actions">
+    <button type="button">▣&nbsp; Switch account</button>
+    <button type="button"><b>G</b>&nbsp; Google Account</button>
+  </div>
+  <div class="ng-profile-links">
+    <a href="./settings.html"><span>⚙</span>Settings<i>›</i></a>
+    <a href="./login.html"><span>↪</span>Login / Sign Up<i>›</i></a>
+    <a href="./settings.html#account-status"><span>◎</span>Account status<i>›</i></a>
+    <a href="https://www.youtube.com/@RoyalFurnitureHouse" target="_blank" rel="noopener"><span>▶</span>YouTube<i>↗</i></a>
+    <a href="./settings.html#terms"><span>▤</span>Terms of Service<i>›</i></a>
+    <div class="ng-profile-action-divider" aria-hidden="true"></div>
+    <a href="#" data-profile-action="share"><span>♧</span>Share<i>›</i></a>
+    <a href="#" data-profile-action="pin"><span>⌖</span>Pin<i>›</i></a>
+    <a href="#" data-profile-action="lock"><span>▣</span>Lock chat<i>›</i></a>
+    <div class="ng-profile-action-spacer" aria-hidden="true"></div>
+    <a href="./content.html"><span>📎</span>Uploaded files<i>›</i></a>
+    <a href="./content.html"><span>⌕</span>Find in chat<i>›</i></a>
+    <a href="#" data-profile-action="home"><span>⌂</span>Add to home<i>›</i></a>
+    <a href="#" data-profile-action="archive"><span>▤</span>Archive<i>›</i></a>
+    <a href="#" data-profile-action="delete" class="ng-profile-delete"><span>▤</span>Delete<i>›</i></a>
+  </div>
+</aside>
+<div class="ng-menu-backdrop" id="ng-menu-backdrop" hidden></div>
+<aside class="ng-menu-drawer ng-facebook-style-menu" id="ng-menu-drawer" aria-label="Navigation menu" aria-hidden="true">
+  <div class="ng-menu-title"><span>NextGen Menu</span><button type="button" id="ng-menu-close" aria-label="Close navigation menu">×</button></div>
+  <div class="ng-menu-account"><span class="ng-menu-logo">NG</span><div><strong>NextGen</strong><small>Smart Automation. Smarter Growth.</small></div></div>
+  <h3 class="ng-menu-section-title">Your shortcuts</h3>
+  <div class="ng-menu-shortcuts">
+    <a href="./channels.html"><span>RF</span><small>Royal Furniture</small></a>
+    <a href="./channels.html"><span>NG</span><small>NextGen</small></a>
+    <a href="./dashboard.html"><span>▦</span><small>Dashboard</small></a>
+  </div>
+  <div class="ng-menu-main-links">
+    <a href="./dashboard.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum1)"><defs><linearGradient id="ngMenuSpectrum1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><rect x="4" y="5" width="32" height="30" rx="5"/><path d="M12 28V20h5v8M23 28V12h5v16"/></svg></span>Dashboard</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngMenuSpectrum2)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngMenuSpectrum2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><rect x="13" y="5" width="22" height="24" rx="4" transform="rotate(8 13 5)"/><rect x="5" y="11" width="23" height="24" rx="4"/><circle cx="13" cy="18" r="2.5"/><path d="m7 30 7-7 5 5 3-3 6 6"/></svg></span>Images</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngMenuSpectrum3)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngMenuSpectrum3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><rect x="5" y="6" width="8" height="28" rx="3"/><rect x="16" y="6" width="8" height="28" rx="3"/><path d="m27 7 5-1 5 26-6 2z"/></svg></span>Library</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngMenuSpectrum4)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngMenuSpectrum4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M5 13V9a4 4 0 0 1 4-4h8l5 5h9a4 4 0 0 1 4 4v17a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M5 19h30"/></svg></span>Projects</a>
+    <a href="./settings.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngMenuSpectrum5)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngMenuSpectrum5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><rect x="8" y="5" width="24" height="19" rx="3"/><path d="M5 25h30v4H5zM12 33h16"/><circle cx="8" cy="36" r="1.2" fill="currentColor"/><circle cx="14" cy="36" r="1.2" fill="currentColor"/><circle cx="20" cy="36" r="1.2" fill="currentColor"/><circle cx="26" cy="36" r="1.2" fill="currentColor"/><circle cx="32" cy="36" r="1.2" fill="currentColor"/></svg></span>Remote</a>
+    <a href="./schedule.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngMenuSpectrum6)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngMenuSpectrum6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><circle cx="20" cy="20" r="15"/><path d="M20 10v11l-7 7"/></svg></span>Scheduled</a><a href="./analytics.html"><span>▥</span>Channel Analytics</a>
+    <a href="./dashboard.html#notifications"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngAddedNav1)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngAddedNav1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="35%" stop-color="#3b82f6"/><stop offset="70%" stop-color="#a855f7"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs><path d="M20 5a3 3 0 0 0-6 0c-5 2-7 6-7 12l-3 4h26l-3-4c0-6-2-10-7-12"/><path d="M14 27a3 3 0 0 0 6 0"/><circle cx="30" cy="9" r="4" fill="#ec4899" stroke="none"/></svg></span>Notifications</a>
+    <a href="./schedule.html#planner"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngAddedNav2)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngAddedNav2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="35%" stop-color="#3b82f6"/><stop offset="70%" stop-color="#a855f7"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs><rect x="5" y="8" width="30" height="27" rx="5"/><path d="M12 4v8M28 4v8M5 16h30M12 22h5M23 22h5M12 28h5"/></svg></span>Planner</a>
+    <a href="./schedule.html#appointments"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngAddedNav3)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngAddedNav3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="35%" stop-color="#3b82f6"/><stop offset="70%" stop-color="#a855f7"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs><circle cx="20" cy="20" r="15"/><path d="M20 10v11l8 4"/><path d="M14 4h12"/></svg></span>Appointments</a>
+    <a href="./analytics.html#insights"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngAddedNav4)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngAddedNav4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="35%" stop-color="#3b82f6"/><stop offset="70%" stop-color="#a855f7"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs><path d="M20 4c-7 0-12 5-12 12 0 5 3 8 6 10v5h12v-5c3-2 6-5 6-10 0-7-5-12-12-12Z"/><path d="M14 35h12M15 16l4 4 7-8"/></svg></span>Insights</a>
+    <a href="./channels.html#leads-center"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngAddedNav5)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngAddedNav5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="35%" stop-color="#3b82f6"/><stop offset="70%" stop-color="#a855f7"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs><circle cx="20" cy="12" r="6"/><circle cx="8" cy="17" r="4"/><circle cx="32" cy="17" r="4"/><path d="M7 34c0-7 5-11 13-11s13 4 13 11M2 33c0-5 2-8 7-9M38 33c0-5-2-8-7-9"/></svg></span>Leads Center</a>
+    <a href="./help-centre.html#meta-latest-news"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="url(#ngAddedNav6)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngAddedNav6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="35%" stop-color="#3b82f6"/><stop offset="70%" stop-color="#a855f7"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs><path d="M7 5h26v30H7z"/><path d="M12 12h16M12 18h16M12 24h10M12 30h7"/><circle cx="29" cy="29" r="4" fill="#ec4899" stroke="none"/></svg></span>Meta Letest News</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum7)"><defs><linearGradient id="ngMenuSpectrum7" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum7" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M9 5h22v30L20 27 9 35z"/></svg></span>Saved</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum8)"><defs><linearGradient id="ngMenuSpectrum8" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum8" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M7 17a14 14 0 1 1 2 12"/><path d="M7 7v10h10M20 11v10l7 4"/></svg></span>Memories</a>
+    <a href="./channels.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum9)"><defs><linearGradient id="ngMenuSpectrum9" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum9" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><circle cx="20" cy="13" r="6"/><circle cx="8" cy="19" r="4"/><circle cx="32" cy="19" r="4"/><path d="M8 34c0-7 5-11 12-11s12 4 12 11M2 34c0-5 2-8 7-9M38 34c0-5-2-8-7-9"/></svg></span>Groups</a>
+    <a href="./settings.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum10)"><defs><linearGradient id="ngMenuSpectrum10" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum10" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M5 17v7h7l18 9V8l-18 9zM12 24l4 11h7l-5-8"/></svg></span>Ad Center</a>
+    <a href="./subscription-package.html"><span class="ng-point-icon">₹</span>Subscription Package</a>
+    <a href="./schedule.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum11)"><defs><linearGradient id="ngMenuSpectrum11" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum11" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><rect x="5" y="7" width="30" height="29" rx="5"/><path d="M12 4v7M28 4v7M5 15h30"/><path d="m20 19 2 4 4 .5-3 3 .8 4.5-3.8-2.2-3.8 2.2.8-4.5-3-3 4-.5z"/></svg></span>Events</a>
+    <a href="./channels.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum12)"><defs><linearGradient id="ngMenuSpectrum12" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum12" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><circle cx="15" cy="12" r="6"/><path d="M4 34c0-7 4-11 11-11s11 4 11 11"/><circle cx="30" cy="13" r="4"/><path d="M28 24c5 0 8 3 8 8"/></svg></span>Explore People</a>
+    <a href="./dashboard.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum13)"><defs><linearGradient id="ngMenuSpectrum13" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum13" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M6 6c16 0 28 12 28 28M6 17c10 0 17 7 17 17"/><circle cx="8" cy="32" r="2" fill="currentColor" stroke="none"/></svg></span>Feeds</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum14)"><defs><linearGradient id="ngMenuSpectrum14" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum14" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M5 18 22 5h12v12L17 34a5 5 0 0 1-7 0l-5-9a5 5 0 0 1 0-7z"/><circle cx="27" cy="12" r="2"/><path d="m15 18 2 4 4 1-4 2-1 4-2-4-4-1 4-2z"/></svg></span>Finds</a>
+    <a href="./channels.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum15)"><defs><linearGradient id="ngMenuSpectrum15" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum15" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M8 35V5h26l-4 10 4 10H8"/></svg></span>Pages</a>
+    <a href="./content.html"><span class="ng-point-icon"><svg viewBox="0 0 40 40" aria-hidden="true" fill="url(#ngMenuSpectrum16)"><defs><linearGradient id="ngMenuSpectrum16" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum16" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M5 19h7v14H5zM12 21l12-10c3-2 6 1 4 4l-4 5h8c3 0 4 4 1 6l-7 7H12z"/><path d="M24 11 27 7M29 15l5-1"/></svg></span>Pokes</a>
+  
+    
+  </div>
+  <button class="ng-menu-see-less" type="button" id="ng-menu-see-less">See less</button>
+  <div class="ng-menu-accordion">
+    <button type="button" class="ng-menu-accordion-trigger" aria-expanded="false"><span><svg viewBox="0 0 48 48" width="28" height="28" aria-hidden="true" fill="none" stroke="url(#ngMenuSpectrum17)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngMenuSpectrum17" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum17" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M24 4C12.95 4 4 12.5 4 23c0 5.2 2.2 9.9 5.8 13.2L8 44l9-3.2c2.2.8 4.6 1.2 7 1.2 11.05 0 20-8.5 20-19S35.05 4 24 4Z"/><path d="M18.5 17.5a5.7 5.7 0 1 1 9.7 4c-2.2 2.1-4.2 2.8-4.2 6"/><circle cx="24" cy="34.5" r="1.6" fill="currentColor" stroke="none"/></svg></span>Help &amp; Support <i>⌄</i></button>
+    <div class="ng-menu-accordion-panel" hidden>
+      <a href="./help-centre.html#scam-protection-center"><span class="ng-point-icon">🛡</span>Scam Protection Center</a>
+      <a href="./help-centre.html"><span class="ng-point-icon">❔</span>Support</a>
+      <a href="./send-feedback.html"><span class="ng-point-icon">⚑</span>Report a problem</a>
+      <a href="./privacy-policy.html#terms"><span class="ng-point-icon">▤</span>Terms &amp; policies</a>
+      <a href="./send-feedback.html"><span class="ng-point-icon">✉</span>Give feedback</a>
+    </div>
+    <button type="button" class="ng-menu-accordion-trigger" aria-expanded="false"><span><svg viewBox="0 0 48 48" width="28" height="28" aria-hidden="true" fill="none" stroke="url(#ngMenuSpectrum18)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="ngMenuSpectrum18" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><defs><linearGradient id="ngMenuSpectrum18" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="32%" stop-color="#3b82f6"/><stop offset="62%" stop-color="#a855f7"/><stop offset="82%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path d="M20 4h8l1.5 5.1a16 16 0 0 1 3.6 1.5l4.8-2 5.7 5.7-2 4.8a16 16 0 0 1 1.5 3.6L48 24v8l-5.1 1.5a16 16 0 0 1-1.5 3.6l2 4.8-5.7 5.7-4.8-2a16 16 0 0 1-3.6 1.5L28 52h-8l-1.5-5.1a16 16 0 0 1-3.6-1.5l-4.8 2-5.7-5.7 2-4.8a16 16 0 0 1-1.5-3.6L0 32v-8l5.1-1.5a16 16 0 0 1 1.5-3.6l-2-4.8 5.7-5.7 4.8 2a16 16 0 0 1 3.6-1.5L20 4Z" transform="translate(4 0) scale(.83)"/><circle cx="24" cy="24" r="7"/></svg></span>Settings &amp; Privacy <i>⌄</i></button>
+    <div class="ng-menu-accordion-panel" hidden>
+      <a href="./settings.html"><span class="ng-point-icon">⚙</span>Settings</a>
+      <a href="./privacy-policy.html"><span class="ng-point-icon">🔒</span>Privacy Center</a>
+      <a href="./settings.html#time-management"><span class="ng-point-icon">◷</span>Time management</a>
+      <a href="./settings.html#device-requests"><span class="ng-point-icon">▣</span>Device requests</a>
+      <a href="./subscription-package.html"><span class="ng-point-icon">♙</span>Your Subscription Activities</a>
+      <a href="./subscription-package.html#orders-and-payments"><span class="ng-point-icon">₹</span>Orders and payments</a>
+      <a href="./settings.html#link-history"><span class="ng-point-icon">↗</span>Link history</a>
+      <a href="./settings.html#appearance"><span class="ng-point-icon">◐</span>Dark mode / White Mode</a>
+      <a href="./settings.html#language"><span class="ng-point-icon">文</span>Language</a>
+    </div>
+  </div>
+  <button type="button" class="ng-menu-logout" disabled aria-disabled="true">Log out · Account connection pending</button>
+</aside><main class="auth-scroll">
 <header><div class="brand">NextGen</div><div class="tagline">Smart Automation. Smarter Growth.</div></header>
-<main>
+<section class="auth-card">
 <p class="eyebrow">Welcome to your control room</p>
 <h1 id="pageTitle">Sign in to NextGen</h1>
 <p class="intro" id="pageIntro">Continue to manage your channels, content and publishing approvals.</p>
@@ -66,8 +449,17 @@ footer{margin-top:auto;padding:13px 14px calc(13px + env(safe-area-inset-bottom)
 <div class="links"><a href="#" id="forgotLink">Forgot password?</a><a href="./index.html">Back to NextGen</a></div>
 <p class="status" id="status" role="status" aria-live="polite"></p>
 <div class="security-note">Your account is protected by NextGen authentication. Use the email address registered to your account. Social sign-in will appear here only after its provider setup is completed.</div>
+</section>
+<footer class="ng-shared-footer"><span class="ng-copyright">©2026 NextGen. All Rights Reserved. Smart Automation. Smarter Growth.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
 </main>
-<footer><span>© 2026 NextGen. All Rights Reserved.</span><span class="credit">Powered by ABDUS SATTAR</span></footer>
+<nav class="ng-bottom-nav" aria-label="Main navigation">
+  <a href="dashboard.html" class="active" aria-current="page"><span class="dashboard-master-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M5 7 Q5 4 9 4 H19 Q23 4 23 8 V13 Q23 17 19 17 H9 Q5 17 5 13 Z" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linejoin="round"/><path d="M28 8 Q28 4 32 4 H39 Q43 4 43 8 V17 Q43 21 39 21 H35 M28 15 V12" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 29 V25 Q5 21 9 21 H19 Q23 21 23 25 V39 Q23 43 19 43 H9 Q5 43 5 39 V33" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 29 Q28 25 32 25 H39 Q43 25 43 29 V39 Q43 43 39 43 H32 Q28 43 28 39 Z" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linejoin="round"/><defs><linearGradient id="dg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient></defs></svg></span><small>Dashboard</small></a>
+  <a href="channels.html"><span class="channel-master-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><g fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 26 10 34M33 26l5 8M15 39h18"/><path d="M23 8v4"/></g><circle cx="24" cy="5.5" r="3.5" fill="#FF9F2E" stroke="#FFFFFF" stroke-width="1.5"/><rect x="13" y="12" width="22" height="17" rx="5" fill="#21A9E0" stroke="#FFFFFF" stroke-width="2.5"/><circle cx="19" cy="20" r="1.7" fill="#FFFFFF"/><circle cx="29" cy="20" r="1.7" fill="#FFFFFF"/><rect x="4" y="33" width="15" height="12" rx="3.5" fill="#07123A" stroke="#FFFFFF" stroke-width="2.3"/><circle cx="9" cy="39" r="1.2" fill="#FFFFFF"/><circle cx="14" cy="39" r="1.2" fill="#FFFFFF"/><rect x="29" y="33" width="15" height="12" rx="3.5" fill="#07123A" stroke="#FFFFFF" stroke-width="2.3"/><circle cx="34" cy="39" r="1.2" fill="#FFFFFF"/><circle cx="39" cy="39" r="1.2" fill="#FFFFFF"/></svg></span><small>Channels</small></a>
+  <a href="content.html"><span class="content-master-icon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M10.2 22H6.1A3.1 3.1 0 0 1 3 18.9V5.1A3.1 3.1 0 0 1 6.1 2h11.8A3.1 3.1 0 0 1 21 5.1v7.4" stroke="#6524B8" stroke-width="1.9"/><path d="M7 7.2h2.7M7 10.5h10M7 13.8h10M7 17.1h7" stroke="#6524B8" stroke-width="1.9"/><path d="M17.4 14.3c.6 2.1 1.5 3 3.6 3.6-2.1.6-3 1.5-3.6 3.6-.6-2.1-1.5-3-3.6-3.6 2.1-.6 3-1.5 3.6-3.6Z" fill="#FF9418" stroke="#FF9418" stroke-width="1.3"/></svg></span><small>Content</small></a>
+  <a href="approvals.html"><span class="approval-master-icon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#16E08A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v6.2a2.8 2.8 0 0 1-2.8 2.8H5.8A2.8 2.8 0 0 1 3 18.2V5.8A2.8 2.8 0 0 1 5.8 3H14"/><path d="m7.2 12.2 3.4 3.4L21 5.2"/></svg></span><small>Approvals</small></a>
+  <a href="schedule.html"><span class="schedule-master-icon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#08B9D1" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="15.5" height="17" rx="2.3"/><path d="M7 2v4M13.5 2v4M2.5 9h15.5M6 12.5h2M10 12.5h2M6 16h2"/><circle cx="17.5" cy="16.5" r="5.1" fill="#030b24"/><path d="M17.5 13.5v3l2 1.5"/></svg></span><small>Schedule</small></a>
+</nav>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="./supabase-config.js"></script>
 <script>
@@ -136,5 +528,19 @@ footer{margin-top:auto;padding:13px 14px calc(13px + env(safe-area-inset-bottom)
  if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 })();
 </script>
+<script id="nextgen-auth-navigation-controls">
+(function(){
+ const byId=id=>document.getElementById(id);
+ const burger=byId("ng-hamburger"),drawer=byId("ng-menu-drawer"),menuShade=byId("ng-menu-backdrop"),close=byId("ng-menu-close");
+ const profile=byId("ng-profile-trigger"),profileMenu=byId("ng-profile-menu"),profileShade=byId("ng-profile-backdrop");
+ function setMenu(open){if(!drawer||!menuShade)return;drawer.classList.toggle("is-open",open);drawer.setAttribute("aria-hidden",String(!open));menuShade.hidden=!open;burger?.setAttribute("aria-expanded",String(open));document.body.classList.toggle("ng-menu-open",open)}
+ function setProfile(open){if(!profileMenu||!profileShade)return;profileMenu.classList.toggle("is-open",open);profileMenu.setAttribute("aria-hidden",String(!open));profileShade.hidden=!open;profile?.setAttribute("aria-expanded",String(open))}
+ burger?.addEventListener("click",()=>setMenu(!drawer.classList.contains("is-open")));close?.addEventListener("click",()=>setMenu(false));menuShade?.addEventListener("click",()=>setMenu(false));
+ profile?.addEventListener("click",()=>setProfile(!profileMenu.classList.contains("is-open")));profileShade?.addEventListener("click",()=>setProfile(false));
+ document.addEventListener("keydown",e=>{if(e.key==="Escape"){setMenu(false);setProfile(false)}});
+ document.querySelectorAll(".ng-menu-accordion-trigger").forEach(btn=>btn.addEventListener("click",()=>{const panel=btn.nextElementSibling;const open=btn.getAttribute("aria-expanded")==="true";btn.setAttribute("aria-expanded",String(!open));if(panel)panel.hidden=open}));
+})();
+</script>
+</div>
 </body>
 </html>
