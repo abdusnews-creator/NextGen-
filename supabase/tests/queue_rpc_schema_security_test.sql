@@ -38,6 +38,28 @@ BEGIN
     RAISE EXCEPTION 'Authenticated role needs schema usage for invoker wrappers';
   END IF;
 
+  IF NOT has_function_privilege('authenticated','nextgen_private.review_content_item(uuid,text,text)','EXECUTE')
+     OR NOT has_function_privilege('authenticated','nextgen_private.schedule_approved_content(uuid,uuid,timestamp with time zone)','EXECUTE')
+     OR NOT has_function_privilege('authenticated','nextgen_private.cancel_scheduled_content(uuid,text)','EXECUTE') THEN
+    RAISE EXCEPTION 'Authenticated role needs EXECUTE on private implementations for invoker wrappers';
+  END IF;
+
+  IF has_function_privilege('anon','nextgen_private.review_content_item(uuid,text,text)','EXECUTE')
+     OR has_function_privilege('anon','nextgen_private.schedule_approved_content(uuid,uuid,timestamp with time zone)','EXECUTE')
+     OR has_function_privilege('anon','nextgen_private.cancel_scheduled_content(uuid,text)','EXECUTE') THEN
+    RAISE EXCEPTION 'Anon must not execute private implementations';
+  END IF;
+
+  IF EXISTS (
+    SELECT 1 FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace,
+      LATERAL aclexplode(coalesce(p.proacl,acldefault('f',p.proowner))) a
+    WHERE n.nspname='nextgen_private'
+      AND p.proname IN ('review_content_item','schedule_approved_content','cancel_scheduled_content')
+      AND a.grantee=0 AND a.privilege_type='EXECUTE'
+  ) THEN
+    RAISE EXCEPTION 'PUBLIC must not have EXECUTE on private implementations';
+  END IF;
+
   IF NOT has_function_privilege('authenticated','public.review_content_item(uuid,text,text)','EXECUTE')
      OR NOT has_function_privilege('authenticated','public.schedule_approved_content(uuid,uuid,timestamp with time zone)','EXECUTE')
      OR NOT has_function_privilege('authenticated','public.cancel_scheduled_content(uuid,text)','EXECUTE') THEN
