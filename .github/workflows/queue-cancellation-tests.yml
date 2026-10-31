@@ -33,12 +33,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Prepare isolated fixture
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/queue_cancellation_fixture.sql
-      - name: Apply approval and scheduling RPC migration
-        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/migrations/20261030093128_add_nextgen_audited_approval_and_safe_scheduling.sql
       - name: Apply queue cancellation migration
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/migrations/20261031130000_add_audited_queue_cancellation.sql
       - name: Run authorization and state-transition tests
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/queue_cancellation_test.sql
+      - name: Apply approval and scheduling RPC migration
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/migrations/20261030093128_add_nextgen_audited_approval_and_safe_scheduling.sql
       - name: Run concurrent cancellation race test
         run: bash supabase/tests/queue_cancellation_concurrency_test.sh
       - name: Run schedule-versus-cancellation regression test
