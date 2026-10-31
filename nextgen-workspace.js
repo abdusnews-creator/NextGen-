@@ -318,8 +318,36 @@
     if($('scheduleForm')){$('scheduleForm').onsubmit=null;$('scheduleForm').addEventListener('submit',e=>{e.preventDefault();scheduleContent().catch(err=>setNote('scheduleNote',err.message,true));});}
     if($('analyticsPeriod'))$('analyticsPeriod').addEventListener('change',()=>loadAnalytics().catch(()=>{}));
   }
+  function renderProfileAuthEntry(){
+    const links=document.querySelector('.ng-profile-menu .ng-profile-links');
+    if(!links)return;
+    links.querySelectorAll('[data-ng-auth-entry],a[href="./login.html"]').forEach(node=>node.remove());
+    const item=document.createElement('a');
+    item.dataset.ngAuthEntry='true';
+    item.innerHTML=user?'<span>↪</span>Logout<i>›</i>':'<span>↪</span>Login / Sign Up<i>›</i>';
+    if(user){
+      item.href='#';
+      item.addEventListener('click',async event=>{
+        event.preventDefault();
+        item.style.pointerEvents='none';
+        item.style.opacity='.65';
+        const {error}=await client.auth.signOut();
+        if(error){
+          item.style.pointerEvents='';
+          item.style.opacity='';
+          item.lastChild.textContent='!';
+          return;
+        }
+        location.href='./login.html';
+      });
+    }else{
+      item.href='./login.html';
+    }
+    links.append(item);
+  }
   function showAuth(){
     showAuthPanel();
+    renderProfileAuthEntry();
     if(user)setSignedIn();
     else if(authMessage)authMessage.textContent='Sign in to enable secure database access. Local-only saving is disabled.';
   }
