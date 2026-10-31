@@ -1031,6 +1031,21 @@ html body .app>main.auth-scroll>footer.ng-shared-footer>.ng-credit{order:2!impor
 }
 </style>
 
+
+<style id="ng-login-footer-legal-only-final">
+/* Login welcome and login-options pages: show only Terms of Use and Privacy Policy. */
+html body .app>main.auth-scroll>footer.ng-shared-footer>.ng-copyright,
+html body .app>main.auth-scroll>footer.ng-shared-footer>.ng-credit{
+  display:none!important;
+}
+html body .app>main.auth-scroll>footer.ng-shared-footer>.ng-footer-legal{
+  display:block!important;visibility:visible!important;
+  flex:0 0 100%!important;width:100%!important;
+  margin:0!important;padding:2px 0!important;
+  text-align:center!important;
+}
+</style>
+
 </head>
 <body>
 <div class="app">
