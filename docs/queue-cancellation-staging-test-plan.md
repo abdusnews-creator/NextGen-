@@ -29,7 +29,8 @@
 | Newer content state | Content schedule/channel no longer matches the cancelled job | Job cancellation is recorded, but content is not reset |
 | Another active job exists | A second queued/processing job exists for the content | Job cancellation is recorded, but content is not reset |
 | Audit note bounds | Supply a long note | Stored note is safely bounded; no unbounded audit payload |
-| Repeat / race | Two requests attempt to cancel the same queued job | At most one successful cancellation; no duplicate or inconsistent restoration |\n| Schedule vs cancellation | Cancellation locks and restores content while a new schedule RPC waits on the same content row | Cancellation commits first; waiting schedule then succeeds; old job stays cancelled, new job remains queued, and content reflects the new schedule |
+| Repeat / race | Two requests attempt to cancel the same queued job | At most one successful cancellation; no duplicate or inconsistent restoration |
+| Schedule vs cancellation | Cancellation locks and restores content while a new schedule RPC waits on the same content row | Cancellation commits first; waiting schedule then succeeds; old job stays cancelled, new job remains queued, and content reflects the new schedule |
 
 ## Release gate
 
