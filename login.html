@@ -494,6 +494,43 @@ html body .app>header{
   width:100%!important;
 }
 </style>
+<style id="ng-chatgpt-second-screen-design">
+#loginOptionsScreen{position:relative;max-width:100%;min-height:650px;padding:0 0 42px!important;background:transparent;text-align:center;color:#101010}
+#loginOptionsScreen .back-auth{position:absolute;top:0;left:0;width:64px;height:64px;margin:0;border:0;border-radius:50%;background:#f4f4f4;color:#111;font-size:36px;font-weight:300}
+.chat-auth-brand{width:76px;height:76px;margin:82px auto 60px;display:grid;place-items:center;border:3px solid #071b39;border-radius:50%;color:#071b39;font-size:25px;font-weight:900;letter-spacing:-1px}
+#loginOptionsScreen h1{margin:0 auto 24px!important;color:#111!important;font-size:27px!important;line-height:1.25!important;font-weight:750!important}
+#loginOptionsScreen .intro{max-width:360px;margin:0 auto 82px!important;color:#171717!important;font-size:17px!important;line-height:1.5!important}
+#loginOptionsScreen #authForm{width:100%;margin:0 auto}
+#loginOptionsScreen .email-first-field{margin:0 0 28px!important}
+#loginOptionsScreen .field input{width:100%;height:58px;padding:0 18px;border:1.5px solid #c9c9c9;border-radius:7px;background:#fff;color:#111;font-size:16px;box-shadow:none}
+#loginOptionsScreen .field input::placeholder{color:#666}
+#loginOptionsScreen #passwordStep .field{position:relative;margin:0 0 14px}
+#loginOptionsScreen #passwordStep .show-pass{position:absolute;right:12px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:#333}
+#loginOptionsScreen .email-continue,#loginOptionsScreen .password-continue{width:100%;height:58px;margin:0;border:0;border-radius:32px;background:#111;color:#fff;font-size:17px;font-weight:650;box-shadow:none}
+#loginOptionsScreen .email-continue:disabled{background:#f1f1f1;color:#999;cursor:not-allowed}
+#loginOptionsScreen .auth-divider{display:flex;align-items:center;gap:12px;margin:48px 0 48px!important;color:#555;font-size:14px;font-weight:500;letter-spacing:0}
+#loginOptionsScreen .auth-divider:before,#loginOptionsScreen .auth-divider:after{height:1px;background:#d8d8d8}
+#loginOptionsScreen .social-stack{display:grid;grid-template-columns:1fr;gap:14px}
+#loginOptionsScreen .social-button{min-height:56px;border:1.5px solid #c9c9c9;border-radius:32px;background:transparent;color:#111;font-size:16px;font-weight:600;box-shadow:none}
+#loginOptionsScreen .google-button{margin:0}
+#loginOptionsScreen .google-mark{width:24px;height:24px;background:transparent;color:#4285f4;font-size:23px}
+#loginOptionsScreen .phone-mark{color:#111;font-size:22px}
+#loginOptionsScreen .more-signin-options{border:0;background:transparent;color:#333;text-decoration:underline;font-size:13px;padding:7px}
+#loginOptionsScreen .extra-social-options{display:grid;gap:12px}
+#loginOptionsScreen .extra-social-options[hidden],#loginOptionsScreen #passwordStep[hidden],#loginOptionsScreen .password-continue[hidden]{display:none!important}
+#loginOptionsScreen .auth-mode-switch{display:flex;justify-content:center;gap:10px;margin:4px 0 18px;color:#555;font-size:14px}
+#loginOptionsScreen .mode-link{border:0;background:transparent;color:#555;font:inherit;padding:0}
+#loginOptionsScreen .mode-link.active{color:#111;font-weight:750;text-decoration:underline}
+#loginOptionsScreen .auth-utility-links{justify-content:center;margin-top:20px}
+#loginOptionsScreen .auth-legal{position:absolute;left:0;right:0;bottom:0;margin:28px 0 0;color:#333;font-size:13px;text-align:center}
+#loginOptionsScreen .auth-legal a{color:#222;text-decoration:underline}
+@media(max-width:430px){
+ #loginOptionsScreen{padding-left:0!important;padding-right:0!important;min-height:calc(100dvh - 130px)}
+ .chat-auth-brand{margin-top:82px;margin-bottom:58px}
+ #loginOptionsScreen h1{font-size:27px!important}
+ #loginOptionsScreen .intro{font-size:16px!important;margin-bottom:78px!important}
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -618,28 +655,33 @@ html body .app>header{
 </div>
 <div id="loginOptionsScreen" class="auth-screen" hidden>
   <button class="back-auth" id="backToWelcome" type="button" aria-label="Back">‹</button>
+  <div class="chat-auth-brand" aria-hidden="true">NG</div>
   <h1 id="pageTitle">Log in or sign up</h1>
-  <p class="intro" id="pageIntro">You'll get smarter responses and can manage your NextGen workspace.</p>
-  <div class="tabs" role="tablist" aria-label="Account access">
-    <button class="tab" id="loginTab" type="button" role="tab" aria-selected="true">Sign in</button>
-    <button class="tab" id="signupTab" type="button" role="tab" aria-selected="false">Sign up</button>
-  </div>
+  <p class="intro" id="pageIntro">You’ll get smarter responses and can upload files, images and more.</p>
   <form id="authForm" novalidate>
-    <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" placeholder="Email" required></div>
-    <div class="field"><label for="password">Password</label><div class="password-wrap"><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Password" minlength="8" required><button class="show-pass" id="showPassword" type="button">Show</button></div></div>
-    <div class="field" id="confirmWrap" hidden><label for="confirmPassword">Confirm password</label><input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Re-enter your password" minlength="8"></div>
-    <button class="primary" id="submitButton" type="submit">Continue</button>
+    <div class="field email-first-field"><input id="email" name="email" type="email" autocomplete="email" placeholder="Email" aria-label="Email" required></div>
+    <div id="passwordStep" hidden>
+      <div class="field"><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password" minlength="8" required><button class="show-pass" id="showPassword" type="button">Show</button></div>
+      <div class="field" id="confirmWrap" hidden><input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Confirm password" aria-label="Confirm password" minlength="8"></div>
+      <div class="auth-mode-switch"><button type="button" id="loginModeButton" class="mode-link active">Log in</button><span>·</span><button type="button" id="signupModeButton" class="mode-link">Sign up</button></div>
+    </div>
+    <button class="primary email-continue" id="submitButton" type="button" disabled>Continue</button>
+    <button class="primary password-continue" id="passwordSubmitButton" type="submit" hidden>Continue</button>
   </form>
   <div class="auth-divider"><span>OR</span></div>
   <div class="social-stack">
     <button class="social-button google-button" id="googleSignIn" type="button"><span class="google-mark">G</span>Continue with Google</button>
-    <button class="social-button apple-button" id="appleSignIn" type="button"><span class="apple-mark">●</span>Continue with Apple</button>
-    <button class="social-button microsoft-button" id="microsoftSignIn" type="button"><span class="microsoft-mark"><i></i><i></i><i></i><i></i></span>Continue with Microsoft</button>
     <button class="social-button" id="phoneSignIn" type="button"><span class="phone-mark">☎</span>Continue with phone</button>
-    <button class="social-button" id="facebookSignIn" type="button"><span class="facebook-mark">f</span>Continue with Facebook</button>
-    <button class="social-button" id="instagramSignIn" type="button"><span class="instagram-mark">◎</span>Continue with Instagram</button>
+    <button class="more-signin-options" id="moreSignInOptions" type="button">More sign-in options</button>
+    <div class="extra-social-options" id="extraSocialOptions" hidden>
+      <button class="social-button apple-button" id="appleSignIn" type="button"><span class="apple-mark">●</span>Continue with Apple</button>
+      <button class="social-button microsoft-button" id="microsoftSignIn" type="button"><span class="microsoft-mark"><i></i><i></i><i></i><i></i></span>Continue with Microsoft</button>
+      <button class="social-button" id="facebookSignIn" type="button"><span class="facebook-mark">f</span>Continue with Facebook</button>
+      <button class="social-button" id="instagramSignIn" type="button"><span class="instagram-mark">◎</span>Continue with Instagram</button>
+    </div>
   </div>
-  <div class="links"><a href="#" id="forgotLink">Forgot password?</a><a href="./index.html">Back to NextGen</a></div>
+  <div class="links auth-utility-links"><a href="#" id="forgotLink">Forgot password?</a></div>
+  <p class="auth-legal"><a href="./privacy-policy.html">Terms of Use</a><span> · </span><a href="./privacy-policy.html">Privacy Policy</a></p>
 </div>
 <p class="status" id="status" role="status" aria-live="polite"></p>
 <div class="security-note">Your NextGen account is protected by secure authentication.</div>
@@ -661,86 +703,34 @@ html body .app>header{
  const $=id=>document.getElementById(id);
  const form=$('authForm'),email=$('email'),password=$('password'),confirmPassword=$('confirmPassword');
  let mode='login',client=null;
- try{
-  const cfg=window.NEXTGEN_SUPABASE_CONFIG||{};
-  if(window.supabase&&cfg.url&&cfg.anonKey&&/^https:\/\//.test(cfg.url))client=window.supabase.createClient(cfg.url,cfg.anonKey);
- }catch(e){console.error('NextGen auth setup error',e);}
+ try{const cfg=window.NEXTGEN_SUPABASE_CONFIG||{};if(window.supabase&&cfg.url&&cfg.anonKey&&/^https:\/\//.test(cfg.url))client=window.supabase.createClient(cfg.url,cfg.anonKey);}catch(e){console.error('NextGen auth setup error',e);}
  function message(text,type=''){const el=$('status');el.textContent=text;el.className='status'+(type?' '+type:'');}
- function showOptions(){ $('welcomeScreen').hidden=true; $('loginOptionsScreen').hidden=false; window.scrollTo({top:0,behavior:'smooth'}); }
- function showWelcome(){ $('loginOptionsScreen').hidden=true; $('welcomeScreen').hidden=false; message(''); window.scrollTo({top:0,behavior:'smooth'}); }
+ function showOptions(){$('welcomeScreen').hidden=true;$('loginOptionsScreen').hidden=false;window.scrollTo({top:0,behavior:'smooth'});}
+ function showWelcome(){$('loginOptionsScreen').hidden=true;$('welcomeScreen').hidden=false;message('');window.scrollTo({top:0,behavior:'smooth'});}
  $('showSignInOptions').addEventListener('click',showOptions);
  $('backToWelcome').addEventListener('click',showWelcome);
- async function continueExisting(){
-  if(!client){message('Authentication is not connected. Please check the Supabase configuration.','error');return;}
-  const {data,error}=await client.auth.getSession();
-  if(error){message(error.message,'error');return;}
-  if(data.session){location.href='./index.html';return;}
-  await socialSignIn('google');
- }
+ async function continueExisting(){if(!client){message('Authentication is not connected. Please check the Supabase configuration.','error');return;}const {data,error}=await client.auth.getSession();if(error){message(error.message,'error');return;}if(data.session){location.href='./index.html';return;}await socialSignIn('google');}
  $('continueAccount').addEventListener('click',continueExisting);
  $('welcomeGoogle').addEventListener('click',()=>socialSignIn('google'));
  $('welcomeApple').addEventListener('click',()=>socialSignIn('apple'));
  $('welcomeMicrosoft').addEventListener('click',()=>socialSignIn('azure'));
- function setMode(next){
-  mode=next;const signup=mode==='signup';
-  $('loginTab').setAttribute('aria-selected',String(!signup));
-  $('signupTab').setAttribute('aria-selected',String(signup));
-  $('pageTitle').textContent='Log in or sign up';
-  $('pageIntro').textContent=signup?'Create your NextGen account to get started.':"You'll get smarter responses and can manage your NextGen workspace.";
-  $('submitButton').textContent='Continue';
-  $('confirmWrap').hidden=!signup;
-  password.autocomplete=signup?'new-password':'current-password';
-  $('forgotLink').hidden=signup;
-  confirmPassword.required=signup;
-  message('');
- }
- $('loginTab').addEventListener('click',()=>setMode('login'));
- $('signupTab').addEventListener('click',()=>setMode('signup'));
+ function setMode(next){mode=next;const signup=mode==='signup';$('loginModeButton').classList.toggle('active',!signup);$('signupModeButton').classList.toggle('active',signup);$('confirmWrap').hidden=!signup;confirmPassword.required=signup;password.autocomplete=signup?'new-password':'current-password';$('forgotLink').hidden=signup;$('pageTitle').textContent='Log in or sign up';$('pageIntro').textContent=signup?'Create your NextGen account to get started.':'You’ll get smarter responses and can upload files, images and more.';message('');}
+ $('loginModeButton').addEventListener('click',()=>setMode('login'));
+ $('signupModeButton').addEventListener('click',()=>setMode('signup'));
+ $('email').addEventListener('input',()=>{$('submitButton').disabled=!email.checkValidity()||!email.value.trim();});
+ $('submitButton').addEventListener('click',()=>{if(!email.value.trim()||!email.checkValidity()){message('Enter a valid email address.','error');email.focus();return;}$('passwordStep').hidden=false;$('submitButton').hidden=true;$('passwordSubmitButton').hidden=false;password.required=true;password.focus();window.scrollTo({top:0,behavior:'smooth'});});
+ $('moreSignInOptions').addEventListener('click',()=>{const box=$('extraSocialOptions');box.hidden=!box.hidden;$('moreSignInOptions').textContent=box.hidden?'More sign-in options':'Fewer sign-in options';});
  $('googleSignIn').addEventListener('click',()=>socialSignIn('google'));
  $('appleSignIn').addEventListener('click',()=>socialSignIn('apple'));
  $('microsoftSignIn').addEventListener('click',()=>socialSignIn('azure'));
  $('facebookSignIn').addEventListener('click',()=>socialSignIn('facebook'));
  $('instagramSignIn').addEventListener('click',()=>message('Instagram sign-in needs Meta/Instagram OAuth configuration before it can be enabled.','error'));
  $('phoneSignIn').addEventListener('click',()=>message('Phone sign-in needs SMS provider and phone OTP configuration before it can be enabled.','error'));
- async function socialSignIn(provider){
-  if(!client){message('Authentication is not connected. Please check the Supabase configuration.','error');return;}
-  try{message('Connecting to '+(provider==='google'?'Google':provider==='apple'?'Apple':provider==='azure'?'Microsoft':'Facebook')+'…');
-   const {error}=await client.auth.signInWithOAuth({provider,options:{redirectTo:new URL('./index.html',location.href).href,...(provider==='google'?{queryParams:{prompt:'select_account'}}:{})}});
-   if(error)throw error;
-  }catch(err){message(err&&err.message?err.message:'Social sign-in could not be started.','error');}
- }
- $('showPassword').addEventListener('click',()=>{
-  const show=password.type==='password';password.type=show?'text':'password';$('showPassword').textContent=show?'Hide':'Show';
- });
- $('forgotLink').addEventListener('click',async e=>{
-  e.preventDefault();if(!client){message('Authentication is not connected. Please check the Supabase configuration.','error');return;}
-  const value=email.value.trim();if(!value){message('Enter your email address first, then choose Forgot password.','error');email.focus();return;}
-  try{const {error}=await client.auth.resetPasswordForEmail(value,{redirectTo:new URL('./login.html',location.href).href});if(error)throw error;message('Password reset instructions have been sent if this email is registered.','success');}
-  catch(err){message(err.message||'Could not send the password reset email.','error');}
- });
- form.addEventListener('submit',async e=>{
-  e.preventDefault();message('');
-  if(!client){message('Authentication is not connected. Please check the Supabase project configuration.','error');return;}
-  const mail=email.value.trim(),pass=password.value;
-  if(!mail||!email.checkValidity()){message('Enter a valid email address.','error');email.focus();return;}
-  if(pass.length<8){message('Password must contain at least 8 characters.','error');password.focus();return;}
-  if(mode==='signup'&&pass!==confirmPassword.value){message('The passwords do not match.','error');confirmPassword.focus();return;}
-  const button=$('submitButton');button.disabled=true;button.textContent=mode==='signup'?'Creating account…':'Continuing…';
-  try{
-   if(mode==='signup'){
-    const {data,error}=await client.auth.signUp({email:mail,password:pass,options:{emailRedirectTo:new URL('./index.html',location.href).href}});
-    if(error)throw error;
-    if(data.session){message('Account created successfully. Opening NextGen…','success');setTimeout(()=>location.href='./index.html',700);}
-    else{message('Account created. Check your email and confirm your address before logging in.','success');setMode('login');}
-   }else{
-    const {error}=await client.auth.signInWithPassword({email:mail,password:pass});
-    if(error)throw error;
-    message('Login successful. Opening NextGen…','success');setTimeout(()=>location.href='./index.html',500);
-   }
-  }catch(err){message(err&&err.message?err.message:'Authentication failed. Please try again.','error');}
-  finally{button.disabled=false;button.textContent='Continue';}
- });
- setMode('login');
+ async function socialSignIn(provider){if(!client){message('Authentication is not connected. Please check the Supabase configuration.','error');return;}try{message('Connecting to '+(provider==='google'?'Google':provider==='apple'?'Apple':provider==='azure'?'Microsoft':'Facebook')+'…');const {error}=await client.auth.signInWithOAuth({provider,options:{redirectTo:new URL('./index.html',location.href).href,...(provider==='google'?{queryParams:{prompt:'select_account'}}:{})}});if(error)throw error;}catch(err){message(err&&err.message?err.message:'Social sign-in could not be started.','error');}}
+ $('showPassword').addEventListener('click',()=>{const show=password.type==='password';password.type=show?'text':'password';$('showPassword').textContent=show?'Hide':'Show';});
+ $('forgotLink').addEventListener('click',async e=>{e.preventDefault();if(!client){message('Authentication is not connected. Please check the Supabase configuration.','error');return;}const value=email.value.trim();if(!value){message('Enter your email address first, then choose Forgot password.','error');email.focus();return;}try{const {error}=await client.auth.resetPasswordForEmail(value,{redirectTo:new URL('./login.html',location.href).href});if(error)throw error;message('Password reset instructions have been sent if this email is registered.','success');}catch(err){message(err.message||'Could not send the password reset email.','error');}});
+ form.addEventListener('submit',async e=>{e.preventDefault();message('');if(!client){message('Authentication is not connected. Please check the Supabase project configuration.','error');return;}const mail=email.value.trim(),pass=password.value;if(!mail||!email.checkValidity()){message('Enter a valid email address.','error');email.focus();return;}if(pass.length<8){message('Password must contain at least 8 characters.','error');password.focus();return;}if(mode==='signup'&&pass!==confirmPassword.value){message('The passwords do not match.','error');confirmPassword.focus();return;}const button=$('passwordSubmitButton');button.disabled=true;button.textContent=mode==='signup'?'Creating account…':'Continuing…';try{if(mode==='signup'){const {data,error}=await client.auth.signUp({email:mail,password:pass,options:{emailRedirectTo:new URL('./index.html',location.href).href}});if(error)throw error;if(data.session){message('Account created successfully. Opening NextGen…','success');setTimeout(()=>location.href='./index.html',700);}else{message('Account created. Check your email and confirm your address before logging in.','success');setMode('login');}}else{const {error}=await client.auth.signInWithPassword({email:mail,password:pass});if(error)throw error;message('Login successful. Opening NextGen…','success');setTimeout(()=>location.href='./index.html',500);}}catch(err){message(err&&err.message?err.message:'Authentication failed. Please try again.','error');}finally{button.disabled=false;button.textContent='Continue';}});
+ setMode('login');$('submitButton').disabled=true;
  if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 })();
 </script>
