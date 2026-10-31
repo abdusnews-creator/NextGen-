@@ -700,8 +700,14 @@ body>.app>nav.ng-bottom-nav{
 .ng-menu-accordion-panel a:nth-child(6n+4) .ng-point-icon{color:#f472b6!important}
 .ng-menu-accordion-panel a:nth-child(6n+5) .ng-point-icon{color:#fbbf24!important}
 .ng-menu-accordion-panel a:nth-child(6n) .ng-point-icon{color:#34d399!important}
-.ng-menu-drawer .ng-point-icon svg{width:25px;height:25px;display:block;stroke:currentColor}
-.ng-menu-main-links>a>span,.ng-menu-accordion-panel a .ng-point-icon{filter:drop-shadow(0 0 2px currentColor)}
+.ng-menu-drawer .ng-point-icon svg{
+  width:25px;height:25px;display:block;stroke:currentColor;
+  stroke-width:1.9;shape-rendering:geometricPrecision;
+  vector-effect:non-scaling-stroke;
+}
+.ng-menu-main-links>a>span,.ng-menu-accordion-panel a .ng-point-icon{
+  filter:drop-shadow(0 0 3px currentColor);
+}
 </style>
 <style id="ng-menu-icon-size-uniform">
 /* Lock every navigation item icon to one shared 25px square size. */
