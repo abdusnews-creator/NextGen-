@@ -811,6 +811,26 @@ body .app>header>img.logo{
   }
 }
 </style>
+<style id="ng-login-legal-links-at-true-page-end">
+/* Keep Terms and Privacy after all sign-in content, at the actual end of the scrollable page. */
+body.ng-auth-second-step .auth-card{
+  min-height:100dvh!important;
+  height:auto!important;
+}
+body.ng-auth-second-step #loginOptionsScreen{
+  display:block!important;
+  min-height:0!important;
+  height:auto!important;
+  flex:none!important;
+  padding-bottom:0!important;
+}
+body.ng-auth-second-step #loginOptionsScreen .auth-legal{
+  position:static!important;
+  margin:26px 0 0!important;
+  padding:18px 0 calc(20px + env(safe-area-inset-bottom,0px))!important;
+  clear:both!important;
+}
+</style>
 </head>
 <body>
 <div class="app">
