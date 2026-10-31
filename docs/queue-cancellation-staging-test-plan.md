@@ -1,6 +1,6 @@
 # Queue Cancellation — Staging Validation Plan
 
-**Status:** Latest isolated PostgreSQL CI passed (2026-10-31; Run #54), including audited-cancellation bypass prevention, private-function privilege, owner, and empty-search-path assertions. Full Supabase staging validation remains pending.
+**Status:** Latest isolated PostgreSQL CI passed (2026-10-31; Run #56), including audited-cancellation bypass prevention, private-function privilege, owner, and empty-search-path assertions. Full Supabase staging validation remains pending.
 
 ## Current safety boundary
 
@@ -48,7 +48,7 @@
 
 ## Current result
 
-**Latest isolated PostgreSQL CI — PASSED (2026-10-31):** GitHub Actions [Run #54 (41185769813)](https://github.com/nextgen-i/NextGen/actions/runs/41185769813), commit `7c16f43f8a39a4759cecf84a8d5d05f8e0d038b7`. All workflow checks completed successfully on a disposable PostgreSQL 17 service.
+**Latest isolated PostgreSQL CI — PASSED (2026-10-31):** GitHub Actions [Run #56 (41185855137)](https://github.com/nextgen-i/NextGen/actions/runs/41185855137), commit `3797d72b6ad3fad1988ca73da3e76018dc681f81`. All workflow checks completed successfully on a disposable PostgreSQL 17 service.
 
 Successful checks include:
 
