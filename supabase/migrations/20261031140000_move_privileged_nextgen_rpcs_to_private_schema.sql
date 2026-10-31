@@ -23,6 +23,12 @@ GRANT EXECUTE ON FUNCTION nextgen_private.review_content_item(uuid,text,text) TO
 GRANT EXECUTE ON FUNCTION nextgen_private.schedule_approved_content(uuid,uuid,timestamptz) TO authenticated;
 GRANT EXECUTE ON FUNCTION nextgen_private.cancel_scheduled_content(uuid,text) TO authenticated;
 
+-- Cancellation must go through the audited RPC. The older browser policy and
+-- table grant allowed direct queued -> cancelled updates, which bypassed the
+-- audit event and content-state restoration performed by cancel_scheduled_content.
+DROP POLICY IF EXISTS "nextgen owners cancel queued jobs" ON public.publishing_jobs;
+REVOKE UPDATE ON TABLE public.publishing_jobs FROM PUBLIC, anon, authenticated;
+
 -- Stable PostgREST endpoints. These wrappers execute as the caller; the
 -- narrowly-scoped private functions perform their own auth.uid()/owner checks.
 CREATE OR REPLACE FUNCTION public.review_content_item(
