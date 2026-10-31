@@ -563,6 +563,13 @@ body.ng-auth-second-step .status{color:#333!important}
  }
 }
 </style>
+<style id="ng-login-hide-header-footer">
+/* Login page only: no workspace header or shared footer on either auth screen. */
+html body .app{padding-top:0!important}
+html body .app>header,
+html body .app>main.auth-scroll>.ng-shared-footer{display:none!important}
+html body .app>main.auth-scroll{padding-top:0!important;margin-top:0!important}
+</style>
 </head>
 <body>
 <div class="app">
