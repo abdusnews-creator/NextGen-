@@ -985,6 +985,17 @@ body.ng-auth-second-step main.auth-scroll{position:relative!important;flex:1 1 a
 body.ng-auth-second-step main.auth-scroll>section.auth-card{flex:1 1 auto!important;width:100%!important;min-height:0!important;height:auto!important;max-height:100%!important;margin:0 auto!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important}
 body.ng-auth-second-step main.auth-scroll>.auth-legal{flex:0 0 auto!important;margin:0 auto!important;padding:12px 0 calc(18px + env(safe-area-inset-bottom,0px))!important}
 </style>
+<style id="ng-legal-links-footer-both-pages-final">
+/* Show Terms and Privacy links in the actual footer on both welcome and login-options screens. */
+.app>.ng-shared-footer .ng-footer-legal{display:block!important;order:0!important;flex:0 0 100%!important;width:100%!important;text-align:center!important;font-size:13px!important;line-height:1.35!important;color:#b9d9fa!important;white-space:nowrap!important}
+.app>.ng-shared-footer .ng-footer-legal a{color:#8bdcff!important;text-decoration:underline!important;text-underline-offset:2px!important;font-size:13px!important;font-weight:600!important}
+.app>.ng-shared-footer .ng-copyright{order:1!important}
+.app>.ng-shared-footer .ng-credit{order:2!important}
+.app>.ng-shared-footer{display:flex!important;flex-wrap:wrap!important;justify-content:space-between!important;row-gap:4px!important}
+body.ng-auth-second-step .app>.ng-shared-footer{display:flex!important;flex:0 0 auto!important;position:relative!important;z-index:5!important;margin:0!important;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))!important;background:#030b24!important;border-top:1px solid #1e4fb5!important}
+body.ng-auth-second-step main.auth-scroll{padding-bottom:0!important}
+body.ng-auth-second-step main.auth-scroll>.auth-legal{display:none!important}
+</style>
 </head>
 <body>
 <div class="app">
