@@ -43,7 +43,7 @@ INSERT INTO public.publishing_jobs(id,owner_id,content_id,channel_id,scheduled_f
 SET LOCAL ROLE authenticated;
 SELECT set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111',true);
 SELECT set_config('request.jwt.claim.role','authenticated',true);
-DO $
+DO $$
 BEGIN
   PERFORM public.cancel_scheduled_content('dddddddd-dddd-4ddd-8ddd-ddddddddddd2',NULL);
   RAISE EXCEPTION 'cross-owner cancellation unexpectedly succeeded';
