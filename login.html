@@ -1082,6 +1082,31 @@ html body .app>main.auth-scroll>footer.ng-shared-footer::after{
 #welcomeScreen .welcome-combined-line{margin-top:0!important}
 </style>
 
+
+<style id="ng-welcome-footer-match-step-two-final">
+/* Put welcome-screen legal links at the same bottom position as step two; keep footer line removed. */
+body:not(.ng-auth-second-step) html body .app>main.auth-scroll{
+  display:flex!important;
+  flex-direction:column!important;
+  min-height:calc(100dvh - 46px)!important;
+  height:auto!important;
+}
+body:not(.ng-auth-second-step) html body .app>main.auth-scroll>section.auth-card{
+  flex:1 0 auto!important;
+}
+body:not(.ng-auth-second-step) html body .app>main.auth-scroll>footer.ng-shared-footer{
+  flex:0 0 auto!important;
+  margin-top:auto!important;
+  border-top:0!important;
+  box-shadow:none!important;
+  padding-top:6px!important;
+}
+body:not(.ng-auth-second-step) html body .app>main.auth-scroll>footer.ng-shared-footer::before,
+body:not(.ng-auth-second-step) html body .app>main.auth-scroll>footer.ng-shared-footer::after{
+  display:none!important;content:none!important;
+}
+</style>
+
 </head>
 <body>
 <div class="app">
