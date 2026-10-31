@@ -95,12 +95,12 @@ RESET ROLE;
 SELECT set_config('request.jwt.claim.sub','',true);
 SELECT set_config('request.jwt.claim.role','authenticated',true);
 SET LOCAL ROLE authenticated;
-DO $
+DO $$
 BEGIN
   PERFORM public.cancel_scheduled_content('dddddddd-dddd-4ddd-8ddd-ddddddddddd1',NULL);
   RAISE EXCEPTION 'unauthenticated cancellation unexpectedly succeeded';
 EXCEPTION WHEN SQLSTATE '28000' THEN NULL;
-END $;
+END $$;
 RESET ROLE;
 
 -- A newer schedule must not be overwritten by cancellation of an older job.
@@ -113,13 +113,13 @@ SELECT set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111'
 SELECT set_config('request.jwt.claim.role','authenticated',true);
 SELECT public.cancel_scheduled_content('dddddddd-dddd-4ddd-8ddd-ddddddddddd5',NULL);
 RESET ROLE;
-DO $
+DO $$
 BEGIN
   IF (SELECT status FROM public.content_items WHERE id='cccccccc-cccc-4ccc-8ccc-ccccccccccc5') <> 'scheduled'
      OR (SELECT scheduled_for FROM public.content_items WHERE id='cccccccc-cccc-4ccc-8ccc-ccccccccccc5') <> '2030-01-05 10:00:00+00'::timestamptz THEN
     RAISE EXCEPTION 'newer content schedule was overwritten';
   END IF;
-END $;
+END $$;
 
 -- Audit notes are bounded to 1,000 characters.
 INSERT INTO public.content_items(id,owner_id,channel_id,status,scheduled_for) VALUES
@@ -129,12 +129,12 @@ INSERT INTO public.publishing_jobs(id,owner_id,content_id,channel_id,scheduled_f
 SET LOCAL ROLE authenticated;
 SELECT public.cancel_scheduled_content('dddddddd-dddd-4ddd-8ddd-ddddddddddd6',repeat('x',1500));
 RESET ROLE;
-DO $
+DO $$
 BEGIN
   IF (SELECT length(note) FROM public.approval_events WHERE content_id='cccccccc-cccc-4ccc-8ccc-ccccccccccc6' AND action='cancelled') <> 1000 THEN
     RAISE EXCEPTION 'audit note was not bounded to 1,000 characters';
   END IF;
-END $;
+END $$;
 
 -- Published and already-cancelled jobs are immutable to the cancellation RPC.
 SELECT set_config('request.jwt.claim.role','service_role',true);
@@ -146,18 +146,18 @@ INSERT INTO public.publishing_jobs(id,owner_id,content_id,channel_id,scheduled_f
  ('dddddddd-dddd-4ddd-8ddd-ddddddddddd8','11111111-1111-4111-8111-111111111111','cccccccc-cccc-4ccc-8ccc-ccccccccccc8','aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa','2030-01-08 08:00:00+00','cancelled');
 SET LOCAL ROLE authenticated;
 SELECT set_config('request.jwt.claim.role','authenticated',true);
-DO $
+DO $$
 BEGIN
   PERFORM public.cancel_scheduled_content('dddddddd-dddd-4ddd-8ddd-ddddddddddd7',NULL);
   RAISE EXCEPTION 'published job cancellation unexpectedly succeeded';
 EXCEPTION WHEN SQLSTATE '55000' THEN NULL;
-END $;
-DO $
+END $$;
+DO $$
 BEGIN
   PERFORM public.cancel_scheduled_content('dddddddd-dddd-4ddd-8ddd-ddddddddddd8',NULL);
   RAISE EXCEPTION 'already-cancelled job cancellation unexpectedly succeeded';
 EXCEPTION WHEN SQLSTATE '55000' THEN NULL;
-END $;
+END $$;
 RESET ROLE;
 
 ROLLBACK;
