@@ -249,3 +249,7 @@ html body.ng-menu-open nav.ng-bottom-nav{
 
 /* Remove the unintended blank spacer between Lock chat and Uploaded files in profile menus. */
 .ng-profile-menu .ng-profile-action-spacer{display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;}
+
+
+/* Profile menu: remove the extra divider above Share; row borders provide the single separator. */
+.ng-profile-menu .ng-profile-action-divider{display:none!important;height:0!important;margin:0!important;padding:0!important;border:0!important;background:none!important;}
