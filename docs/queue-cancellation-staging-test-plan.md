@@ -55,6 +55,14 @@
 
 No production schema or data was changed. The cancellation migration remains undeployed to production.
 
+## Production RLS inventory (read-only, 2026-10-31)
+
+- All 10 NextGen application tables inspected in the public schema have RLS enabled.
+- Policy counts: `content_items` 4; `platform_connections` 3; `publishing_jobs` 2; each of the other seven tables has 1.
+- Policies target `authenticated` and use `auth.uid() = owner_id` ownership checks. The content update policy has both `USING` and `WITH CHECK`; browser content inserts are restricted to unapproved states; approval events are SELECT-only; publishing jobs expose owner SELECT and queued-to-cancelled UPDATE only.
+- These tables do not have FORCE ROW LEVEL SECURITY. That is not a substitute for runtime testing: table owners and privileged functions can bypass RLS. The application Data API roles remain subject to RLS, but real Supabase staging tests are still required.
+- This was a read-only catalog inspection of production. No policy, grant, row, or schema was changed.
+
 ## Read-only preflight review (2026-10-31)
 
 - The live production migration ledger still contains exactly 11 migrations and ends at `20261031065025_restrict_nextgen_browser_table_privileges`. The cancellation migration is not deployed.
