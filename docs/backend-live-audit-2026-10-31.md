@@ -97,3 +97,14 @@ All four were observed with JWT verification enabled.
 - Browser grants are narrow: analytics, activity logs, and approval events are SELECT-only; publishing jobs have SELECT and UPDATE only (with RLS/trigger restrictions); platform connections have SELECT/INSERT/UPDATE; channels and content have owner-scoped browser operations.
 - The Security Advisor was re-run and still reports the same three warnings: leaked-password protection disabled, plus authenticated EXECUTE access to the two SECURITY DEFINER RPCs. The RPCs are deliberately authenticated entry points for review/scheduling and their definitions include explicit `auth.uid()` and owner/state checks. Keep their current restricted grants; do not remove authenticated EXECUTE without replacing the workflow with a safe alternative.
 - The Supabase documentation confirms leaked-password protection is configured in the project's Auth settings and is a Pro-plan-and-above feature. The connected Supabase tools do not expose an Auth password-security setting update action, so this setting cannot be changed through the available integration. Dashboard action remains pending.
+
+
+## Original migration recovery (2026-10-31)
+
+The original SQL for the three previously missing migrations was recovered directly from the live `supabase_migrations.schema_migrations` ledger (including the stored `statements` arrays), rather than reconstructed from memory or inferred from the current schema. The exact SQL statements were restored as repository files:
+
+- `supabase/migrations/20261027094432_create_nextgen_core_workspace_schema.sql`
+- `supabase/migrations/20261027095520_enforce_content_channel_owner_match.sql`
+- `supabase/migrations/20261027223652_add_platform_connections_secure.sql`
+
+All three files were fetched back from GitHub after creation to verify that the files exist and contain content. These files are restored source artifacts only; no migration was re-applied to the live database, and no production schema was changed during this recovery step. Before any future deployment, compare the restored files with the live schema and the later hardening migrations, then validate the full migration chain in a disposable/staging database.
