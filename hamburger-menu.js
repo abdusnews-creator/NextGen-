@@ -2,7 +2,7 @@
   "use strict";
   function init(){
     if(document.getElementById("ng-menu-drawer")) return;
-    fetch("./hamburger-menu.html",{cache:"no-store"})
+    fetch("./hamburger-menu.html?v=20261101-0146-restore",{cache:"no-store"})
       .then(function(r){if(!r.ok)throw new Error("Menu component unavailable");return r.text();})
       .then(function(html){
         var holder=document.createElement("div");
