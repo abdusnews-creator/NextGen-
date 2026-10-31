@@ -976,6 +976,15 @@ body:not(.ng-auth-second-step) .app>.ng-shared-footer .ng-copyright{order:1!impo
 body:not(.ng-auth-second-step) .app>.ng-shared-footer .ng-credit{order:2!important}
 body.ng-auth-second-step main.auth-scroll>.auth-legal{display:block!important}
 </style>
+<style id="ng-second-step-viewport-lock-final">
+/* Lock step two to the viewport so a small touch-scroll cannot shift the whole screen. */
+html:has(body.ng-auth-second-step){position:fixed!important;inset:0!important;width:100%!important;height:100%!important;overflow:hidden!important;overscroll-behavior:none!important}
+body.ng-auth-second-step{position:fixed!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;overscroll-behavior:none!important;touch-action:pan-y!important}
+body.ng-auth-second-step .app{position:fixed!important;inset:0!important;width:100%!important;max-width:430px!important;height:100dvh!important;min-height:0!important;max-height:100dvh!important;margin:0 auto!important;overflow:hidden!important;display:flex!important;flex-direction:column!important}
+body.ng-auth-second-step main.auth-scroll{position:relative!important;flex:1 1 auto!important;width:100%!important;height:100%!important;min-height:0!important;max-height:100%!important;margin:0!important;padding:0 18px!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;overflow:hidden!important;overscroll-behavior:none!important;touch-action:pan-y!important}
+body.ng-auth-second-step main.auth-scroll>section.auth-card{flex:1 1 auto!important;width:100%!important;min-height:0!important;height:auto!important;max-height:100%!important;margin:0 auto!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important}
+body.ng-auth-second-step main.auth-scroll>.auth-legal{flex:0 0 auto!important;margin:0 auto!important;padding:12px 0 calc(18px + env(safe-area-inset-bottom,0px))!important}
+</style>
 </head>
 <body>
 <div class="app">
