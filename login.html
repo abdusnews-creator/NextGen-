@@ -962,6 +962,10 @@ body.ng-auth-second-step main.auth-scroll>.auth-legal{
 #welcomeScreen h1{margin-bottom:18px!important}
 #welcomeScreen .welcome-login-prompt{margin-top:0!important}
 </style>
+<style id="ng-welcome-combined-tagline-final">
+/* Keep the login prompt and brand tagline together on one line at a matching text size. */
+#welcomeScreen .welcome-combined-line{display:block!important;width:128%!important;margin:9px 0 22px -14%!important;padding:0!important;color:#b9d9fa!important;font-size:13px!important;line-height:1.45!important;font-weight:600!important;text-align:center!important;white-space:nowrap!important;transform:scaleX(.78)!important;transform-origin:center center!important;background:transparent!important;border:0!important;box-shadow:none!important}
+</style>
 </head>
 <body>
 <div class="app">
@@ -1079,8 +1083,7 @@ body.ng-auth-second-step main.auth-scroll>.auth-legal{
 <div id="welcomeScreen" class="auth-screen">
   <img class="welcome-brand-logo" src="./assets/nextgen-login-logo-100.webp?v=2" alt="NextGen — Smart Automation. Smarter Growth.">
   <h1>Welcome to NextGen</h1>
-  <p class="welcome-login-prompt">Log in to work with smarter models</p>
-  <p class="intro">Smart Automation. Smarter Growth.</p>
+  <p class="welcome-combined-line">Log in to work with smarter models, Smart Automation. Smarter Growth.</p>
   <button class="social-button account-button" id="continueAccount" type="button"><span class="account-mark">N</span><span><strong>Continue with this account</strong><small id="accountHint">Your NextGen account</small></span></button>
   <button class="social-button google-button" id="welcomeGoogle" type="button"><span class="google-mark">G</span>Continue with Google</button>
   <button class="social-button alternate-button" id="showSignInOptions" type="button">Log in another way</button>
