@@ -686,7 +686,6 @@ body.ng-auth-second-step .status{color:#333!important}
     <button class="social-button" id="phoneSignIn" type="button"><span class="phone-mark">☎</span>Continue with phone</button>
     <button class="more-signin-options" id="moreSignInOptions" type="button">More sign-in options</button>
     <div class="extra-social-options" id="extraSocialOptions" hidden>
-      <button class="social-button apple-button" id="appleSignIn" type="button"><span class="apple-mark">●</span>Continue with Apple</button>
       <button class="social-button microsoft-button" id="microsoftSignIn" type="button"><span class="microsoft-mark"><i></i><i></i><i></i><i></i></span>Continue with Microsoft</button>
       <button class="social-button" id="facebookSignIn" type="button"><span class="facebook-mark">f</span>Continue with Facebook</button>
       <button class="social-button" id="instagramSignIn" type="button"><span class="instagram-mark">◎</span>Continue with Instagram</button>
@@ -724,7 +723,6 @@ body.ng-auth-second-step .status{color:#333!important}
  async function continueExisting(){if(!client){message('Authentication is not connected. Please check the Supabase configuration.','error');return;}const {data,error}=await client.auth.getSession();if(error){message(error.message,'error');return;}if(data.session){location.href='./index.html';return;}await socialSignIn('google');}
  $('continueAccount').addEventListener('click',continueExisting);
  $('welcomeGoogle').addEventListener('click',()=>socialSignIn('google'));
- $('welcomeApple').addEventListener('click',()=>socialSignIn('apple'));
  $('welcomeMicrosoft').addEventListener('click',()=>socialSignIn('azure'));
  function setMode(next){mode=next;const signup=mode==='signup';$('loginModeButton').classList.toggle('active',!signup);$('signupModeButton').classList.toggle('active',signup);$('confirmWrap').hidden=!signup;confirmPassword.required=signup;password.autocomplete=signup?'new-password':'current-password';$('forgotLink').hidden=signup;$('pageTitle').textContent='Log in or sign up';$('pageIntro').textContent=signup?'Create your NextGen account to get started.':'You’ll get smarter responses and can upload files, images and more.';message('');}
  $('loginModeButton').addEventListener('click',()=>setMode('login'));
@@ -733,7 +731,6 @@ body.ng-auth-second-step .status{color:#333!important}
  $('submitButton').addEventListener('click',()=>{if(!email.value.trim()||!email.checkValidity()){message('Enter a valid email address.','error');email.focus();return;}$('passwordStep').hidden=false;$('submitButton').hidden=true;$('passwordSubmitButton').hidden=false;password.required=true;password.focus();window.scrollTo({top:0,behavior:'smooth'});});
  $('moreSignInOptions').addEventListener('click',()=>{const box=$('extraSocialOptions');box.hidden=!box.hidden;$('moreSignInOptions').textContent=box.hidden?'More sign-in options':'Fewer sign-in options';});
  $('googleSignIn').addEventListener('click',()=>socialSignIn('google'));
- $('appleSignIn').addEventListener('click',()=>socialSignIn('apple'));
  $('microsoftSignIn').addEventListener('click',()=>socialSignIn('azure'));
  $('facebookSignIn').addEventListener('click',()=>socialSignIn('facebook'));
  $('instagramSignIn').addEventListener('click',()=>message('Instagram sign-in needs Meta/Instagram OAuth configuration before it can be enabled.','error'));
