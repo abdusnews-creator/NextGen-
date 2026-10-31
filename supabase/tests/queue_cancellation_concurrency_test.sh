@@ -67,6 +67,5 @@ if [ "$checks" != $'t\nt\nt' ]; then
   echo "ERROR: concurrent cancellation left an unexpected final state"
   exit 1
 fi
-SQL
 
 echo "PASS: concurrent cancellation serialized; one success, one 55000 rejection, one audit event."
