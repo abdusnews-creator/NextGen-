@@ -13,9 +13,10 @@ psql "$DATABASE_URL" -v ON_ERROR_STOP=1 <<SQL
 INSERT INTO auth.users(id) VALUES ('$owner') ON CONFLICT DO NOTHING;
 INSERT INTO public.channels(id,owner_id) VALUES ('$channel','$owner') ON CONFLICT DO NOTHING;
 INSERT INTO public.content_items(id,owner_id,channel_id,status,scheduled_for)
-VALUES ('$content','$owner','$channel','scheduled','2030-02-01 08:00:00+00');
+VALUES ('$content','$owner','$channel','approved','2030-02-01 08:00:00+00');
 INSERT INTO public.publishing_jobs(id,owner_id,content_id,channel_id,scheduled_for,status)
 VALUES ('$job','$owner','$content','$channel','2030-02-01 08:00:00+00','queued');
+UPDATE public.content_items SET status='scheduled' WHERE id='$content';
 SQL
 
 # Session one wins the cancellation and deliberately holds its row locks briefly.
