@@ -1,10 +1,10 @@
 # Queue Cancellation — Staging Validation Plan
 
-**Status:** Latest isolated PostgreSQL CI passed (2026-10-31), including the expanded private-function privilege assertions. Full Supabase staging validation remains pending.
+**Status:** Latest isolated PostgreSQL CI passed (2026-10-31), including private-function privilege, owner, and empty-search-path assertions. Full Supabase staging validation remains pending.
 
 ## Current safety boundary
 
-- The Supabase project currently exposes only the production `main` branch; no development/staging branch is available.
+- A fresh branch listing confirms the Supabase project currently has only the production `main` branch; no separate staging branch is available.
 - The cancellation migration `20261031130000_add_audited_queue_cancellation.sql` and RPC-hardening migration `20261031140000_move_privileged_nextgen_rpcs_to_private_schema.sql` are present in the repository but have **not** been applied to production.
 - Pull request #9 remains a draft and must not be merged or deployed until the checks below pass.
 - Do not test cancellation against production data.
@@ -15,7 +15,8 @@
 2. Confirm the staging database is disposable and contains no production user data.
 3. Apply the queue-cancellation migration to staging only.
 4. Confirm the function exists and grants are limited to `authenticated` (with `PUBLIC` and `anon` revoked).
-5. Run Supabase security advisors and inspect any new findings.
+5. Confirm `nextgen_private` is not included in the project's exposed Data API schemas.
+6. Run Supabase security advisors and inspect any new findings.
 
 ## Required functional and authorization tests
 
@@ -37,13 +38,14 @@
 - All cases above pass on staging.
 - Inspect resulting rows and audit events directly on staging.
 - Confirm existing review and scheduling RPC behavior remains unchanged.
+- Confirm the private schema is not exposed through PostgREST/Data API.
 - Re-run security advisors.
 - Review the final PR diff; merge only after explicit release approval.
 - Apply the migration to production only as a separately approved deployment step, after staging passes.
 
 ## Current result
 
-**Latest isolated PostgreSQL CI — PASSED (2026-10-31):** GitHub Actions [Run 41184706196](https://github.com/nextgen-i/NextGen/actions/runs/41184706196), commit `c798887b8d0c353fa81effb55d24f7c2a589bca7`. All 13 workflow steps completed successfully on a disposable PostgreSQL 17 service.
+**Latest isolated PostgreSQL CI — PASSED (2026-10-31):** GitHub Actions [Run 41185037940](https://github.com/nextgen-i/NextGen/actions/runs/41185037940), commit `babae433aca2cde1ef203983cc806dd83e508966`. All 13 workflow steps completed successfully on a disposable PostgreSQL 17 service.
 
 Successful checks include:
 
@@ -51,10 +53,11 @@ Successful checks include:
 - Approval/rejection RPC regression using test-only snapshots of the current production `SECURITY DEFINER` RPC definitions: owner approval, owner rejection, audit events, bounded rejection reason, cross-owner rejection, repeated-decision rejection, invalid-action rejection, and unauthenticated rejection.
 - RPC schema hardening: all three public RPC endpoints are `SECURITY INVOKER` wrappers; privileged implementations remain `SECURITY DEFINER` in the non-exposed `nextgen_private` schema.
 - Private permission assertions: `authenticated` has the required schema USAGE and EXECUTE rights on the three private implementations; `anon` and `PUBLIC` do not have private-schema access or EXECUTE on those implementations; `anon` cannot execute the public wrappers.
+- Function hardening assertions: all six public wrappers/private implementations pin an empty `search_path`; the three private privileged implementations retain `postgres` ownership.
 - Two-session concurrent cancellation: one request commits, the competing request is rejected; exactly one cancellation audit event is written.
 - Concurrent cancel-then-reschedule: the scheduling RPC waits for cancellation to commit, then succeeds; the old job remains cancelled, the new schedule is the only queued job, and the new timestamp remains on the content item.
 
-**Important limitation:** This is an isolated PostgreSQL fixture test, not a Supabase staging environment. It validates RPC and trigger logic and privilege boundaries in the test fixture, but does not reproduce the live Supabase project's full RLS policies, API gateway behavior, or Security Advisor. Full staging verification is still required.
+**Important limitation:** This is an isolated PostgreSQL fixture test, not a Supabase staging environment. It validates RPC and trigger logic and privilege boundaries in the test fixture, but does not reproduce the live Supabase project's full RLS policies, API gateway behavior, Data API exposed-schema configuration, or Security Advisor. Full staging verification is still required.
 
 No production schema or data was changed. The cancellation and RPC-hardening migrations remain undeployed to production.
 
@@ -69,10 +72,11 @@ No production schema or data was changed. The cancellation and RPC-hardening mig
 ## Read-only preflight review (2026-10-31)
 
 - The live production migration ledger still contains exactly 11 migrations and ends at `20261031065025_restrict_nextgen_browser_table_privileges`. The cancellation and private-schema hardening migrations are not deployed.
-- The current production Security Advisor reports two warnings for authenticated `SECURITY DEFINER` RPCs (`review_content_item` and `schedule_approved_content`) and one warning for leaked-password protection disabled. The proposed RPC-hardening migration moves the privileged implementations into `nextgen_private` and leaves stable `SECURITY INVOKER` wrappers in `public`; this is expected to address the two function-exposure warnings after deployment, but must be verified with the live Security Advisor in staging.
-- The proposed cancellation RPC is also moved into `nextgen_private` by the RPC-hardening migration, with a public `SECURITY INVOKER` wrapper. Verify that the live Advisor no longer reports any of the three public RPCs after the staging migration.
+- A fresh live Security Advisor check at 2026-10-31 08:31 UTC still reports exactly two public `SECURITY DEFINER` RPC warnings (`review_content_item` and `schedule_approved_content`) plus the separate leaked-password protection warning. This is expected before the private-schema migration is deployed; it is not evidence that the proposed migration has been validated.
+- The proposed RPC-hardening migration moves the privileged implementations into `nextgen_private` and leaves stable `SECURITY INVOKER` wrappers in `public`; verify that the live Advisor no longer reports any of the three public RPCs after the staging migration.
 - Static source review confirms the cancellation routine checks `auth.uid()`, scopes the job and content to the owner, locks the content before the job, accepts only `queued` jobs, restores content only when the exact schedule/channel still match and no other active job exists, and writes an audit event.
+- Static source review confirms all application relations and auth helpers in the privileged RPC bodies are schema-qualified before the migration pins an empty `search_path`.
 - Static source review is not a runtime test. In particular, the eventual publishing worker must use a compatible content-then-job lock order (or an explicitly tested concurrency strategy) to avoid lock-order deadlocks.
 - The existing `guard_publishing_job_status` trigger is intended to allow only queued-to-cancelled browser updates while preserving immutable job fields. Verify this trigger interaction in staging along with the RPC and audit insert.
 
-**Preflight result:** Read-only production inspection only. Latest expanded isolated PostgreSQL CI passed, including private implementation grants, public wrapper boundaries, approval/rejection regression, cancellation race, and schedule-vs-cancellation regression. No production writes or migration deployment occurred; full Supabase staging runtime tests remain outstanding.
+**Preflight result:** Read-only production inspection only. Latest expanded isolated PostgreSQL CI passed, including private implementation grants, owner checks, empty search paths, public wrapper boundaries, approval/rejection regression, cancellation race, and schedule-vs-cancellation regression. No production writes or migration deployment occurred; full Supabase staging runtime tests remain outstanding.
