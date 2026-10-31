@@ -543,6 +543,26 @@ body.ng-auth-second-step #loginOptionsScreen{min-height:calc(100dvh - 44px)!impo
 body.ng-auth-second-step .security-note{display:none!important}
 body.ng-auth-second-step .status{color:#333!important}
 </style>
+<style id="ng-second-screen-original-logo">
+#loginOptionsScreen .chat-auth-brand-image{
+ display:block!important;
+ width:min(100%,270px)!important;
+ height:auto!important;
+ max-height:190px!important;
+ object-fit:contain!important;
+ margin:52px auto 42px!important;
+ border:0!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+}
+@media(max-width:430px){
+ #loginOptionsScreen .chat-auth-brand-image{
+  width:min(100%,260px)!important;
+  max-height:180px!important;
+  margin:48px auto 38px!important;
+ }
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -667,7 +687,7 @@ body.ng-auth-second-step .status{color:#333!important}
 </div>
 <div id="loginOptionsScreen" class="auth-screen" hidden>
   <button class="back-auth" id="backToWelcome" type="button" aria-label="Back">‹</button>
-  <div class="chat-auth-brand" aria-hidden="true">NG</div>
+  <img class="chat-auth-brand-image" src="./file_000000005ab0820896e23efe9cf142bb.png" alt="NextGen — Smart Automation. Smarter Growth.">
   <h1 id="pageTitle">Log in or sign up</h1>
   <p class="intro" id="pageIntro">You’ll get smarter responses and can upload files, images and more.</p>
   <form id="authForm" novalidate>
