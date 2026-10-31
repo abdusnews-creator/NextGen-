@@ -831,6 +831,45 @@ body.ng-auth-second-step #loginOptionsScreen .auth-legal{
   clear:both!important;
 }
 </style>
+<style id="ng-login-legal-footer-outside-card">
+/* Legal links are a real page footer, outside the login form/card. */
+body.ng-auth-second-step main.auth-scroll{
+  min-height:100dvh!important;
+  height:auto!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-start!important;
+  padding:0 18px!important;
+  gap:0!important;
+  overflow-y:auto!important;
+}
+body.ng-auth-second-step main.auth-scroll>section.auth-card{
+  flex:1 0 auto!important;
+  min-height:0!important;
+  height:auto!important;
+  width:100%!important;
+  padding-bottom:18px!important;
+}
+body.ng-auth-second-step main.auth-scroll>.auth-legal{
+  display:block!important;
+  position:static!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  margin:18px auto 0!important;
+  padding:16px 0 calc(18px + env(safe-area-inset-bottom,0px))!important;
+  background:#030b24!important;
+  color:#b9d9fa!important;
+  text-align:center!important;
+  font-size:13px!important;
+  line-height:1.5!important;
+}
+body.ng-auth-second-step main.auth-scroll>.auth-legal a{
+  color:#8bdcff!important;
+  text-decoration:underline!important;
+  text-underline-offset:3px;
+}
+body.ng-auth-second-step main.auth-scroll>.auth-legal span{color:#6f8fb8!important}
+</style>
 </head>
 <body>
 <div class="app">
@@ -980,11 +1019,12 @@ body.ng-auth-second-step #loginOptionsScreen .auth-legal{
     </div>
   </div>
   <div class="links auth-utility-links"><a href="#" id="forgotLink">Forgot password?</a></div>
-  <p class="auth-legal"><a href="./privacy-policy.html">Terms of Use</a><span> · </span><a href="./privacy-policy.html">Privacy Policy</a></p>
+  
 </div>
 <p class="status" id="status" role="status" aria-live="polite"></p>
 <div class="security-note">Your NextGen account is protected by secure authentication.</div>
 </section>
+<p class="auth-legal"><a href="./privacy-policy.html">Terms of Use</a><span> · </span><a href="./privacy-policy.html">Privacy Policy</a></p>
 <footer class="ng-shared-footer"><span class="ng-copyright">© 2026 NextGen. All Rights Reserved.</span><span class="ng-credit">Powered by ABDUS SATTAR</span></footer>
 </main>
 <nav class="ng-bottom-nav" aria-label="Main navigation">
