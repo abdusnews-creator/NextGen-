@@ -1,6 +1,6 @@
 # Queue Cancellation — Staging Validation Plan
 
-**Status:** Isolated PostgreSQL CI subset passed; full Supabase staging validation remains pending.
+**Status:** Expanded isolated PostgreSQL CI suite passed; full Supabase staging validation remains pending.
 
 ## Current safety boundary
 
@@ -42,9 +42,9 @@
 
 ## Current result
 
-**Isolated PostgreSQL CI — PASSED (2026-10-31):** GitHub Actions run [#6](https://github.com/nextgen-i/NextGen/actions/runs/41183143844), commit `b03f7d60bdf4c1c5ce1c682c2825ee882fcb2bb5`. The fixture loaded, the cancellation migration applied, and the authorization/state-transition test script completed successfully. Covered: owner cancels own queued job with content restoration and audit event; cross-owner cancellation is rejected without changing the other owner's job; another active queued job prevents content restoration; processing jobs cannot be cancelled.
+**Expanded isolated PostgreSQL CI — PASSED (2026-10-31):** GitHub Actions run [#9](https://github.com/nextgen-i/NextGen/actions/runs/41183443551), commit `f960cd5492d9de22abc2cbdda4e370cb02d01c25`. The fixture loaded, the cancellation migration applied, and the full authorization/state-transition test script completed successfully. Covered: owner cancels own queued job with content restoration and audit event; cross-owner and unauthenticated cancellation are rejected; another active job prevents content restoration; processing, published, and already-cancelled jobs cannot be cancelled; a newer content schedule is preserved; audit notes are truncated to 1,000 characters.
 
-**Not covered by this CI run:** unauthenticated caller, published/already-cancelled jobs, newer content state mismatch, long audit-note bounds, repeated/concurrent cancellation, full existing review/scheduling RPC regression, and Supabase-specific RLS/security-advisor behavior. These remain staging/release-gate items.
+**Not covered by this CI run:** repeated/concurrent cancellation, full existing review/scheduling RPC regression, and Supabase-specific RLS/security-advisor behavior. These remain staging/release-gate items.
 
 This is an isolated PostgreSQL fixture test, not a Supabase staging environment. No production schema or data was changed; the cancellation migration remains undeployed to production.
 
@@ -58,4 +58,4 @@ This is an isolated PostgreSQL fixture test, not a Supabase staging environment.
 - Static source review is not a runtime test. In particular, the eventual publishing worker must use a compatible content-then-job lock order (or an explicitly tested concurrency strategy) to avoid lock-order deadlocks.
 - The existing `guard_publishing_job_status` trigger is intended to allow only queued-to-cancelled browser updates while preserving immutable job fields. Verify this trigger interaction in staging along with the RPC and audit insert.
 
-**Preflight result:** Read-only production inspection only. The isolated PostgreSQL CI test above passed; no production writes or migration deployment occurred, and full Supabase staging runtime tests remain outstanding.
+**Preflight result:** Read-only production inspection only. The expanded isolated PostgreSQL CI suite passed; no production writes or migration deployment occurred, and full Supabase staging runtime tests remain outstanding.
