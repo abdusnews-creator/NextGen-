@@ -101,5 +101,5 @@ BEFORE INSERT OR UPDATE OF status ON public.publishing_jobs
 FOR EACH ROW EXECUTE FUNCTION public.guard_publishing_job_status();
 
 GRANT SELECT ON public.channels, public.content_items, public.approval_events, public.publishing_jobs TO authenticated;
-GRANT UPDATE ON public.content_items TO authenticated;
+GRANT UPDATE ON public.content_items, public.channels TO authenticated;
 GRANT INSERT ON public.publishing_jobs TO authenticated;
