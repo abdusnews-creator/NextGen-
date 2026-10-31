@@ -459,6 +459,14 @@ html body .app>header{
 .microsoft-mark i:nth-child(1){background:#f25022}.microsoft-mark i:nth-child(2){background:#7fba00}.microsoft-mark i:nth-child(3){background:#00a4ef}.microsoft-mark i:nth-child(4){background:#ffb900}
 #welcomeScreen .apple-button,#welcomeScreen .microsoft-button{margin-bottom:10px}
 </style>
+<style id="ng-chatgpt-flow-alignment">
+#welcomeScreen{text-align:center;max-width:390px;margin:0 auto;padding:12px 0 8px}
+.welcome-brand-logo{display:block;width:min(100%,290px);height:auto;max-height:190px;object-fit:contain;margin:2px auto 18px}
+#welcomeScreen h1{font-size:24px;margin:0 0 8px}
+#welcomeScreen .intro{margin:0 0 26px}
+#welcomeScreen .account-button,#welcomeScreen .google-button{margin-bottom:10px}
+#welcomeScreen .alternate-button{margin-top:0}
+</style>
 </head>
 <body>
 <div class="app">
@@ -574,13 +582,11 @@ html body .app>header{
 <main class="auth-scroll">
 <section class="auth-card">
 <div id="welcomeScreen" class="auth-screen">
-  <div class="ng-auth-mark" aria-hidden="true">NG</div>
+  <img class="welcome-brand-logo" src="./file_000000005ab0820896e23efe9cf142bb.png" alt="NextGen — Smart Automation. Smarter Growth.">
   <h1>Welcome to NextGen</h1>
   <p class="intro">Smart Automation. Smarter Growth.</p>
   <button class="social-button account-button" id="continueAccount" type="button"><span class="account-mark">N</span><span><strong>Continue with this account</strong><small id="accountHint">Your NextGen account</small></span></button>
   <button class="social-button google-button" id="welcomeGoogle" type="button"><span class="google-mark">G</span>Continue with Google</button>
-  <button class="social-button apple-button" id="welcomeApple" type="button"><span class="apple-mark">●</span>Continue with Apple</button>
-  <button class="social-button microsoft-button" id="welcomeMicrosoft" type="button"><span class="microsoft-mark"><i></i><i></i><i></i><i></i></span>Continue with Microsoft</button>
   <button class="social-button alternate-button" id="showSignInOptions" type="button">Log in another way</button>
 </div>
 <div id="loginOptionsScreen" class="auth-screen" hidden>
@@ -638,11 +644,11 @@ html body .app>header{
  $('showSignInOptions').addEventListener('click',showOptions);
  $('backToWelcome').addEventListener('click',showWelcome);
  async function continueExisting(){
-  if(!client){message('No saved NextGen session found. Choose another sign-in method.','error');return;}
+  if(!client){message('Authentication is not connected. Please check the Supabase configuration.','error');return;}
   const {data,error}=await client.auth.getSession();
   if(error){message(error.message,'error');return;}
   if(data.session){location.href='./index.html';return;}
-  message('No active session found. Please continue with Google or another sign-in method.','error');
+  await socialSignIn('google');
  }
  $('continueAccount').addEventListener('click',continueExisting);
  $('welcomeGoogle').addEventListener('click',()=>socialSignIn('google'));
@@ -672,7 +678,7 @@ html body .app>header{
  async function socialSignIn(provider){
   if(!client){message('Authentication is not connected. Please check the Supabase configuration.','error');return;}
   try{message('Connecting to '+(provider==='google'?'Google':provider==='apple'?'Apple':provider==='azure'?'Microsoft':'Facebook')+'…');
-   const {error}=await client.auth.signInWithOAuth({provider,options:{redirectTo:new URL('./index.html',location.href).href}});
+   const {error}=await client.auth.signInWithOAuth({provider,options:{redirectTo:new URL('./index.html',location.href).href,...(provider==='google'?{queryParams:{prompt:'select_account'}}:{})}});
    if(error)throw error;
   }catch(err){message(err&&err.message?err.message:'Social sign-in could not be started.','error');}
  }
