@@ -59,6 +59,19 @@ BEGIN
     RAISE EXCEPTION 'Private schema must not be accessible to anon or PUBLIC';
   END IF;
 
+  IF has_table_privilege('authenticated','public.publishing_jobs','UPDATE') THEN
+    RAISE EXCEPTION 'Browser clients must not update publishing_jobs directly; cancellation must use the audited RPC';
+  END IF;
+
+  IF EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname='public'
+      AND tablename='publishing_jobs'
+      AND policyname='nextgen owners cancel queued jobs'
+  ) THEN
+    RAISE EXCEPTION 'Legacy direct-cancellation RLS policy must be removed';
+  END IF;
+
   IF NOT has_schema_privilege('authenticated','nextgen_private','USAGE') THEN
     RAISE EXCEPTION 'Authenticated role needs schema usage for invoker wrappers';
   END IF;
