@@ -603,6 +603,18 @@ html body .app>nav.ng-bottom-nav{display:none!important;visibility:hidden!import
 html body .app{padding-bottom:0!important}
 html body{padding-bottom:0!important}
 </style>
+<style id="ng-login-logo-background-blend">
+/* Blend the logo's dark square into the login navy background without changing the artwork. */
+body .app .logo,
+body .app .welcome-brand-logo,
+body .app .chat-auth-brand-image{
+  background:transparent!important;
+  mix-blend-mode:screen!important;
+  object-fit:contain!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+</style>
 </head>
 <body>
 <div class="app">
