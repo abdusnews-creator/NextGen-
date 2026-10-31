@@ -870,6 +870,17 @@ body.ng-auth-second-step main.auth-scroll>.auth-legal a{
 }
 body.ng-auth-second-step main.auth-scroll>.auth-legal span{color:#6f8fb8!important}
 </style>
+<style id="ng-welcome-login-prompt-style">
+#welcomeScreen .welcome-login-prompt{
+  margin:9px auto 5px!important;
+  color:#b9d9fa!important;
+  font-size:14px!important;
+  line-height:1.45!important;
+  font-weight:600!important;
+  text-align:center!important;
+}
+#welcomeScreen .intro{margin-top:5px!important}
+</style>
 </head>
 <body>
 <div class="app">
@@ -987,6 +998,7 @@ body.ng-auth-second-step main.auth-scroll>.auth-legal span{color:#6f8fb8!importa
 <div id="welcomeScreen" class="auth-screen">
   <img class="welcome-brand-logo" src="./assets/nextgen-login-logo-100.webp?v=2" alt="NextGen — Smart Automation. Smarter Growth.">
   <h1>Welcome to NextGen</h1>
+  <p class="welcome-login-prompt">Log in to work with smarter models</p>
   <p class="intro">Smart Automation. Smarter Growth.</p>
   <button class="social-button account-button" id="continueAccount" type="button"><span class="account-mark">N</span><span><strong>Continue with this account</strong><small id="accountHint">Your NextGen account</small></span></button>
   <button class="social-button google-button" id="welcomeGoogle" type="button"><span class="google-mark">G</span>Continue with Google</button>
