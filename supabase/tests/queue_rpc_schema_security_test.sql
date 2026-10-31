@@ -59,7 +59,8 @@ BEGIN
     RAISE EXCEPTION 'Private schema must not be accessible to anon or PUBLIC';
   END IF;
 
-  IF has_table_privilege('authenticated','public.publishing_jobs','UPDATE') THEN
+  IF has_any_column_privilege('authenticated','public.publishing_jobs','UPDATE')
+     OR has_any_column_privilege('anon','public.publishing_jobs','UPDATE') THEN
     RAISE EXCEPTION 'Browser clients must not update publishing_jobs directly; cancellation must use the audited RPC';
   END IF;
 
