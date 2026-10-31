@@ -358,6 +358,41 @@
     signIn:async email=>client.auth.signInWithOtp({email,options:{emailRedirectTo:location.origin+location.pathname}}),
     signOut:()=>client.auth.signOut()
   };
+
+  // Keep the right-side profile menu on the same page when Chrome refreshes.
+  (function(){
+    const key='ngNextGenProfileMenuOpen';
+    const trigger=document.getElementById('ng-profile-trigger');
+    const menu=document.getElementById('ng-profile-menu');
+    const backdrop=document.getElementById('ng-profile-backdrop');
+    if(!trigger||!menu||!backdrop)return;
+    function open(){
+      menu.classList.add('is-open');
+      menu.setAttribute('aria-hidden','false');
+      backdrop.hidden=false;
+      trigger.setAttribute('aria-expanded','true');
+      document.body.classList.add('ng-profile-open');
+    }
+    function close(){
+      menu.classList.remove('is-open');
+      menu.setAttribute('aria-hidden','true');
+      backdrop.hidden=true;
+      trigger.setAttribute('aria-expanded','false');
+      document.body.classList.remove('ng-profile-open');
+      try{sessionStorage.removeItem(key)}catch(e){}
+    }
+    trigger.addEventListener('click',()=>setTimeout(()=>{
+      try{if(menu.classList.contains('is-open'))sessionStorage.setItem(key,'1');else close()}catch(e){}
+    },0));
+    backdrop.addEventListener('click',close);
+    menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+    window.addEventListener('pagehide',()=>{
+      try{if(menu.classList.contains('is-open'))sessionStorage.setItem(key,'1')}catch(e){}
+    });
+    try{if(sessionStorage.getItem(key)==='1')open()}catch(e){}
+  })();
+
   bindPage();
   showAuth();
   client.auth.getSession().then(({data})=>{
