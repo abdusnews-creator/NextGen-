@@ -686,6 +686,22 @@ body>.app>nav.ng-bottom-nav{
  z-index:1000!important;flex:0 0 auto!important;
 }
 </style>
+<style id="ng-menu-icon-size-uniform">
+/* Lock every navigation item icon to one shared 25px square size. */
+.ng-menu-drawer .ng-menu-main-links>a>span,
+.ng-menu-drawer .ng-menu-accordion-panel a .ng-point-icon,
+.ng-menu-drawer .ng-menu-accordion-trigger>span{
+  width:25px!important;height:25px!important;min-width:25px!important;min-height:25px!important;
+  flex:0 0 25px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  box-sizing:border-box!important;line-height:1!important;font-size:20px!important;
+}
+.ng-menu-drawer .ng-menu-main-links>a>span svg,
+.ng-menu-drawer .ng-menu-accordion-panel a .ng-point-icon svg,
+.ng-menu-drawer .ng-menu-accordion-trigger>span svg{
+  width:25px!important;height:25px!important;min-width:25px!important;min-height:25px!important;
+  max-width:25px!important;max-height:25px!important;display:block!important;flex:0 0 25px!important;
+}
+</style>
 </head>
 <body>
 <div class="app">
