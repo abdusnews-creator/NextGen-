@@ -144,3 +144,19 @@ The complete 11-file migration chain was reviewed from the GitHub default branch
 ### Validation boundary
 
 This source review does not prove that the full chain replays successfully on a clean database. It also does not replace authenticated integration tests for owner/non-owner access, approval, scheduling, cancellation, and channel deletion. Do not deploy a corrective migration to production until those tests pass in a disposable staging database.
+
+
+## Queue cancellation fix prepared (2026-10-31)
+
+A proposed follow-up migration has been added to the repository:
+
+- `supabase/migrations/20261031130000_add_audited_queue_cancellation.sql`
+
+It adds an owner-checked `cancel_scheduled_content` RPC that:
+- accepts only a queued job belonging to the authenticated owner;
+- locks the associated content and job rows and permits only queued-to-cancelled transitions;
+- restores the content to `approved` and clears `scheduled_for` only when the content still matches the exact cancelled schedule and no other queued/processing job exists;
+- appends a `cancelled` approval event with a bounded audit note;
+- revokes default/public and anon execution and grants the RPC only to authenticated users.
+
+The migration file was fetched back from GitHub and verified after creation. **It has not been applied to Supabase.** Production migration history remains at the existing 11 applied versions. Runtime verification and concurrency/security tests remain pending until a staging or disposable database is available. The frontend must call this RPC for cancellation if/when the migration is approved and deployed; the current direct job-cancel path does not restore content state by itself.
