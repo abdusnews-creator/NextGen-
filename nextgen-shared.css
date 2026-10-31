@@ -245,3 +245,7 @@ html body.ng-menu-open nav.ng-bottom-nav{
   visibility:hidden!important;
   pointer-events:none!important;
 }
+
+
+/* Remove the unintended blank spacer between Lock chat and Uploaded files in profile menus. */
+.ng-profile-menu .ng-profile-action-spacer{display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;}
