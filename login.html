@@ -1005,6 +1005,32 @@ html body .app>main.auth-scroll>footer.ng-shared-footer>.ng-copyright{order:1!im
 html body .app>main.auth-scroll>footer.ng-shared-footer>.ng-credit{order:2!important}
 body.ng-auth-second-step html body .app>main.auth-scroll>footer.ng-shared-footer{display:flex!important}
 </style>
+
+<style id="ng-legal-footer-visible-final-override">
+/* Keep legal links visible above the copyright/credit row on both login screens. */
+html body .app>main.auth-scroll>footer.ng-shared-footer{
+  display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;
+  justify-content:center!important;align-items:center!important;gap:4px 8px!important;
+  overflow:visible!important;min-height:0!important;height:auto!important;
+}
+html body .app>main.auth-scroll>footer.ng-shared-footer>.ng-footer-legal{
+  display:block!important;visibility:visible!important;position:static!important;
+  order:0!important;flex:0 0 100%!important;width:100%!important;max-width:100%!important;
+  margin:0!important;padding:2px 0!important;text-align:center!important;
+  white-space:nowrap!important;overflow:visible!important;font-size:13px!important;line-height:1.4!important;
+}
+html body .app>main.auth-scroll>footer.ng-shared-footer>.ng-footer-legal a{
+  display:inline!important;visibility:visible!important;color:#8bdcff!important;
+  font-size:13px!important;font-weight:600!important;text-decoration:underline!important;
+}
+html body .app>main.auth-scroll>footer.ng-shared-footer>.ng-copyright{order:1!important;flex:1 1 auto!important}
+html body .app>main.auth-scroll>footer.ng-shared-footer>.ng-credit{order:2!important;flex:0 0 auto!important}
+@media(max-width:600px){
+ html body .app>main.auth-scroll>footer.ng-shared-footer{flex-direction:row!important;flex-wrap:wrap!important;overflow:visible!important}
+ html body .app>main.auth-scroll>footer.ng-shared-footer>.ng-footer-legal{flex:0 0 100%!important}
+}
+</style>
+
 </head>
 <body>
 <div class="app">
