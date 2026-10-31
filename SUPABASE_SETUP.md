@@ -1,32 +1,44 @@
 # Connect NextGen to Supabase
 
-This repository is a static GitHub Pages prototype. These steps prepare real authentication and database access, but the connection is not live until you create and configure your own Supabase project.
+## Current project status
 
-## 1. Create the project
-1. Open https://supabase.com/ and sign in or create an account.
-2. Create a new project and keep its database password private.
-3. In Project Settings / API (or the Connect dialog), copy the Project URL and the **publishable key** (or legacy anon key).
+The connected NextGen Supabase project is active. Its live database currently has the core workspace tables, owner-scoped RLS, audited approval/scheduling RPCs, and server-only publishing-state guards.
 
-## 2. Configure the web app
-1. Open `supabase-config.js` in this repository.
-2. Replace `PASTE_YOUR_SUPABASE_PROJECT_URL_HERE` with your Project URL.
-3. Replace `PASTE_YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY_HERE` with the publishable/anon key.
-4. Commit the change and wait for GitHub Pages to deploy.
+**Do not run `database/schema.sql` against the current NextGen project.** That file is an older draft schema using `content_drafts` and `user_id`; the current app uses `content_items` and `owner_id`. Applying the legacy script to a fresh or existing project would not reproduce the current app schema.
 
-The browser key is not a secret; access must be protected by Row Level Security. **Never paste a service_role key, secret key, database password, or OAuth client secret into browser files or chat.**
+The live Supabase migration history includes three baseline migrations that are not currently present in this repository:
+- `20261027094432_create_nextgen_core_workspace_schema`
+- `20261027095520_enforce_content_channel_owner_match`
+- `20261027223652_add_platform_connections_secure`
 
-## 3. Apply the database schema
-1. In the Supabase dashboard, open SQL Editor.
-2. Copy the latest contents of `database/schema.sql` into a new query and run it. The script includes an idempotent migration adding `content` and `metadata` to existing `content_drafts` tables; rerun it after schema updates.
-3. Check that the tables and RLS policies were created successfully.
+Restore those source files before attempting a clean-room database setup. The later migrations in `supabase/migrations/` are incremental and assume those baseline tables already exist.
 
-## 4. Authentication settings
-- In Authentication settings, configure allowed site URLs to include `https://nextgen-i.github.io`.
-- Add the sign-in page redirect URL: `https://nextgen-i.github.io/NextGen/login.html`.
-- Email confirmation may need to be completed before a new account can sign in.
+## 1. Browser configuration
 
-## Safety and current limitations
-- The login page uses Supabase Auth only when valid project settings are present.
-- Review Queue can save and load the supported draft fields per signed-in account when Supabase is configured and the latest schema has been applied. The Channels page currently syncs only limited channel state; this is not full production CRUD.
-- No social-media publishing, OAuth connections, background worker, or 24/7 automation is active.
-- Before commercial use, review the schema, security policies, recovery, logging, billing and privacy requirements.
+The browser uses `supabase-config.js` with the project URL and a Supabase publishable key. A publishable key is expected to be visible in browser code; it is safe only when Row Level Security and grants are configured correctly.
+
+Never put a `service_role` key, Supabase secret key, database password, OAuth client secret, or provider access/refresh token in HTML, JavaScript, GitHub, or chat.
+
+## 2. Authentication settings
+
+In Supabase Authentication settings:
+- Configure the site URL to include `https://nextgen-i.github.io`.
+- Add `https://nextgen-i.github.io/NextGen/login.html` as an allowed redirect URL.
+- Enable leaked-password protection for password sign-in.
+- Confirm email delivery and email confirmation settings before testing new accounts.
+
+## 3. Edge Function secrets and deployment
+
+The `channel-profile-lookup` function requires a valid signed-in NextGen user. YouTube profile lookup additionally requires the server-side `YOUTUBE_DATA_API_KEY` secret. Meta and Threads profile lookup still require proper provider OAuth authorization and permissions; those OAuth flows are not implemented by this function.
+
+The `platform-connection-status` endpoint stores only unverified connection metadata. It deliberately cannot mark an account as `connected`; that state must come from a future server-side OAuth callback after the provider token and scopes have been verified.
+
+To deploy functions through GitHub Actions, configure `SUPABASE_ACCESS_TOKEN` as a repository Actions secret. Do not put the token in the repository or send it through chat.
+
+## 4. Background automation and publishing
+
+There is currently no deployed publishing worker and no `pg_cron` scheduler in the connected database. The active Edge Functions are not a 24/7 publishing worker. Queue rows are only scheduled records; no social platform post is sent.
+
+Manual approval remains the default. Auto Approval is a user preference only; no automatic approval worker is active. Background mode must remain disabled until a real server-side worker is deployed, monitored, and verified.
+
+Before production publishing, implement and test provider OAuth, encrypted token storage/refresh, a leased and idempotent worker, retry/backoff and dead-letter handling, observability, and platform-specific permission checks.
