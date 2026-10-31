@@ -1060,6 +1060,21 @@ html body .app>main.auth-scroll>footer.ng-shared-footer>.ng-footer-legal{
 }
 </style>
 
+
+<style id="ng-login-footer-remove-divider-line">
+/* Remove the separator line above the legal-only footer on both login screens. */
+html body .app>main.auth-scroll>footer.ng-shared-footer{
+  border-top:0!important;
+  box-shadow:none!important;
+  outline:0!important;
+}
+html body .app>main.auth-scroll>footer.ng-shared-footer::before,
+html body .app>main.auth-scroll>footer.ng-shared-footer::after{
+  display:none!important;
+  content:none!important;
+}
+</style>
+
 </head>
 <body>
 <div class="app">
