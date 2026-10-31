@@ -11,7 +11,7 @@ INSERT INTO public.content_items(id,owner_id,channel_id,status,platform,schedule
 VALUES ('5ccccccc-cccc-4ccc-8ccc-cccccccccc01',
         '51111111-1111-4111-8111-111111111111',
         '5aaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
-        'scheduled','youtube','2030-04-01 08:00:00+00');
+        'approved','youtube',NULL);
 
 INSERT INTO public.publishing_jobs(id,owner_id,content_id,channel_id,scheduled_for,status)
 VALUES ('5ddddddd-dddd-4ddd-8ddd-dddddddddd01',
@@ -19,6 +19,10 @@ VALUES ('5ddddddd-dddd-4ddd-8ddd-dddddddddd01',
         '5ccccccc-cccc-4ccc-8ccc-cccccccccc01',
         '5aaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
         '2030-04-01 08:00:00+00','queued');
+
+UPDATE public.content_items
+SET status='scheduled', scheduled_for='2030-04-01 08:00:00+00'
+WHERE id='5ccccccc-cccc-4ccc-8ccc-cccccccccc01';
 
 SET LOCAL ROLE authenticated;
 SELECT set_config('request.jwt.claim.sub','51111111-1111-4111-8111-111111111111',true);
