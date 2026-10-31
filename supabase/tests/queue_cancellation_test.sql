@@ -33,12 +33,17 @@ BEGIN
   END IF;
 END $$;
 
--- Owner A cannot cancel owner B's job.
+-- Owner A cannot cancel owner B's job. Create fixture rows as the database owner,
+-- then switch back to the authenticated role for the RPC authorization check.
+RESET ROLE;
 INSERT INTO public.content_items(id,owner_id,channel_id,status,scheduled_for) VALUES
  ('cccccccc-cccc-4ccc-8ccc-ccccccccccc2','22222222-2222-4222-8222-222222222222','bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb','scheduled','2030-01-02 08:00:00+00');
 INSERT INTO public.publishing_jobs(id,owner_id,content_id,channel_id,scheduled_for,status) VALUES
  ('dddddddd-dddd-4ddd-8ddd-ddddddddddd2','22222222-2222-4222-8222-222222222222','cccccccc-cccc-4ccc-8ccc-ccccccccccc2','bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb','2030-01-02 08:00:00+00','queued');
-DO $$
+SET LOCAL ROLE authenticated;
+SELECT set_config('request.jwt.claim.sub','11111111-1111-4111-8111-111111111111',true);
+SELECT set_config('request.jwt.claim.role','authenticated',true);
+DO $
 BEGIN
   PERFORM public.cancel_scheduled_content('dddddddd-dddd-4ddd-8ddd-ddddddddddd2',NULL);
   RAISE EXCEPTION 'cross-owner cancellation unexpectedly succeeded';
