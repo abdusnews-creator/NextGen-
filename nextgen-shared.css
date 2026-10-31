@@ -253,3 +253,59 @@ html.ng-menu-open body .ng-bottom-nav{display:none!important;visibility:hidden!i
 #ng-menu-drawer .ng-menu-accordion-trigger>span:first-child svg{width:23px!important;height:23px!important}
 #ng-menu-drawer .ng-menu-shortcuts a[href*="dashboard.html"]>span{position:relative;font-size:0!important}
 #ng-menu-drawer .ng-menu-shortcuts a[href*="dashboard.html"]>span::before{content:"";display:block;width:28px;height:28px;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2326caff%22%20stroke-width%3D%221.9%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%226%22%20height%3D%226%22%20rx%3D%221%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%224%22%20width%3D%226%22%20height%3D%226%22%20rx%3D%221%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%2214%22%20width%3D%226%22%20height%3D%226%22%20rx%3D%221%22%2F%3E%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%226%22%20height%3D%226%22%20rx%3D%221%22%2F%3E%3C%2Fsvg%3E");background-position:center;background-repeat:no-repeat;background-size:28px 28px}
+
+
+/* Alignment correction: restore the drawer's original left edge and use one 25px icon rail. */
+#ng-menu-drawer .ng-menu-main-links>a,
+#ng-menu-drawer .ng-menu-accordion-panel>a{
+  padding-left:2px!important;
+  padding-right:8px!important;
+  gap:8px!important;
+  justify-content:flex-start!important;
+  text-align:left!important;
+}
+#ng-menu-drawer .ng-menu-main-links>a>span:first-child,
+#ng-menu-drawer .ng-menu-accordion-panel>a>span:first-child,
+#ng-menu-drawer .ng-menu-accordion-trigger>span:first-child{
+  width:25px!important;
+  min-width:25px!important;
+  max-width:25px!important;
+  height:25px!important;
+  min-height:25px!important;
+  max-height:25px!important;
+  flex:0 0 25px!important;
+  margin:0!important;
+  padding:0!important;
+}
+#ng-menu-drawer .ng-menu-main-links>a>span:first-child svg,
+#ng-menu-drawer .ng-menu-accordion-panel>a>span:first-child svg,
+#ng-menu-drawer .ng-menu-accordion-trigger>span:first-child svg{
+  width:23px!important;
+  height:23px!important;
+  min-width:23px!important;
+  max-width:23px!important;
+  flex:0 0 23px!important;
+}
+#ng-menu-drawer .ng-menu-accordion{
+  padding-left:12px!important;
+  padding-right:12px!important;
+}
+#ng-menu-drawer .ng-menu-accordion-panel{
+  padding-left:0!important;
+}
+#ng-menu-drawer .ng-menu-accordion-trigger{
+  padding-left:2px!important;
+  gap:8px!important;
+}
+#ng-menu-drawer .ng-menu-shortcuts a[href*="dashboard.html"]>span{
+  width:58px!important;
+  min-width:58px!important;
+  max-width:58px!important;
+  height:58px!important;
+  min-height:58px!important;
+  flex:0 0 58px!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  place-items:center!important;
+  font-size:0!important;
+}
