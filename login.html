@@ -1130,6 +1130,49 @@ html body:not(.ng-auth-second-step) .app>main.auth-scroll>footer.ng-shared-foote
 }
 </style>
 
+
+<style id="ng-second-step-native-pull-refresh-restore">
+/* Restore Chrome's native pull-to-refresh on login step two using the document as the scroll surface. */
+html:has(body.ng-auth-second-step){
+  position:static!important;inset:auto!important;width:100%!important;
+  height:auto!important;min-height:100%!important;
+  overflow-x:hidden!important;overflow-y:auto!important;
+  overscroll-behavior-y:auto!important;
+}
+html:has(body.ng-auth-second-step) body.ng-auth-second-step{
+  position:relative!important;inset:auto!important;width:100%!important;
+  height:auto!important;min-height:100vh!important;min-height:100dvh!important;
+  margin:0!important;padding:0 0 env(safe-area-inset-bottom,0px)!important;
+  overflow-x:hidden!important;overflow-y:auto!important;
+  overscroll-behavior-y:auto!important;touch-action:pan-y!important;
+}
+body.ng-auth-second-step .app{
+  position:relative!important;inset:auto!important;
+  width:100%!important;max-width:430px!important;
+  height:auto!important;min-height:100dvh!important;max-height:none!important;
+  margin:0 auto!important;overflow:visible!important;
+  display:flex!important;flex-direction:column!important;
+}
+body.ng-auth-second-step main.auth-scroll{
+  position:relative!important;flex:1 0 auto!important;
+  width:100%!important;height:auto!important;min-height:100dvh!important;
+  max-height:none!important;margin:0!important;
+  display:flex!important;flex-direction:column!important;
+  overflow:visible!important;overflow-x:visible!important;overflow-y:visible!important;
+  overscroll-behavior-y:auto!important;touch-action:pan-y!important;
+}
+body.ng-auth-second-step main.auth-scroll>section.auth-card{
+  flex:1 0 auto!important;width:100%!important;
+  min-height:0!important;height:auto!important;max-height:none!important;
+  margin:0 auto!important;overflow:visible!important;
+  overscroll-behavior:auto!important;-webkit-overflow-scrolling:auto!important;
+  touch-action:pan-y!important;
+}
+body.ng-auth-second-step main.auth-scroll>.ng-shared-footer{
+  flex:0 0 auto!important;margin-top:0!important;
+}
+</style>
+
 </head>
 <body>
 <div class="app">
