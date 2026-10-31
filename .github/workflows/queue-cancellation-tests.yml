@@ -41,6 +41,10 @@ jobs:
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/migrations/20261030093128_add_nextgen_audited_approval_and_safe_scheduling.sql
       - name: Align RPC fixture with production SECURITY DEFINER definitions
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/queue_rpc_production_security_fixture.sql
+      - name: Move privileged RPC implementations into private schema
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/migrations/20261031140000_move_privileged_nextgen_rpcs_to_private_schema.sql
+      - name: Verify RPC schema and execution boundaries
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/queue_rpc_schema_security_test.sql
       - name: Run approval RPC regression tests
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f supabase/tests/queue_rpc_regression_test.sql
       - name: Run concurrent cancellation race test
