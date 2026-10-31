@@ -58,19 +58,9 @@ if ! grep -q "55000" "$second_log"; then
 fi
 
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 <<SQL
-DO \$\$
-BEGIN
-  IF (SELECT status FROM public.publishing_jobs WHERE id='$job') <> 'cancelled' THEN
-    RAISE EXCEPTION 'winning cancellation did not persist';
-  END IF;
-  IF (SELECT status FROM public.content_items WHERE id='$content') <> 'approved' THEN
-    RAISE EXCEPTION 'content was not restored exactly once';
-  END IF;
-  IF (SELECT count(*) FROM public.approval_events WHERE content_id='$content' AND action='cancelled') <> 1 THEN
-    RAISE EXCEPTION 'expected exactly one cancellation audit event';
-  END IF;
-END
-\\$\$;
+SELECT CASE WHEN (SELECT status FROM public.publishing_jobs WHERE id='$job') = 'cancelled' THEN 1 ELSE 1/0 END;
+SELECT CASE WHEN (SELECT status FROM public.content_items WHERE id='$content') = 'approved' THEN 1 ELSE 1/0 END;
+SELECT CASE WHEN (SELECT count(*) FROM public.approval_events WHERE content_id='$content' AND action='cancelled') = 1 THEN 1 ELSE 1/0 END;
 SQL
 
 echo "PASS: concurrent cancellation serialized; one success, one 55000 rejection, one audit event."
