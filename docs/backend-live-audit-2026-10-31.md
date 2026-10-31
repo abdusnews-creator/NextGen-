@@ -87,3 +87,13 @@ All four were observed with JWT verification enabled.
 - An older commit titled “Add initial secured database schema for NextGen” (`96438ecb71d3218d9c940c7d38377cb8da9a5023`) contains a prototype schema using `content_drafts` and `draft_reviews`. This does **not** match the current live schema built around `content_items`, `approval_events`, and owner-scoped composite foreign keys. It is not a valid replacement for the missing applied migration.
 - A separate historical content/publishing expansion commit (`ee8487bdaca1c30815ed65a9aea5ce25f321b433`) is an additive migration for a later schema and does not recover the three missing initial migrations.
 - Therefore, no guessed or reconstructed SQL was added under `supabase/migrations/`. The live schema and applied migration ledger remain unchanged.
+
+
+## Fresh live-schema verification (2026-10-31)
+
+- Rechecked the live public schema with verbose table metadata. Core tables have RLS enabled: `channels`, `content_items`, `approval_events`, `automation_settings`, `platform_connections`, `publishing_jobs`, `channel_analytics_daily`, `content_analytics_daily`, `notification_preferences`, and `activity_logs`.
+- Current row counts returned by the schema inventory: one row in `automation_settings`; zero rows in the other listed application tables. No application content or channel records were found in these tables during this check.
+- The public schema has no stored access-token, secret, or credential column. The only column matching the token-name scan is `platform_connections.token_expires_at` (expiry timestamp only); OAuth token storage is not implemented in this table.
+- Browser grants are narrow: analytics, activity logs, and approval events are SELECT-only; publishing jobs have SELECT and UPDATE only (with RLS/trigger restrictions); platform connections have SELECT/INSERT/UPDATE; channels and content have owner-scoped browser operations.
+- The Security Advisor was re-run and still reports the same three warnings: leaked-password protection disabled, plus authenticated EXECUTE access to the two SECURITY DEFINER RPCs. The RPCs are deliberately authenticated entry points for review/scheduling and their definitions include explicit `auth.uid()` and owner/state checks. Keep their current restricted grants; do not remove authenticated EXECUTE without replacing the workflow with a safe alternative.
+- The Supabase documentation confirms leaked-password protection is configured in the project's Auth settings and is a Pro-plan-and-above feature. The connected Supabase tools do not expose an Auth password-security setting update action, so this setting cannot be changed through the available integration. Dashboard action remains pending.
