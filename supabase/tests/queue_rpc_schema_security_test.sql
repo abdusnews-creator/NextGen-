@@ -26,6 +26,31 @@ BEGIN
     RAISE EXCEPTION 'All three privileged implementations must remain SECURITY DEFINER in private schema';
   END IF;
 
+  -- SECURITY DEFINER code must use an empty search_path, and wrappers must
+  -- also avoid relying on caller-controlled search_path resolution.
+  IF EXISTS (
+    SELECT 1
+    FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace
+    WHERE (
+      (n.nspname='nextgen_private' AND p.proname IN ('review_content_item','schedule_approved_content','cancel_scheduled_content'))
+      OR
+      (n.nspname='public' AND p.proname IN ('review_content_item','schedule_approved_content','cancel_scheduled_content'))
+    )
+    AND NOT (coalesce(p.proconfig, ARRAY[]::text[]) @> ARRAY['search_path=""'])
+  ) THEN
+    RAISE EXCEPTION 'All six RPC functions must pin an empty search_path';
+  END IF;
+
+  IF EXISTS (
+    SELECT 1
+    FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace
+    WHERE n.nspname='nextgen_private'
+      AND p.proname IN ('review_content_item','schedule_approved_content','cancel_scheduled_content')
+      AND pg_get_userbyid(p.proowner) <> 'postgres'
+  ) THEN
+    RAISE EXCEPTION 'Private SECURITY DEFINER implementations must retain postgres ownership';
+  END IF;
+
   IF has_schema_privilege('anon','nextgen_private','USAGE') OR EXISTS (
     SELECT 1 FROM pg_namespace n,
       LATERAL aclexplode(coalesce(n.nspacl,acldefault('n',n.nspowner))) a
