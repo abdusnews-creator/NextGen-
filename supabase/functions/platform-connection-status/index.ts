@@ -84,10 +84,6 @@ Deno.serve(async (req: Request) => {
     updated_at: new Date().toISOString(),
   };
 
-  let query = supabase.from("platform_connections").select(
-    "id, platform, platform_user_id, display_name, handle, connection_status, token_expires_at, scopes, last_verified_at, last_error, updated_at",
-  );
-
   if (row.platform_user_id) {
     const existing = await supabase.from("platform_connections").select("id")
       .eq("owner_id", user.id).eq("platform", platform)
