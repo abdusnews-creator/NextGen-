@@ -403,6 +403,29 @@ html body .app>nav.ng-bottom-nav>a:focus-visible{
 .social-stack{display:grid;grid-template-columns:1fr;gap:9px}
 #authForm{margin:0}
 </style>
+<style id="ng-login-header-fixed-final">
+/* Login only: pin the existing header to the viewport while the document scrolls. */
+html body .app{padding-top:46px!important}
+html body .app>header{
+  position:fixed!important;
+  top:0!important;
+  left:50%!important;
+  right:auto!important;
+  width:100%!important;
+  max-width:430px!important;
+  min-width:0!important;
+  height:46px!important;
+  min-height:46px!important;
+  margin:0!important;
+  transform:translateX(-50%)!important;
+  z-index:2000!important;
+}
+@supports(height:100dvh){
+ html body .app>header{top:env(safe-area-inset-top,0px)!important}
+ html body .app{padding-top:calc(46px + env(safe-area-inset-top,0px))!important}
+}
+</style>
+
 </head>
 <body>
 <div class="app">
