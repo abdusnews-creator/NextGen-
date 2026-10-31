@@ -309,3 +309,83 @@ html.ng-menu-open body .ng-bottom-nav{display:none!important;visibility:hidden!i
   place-items:center!important;
   font-size:0!important;
 }
+
+
+/* Hamburger menu alignment: use a shared grid so icon and label start at identical columns. */
+#ng-menu-drawer .ng-menu-main-links>a,
+#ng-menu-drawer .ng-menu-accordion-panel>a{
+  display:grid!important;
+  grid-template-columns:25px minmax(0,1fr)!important;
+  align-items:center!important;
+  justify-content:initial!important;
+  column-gap:8px!important;
+  padding:7px 8px 7px 2px!important;
+  text-align:left!important;
+  box-sizing:border-box!important;
+}
+#ng-menu-drawer .ng-menu-main-links>a>span:first-child,
+#ng-menu-drawer .ng-menu-accordion-panel>a>span:first-child{
+  grid-column:1!important;
+  grid-row:1!important;
+  width:25px!important;
+  min-width:25px!important;
+  max-width:25px!important;
+  height:25px!important;
+  min-height:25px!important;
+  max-height:25px!important;
+  margin:0!important;
+  padding:0!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+}
+#ng-menu-drawer .ng-menu-main-links>a>span:first-child svg,
+#ng-menu-drawer .ng-menu-accordion-panel>a>span:first-child svg{
+  display:block!important;
+  width:23px!important;
+  height:23px!important;
+  min-width:23px!important;
+  max-width:23px!important;
+  margin:0!important;
+}
+#ng-menu-drawer .ng-menu-accordion{
+  padding-left:12px!important;
+  padding-right:12px!important;
+}
+#ng-menu-drawer .ng-menu-accordion-panel{
+  padding:3px 0 7px!important;
+}
+#ng-menu-drawer .ng-menu-accordion-trigger{
+  display:grid!important;
+  grid-template-columns:25px minmax(0,1fr) auto!important;
+  align-items:center!important;
+  column-gap:8px!important;
+  padding-left:2px!important;
+  padding-right:8px!important;
+  text-align:left!important;
+}
+#ng-menu-drawer .ng-menu-accordion-trigger>span:first-child{
+  grid-column:1!important;
+  width:25px!important;
+  min-width:25px!important;
+  max-width:25px!important;
+  height:25px!important;
+  min-height:25px!important;
+  max-height:25px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  margin:0!important;
+  padding:0!important;
+}
+#ng-menu-drawer .ng-menu-accordion-trigger>i{
+  grid-column:3!important;
+  margin-left:0!important;
+}
+/* Replace any remaining text/emoji glyph in icon-only spans with the existing SVG icon artwork. */
+#ng-menu-drawer .ng-point-icon:not(:has(svg)){
+  font-size:0!important;
+  line-height:0!important;
+  color:transparent!important;
+}
