@@ -1,11 +1,7 @@
 \set ON_ERROR_STOP on
 DO $$
 DECLARE
-  v_public_oid oid;
-  v_anon_oid oid;
 BEGIN
-  SELECT oid INTO v_public_oid FROM pg_roles WHERE rolname='public';
-  SELECT oid INTO v_anon_oid FROM pg_roles WHERE rolname='anon';
 
   IF NOT EXISTS (
     SELECT 1 FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace
@@ -30,8 +26,11 @@ BEGIN
     RAISE EXCEPTION 'All three privileged implementations must remain SECURITY DEFINER in private schema';
   END IF;
 
-  IF has_schema_privilege('anon','nextgen_private','USAGE')
-     OR has_schema_privilege('public','nextgen_private','USAGE') THEN
+  IF has_schema_privilege('anon','nextgen_private','USAGE') OR EXISTS (
+    SELECT 1 FROM pg_namespace n,
+      LATERAL aclexplode(coalesce(n.nspacl,acldefault('n',n.nspowner))) a
+    WHERE n.nspname='nextgen_private' AND a.grantee=0 AND a.privilege_type='USAGE'
+  ) THEN
     RAISE EXCEPTION 'Private schema must not be accessible to anon or PUBLIC';
   END IF;
 
