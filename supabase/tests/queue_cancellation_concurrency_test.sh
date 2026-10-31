@@ -57,10 +57,16 @@ if ! grep -q "55000" "$second_log"; then
   exit 1
 fi
 
-psql "$DATABASE_URL" -v ON_ERROR_STOP=1 <<SQL
-SELECT CASE WHEN (SELECT status FROM public.publishing_jobs WHERE id='$job') = 'cancelled' THEN 1 ELSE 1/0 END;
-SELECT CASE WHEN (SELECT status FROM public.content_items WHERE id='$content') = 'approved' THEN 1 ELSE 1/0 END;
-SELECT CASE WHEN (SELECT count(*) FROM public.approval_events WHERE content_id='$content' AND action='cancelled') = 1 THEN 1 ELSE 1/0 END;
+checks="$(psql "$DATABASE_URL" -At -v ON_ERROR_STOP=1 -c "
+SELECT (SELECT status FROM public.publishing_jobs WHERE id='$job') = 'cancelled';
+SELECT (SELECT status FROM public.content_items WHERE id='$content') = 'approved';
+SELECT (SELECT count(*) FROM public.approval_events WHERE content_id='$content' AND action='cancelled') = 1;
+")"
+printf '%s\n' "$checks"
+if [ "$checks" != $'t\nt\nt' ]; then
+  echo "ERROR: concurrent cancellation left an unexpected final state"
+  exit 1
+fi
 SQL
 
 echo "PASS: concurrent cancellation serialized; one success, one 55000 rejection, one audit event."
