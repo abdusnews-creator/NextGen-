@@ -115,3 +115,32 @@ All three files were fetched back from GitHub after creation to verify that the 
 The complete live migration ledger was compared against the repository's `supabase/migrations/` files. All 11 applied migration versions now have corresponding SQL files in the repository. The four missing later migration files were restored from the live ledger, and the two pre-existing files that differed only by blank-line formatting were verified as equivalent to the ledger SQL. The comparison passed for all 11 files when ignoring blank-line formatting; no SQL statement differences were detected.
 
 No production migrations were re-applied as part of this reconciliation. The next safe validation is to replay the chain against a disposable/staging Supabase database, not the live project.
+
+
+## Static SQL review of all 11 migrations (2026-10-31)
+
+The complete 11-file migration chain was reviewed from the GitHub default branch. This is a source review only: no SQL was executed and no production or staging database was modified. A real migration replay remains pending because Supabase Branching requires the Pro plan.
+
+### Findings
+
+1. **High — cancelled scheduled content can become stuck.** The scheduling RPC changes the content row from `approved` to `scheduled`. The browser update/delete policies only permit `draft`, `pending_approval`, or `rejected` content. The browser may cancel a queued publishing job, but the cancellation policy/trigger changes only the job row; no trigger or RPC restores the associated content item to an editable/approvable state. The scheduling RPC also accepts only `approved` content. Therefore, after cancellation, the content remains `scheduled` and cannot be edited or scheduled again through the current browser/RPC paths. **Recommended fix:** add an owner-checked, audited cancellation RPC that atomically cancels the queued job and restores the content item to `approved` (only when no other active job exists), or provide an equivalent safe reschedule workflow. Test concurrency and audit-event behavior before deployment.
+
+2. **Medium — deleting a channel with existing content may be blocked.** Migration `20261027095520_enforce_content_channel_owner_match` drops the original single-column channel foreign keys (which used `ON DELETE SET NULL`) and replaces them with a composite `(channel_id, owner_id)` foreign key without an `ON DELETE` action. PostgreSQL therefore uses `NO ACTION`; deleting a channel referenced by content rows will fail. **Recommended fix:** decide the intended product behavior. If content should be retained with its channel detached, use a PostgreSQL 17-compatible column-list action such as `ON DELETE SET NULL (channel_id)` on the composite FK, and test it. Otherwise implement a deliberate soft-delete or cascade policy. Do not change this until the desired channel-removal behavior is confirmed.
+
+3. **Medium — Auto Approval is not yet a complete backend workflow.** The schema allows the owner to enable `auto_approval_enabled` and select `approval_mode = 'auto'`, but the reviewed migrations do not implement a trusted automated reviewer that proves spelling, factual, copyright, duplicate, and platform-policy checks passed before approval. The review RPC is an owner-driven approve/reject action, not an automated safety pipeline. Keep Auto Approval OFF until a server-side validator and audited approval path enforce every required check and route uncertain/sensitive content to manual review.
+
+4. **Low — nullable platform identity can permit duplicate pending connection rows.** The unique constraint on `(owner_id, platform, platform_user_id)` does not prevent multiple rows with a NULL `platform_user_id` under PostgreSQL's default NULL-distinct uniqueness behavior. Consider a partial unique index for rows where `platform_user_id IS NULL` if the product intends one pending connection per owner/platform.
+
+### Positive controls confirmed in source
+
+- Owner-scoped RLS and composite owner foreign keys are present across the workspace and analytics relationships.
+- Browser content creation is restricted to unapproved states; approval metadata must remain empty on browser writes.
+- Approval history is read-only to browser users and written by the owner-checking review RPC.
+- Scheduling requires explicitly approved content, a future timestamp, an owner-owned active channel, and matching platforms.
+- Browser job updates are limited to cancellation of queued jobs; job payload fields are guarded against mutation.
+- Client writes cannot claim a platform connection is verified, mark content published, or enable background mode.
+- The default automation settings remain manual approval, auto approval disabled, and background mode disabled.
+
+### Validation boundary
+
+This source review does not prove that the full chain replays successfully on a clean database. It also does not replace authenticated integration tests for owner/non-owner access, approval, scheduling, cancellation, and channel deletion. Do not deploy a corrective migration to production until those tests pass in a disposable staging database.
