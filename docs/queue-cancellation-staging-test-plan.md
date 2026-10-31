@@ -1,6 +1,6 @@
 # Queue Cancellation — Staging Validation Plan
 
-**Status:** Expanded isolated PostgreSQL CI suite passed, including concurrent cancellation and concurrent cancel-then-reschedule coverage; full Supabase staging validation remains pending.
+**Status:** Isolated PostgreSQL CI passed for cancellation, approval/rejection, concurrent cancellation, and concurrent cancel-then-reschedule scenarios. Full Supabase staging validation remains pending.
 
 ## Current safety boundary
 
@@ -42,14 +42,16 @@
 
 ## Current result
 
-**Expanded isolated PostgreSQL CI — PASSED (2026-10-31):** GitHub Actions run [#9](https://github.com/nextgen-i/NextGen/actions/runs/41183443551), commit `f960cd5492d9de22abc2cbdda4e370cb02d01c25`. The fixture loaded, the cancellation migration applied, and the full authorization/state-transition test script completed successfully. Covered: owner cancels own queued job with content restoration and audit event; cross-owner and unauthenticated cancellation are rejected; another active job prevents content restoration; processing, published, and already-cancelled jobs cannot be cancelled; a newer content schedule is preserved; audit notes are truncated to 1,000 characters.
+**Expanded isolated PostgreSQL CI — PASSED (2026-10-31):** GitHub Actions [Run #32](https://github.com/nextgen-i/NextGen/actions/runs/41184239877), commit `7d11278f0771d85f72958ee0b4420cf985cfe1f4`. The workflow applied the cancellation migration and the existing approval/scheduling migration to a disposable PostgreSQL 17 service, then ran the following tests successfully:
 
-**Concurrency validation — PASSED:** The separate two-session race test ran two cancellation RPC calls against the same queued job. Exactly one request committed; the competing request received SQLSTATE `55000`; the job ended `cancelled`, the content was restored once, and exactly one cancellation audit event existed.
+- Cancellation authorization and state transitions: owner, cross-owner, unauthenticated, queued/processing/published/already-cancelled states, active-job protection, newer schedule preservation, and 1,000-character audit-note bound.
+- Approval/rejection RPC regression using test-only snapshots of the current production `SECURITY DEFINER` RPC definitions: owner approval, owner rejection, audit events, bounded rejection reason, cross-owner rejection, repeated-decision rejection, invalid-action rejection, and unauthenticated rejection.
+- Two-session concurrent cancellation: one request commits, the competing request receives SQLSTATE `55000`; exactly one cancellation audit event is written.
+- Concurrent cancel-then-reschedule: the scheduling RPC waits for cancellation to commit, then succeeds; the old job remains cancelled, the new schedule is the only queued job, and the new timestamp remains on the content item.
 
-**Not covered by this CI run:** concurrent schedule-vs-cancel behavior, full existing review/scheduling RPC regression, and Supabase-specific RLS/security-advisor behavior. These remain staging/release-gate items.
+**Important limitation:** This is an isolated PostgreSQL fixture test, not a Supabase staging environment. It validates the RPC and trigger logic but does not reproduce the live Supabase project's full RLS policies, API gateway behavior, or Security Advisor. Full staging verification is still required.
 
-This is an isolated PostgreSQL fixture test, not a Supabase staging environment. No production schema or data was changed; the cancellation migration remains undeployed to production.
-
+No production schema or data was changed. The cancellation migration remains undeployed to production.
 
 ## Read-only preflight review (2026-10-31)
 
@@ -60,4 +62,4 @@ This is an isolated PostgreSQL fixture test, not a Supabase staging environment.
 - Static source review is not a runtime test. In particular, the eventual publishing worker must use a compatible content-then-job lock order (or an explicitly tested concurrency strategy) to avoid lock-order deadlocks.
 - The existing `guard_publishing_job_status` trigger is intended to allow only queued-to-cancelled browser updates while preserving immutable job fields. Verify this trigger interaction in staging along with the RPC and audit insert.
 
-**Preflight result:** Read-only production inspection only. The expanded isolated PostgreSQL CI suite, two-session cancellation race, and schedule-vs-cancellation regression all passed; no production writes or migration deployment occurred, and full Supabase staging runtime tests remain outstanding.
+**Preflight result:** Read-only production inspection only. The expanded isolated PostgreSQL CI suite, approval/rejection regression, two-session cancellation race, and schedule-vs-cancellation regression all passed; no production writes or migration deployment occurred, and full Supabase staging runtime tests remain outstanding.
