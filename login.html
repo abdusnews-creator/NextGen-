@@ -570,6 +570,33 @@ html body .app>header,
 html body .app>main.auth-scroll>.ng-shared-footer{display:none!important}
 html body .app>main.auth-scroll{padding-top:0!important;margin-top:0!important}
 </style>
+<style id="ng-login-legal-bottom-reference">
+/* Keep legal links centered at the bottom of the white second-step screen, like the reference. */
+body.ng-auth-second-step #loginOptionsScreen{
+  position:relative!important;
+  padding-bottom:82px!important;
+}
+body.ng-auth-second-step #loginOptionsScreen .auth-legal{
+  position:fixed!important;
+  z-index:20!important;
+  left:0!important;
+  right:0!important;
+  bottom:calc(12px + env(safe-area-inset-bottom,0px))!important;
+  width:100%!important;
+  margin:0!important;
+  padding:12px 8px!important;
+  background:#fff!important;
+  color:#222!important;
+  text-align:center!important;
+  font-size:13px!important;
+  line-height:1.5!important;
+}
+body.ng-auth-second-step #loginOptionsScreen .auth-legal a{
+  color:#222!important;
+  text-decoration:underline!important;
+  text-underline-offset:2px!important;
+}
+</style>
 </head>
 <body>
 <div class="app">
