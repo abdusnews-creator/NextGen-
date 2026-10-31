@@ -78,3 +78,12 @@ All four were observed with JWT verification enabled.
 3. Enable leaked-password protection in Supabase Auth settings.
 4. Test review/scheduling RPCs with owner, non-owner, unauthenticated, wrong-platform, paused-channel, and unapproved-content cases before any permission change.
 5. Implement OAuth verification and a server-side worker with retry/idempotency and monitoring before enabling Background Mode. Keep Manual Approval ON by default and require explicit approval before scheduling/publishing unless the user deliberately changes the mode under the established safety rules.
+
+
+## Additional recovery investigation (2026-10-31)
+
+- Searched GitHub code and commit indexes for all three missing migration identifiers; no exact source files or matching migration commits were returned.
+- Checked the repository branches available to the linked GitHub connection; the three exact migration paths were not present on `main` or the other inspected branches.
+- An older commit titled “Add initial secured database schema for NextGen” (`96438ecb71d3218d9c940c7d38377cb8da9a5023`) contains a prototype schema using `content_drafts` and `draft_reviews`. This does **not** match the current live schema built around `content_items`, `approval_events`, and owner-scoped composite foreign keys. It is not a valid replacement for the missing applied migration.
+- A separate historical content/publishing expansion commit (`ee8487bdaca1c30815ed65a9aea5ce25f321b433`) is an additive migration for a later schema and does not recover the three missing initial migrations.
+- Therefore, no guessed or reconstructed SQL was added under `supabase/migrations/`. The live schema and applied migration ledger remain unchanged.
